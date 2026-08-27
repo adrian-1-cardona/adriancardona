@@ -135,10 +135,10 @@ export default function App() {
           </div>
           <div className="portrait-frame">
             <div className="portrait-layer portrait-layer-color">
-              <img className="portrait" src="/adrian-portrait-color.webp" alt="Adrian Cardona" />
+              <img className="portrait" src="/adrian-portrait-desktop.webp" alt="Adrian Cardona" />
             </div>
             <div className="portrait-layer portrait-layer-mono" aria-hidden="true">
-              <img className="portrait" src="/adrian-portrait-mono.webp" alt="" />
+              <img className="portrait" src="/adrian-portrait-desktop.webp" alt="" />
             </div>
           </div>
           <div className="hero-shade" aria-hidden="true" />
