@@ -1,0 +1,14 @@
+{
+  "title": "Adrian Cardona — Software Engineer",
+  "description": "Portfolio of Adrian Cardona, a software engineer building dependable systems, full-stack products, and applied AI.",
+  "openGraph": {
+    "image": "/og.png"
+  },
+  "robots": {
+    "index": true
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
