@@ -1,4 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
+import { motion } from "motion/react";
+
+import { HyperText } from "@/components/ui/hyper-text";
+import { TypingAnimation } from "@/components/ui/typing-animation";
 
 const experience = [
   {
@@ -62,10 +66,23 @@ function clamp(value: number, min = 0, max = 1) {
   return Math.min(Math.max(value, min), max);
 }
 
+function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 72, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.18 }}
+      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export default function App() {
   const heroRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const updateHero = () => {
@@ -75,22 +92,17 @@ export default function App() {
       const rect = hero.getBoundingClientRect();
       const range = Math.max(rect.height - window.innerHeight, 1);
       const progress = clamp(-rect.top / range);
-      const zoom = clamp((progress - 0.015) / 0.58);
-      const color = clamp((progress - 0.06) / 0.48);
+      const gray = clamp((progress - 0.025) / 0.48);
       const chrome = clamp((progress - 0.045) / 0.16);
-      const title = clamp((progress - 0.2) / 0.3);
-      const details = clamp((progress - 0.62) / 0.24);
-      const mobile = window.innerWidth <= 760;
+      const title = clamp((progress - 0.12) / 0.28);
+      const details = clamp((progress - 0.56) / 0.24);
 
       hero.style.setProperty("--hero-progress", progress.toFixed(4));
-      hero.style.setProperty("--color-reveal", color.toFixed(4));
+      hero.style.setProperty("--gray-reveal", gray.toFixed(4));
       hero.style.setProperty("--chrome-reveal", chrome.toFixed(4));
       hero.style.setProperty("--eyebrow-reveal", (chrome * (1 - title)).toFixed(4));
       hero.style.setProperty("--title-reveal", title.toFixed(4));
       hero.style.setProperty("--details-reveal", details.toFixed(4));
-      hero.style.setProperty("--frame-scale", (1 - zoom * (mobile ? 0.18 : 0.36)).toFixed(4));
-      hero.style.setProperty("--portrait-scale", (1.045 - zoom * 0.045).toFixed(4));
-      document.documentElement.style.setProperty("--nav-reveal", chrome.toFixed(4));
     };
 
     const requestUpdate = () => {
@@ -103,38 +115,24 @@ export default function App() {
     return () => {
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
-      document.documentElement.style.removeProperty("--nav-reveal");
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
     };
   }, []);
 
-  const closeMenu = () => setMenuOpen(false);
-
   return (
     <main>
-      <header className="site-header">
-        <a className="monogram" href="#top" aria-label="Adrian Cardona — top">AC<span>.</span></a>
-        <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="site-nav" onClick={() => setMenuOpen((open) => !open)}>
-          <span>{menuOpen ? "CLOSE" : "INDEX"}</span><i aria-hidden="true" />
-        </button>
-        <nav id="site-nav" className={menuOpen ? "site-nav is-open" : "site-nav"}>
-          <a href="#profile" onClick={closeMenu}>Profile</a>
-          <a href="#work" onClick={closeMenu}>Work</a>
-          <a href="#contact" onClick={closeMenu}>Contact</a>
-          <a href="/adrian-cardona-resume.pdf" target="_blank" rel="noreferrer" onClick={closeMenu}>Résumé ↗</a>
-        </nav>
-      </header>
-
       <section id="top" ref={heroRef} className="hero-track" aria-label="Introduction">
         <div className="hero-sticky">
-          <div className="hero-field" aria-hidden="true"><span>SOFTWARE</span><span>ENGINEER</span></div>
           <div className="portrait-frame">
-            <img className="portrait portrait-mono" src="/adrian-portrait-mono.webp" alt="" />
-            <img className="portrait portrait-color" src="/adrian-portrait-color.webp" alt="Adrian Cardona" />
+            <div className="portrait-layer portrait-layer-color">
+              <img className="portrait" src="/adrian-portrait-color.webp" alt="Adrian Cardona" />
+            </div>
+            <div className="portrait-layer portrait-layer-mono" aria-hidden="true">
+              <img className="portrait" src="/adrian-portrait-mono.webp" alt="" />
+            </div>
           </div>
           <div className="hero-shade" aria-hidden="true" />
           <div className="hero-intro">
-            <p className="eyebrow"><span /> CALIFORNIA · COMPUTER SCIENCE</p>
             <h1><span>ADRIAN</span><span>CARDONA</span></h1>
           </div>
           <div className="hero-details">
@@ -146,15 +144,19 @@ export default function App() {
       </section>
 
       <section id="profile" className="statement-section">
-        <div className="section-number">00 / PROFILE</div>
-        <p className="statement">I BUILD SOFTWARE THAT HOLDS UP <em>AFTER</em> THE DEMO.</p>
-        <div className="profile-grid">
-          <p className="profile-lede">Computer Science student at Cal Poly San Luis Obispo, graduating May 2027.</p>
+        <Reveal>
+          <div className="section-number">00 / PROFILE</div>
+          <p className="statement">I BUILD SOFTWARE THAT HOLDS UP <em>AFTER</em> THE DEMO.</p>
+        </Reveal>
+        <Reveal className="profile-grid" delay={0.1}>
+          <TypingAnimation as="p" className="profile-lede" typeSpeed={28} showCursor={false} startOnView>
+            Computer Science student at Cal Poly San Luis Obispo, graduating May 2027.
+          </TypingAnimation>
           <div className="profile-copy">
             <p>I move between systems, product, and applied AI: programming languages in Rust, production React platforms, resilient data pipelines, and grounded document intelligence.</p>
             <p>The through-line is simple—clean architecture, measurable correctness, and work built to scale beyond a prototype.</p>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <div className="marquee" aria-label="Core disciplines">
@@ -165,13 +167,25 @@ export default function App() {
       </div>
 
       <section id="work" className="work-section">
-        <div className="section-heading">
+        <Reveal className="section-heading">
           <div className="section-number">01 / SELECTED WORK</div>
-          <h2>Things I’ve<br />made real.</h2>
-        </div>
+          <HyperText as="h2" className="work-hyper-title" duration={1200} startOnView animateOnHover={false}>
+            THINGS I'VE MADE REAL.
+          </HyperText>
+        </Reveal>
         <div className="project-list">
-          {projects.map((project) => (
-            <a className="project-card" href={project.href} target="_blank" rel="noreferrer" key={project.name}>
+          {projects.map((project, index) => (
+            <motion.a
+              className="project-card"
+              href={project.href}
+              target="_blank"
+              rel="noreferrer"
+              key={project.name}
+              initial={{ opacity: 0, y: 80 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.75, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            >
               <span className="project-index">{project.index}</span>
               <div className="project-main">
                 <p className="project-kicker">{project.kicker}</p><h3>{project.name}</h3>
@@ -179,39 +193,53 @@ export default function App() {
               </div>
               <div className="project-meta"><strong>{project.proof}</strong><span>{project.stack}</span></div>
               <span className="project-arrow" aria-hidden="true">↗</span>
-            </a>
+            </motion.a>
           ))}
         </div>
       </section>
 
       <section className="experience-section">
-        <div className="section-heading compact">
-          <div className="section-number">02 / EXPERIENCE</div><h2>Building<br />in the field.</h2>
-        </div>
+        <Reveal className="section-heading compact">
+          <div className="section-number">02 / EXPERIENCE</div>
+          <TypingAnimation as="h2" className="experience-typing-title" typeSpeed={42} showCursor={false} startOnView>
+            BUILDING IN THE FIELD.
+          </TypingAnimation>
+        </Reveal>
         <div className="experience-list">
           {experience.map((item, index) => (
-            <article className="experience-row" key={item.role}>
+            <motion.article
+              className="experience-row"
+              key={item.role}
+              initial={{ opacity: 0, y: 64 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            >
               <span className="experience-count">0{index + 1}</span>
               <div>
                 <p className="experience-dates">{item.dates}</p><h3>{item.role}</h3>
                 <p className="experience-company">{item.company}</p><p className="experience-location">{item.location}</p>
               </div>
               <div className="experience-summary"><strong>{item.impact}</strong><p>{item.description}</p></div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </section>
 
       <section className="skills-section">
-        <div className="section-number">03 / TOOLKIT</div>
-        <div className="skills-cloud">{skills.map((skill, index) => <span className={index % 4 === 0 ? "accent" : ""} key={skill}>{skill}</span>)}</div>
-        <p className="coursework">DATA STRUCTURES & ALGORITHMS / SYSTEMS PROGRAMMING / DATABASES / COMPUTER SECURITY / SOFTWARE ENGINEERING / PROGRAMMING LANGUAGES</p>
+        <Reveal>
+          <div className="section-number">03 / TOOLKIT</div>
+          <div className="skills-cloud">{skills.map((skill, index) => <span className={index % 4 === 0 ? "accent" : ""} key={skill}>{skill}</span>)}</div>
+          <p className="coursework">DATA STRUCTURES & ALGORITHMS / SYSTEMS PROGRAMMING / DATABASES / COMPUTER SECURITY / SOFTWARE ENGINEERING / PROGRAMMING LANGUAGES</p>
+        </Reveal>
       </section>
 
       <section id="contact" className="contact-section">
         <div className="contact-orbit" aria-hidden="true"><span>AVAILABLE FOR THE RIGHT TEAM · </span></div>
-        <p className="section-number">04 / NEXT</p>
-        <h2>LET’S MAKE<br /><em>SOMETHING</em><br />UNIGNORABLE.</h2>
+        <Reveal>
+          <p className="section-number">04 / NEXT</p>
+          <h2>LET’S MAKE<br /><em>SOMETHING</em><br />UNIGNORABLE.</h2>
+        </Reveal>
         <div className="contact-bottom">
           <p>Open to internships, new-grad roles,<br />and ambitious technical collaborations.</p>
           <a className="contact-button" href="mailto:cardona.adrian.1029@gmail.com"><span>START A CONVERSATION</span><i>↗</i></a>
