@@ -97,7 +97,7 @@ export default function App() {
       const title = clamp((progress - 0.28) / 0.42);
       const details = clamp((progress - 0.68) / 0.22);
       const zoom = clamp((progress - 0.06) / 0.62);
-      const targetScale = window.innerWidth <= 760 ? 0.76 : 0.5;
+      const targetScale = window.innerWidth <= 760 ? 0.72 : 0.44;
       const frameScale = 1 - zoom * (1 - targetScale);
 
       hero.style.setProperty("--hero-progress", progress.toFixed(4));
