@@ -92,12 +92,16 @@ export default function App() {
       const rect = hero.getBoundingClientRect();
       const range = Math.max(rect.height - window.innerHeight, 1);
       const progress = clamp(-rect.top / range);
-      const gray = clamp((progress - 0.025) / 0.48);
-      const chrome = clamp((progress - 0.045) / 0.16);
-      const title = clamp((progress - 0.12) / 0.28);
-      const details = clamp((progress - 0.56) / 0.24);
+      const gray = clamp((progress - 0.12) / 0.5);
+      const chrome = clamp((progress - 0.1) / 0.48);
+      const title = clamp((progress - 0.28) / 0.42);
+      const details = clamp((progress - 0.68) / 0.22);
+      const zoom = clamp((progress - 0.06) / 0.62);
+      const targetScale = window.innerWidth <= 760 ? 0.76 : 0.5;
+      const frameScale = 1 - zoom * (1 - targetScale);
 
       hero.style.setProperty("--hero-progress", progress.toFixed(4));
+      hero.style.setProperty("--frame-scale", frameScale.toFixed(4));
       hero.style.setProperty("--gray-reveal", gray.toFixed(4));
       hero.style.setProperty("--chrome-reveal", chrome.toFixed(4));
       hero.style.setProperty("--eyebrow-reveal", (chrome * (1 - title)).toFixed(4));
@@ -123,6 +127,12 @@ export default function App() {
     <main>
       <section id="top" ref={heroRef} className="hero-track" aria-label="Introduction">
         <div className="hero-sticky">
+          <div className="hero-scene" aria-hidden="true">
+            <div className="hero-backdrop-copy">
+              <span>SOFTWARE THAT</span>
+              <strong>HOLDS UP AFTER THE DEMO</strong>
+            </div>
+          </div>
           <div className="portrait-frame">
             <div className="portrait-layer portrait-layer-color">
               <img className="portrait" src="/adrian-portrait-color.webp" alt="Adrian Cardona" />
@@ -133,7 +143,7 @@ export default function App() {
           </div>
           <div className="hero-shade" aria-hidden="true" />
           <div className="hero-intro">
-            <h1><span>ADRIAN</span><span>CARDONA</span></h1>
+            <h1>Adrian Cardona</h1>
           </div>
           <div className="hero-details">
             <p>Building dependable systems,<br />from bytecode to browser.</p>
@@ -169,9 +179,14 @@ export default function App() {
       <section id="work" className="work-section">
         <Reveal className="section-heading">
           <div className="section-number">01 / SELECTED WORK</div>
-          <HyperText as="h2" className="work-hyper-title" duration={1200} startOnView animateOnHover={false}>
-            THINGS I'VE MADE REAL.
-          </HyperText>
+          <div className="work-hyper-stack" aria-label="Things I've made real.">
+            <HyperText as="h2" className="work-hyper-title" duration={2100} startOnView animateOnHover={false}>
+              THINGS I'VE
+            </HyperText>
+            <HyperText as="h2" className="work-hyper-title" duration={2400} delay={220} startOnView animateOnHover={false}>
+              MADE REAL.
+            </HyperText>
+          </div>
         </Reveal>
         <div className="project-list">
           {projects.map((project, index) => (
@@ -201,7 +216,7 @@ export default function App() {
       <section className="experience-section">
         <Reveal className="section-heading compact">
           <div className="section-number">02 / EXPERIENCE</div>
-          <TypingAnimation as="h2" className="experience-typing-title" typeSpeed={42} showCursor={false} startOnView>
+          <TypingAnimation as="h2" className="experience-typing-title" typeSpeed={72} showCursor={false} startOnView>
             BUILDING IN THE FIELD.
           </TypingAnimation>
         </Reveal>
@@ -235,7 +250,6 @@ export default function App() {
       </section>
 
       <section id="contact" className="contact-section">
-        <div className="contact-orbit" aria-hidden="true"><span>AVAILABLE FOR THE RIGHT TEAM · </span></div>
         <Reveal>
           <p className="section-number">04 / NEXT</p>
           <h2>LET’S MAKE<br /><em>SOMETHING</em><br />UNIGNORABLE.</h2>
