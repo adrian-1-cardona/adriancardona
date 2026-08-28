@@ -61,11 +61,9 @@ const projects = [
 ];
 
 const skills = [
-  "Python", "TypeScript", "JavaScript", "Rust", "Java", "C", "C++", "SQL",
-  "React", "Next.js", "Node.js", "FastAPI", "Tailwind CSS", "Vite",
-  "PostgreSQL", "Redis", "Convex", "Docker", "Celery", "Prometheus", "Grafana",
-  "LlamaIndex", "Gemini API", "Ollama", "RAG", "Vector Search",
-  "GitHub Actions", "Power Automate", "Unix/Linux",
+  "Rust", "TypeScript", "Python", "C",
+  "React", "Node.js", "PostgreSQL", "Docker",
+  "RAG / Vector Search", "GitHub Actions", "Unix/Linux", "SQL",
 ];
 
 const navigation = [
@@ -409,8 +407,8 @@ export default function App() {
               <BlockReveal
                 key={skill}
                 className={index % 4 === 0 ? " accent" : ""}
-                delay={index * 55}
-                duration={440}
+                delay={index * 28}
+                duration={240}
               >
                 {skill}
               </BlockReveal>
