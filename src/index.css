@@ -41,10 +41,12 @@ img { display:block; }
 .hero-sticky { position:sticky; top:0; height:100svh; min-height:540px; overflow:hidden; isolation:isolate; background:var(--ink); color:white; }
 .hero-scene { position:absolute; z-index:0; inset:0; overflow:hidden; background:#20271c; opacity:var(--chrome-reveal); }
 .hero-scene::before { content:""; position:absolute; inset:-35%; background:repeating-radial-gradient(ellipse at 24% 38%,transparent 0 8.5rem,rgba(200,255,39,.085) 8.6rem 8.75rem,transparent 8.85rem 17rem); transform:rotate(-12deg) scale(calc(.96 + var(--hero-progress) * .08)); }
-.hero-backdrop-copy { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; gap:.04em; white-space:nowrap; transform:translateX(calc((.5 - var(--hero-progress)) * 16vw)); }
-.hero-backdrop-copy span,.hero-backdrop-copy strong { display:block; width:max-content; font-family:"Oswald",sans-serif; text-transform:uppercase; }
-.hero-backdrop-copy span { color:var(--electric); font:500 clamp(4.5rem,9.8vw,11rem)/.78 "Oswald",sans-serif; letter-spacing:-.055em; }
-.hero-backdrop-copy strong { color:var(--paper); font:600 clamp(4rem,8.4vw,9.4rem)/.8 "Oswald",sans-serif; letter-spacing:-.065em; }
+.hero-velocity-copy { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; gap:.02em; transform:translateY(calc((.5 - var(--hero-progress)) * 3vh)); }
+.hero-velocity-row>div { align-items:center; }
+.hero-velocity-row span,.hero-velocity-row strong { display:block; width:max-content; font-family:"Oswald",sans-serif; text-transform:uppercase; }
+.hero-velocity-row i { margin:0 .16em; color:var(--electric); font:.45em/1 "Oswald",sans-serif; }
+.hero-velocity-row-top { color:var(--electric); font:500 clamp(4.5rem,9.8vw,11rem)/.78 "Oswald",sans-serif; letter-spacing:-.055em; }
+.hero-velocity-row-bottom { color:var(--paper); font:600 clamp(4rem,8.4vw,9.4rem)/.8 "Oswald",sans-serif; letter-spacing:-.065em; }
 .portrait-frame,.portrait-layer { position:absolute; inset:0; overflow:hidden; }
 .portrait-frame { z-index:2; transform:scale(var(--frame-scale)); will-change:transform; }
 .portrait-layer { display:flex; align-items:center; justify-content:center; }

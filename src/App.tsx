@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
 import { HyperText } from "@/components/ui/hyper-text";
+import { ScrollVelocityContainer, ScrollVelocityRow } from "@/components/ui/scroll-based-velocity";
 import { TypingAnimation } from "@/components/ui/typing-animation";
 
 const experience = [
@@ -75,6 +76,11 @@ function clamp(value: number, min = 0, max = 1) {
   return Math.min(Math.max(value, min), max);
 }
 
+function smootherStep(value: number) {
+  const progress = clamp(value);
+  return progress * progress * progress * (progress * (progress * 6 - 15) + 10);
+}
+
 function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   return (
     <motion.div
@@ -92,6 +98,9 @@ function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; 
 export default function App() {
   const heroRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
+  const targetProgressRef = useRef(0);
+  const currentProgressRef = useRef(0);
+  const previousTimeRef = useRef(0);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -111,18 +120,14 @@ export default function App() {
   }, [menuOpen]);
 
   useEffect(() => {
-    const updateHero = () => {
-      frameRef.current = null;
+    const applyHero = (progress: number) => {
       const hero = heroRef.current;
       if (!hero) return;
-      const rect = hero.getBoundingClientRect();
-      const range = Math.max(rect.height - window.innerHeight, 1);
-      const progress = clamp(-rect.top / range);
       const gray = clamp((progress - 0.12) / 0.5);
       const chrome = clamp((progress - 0.1) / 0.48);
       const title = clamp((progress - 0.28) / 0.42);
       const details = clamp((progress - 0.68) / 0.22);
-      const zoom = clamp((progress - 0.06) / 0.62);
+      const zoom = smootherStep((progress - 0.045) / 0.68);
       const targetScale = window.innerWidth <= 760 ? 0.72 : 0.44;
       const frameScale = 1 - zoom * (1 - targetScale);
 
@@ -135,16 +140,53 @@ export default function App() {
       hero.style.setProperty("--details-reveal", details.toFixed(4));
     };
 
-    const requestUpdate = () => {
-      if (frameRef.current === null) frameRef.current = requestAnimationFrame(updateHero);
+    const readTargetProgress = () => {
+      const hero = heroRef.current;
+      if (!hero) return 0;
+      const rect = hero.getBoundingClientRect();
+      const range = Math.max(rect.height - window.innerHeight, 1);
+      return clamp(-rect.top / range);
     };
 
-    updateHero();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate, { passive: true });
+    const animateHero = (time: number) => {
+      const elapsed = previousTimeRef.current ? Math.min(time - previousTimeRef.current, 48) : 16;
+      previousTimeRef.current = time;
+      const current = currentProgressRef.current;
+      const target = targetProgressRef.current;
+      const damping = 1 - Math.exp(-elapsed / 105);
+      const next = current + (target - current) * damping;
+      const settled = Math.abs(target - next) < 0.00008;
+
+      currentProgressRef.current = settled ? target : next;
+      applyHero(currentProgressRef.current);
+
+      if (settled) {
+        frameRef.current = null;
+        previousTimeRef.current = 0;
+      } else {
+        frameRef.current = requestAnimationFrame(animateHero);
+      }
+    };
+
+    const requestUpdate = (immediate = false) => {
+      targetProgressRef.current = readTargetProgress();
+      if (immediate) {
+        currentProgressRef.current = targetProgressRef.current;
+        applyHero(currentProgressRef.current);
+        return;
+      }
+      if (frameRef.current === null) frameRef.current = requestAnimationFrame(animateHero);
+    };
+
+    const handleScroll = () => requestUpdate();
+    const handleResize = () => requestUpdate(true);
+
+    requestUpdate(true);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize, { passive: true });
     return () => {
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
     };
   }, []);
@@ -203,10 +245,14 @@ export default function App() {
       <section id="top" ref={heroRef} className="hero-track" aria-label="Introduction">
         <div className="hero-sticky">
           <div className="hero-scene" aria-hidden="true">
-            <div className="hero-backdrop-copy">
-              <span>SOFTWARE THAT</span>
-              <strong>HOLDS UP AFTER THE DEMO</strong>
-            </div>
+            <ScrollVelocityContainer className="hero-velocity-copy">
+              <ScrollVelocityRow className="hero-velocity-row hero-velocity-row-top" baseVelocity={1.15} direction={-1}>
+                <span>SOFTWARE THAT</span><i>✳</i>
+              </ScrollVelocityRow>
+              <ScrollVelocityRow className="hero-velocity-row hero-velocity-row-bottom" baseVelocity={0.8} direction={1}>
+                <strong>HOLDS UP AFTER THE DEMO</strong><i>✳</i>
+              </ScrollVelocityRow>
+            </ScrollVelocityContainer>
           </div>
           <div className="portrait-frame">
             <div className="portrait-layer portrait-layer-color">
