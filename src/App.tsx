@@ -134,7 +134,9 @@ export default function App() {
       const scrollTitle = clamp((progress - 0.28) / 0.42);
       const introTitle = smootherStep((intro - 0.5) / 0.5);
       const title = introTitle + scrollTitle * (1 - introTitle);
-      const details = clamp((progress - 0.68) / 0.22);
+      const scrollDetails = clamp((progress - 0.68) / 0.22);
+      const introDetails = smootherStep((intro - 0.72) / 0.28);
+      const details = introDetails + scrollDetails * (1 - introDetails);
       const scrollZoom = smootherStep((progress - 0.045) / 0.68);
       const introZoom = intro;
       const zoom = introZoom + scrollZoom * (1 - introZoom);
