@@ -111,13 +111,23 @@ img { display:block; }
 .experience-summary p { margin:0; font-size:clamp(.72rem,.9vw,.9rem); line-height:1.65; }
 .skills-section { background:var(--paper); }
 .skills-cloud { display:flex; flex-wrap:wrap; align-items:center; gap:0 .35em; font:600 clamp(3.2rem,8.2vw,8.2rem)/1 "Oswald",sans-serif; letter-spacing:-.065em; text-transform:uppercase; }
-.skills-cloud span::after { content:"/"; margin-left:.35em; color:rgba(17,16,15,.18); }
-.skills-cloud .accent { color:var(--electric); }
+/* BlockReveal wrapper — keep it inline-block and vertically aligned */
+.skills-cloud .block-reveal-root { vertical-align:baseline; line-height:inherit; }
+/* The "/" separator after each tag */
+.skills-cloud .block-reveal-root::after { content:"/"; margin-left:.35em; color:rgba(17,16,15,.18); }
+/* Accent (electric yellow) tags */
+.skills-cloud .block-reveal-root.accent { color:var(--electric); }
+/* Override the ink overlay colour for accent tags so it matches the section bg */
+.skills-cloud .block-reveal-root.accent [aria-hidden="true"]:last-child { background:var(--ink); }
 .coursework { max-width:75rem; margin:clamp(4rem,8vw,8rem) 0 0 auto; padding-top:1.5rem; border-top:1px solid var(--line); line-height:1.8; }
 
 .contact-section { position:relative; overflow:hidden; background:#ff4e2f; color:var(--ink); min-height:90svh; }
 .contact-section h2 { position:relative; z-index:1; width:100%; max-width:none; margin:0; font:600 clamp(4rem,11vw,11rem)/.8 "Oswald",sans-serif; letter-spacing:-.065em; white-space:nowrap; }
 .contact-section h2 em { color:var(--paper); }
+.contact-hyper-stack { position:relative; z-index:1; }
+.contact-hyper-stack h2 { font:600 clamp(4rem,11vw,11rem)/.8 "Oswald",sans-serif; letter-spacing:-.065em; white-space:nowrap; }
+.contact-hyper-em h2 { color:var(--paper); }
+.contact-sub-hyper { margin:.6em 0 0; font:500 clamp(1.1rem,2.2vw,2.2rem)/1 "Oswald",sans-serif; letter-spacing:.06em; text-transform:uppercase; opacity:.6; }
 .contact-bottom { display:grid; grid-template-columns:1fr 1fr; align-items:end; gap:4rem; margin-top:clamp(4rem,8vw,8rem); padding-top:1.5rem; border-top:1px solid var(--ink); }
 .contact-bottom>p { margin:0; font-size:clamp(.75rem,1vw,1rem); line-height:1.6; text-transform:uppercase; }
 .contact-button { display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.4rem; background:var(--electric); color:var(--ink); font-size:.7rem; letter-spacing:.08em; transition:background 180ms ease,color 180ms ease; }
@@ -141,6 +151,7 @@ footer { display:flex; justify-content:space-between; padding:1.4rem 3vw; backgr
   .profile-grid { margin-top:5rem; }
   .section-heading h2,.work-hyper-title,.experience-typing-title { font-size:17vw; }
   .contact-section h2 { font-size:15.5vw; letter-spacing:-.055em; }
+  .contact-hyper-stack h2 { font-size:15.5vw; letter-spacing:-.055em; }
   .project-card { grid-template-columns:2rem 1fr auto; }
   .project-main { grid-column:2 / 4; }
   .project-main h3 { font-size:22vw; }

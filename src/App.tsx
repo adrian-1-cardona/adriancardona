@@ -4,34 +4,36 @@ import { AnimatePresence, motion } from "motion/react";
 import { HyperText } from "@/components/ui/hyper-text";
 import { ScrollVelocityContainer, ScrollVelocityRow } from "@/components/ui/scroll-based-velocity";
 import { TypingAnimation } from "@/components/ui/typing-animation";
+import { ScrollTypewriter } from "@/components/ui/scroll-typewriter";
+import { BlockReveal } from "@/components/ui/block-reveal";
 
 const experience = [
   {
     dates: "JAN 2026 — PRESENT",
-    role: "Software Engineer Intern",
-    company: "Cal Poly Bailey College of Science & Mathematics",
+    role: "Software Engineering Intern",
+    company: "Cal Poly Bailey College of Science and Mathematics",
     location: "San Luis Obispo, California",
-    impact: "58,579 media records",
+    impact: "58,579 media files",
     description:
-      "Building an internal digital asset system with SharePoint and Power Automate: batch ingestion, metadata indexing, duplicate detection, validation, recovery, and collision-safe resumable migrations.",
+      "Built an internal media management system automating batch ingestion, metadata-driven organization, validation, and failure recovery. Engineered a resumable Power Automate migration for 455 GB of media with duplicate detection and collision-safe writes. Designed searchable metadata workflows for 17,000+ assets.",
   },
   {
     dates: "JUL 2025 — MAR 2026",
     role: "Technology Solutions Research Intern",
     company: "Foundation for California Community Colleges",
     location: "Los Angeles, California",
-    impact: "10+ stakeholder visuals",
+    impact: "6 colleges analyzed",
     description:
-      "Turning statewide enrollment, demographic, and financial-aid data into clear decisions while standardizing reusable data-cleaning, validation, and reporting workflows for a six-person research team.",
+      "Analyzed financial aid and demographic records across 6 California community colleges to identify trends in FAFSA access and student outcomes. Synthesized focus-group feedback into a research report for external stakeholders documenting evidence-based themes around financial aid accessibility.",
   },
   {
     dates: "FEB 2025 — APR 2025",
     role: "AI Document Insights Extern",
-    company: "Extern × Outamation",
+    company: "Extern",
     location: "Los Angeles, California",
     impact: "Grounded document AI",
     description:
-      "Built and tuned a Python RAG pipeline using LlamaIndex, Ollama, and Gemini to ingest mortgage and lease documents, generate embeddings, and retrieve trustworthy source context.",
+      "Built a Python RAG pipeline for mortgage document Q&A using LlamaIndex, Ollama, and Gemini API. Evaluated open-source models and retrieval configurations, tuning chunking and prompting strategies, then presented the completed system to Outamation stakeholders.",
   },
 ];
 
@@ -41,8 +43,8 @@ const projects = [
     name: "Guppty",
     kicker: "A programming language, from syntax to stack.",
     description:
-      "A Rust language implementation with a lexer, parser, bytecode compiler, stack VM, closures, control flow, span-aware errors, dual execution backends, and CI-enforced differential testing.",
-    proof: "38+ tests",
+      "An indentation-based language in Rust with a lexer, parser, bytecode compiler, stack VM, closures, recursion, and control flow. Includes a tree-walking interpreter and CI differential tests across 30+ programs — both backends must produce identical output.",
+    proof: "30+ CI-tested programs",
     stack: "RUST / COMPILERS / BYTECODE",
     href: "https://adrian-1-cardona.github.io/Guppty/#installation",
   },
@@ -51,16 +53,19 @@ const projects = [
     name: "Gitex",
     kicker: "Ask a codebase. Get an answer you can trust.",
     description:
-      "A production GitHub Q&A platform with Gemini embeddings, Convex vector search, Clerk auth, Stripe billing, rate limiting, AI security controls, and retrieval evaluations enforced through CI.",
-    proof: "160+ tests · 100% groundedness",
+      "A codebase Q&A platform with Gemini embeddings and Convex vector search. 31-case RAG evals gate citation groundedness, retrieval recall, and refusals in CI. Auth, billing, rate limits, and security engineered with Clerk and Stripe.",
+    proof: "160+ tests · 31-case RAG evals",
     stack: "TYPESCRIPT / REACT / CONVEX",
     href: "https://gitex.dev",
   },
 ];
 
 const skills = [
-  "Python", "TypeScript", "React", "Rust", "FastAPI", "Next.js", "PostgreSQL",
-  "Docker", "Redis", "Convex", "Prometheus", "Grafana", "Gemini API", "Ollama",
+  "Python", "TypeScript", "JavaScript", "Rust", "Java", "C", "C++", "SQL",
+  "React", "Next.js", "Node.js", "FastAPI", "Tailwind CSS", "Vite",
+  "PostgreSQL", "Redis", "Convex", "Docker", "Celery", "Prometheus", "Grafana",
+  "LlamaIndex", "Gemini API", "Ollama", "RAG", "Vector Search",
+  "GitHub Actions", "Power Automate", "Unix/Linux",
 ];
 
 const navigation = [
@@ -278,10 +283,10 @@ export default function App() {
         <div className="hero-sticky">
           <div className="hero-scene" aria-hidden="true">
             <ScrollVelocityContainer className="hero-velocity-copy">
-              <ScrollVelocityRow className="hero-velocity-row hero-velocity-row-top" baseVelocity={1.15} direction={-1}>
+              <ScrollVelocityRow className="hero-velocity-row hero-velocity-row-top" baseVelocity={0.55} direction={-1}>
                 <span>SOFTWARE THAT</span><i>✳</i>
               </ScrollVelocityRow>
-              <ScrollVelocityRow className="hero-velocity-row hero-velocity-row-bottom" baseVelocity={0.8} direction={1}>
+              <ScrollVelocityRow className="hero-velocity-row hero-velocity-row-bottom" baseVelocity={0.38} direction={1}>
                 <strong>HOLDS UP AFTER THE DEMO</strong><i>✳</i>
               </ScrollVelocityRow>
             </ScrollVelocityContainer>
@@ -309,7 +314,9 @@ export default function App() {
       <section id="profile" className="statement-section">
         <Reveal>
           <div className="section-number">00 / PROFILE</div>
-          <p className="statement">I BUILD SOFTWARE THAT HOLDS UP <em>AFTER</em> THE DEMO.</p>
+          <ScrollTypewriter as="p" className="statement" charSpeed={42} startDelay={200}>
+            I BUILD SOFTWARE THAT HOLDS UP AFTER THE DEMO.
+          </ScrollTypewriter>
         </Reveal>
         <Reveal className="profile-grid" delay={0.1}>
           <TypingAnimation as="p" className="profile-lede" typeSpeed={28} showCursor={false} startOnView>
@@ -397,24 +404,42 @@ export default function App() {
       <section id="toolkit" className="skills-section">
         <Reveal>
           <div className="section-number">03 / TOOLKIT</div>
-          <div className="skills-cloud">{skills.map((skill, index) => <span className={index % 4 === 0 ? "accent" : ""} key={skill}>{skill}</span>)}</div>
-          <p className="coursework">DATA STRUCTURES & ALGORITHMS / SYSTEMS PROGRAMMING / DATABASES / COMPUTER SECURITY / SOFTWARE ENGINEERING / PROGRAMMING LANGUAGES</p>
+          <div className="skills-cloud">
+            {skills.map((skill, index) => (
+              <BlockReveal
+                key={skill}
+                className={index % 4 === 0 ? " accent" : ""}
+                delay={index * 55}
+                duration={440}
+              >
+                {skill}
+              </BlockReveal>
+            ))}
+          </div>
+          <p className="coursework">DATA STRUCTURES & ALGORITHMS / SYSTEMS PROGRAMMING / COMPUTER SECURITY / PROGRAMMING LANGUAGES</p>
         </Reveal>
       </section>
 
       <section id="contact" className="contact-section">
         <Reveal>
           <p className="section-number">04 / NEXT</p>
-          <h2>LET’S MAKE<br /><em>SOMETHING</em><br />UNIGNORABLE.</h2>
+          <div className="work-hyper-stack contact-hyper-stack" aria-label="Let’s make something unignorable. Connect with me.">
+            <HyperText as="h2" className="work-hyper-title" duration={2100} startOnView animateOnHover={false}>
+              LET’S 
+            </HyperText>
+            <HyperText as="h2" className="work-hyper-title contact-hyper-em" duration={2400} delay={220} startOnView animateOnHover={false}>
+              CONNECT
+            </HyperText>
+          </div>
         </Reveal>
         <div className="contact-bottom">
-          <p>Open to internships, new-grad roles,<br />and ambitious technical collaborations.</p>
+          <p>Open to new grad 2027 tech roles<br />and ambitious technical collaborations.</p>
           <a className="contact-button" href="mailto:cardona.adrian.1029@gmail.com"><span>START A CONVERSATION</span><i>↗</i></a>
         </div>
         <div className="social-row">
           <a href="https://github.com/adrian-1-cardona" target="_blank" rel="noreferrer">GITHUB ↗</a>
           <a href="https://linkedin.com/in/adrian-cardona/" target="_blank" rel="noreferrer">LINKEDIN ↗</a>
-          <a href="/adrian-cardona-resume.pdf" target="_blank" rel="noreferrer">RÉSUMÉ ↗</a>
+          <a href="/ADRIAN_CARDONA_RESUME.pdf" target="_blank" rel="noreferrer">RÉSUMÉ ↗</a>
           <a href="tel:3104896795">310 489 6795</a>
         </div>
       </section>
