@@ -8,7 +8,7 @@ import { TypingAnimation } from "@/components/ui/typing-animation";
 const experience = [
   {
     dates: "JAN 2026 — PRESENT",
-    role: "Web Development Intern",
+    role: "Software Engineer Intern",
     company: "Cal Poly Bailey College of Science & Mathematics",
     location: "San Luis Obispo, California",
     impact: "58,579 media records",
