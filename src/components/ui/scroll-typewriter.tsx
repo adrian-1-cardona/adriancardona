@@ -15,8 +15,8 @@ export function ScrollTypewriter({
   children,
   className = "",
   as: Tag = "p",
-  charSpeed = 38,
-  startDelay = 120,
+  charSpeed = 52,
+  startDelay = 300,
 }: ScrollTypewriterProps) {
   const containerRef = useRef<HTMLElement>(null);
   const [visibleCount, setVisibleCount] = useState(0);
@@ -87,7 +87,7 @@ export function ScrollTypewriter({
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(0.18em)",
               transition: visible
-                ? "opacity 0.22s ease, transform 0.28s cubic-bezier(0.16,1,0.3,1)"
+                ? "opacity 0.34s ease, transform 0.42s cubic-bezier(0.16,1,0.3,1)"
                 : "none",
             }}
           >

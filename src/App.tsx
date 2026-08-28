@@ -88,10 +88,10 @@ function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; 
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 72, scale: 0.97 }}
+      initial={{ opacity: 0, y: 40, scale: 0.97 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 1.05, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>
@@ -137,7 +137,7 @@ export default function App() {
       const scrollTitle = clamp((progress - 0.28) / 0.42);
       const introTitle = smootherStep((intro - 0.5) / 0.5);
       const title = introTitle + scrollTitle * (1 - introTitle);
-      const scrollDetails = clamp((progress - 0.68) / 0.22);
+      const scrollDetails = clamp((progress - 0.62) / 0.3);
       const introDetails = smootherStep((intro - 0.72) / 0.28);
       const details = introDetails + scrollDetails * (1 - introDetails);
       const scrollZoom = smootherStep((progress - 0.045) / 0.68);
@@ -168,14 +168,14 @@ export default function App() {
       previousTimeRef.current = time;
       const current = currentProgressRef.current;
       const target = targetProgressRef.current;
-      const damping = 1 - Math.exp(-elapsed / 105);
+      const damping = 1 - Math.exp(-elapsed / 145);
       const next = current + (target - current) * damping;
       const settled = Math.abs(target - next) < 0.00008;
 
       if (introStartedAt !== null && !introFinished) {
         const introElapsed = time - introStartedAt;
-        introPullback = smootherStep(introElapsed / 1900);
-        introFinished = introElapsed >= 1900;
+        introPullback = smootherStep(introElapsed / 2200);
+        introFinished = introElapsed >= 2200;
       }
 
       currentProgressRef.current = settled ? target : next;
@@ -249,7 +249,7 @@ export default function App() {
             initial={{ clipPath: "circle(0% at calc(100% - 3rem) 3rem)" }}
             animate={{ clipPath: "circle(150% at calc(100% - 3rem) 3rem)" }}
             exit={{ clipPath: "circle(0% at calc(100% - 3rem) 3rem)" }}
-            transition={{ duration: 0.72, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: 0.88, ease: [0.65, 0, 0.15, 1] }}
           >
             <div className="menu-heading">ADRIAN CARDONA / PORTFOLIO</div>
             <nav aria-label="Main navigation">
@@ -258,9 +258,9 @@ export default function App() {
                   href={item.href}
                   key={item.href}
                   onClick={() => setMenuOpen(false)}
-                  initial={{ opacity: 0, y: 32 }}
+                  initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.18 + index * 0.055, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ delay: 0.22 + index * 0.07, duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <span className="menu-number">{item.number}</span>
                   <span className="menu-label">{item.label}</span>
@@ -354,10 +354,10 @@ export default function App() {
               target="_blank"
               rel="noreferrer"
               key={project.name}
-              initial={{ opacity: 0, y: 80 }}
+              initial={{ opacity: 0, y: 48 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.25 }}
-              transition={{ duration: 0.75, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.95, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
             >
               <span className="project-index">{project.index}</span>
               <div className="project-main">
@@ -383,10 +383,10 @@ export default function App() {
             <motion.article
               className="experience-row"
               key={item.role}
-              initial={{ opacity: 0, y: 64 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.9, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
             >
               <span className="experience-count">0{index + 1}</span>
               <div>
@@ -407,7 +407,7 @@ export default function App() {
               <BlockReveal
                 key={skill}
                 className={index % 4 === 0 ? " accent" : ""}
-                delay={index * 28}
+                delay={index * 45}
                 duration={240}
               >
                 {skill}

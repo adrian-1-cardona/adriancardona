@@ -36,8 +36,8 @@ export function ScrollVelocityContainer({
   const { scrollY } = useScroll()
   const scrollVelocity = useVelocity(scrollY)
   const smoothVelocity = useSpring(scrollVelocity, {
-    damping: 80,
-    stiffness: 200,
+    damping: 100,
+    stiffness: 160,
   })
   const velocityFactor = useTransform(smoothVelocity, (v) => {
     const sign = v < 0 ? -1 : 1

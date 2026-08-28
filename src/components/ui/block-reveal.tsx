@@ -45,9 +45,9 @@ export function BlockReveal({
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
       // Start wipe when bottom of element crosses viewport bottom (entry = 0)
-      // Finish wipe when element's vertical centre reaches 40% from top (exit = 1)
+      // Finish wipe when element's vertical centre reaches ~28% from top (exit = 1)
       const entry = vh - rect.top;          // positive once element enters from bottom
-      const range = vh * 0.6;              // wipe completes over 60% of viewport height
+      const range = vh * 0.72;             // wipe completes over 72% of viewport height
       return Math.min(Math.max(entry / range, 0), 1);
     };
 
@@ -92,9 +92,9 @@ export function BlockReveal({
     };
   }, [delay]);
 
-  // Smooth the raw scroll progress through a cubic ease so fast scrolling
-  // doesn't make it feel mechanical.
-  const eased = smoothStep(progress);
+  // Smooth the raw scroll progress through a quintic (smootherStep) ease —
+  // much softer S-curve than Ken Perlin's cubic, feels floatier on fast scrolls.
+  const eased = smootherStep(progress);
 
   return (
     <span
@@ -135,4 +135,10 @@ export function BlockReveal({
 function smoothStep(t: number): number {
   const c = Math.min(Math.max(t, 0), 1);
   return c * c * (3 - 2 * c);
+}
+
+/** SmootherStep (quintic) easing: flatter at both ends, more organic mid-scroll feel */
+function smootherStep(t: number): number {
+  const c = Math.min(Math.max(t, 0), 1);
+  return c * c * c * (c * (c * 6 - 15) + 10);
 }
