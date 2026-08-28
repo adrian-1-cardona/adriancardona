@@ -129,12 +129,14 @@ export default function App() {
       if (!hero) return;
       const gray = clamp((progress - 0.12) / 0.5);
       const scrollChrome = clamp((progress - 0.1) / 0.48);
-      const introChrome = intro * 0.72;
+      const introChrome = intro;
       const chrome = introChrome + scrollChrome * (1 - introChrome);
-      const title = clamp((progress - 0.28) / 0.42);
+      const scrollTitle = clamp((progress - 0.28) / 0.42);
+      const introTitle = smootherStep((intro - 0.5) / 0.5);
+      const title = introTitle + scrollTitle * (1 - introTitle);
       const details = clamp((progress - 0.68) / 0.22);
       const scrollZoom = smootherStep((progress - 0.045) / 0.68);
-      const introZoom = intro * 0.48;
+      const introZoom = intro;
       const zoom = introZoom + scrollZoom * (1 - introZoom);
       const targetScale = window.innerWidth <= 760 ? 0.72 : 0.44;
       const frameScale = 1 - zoom * (1 - targetScale);
@@ -207,7 +209,7 @@ export default function App() {
       introStartedAt = performance.now();
       previousTimeRef.current = 0;
       if (frameRef.current === null) frameRef.current = requestAnimationFrame(animateHero);
-    }, 3000);
+    }, 1000);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize, { passive: true });
