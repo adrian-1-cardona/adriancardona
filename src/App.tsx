@@ -120,14 +120,22 @@ export default function App() {
   }, [menuOpen]);
 
   useEffect(() => {
-    const applyHero = (progress: number) => {
+    let introStartedAt: number | null = null;
+    let introPullback = 0;
+    let introFinished = false;
+
+    const applyHero = (progress: number, intro = introPullback) => {
       const hero = heroRef.current;
       if (!hero) return;
       const gray = clamp((progress - 0.12) / 0.5);
-      const chrome = clamp((progress - 0.1) / 0.48);
+      const scrollChrome = clamp((progress - 0.1) / 0.48);
+      const introChrome = intro * 0.72;
+      const chrome = introChrome + scrollChrome * (1 - introChrome);
       const title = clamp((progress - 0.28) / 0.42);
       const details = clamp((progress - 0.68) / 0.22);
-      const zoom = smootherStep((progress - 0.045) / 0.68);
+      const scrollZoom = smootherStep((progress - 0.045) / 0.68);
+      const introZoom = intro * 0.48;
+      const zoom = introZoom + scrollZoom * (1 - introZoom);
       const targetScale = window.innerWidth <= 760 ? 0.72 : 0.44;
       const frameScale = 1 - zoom * (1 - targetScale);
 
@@ -157,10 +165,16 @@ export default function App() {
       const next = current + (target - current) * damping;
       const settled = Math.abs(target - next) < 0.00008;
 
-      currentProgressRef.current = settled ? target : next;
-      applyHero(currentProgressRef.current);
+      if (introStartedAt !== null && !introFinished) {
+        const introElapsed = time - introStartedAt;
+        introPullback = smootherStep(introElapsed / 1900);
+        introFinished = introElapsed >= 1900;
+      }
 
-      if (settled) {
+      currentProgressRef.current = settled ? target : next;
+      applyHero(currentProgressRef.current, introPullback);
+
+      if (settled && (introStartedAt === null || introFinished)) {
         frameRef.current = null;
         previousTimeRef.current = 0;
       } else {
@@ -172,7 +186,7 @@ export default function App() {
       targetProgressRef.current = readTargetProgress();
       if (immediate) {
         currentProgressRef.current = targetProgressRef.current;
-        applyHero(currentProgressRef.current);
+        applyHero(currentProgressRef.current, introPullback);
         return;
       }
       if (frameRef.current === null) frameRef.current = requestAnimationFrame(animateHero);
@@ -182,9 +196,23 @@ export default function App() {
     const handleResize = () => requestUpdate(true);
 
     requestUpdate(true);
+    const introTimer = window.setTimeout(() => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        introPullback = 1;
+        introFinished = true;
+        applyHero(currentProgressRef.current, introPullback);
+        return;
+      }
+
+      introStartedAt = performance.now();
+      previousTimeRef.current = 0;
+      if (frameRef.current === null) frameRef.current = requestAnimationFrame(animateHero);
+    }, 3000);
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize, { passive: true });
     return () => {
+      window.clearTimeout(introTimer);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
