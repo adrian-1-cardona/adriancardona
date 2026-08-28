@@ -1,5 +1,5 @@
-import { useEffect, useRef, type ReactNode } from "react";
-import { motion } from "motion/react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { AnimatePresence, motion } from "motion/react";
 
 import { HyperText } from "@/components/ui/hyper-text";
 import { TypingAnimation } from "@/components/ui/typing-animation";
@@ -62,6 +62,15 @@ const skills = [
   "Docker", "Redis", "Convex", "Prometheus", "Grafana", "Gemini API", "Ollama",
 ];
 
+const navigation = [
+  { label: "Home", detail: "Portrait", href: "#top", number: "00" },
+  { label: "Profile", detail: "About me", href: "#profile", number: "01" },
+  { label: "Projects", detail: "Selected work", href: "#work", number: "02" },
+  { label: "Experience", detail: "In the field", href: "#experience", number: "03" },
+  { label: "Toolkit", detail: "Skills & tools", href: "#toolkit", number: "04" },
+  { label: "Contact", detail: "Let's talk", href: "#contact", number: "05" },
+];
+
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(Math.max(value, min), max);
 }
@@ -83,6 +92,23 @@ function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; 
 export default function App() {
   const heroRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     const updateHero = () => {
@@ -125,6 +151,55 @@ export default function App() {
 
   return (
     <main>
+      <button
+        className={`menu-toggle${menuOpen ? " is-open" : ""}`}
+        type="button"
+        aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+        aria-expanded={menuOpen}
+        aria-controls="site-navigation"
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            id="site-navigation"
+            className="menu-overlay"
+            initial={{ clipPath: "circle(0% at calc(100% - 3rem) 3rem)" }}
+            animate={{ clipPath: "circle(150% at calc(100% - 3rem) 3rem)" }}
+            exit={{ clipPath: "circle(0% at calc(100% - 3rem) 3rem)" }}
+            transition={{ duration: 0.72, ease: [0.76, 0, 0.24, 1] }}
+          >
+            <div className="menu-heading">ADRIAN CARDONA / PORTFOLIO</div>
+            <nav aria-label="Main navigation">
+              {navigation.map((item, index) => (
+                <motion.a
+                  href={item.href}
+                  key={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  initial={{ opacity: 0, y: 32 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.18 + index * 0.055, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <span className="menu-number">{item.number}</span>
+                  <span className="menu-label">{item.label}</span>
+                  <span className="menu-detail">{item.detail}</span>
+                  <span className="menu-arrow" aria-hidden="true">↘</span>
+                </motion.a>
+              ))}
+            </nav>
+            <div className="menu-footer">
+              <span>SAN LUIS OBISPO, CA</span>
+              <span>AVAILABLE FOR OPPORTUNITIES</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <section id="top" ref={heroRef} className="hero-track" aria-label="Introduction">
         <div className="hero-sticky">
           <div className="hero-scene" aria-hidden="true">
@@ -213,7 +288,7 @@ export default function App() {
         </div>
       </section>
 
-      <section className="experience-section">
+      <section id="experience" className="experience-section">
         <Reveal className="section-heading compact">
           <div className="section-number">02 / EXPERIENCE</div>
           <TypingAnimation as="h2" className="experience-typing-title" typeSpeed={72} showCursor={false} startOnView>
@@ -241,7 +316,7 @@ export default function App() {
         </div>
       </section>
 
-      <section className="skills-section">
+      <section id="toolkit" className="skills-section">
         <Reveal>
           <div className="section-number">03 / TOOLKIT</div>
           <div className="skills-cloud">{skills.map((skill, index) => <span className={index % 4 === 0 ? "accent" : ""} key={skill}>{skill}</span>)}</div>
