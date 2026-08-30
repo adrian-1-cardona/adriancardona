@@ -110,15 +110,12 @@ img { display:block; }
 .experience-summary strong { display:inline-block; margin-bottom:1rem; padding:.38rem .6rem; background:var(--electric); color:var(--ink); font-size:.65rem; text-transform:uppercase; }
 .experience-summary p { margin:0; font-size:clamp(.72rem,.9vw,.9rem); line-height:1.65; }
 .skills-section { background:var(--paper); }
-.skills-cloud { display:flex; flex-wrap:wrap; align-items:center; gap:0 .35em; font:600 clamp(3.2rem,8.2vw,8.2rem)/1 "Oswald",sans-serif; letter-spacing:-.065em; text-transform:uppercase; }
-/* BlockReveal wrapper — keep it inline-block and vertically aligned */
-.skills-cloud .block-reveal-root { vertical-align:baseline; line-height:inherit; }
-/* The "/" separator after each tag */
-.skills-cloud .block-reveal-root::after { content:"/"; margin-left:.35em; color:rgba(17,16,15,.18); }
-/* Accent (electric yellow) tags */
-.skills-cloud .block-reveal-root.accent { color:var(--electric); }
-/* Override the ink overlay colour for accent tags so it matches the section bg */
-.skills-cloud .block-reveal-root.accent [aria-hidden="true"]:last-child { background:var(--ink); }
+.skills-cloud { display:flex; flex-wrap:wrap; align-items:baseline; gap:0 .3em; font:600 clamp(3.2rem,8.2vw,8.2rem)/1.05 "Oswald",sans-serif; letter-spacing:-.065em; text-transform:uppercase; }
+.skill-item { display:inline-flex; align-items:baseline; white-space:nowrap; }
+.skill-word { display:inline-block; }
+.skill-sep { margin-left:.3em; color:rgba(17,16,15,.18); }
+/* Accent every 4th skill in electric yellow */
+.skill-item:nth-child(4n+1) .skill-word { color:var(--electric); }
 .coursework { max-width:75rem; margin:clamp(4rem,8vw,8rem) 0 0 auto; padding-top:1.5rem; border-top:1px solid var(--line); line-height:1.8; }
 
 .contact-section { position:relative; overflow:hidden; background:#ff4e2f; color:var(--ink); min-height:90svh; }

@@ -5,7 +5,6 @@ import { HyperText } from "@/components/ui/hyper-text";
 import { ScrollVelocityContainer, ScrollVelocityRow } from "@/components/ui/scroll-based-velocity";
 import { TypingAnimation } from "@/components/ui/typing-animation";
 import { ScrollTypewriter } from "@/components/ui/scroll-typewriter";
-import { BlockReveal } from "@/components/ui/block-reveal";
 
 const experience = [
   {
@@ -405,14 +404,19 @@ export default function App() {
           <div className="section-number">03 / TOOLKIT</div>
           <div className="skills-cloud">
             {skills.map((skill, index) => (
-              <BlockReveal
-                key={skill}
-                className={index % 4 === 0 ? " accent" : ""}
-                delay={index * 45}
-                duration={240}
-              >
-                {skill}
-              </BlockReveal>
+              <span key={skill} className="skill-item">
+                <TypingAnimation
+                  as="span"
+                  className="skill-word"
+                  typeSpeed={28}
+                  showCursor={false}
+                  startOnView
+                  delay={index * 160}
+                >
+                  {skill}
+                </TypingAnimation>
+                <span className="skill-sep" aria-hidden="true">/</span>
+              </span>
             ))}
           </div>
           <p className="coursework">DATA STRUCTURES & ALGORITHMS / SYSTEMS PROGRAMMING / COMPUTER SECURITY / PROGRAMMING LANGUAGES</p>
