@@ -9,7 +9,7 @@ import { ScrollTypewriter } from "@/components/ui/scroll-typewriter";
 const experience = [
   {
     dates: "JAN 2026 — PRESENT",
-    role: "Software Engineering Intern",
+    role: "Web Development Intern",
     company: "Cal Poly Bailey College of Science and Mathematics",
     location: "San Luis Obispo, California",
     impact: "Python · Cloud · Git",
