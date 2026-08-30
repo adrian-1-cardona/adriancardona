@@ -68,8 +68,8 @@ const skills = [
 const navigation = [
   { label: "Home", detail: "Portrait", href: "#top", number: "00" },
   { label: "Profile", detail: "About me", href: "#profile", number: "01" },
-  { label: "Projects", detail: "Selected work", href: "#work", number: "02" },
-  { label: "Experience", detail: "In the field", href: "#experience", number: "03" },
+  { label: "Experience", detail: "In the field", href: "#experience", number: "02" },
+  { label: "Projects", detail: "Selected work", href: "#work", number: "03" },
   { label: "Toolkit", detail: "Skills & tools", href: "#toolkit", number: "04" },
   { label: "Contact", detail: "Let's talk", href: "#contact", number: "05" },
 ];
@@ -334,9 +334,37 @@ export default function App() {
         </div>
       </div>
 
+      <section id="experience" className="experience-section">
+        <Reveal className="section-heading compact">
+          <div className="section-number">01 / EXPERIENCE</div>
+          <TypingAnimation as="h2" className="experience-typing-title" typeSpeed={72} showCursor={false} startOnView>
+            BUILDING IN THE FIELD.
+          </TypingAnimation>
+        </Reveal>
+        <div className="experience-list">
+          {experience.map((item, index) => (
+            <motion.article
+              className="experience-row"
+              key={item.role}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.9, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <span className="experience-count">0{index + 1}</span>
+              <div>
+                <p className="experience-dates">{item.dates}</p><h3>{item.role}</h3>
+                <p className="experience-company">{item.company}</p><p className="experience-location">{item.location}</p>
+              </div>
+              <div className="experience-summary"><strong>{item.impact}</strong><p>{item.description}</p></div>
+            </motion.article>
+          ))}
+        </div>
+      </section>
+
       <section id="work" className="work-section">
         <Reveal className="section-heading">
-          <div className="section-number">01 / SELECTED WORK</div>
+          <div className="section-number">02 / SELECTED WORK</div>
           <div className="work-hyper-stack" aria-label="Things I've made real.">
             <HyperText as="h2" className="work-hyper-title" duration={2100} startOnView animateOnHover={false}>
               THINGS I'VE
@@ -367,34 +395,6 @@ export default function App() {
               <div className="project-meta"><strong>{project.proof}</strong><span>{project.stack}</span></div>
               <span className="project-arrow" aria-hidden="true">↗</span>
             </motion.a>
-          ))}
-        </div>
-      </section>
-
-      <section id="experience" className="experience-section">
-        <Reveal className="section-heading compact">
-          <div className="section-number">02 / EXPERIENCE</div>
-          <TypingAnimation as="h2" className="experience-typing-title" typeSpeed={72} showCursor={false} startOnView>
-            BUILDING IN THE FIELD.
-          </TypingAnimation>
-        </Reveal>
-        <div className="experience-list">
-          {experience.map((item, index) => (
-            <motion.article
-              className="experience-row"
-              key={item.role}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.9, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <span className="experience-count">0{index + 1}</span>
-              <div>
-                <p className="experience-dates">{item.dates}</p><h3>{item.role}</h3>
-                <p className="experience-company">{item.company}</p><p className="experience-location">{item.location}</p>
-              </div>
-              <div className="experience-summary"><strong>{item.impact}</strong><p>{item.description}</p></div>
-            </motion.article>
           ))}
         </div>
       </section>
