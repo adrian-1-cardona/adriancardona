@@ -130,20 +130,21 @@ export default function App() {
     const applyHero = (progress: number, intro = introPullback) => {
       const hero = heroRef.current;
       if (!hero) return;
-      const gray = clamp((progress - 0.12) / 0.5);
-      const scrollChrome = clamp((progress - 0.1) / 0.48);
+      // All scroll ranges tightened to complete within 220svh track
+      const gray = clamp((progress - 0.08) / 0.44);
+      const scrollChrome = clamp((progress - 0.06) / 0.42);
       const introChrome = intro;
       const chrome = introChrome + scrollChrome * (1 - introChrome);
-      const scrollTitle = clamp((progress - 0.28) / 0.42);
+      const scrollTitle = clamp((progress - 0.18) / 0.38);
       const introTitle = smootherStep((intro - 0.5) / 0.5);
       const title = introTitle + scrollTitle * (1 - introTitle);
-      const scrollDetails = clamp((progress - 0.62) / 0.3);
+      const scrollDetails = clamp((progress - 0.52) / 0.32);
       const introDetails = smootherStep((intro - 0.72) / 0.28);
       const details = introDetails + scrollDetails * (1 - introDetails);
-      const scrollZoom = smootherStep((progress - 0.045) / 0.68);
+      const scrollZoom = smootherStep((progress - 0.04) / 0.72);
       const introZoom = intro;
       const zoom = introZoom + scrollZoom * (1 - introZoom);
-      const targetScale = window.innerWidth <= 760 ? 0.72 : 0.44;
+      const targetScale = window.innerWidth <= 760 ? 0.76 : 0.46;
       const frameScale = 1 - zoom * (1 - targetScale);
 
       hero.style.setProperty("--hero-progress", progress.toFixed(4));
