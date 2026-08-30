@@ -271,7 +271,7 @@ export default function App() {
             </nav>
             <div className="menu-footer">
               <span>SAN LUIS OBISPO, CA</span>
-              <span>NEW GRAD 2027</span>
+              <span>NEW GRAD 2027 · INTERN W26/SP27/SU27</span>
             </div>
           </motion.div>
         )}
@@ -322,7 +322,7 @@ export default function App() {
           </TypingAnimation>
           <div className="profile-copy">
             <p>I build web apps and backend tools using TypeScript, React, Python, and Git. I'm comfortable working with AI APIs, cloud storage, and CI/CD pipelines — and I'm just as comfortable asking for help, taking feedback, and figuring things out as part of a team.</p>
-            <p>I'm looking for new grad software engineering roles starting in 2027. I want to contribute real work, learn from people who know more than me, and keep getting better.</p>
+            <p>I'm looking for new grad software engineering roles starting in 2027, or internships for Winter 2026, Spring 2027, or Summer 2027.</p>
           </div>
         </Reveal>
       </section>
@@ -436,7 +436,7 @@ export default function App() {
           </div>
         </Reveal>
         <div className="contact-bottom">
-          <p>Open to new grad 2027 software engineering roles.</p>
+          <p>Open to new grad 2027 roles and internships for Winter 2026, Spring 2027, or Summer 2027.</p>
           <a className="contact-button" href="mailto:cardona.adrian.1029@gmail.com"><span>START A CONVERSATION</span><i>↗</i></a>
         </div>
         <div className="social-row">
