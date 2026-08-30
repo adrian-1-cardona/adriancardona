@@ -47,20 +47,21 @@ img { display:block; }
 .hero-velocity-row i { margin:0 .16em; color:var(--electric); font:.45em/1 "Oswald",sans-serif; }
 .hero-velocity-row-top { color:var(--electric); font:500 clamp(4.5rem,9.8vw,11rem)/.78 "Oswald",sans-serif; letter-spacing:-.055em; }
 .hero-velocity-row-bottom { color:var(--paper); font:600 clamp(4rem,8.4vw,9.4rem)/.8 "Oswald",sans-serif; letter-spacing:-.065em; }
-.portrait-frame { position:absolute; inset:0; z-index:2; transform:scale(var(--frame-scale)); will-change:transform; display:flex; align-items:center; justify-content:center; }
-.portrait-layer { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+.portrait-frame { position:absolute; inset:0; z-index:2; transform:scale(var(--frame-scale)); will-change:transform; }
+.portrait-layer { position:absolute; inset:0; }
 .portrait-layer-color { background:#4f7fa8; }
 .portrait-layer-mono { background:#4f7fa8; opacity:var(--gray-reveal); will-change:opacity; }
 .portrait-layer-mono .portrait { filter:grayscale(1) contrast(.98); }
-/* Natural image ratio — never crop, never stretch, always the full photo */
+/* Fill the entire panel — no borders ever.
+   object-position 30% from top keeps face + tie in frame on any aspect ratio. */
 .portrait {
   position: relative;
   z-index: 1;
   display: block;
   width: 100%;
-  height: auto;
-  max-height: 100svh;
-  object-fit: scale-down;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
   backface-visibility: hidden;
   transform: translateZ(0);
 }
