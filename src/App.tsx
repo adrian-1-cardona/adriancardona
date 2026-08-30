@@ -12,27 +12,27 @@ const experience = [
     role: "Software Engineering Intern",
     company: "Cal Poly Bailey College of Science and Mathematics",
     location: "San Luis Obispo, California",
-    impact: "58,579 media files",
+    impact: "Python · Cloud · Git",
     description:
-      "Built an internal media management system automating batch ingestion, metadata-driven organization, validation, and failure recovery. Engineered a resumable Power Automate migration for 455 GB of media with duplicate detection and collision-safe writes. Designed searchable metadata workflows for 17,000+ assets.",
+      "Built internal tools using Python and cloud storage so the college team could find, organize, and back up their media files without needing IT help. Took direction from non-technical staff, asked questions to understand what they actually needed, and delivered something they could use on day one.",
   },
   {
     dates: "JUL 2025 — MAR 2026",
     role: "Technology Solutions Research Intern",
     company: "Foundation for California Community Colleges",
     location: "Los Angeles, California",
-    impact: "6 colleges analyzed",
+    impact: "SQL · Research · Agile",
     description:
-      "Analyzed financial aid and demographic records across 6 California community colleges to identify trends in FAFSA access and student outcomes. Synthesized focus-group feedback into a research report for external stakeholders documenting evidence-based themes around financial aid accessibility.",
+      "Worked with a cross-functional team using SQL and spreadsheet tools to look at student data and figure out why students weren't getting financial aid. Wrote a clear report for non-technical stakeholders so they could act on the findings. Welcomed feedback from senior researchers and revised the work based on their direction.",
   },
   {
     dates: "FEB 2025 — APR 2025",
     role: "AI Document Insights Extern",
     company: "Extern",
     location: "Los Angeles, California",
-    impact: "Grounded document AI",
+    impact: "Python · AI tools · GitHub",
     description:
-      "Built a Python RAG pipeline for mortgage document Q&A using LlamaIndex, Ollama, and Gemini API. Evaluated open-source models and retrieval configurations, tuning chunking and prompting strategies, then presented the completed system to Outamation stakeholders.",
+      "Used Python and AI developer tools including GitHub Copilot and the Gemini API to build a tool that lets people ask plain-English questions about complex documents and get reliable answers. Collaborated with a small team, took feedback on what was and wasn't working, and presented the finished product to the client.",
   },
 ];
 
@@ -40,11 +40,11 @@ const projects = [
   {
     index: "01",
     name: "Guppty",
-    kicker: "A programming language, from syntax to stack.",
+    kicker: "A programming language, built from scratch.",
     description:
-      "An indentation-based language in Rust with a lexer, parser, bytecode compiler, stack VM, closures, recursion, and control flow. Includes a tree-walking interpreter and CI differential tests across 30+ programs — both backends must produce identical output.",
-    proof: "30+ CI-tested programs",
-    stack: "RUST / COMPILERS / BYTECODE",
+      "Built a working programming language in Rust — the kind of project that shows you understand how computers actually run code. Used GitHub Actions and CI/CD to automatically test every change, so the project stays reliable as it grows. Designed to be easy for other developers to read and contribute to.",
+    proof: "CI-tested · Open source",
+    stack: "RUST / GITHUB ACTIONS / CI/CD",
     href: "https://adrian-1-cardona.github.io/Guppty/#installation",
   },
   {
@@ -52,9 +52,9 @@ const projects = [
     name: "Gitex",
     kicker: "Ask a codebase. Get an answer you can trust.",
     description:
-      "A codebase Q&A platform with Gemini embeddings and Convex vector search. 31-case RAG evals gate citation groundedness, retrieval recall, and refusals in CI. Auth, billing, rate limits, and security engineered with Clerk and Stripe.",
-    proof: "160+ tests · 31-case RAG evals",
-    stack: "TYPESCRIPT / REACT / CONVEX",
+      "Built a full-stack web app using TypeScript and React where developers can ask questions about any codebase and get accurate answers backed by real sources. Used Git and GitHub for version control, set up CI/CD pipelines so every update ships safely, and integrated AI APIs to make the answers reliable — not just guesses.",
+    proof: "TypeScript · React · CI/CD",
+    stack: "TYPESCRIPT / REACT / CI/CD",
     href: "https://gitex.dev",
   },
 ];
@@ -302,7 +302,7 @@ export default function App() {
             <h1>Adrian Cardona</h1>
           </div>
           <div className="hero-details">
-            <p>Building dependable systems,<br />from bytecode to browser.</p>
+            <p>Building software people<br />can actually use and rely on.</p>
             <div className="hero-stat"><strong>3.5</strong><span>GPA</span></div>
             <div className="hero-stat"><strong>2027</strong><span>CAL POLY · B.S. CS</span></div>
           </div>
@@ -321,8 +321,8 @@ export default function App() {
             Computer Science student at Cal Poly San Luis Obispo, graduating May 2027.
           </TypingAnimation>
           <div className="profile-copy">
-            <p>I move between systems, product, and applied AI: programming languages in Rust, production React platforms, resilient data pipelines, and grounded document intelligence.</p>
-            <p>The through-line is simple—clean architecture, measurable correctness, and work built to scale beyond a prototype.</p>
+            <p>I build web apps and backend tools using TypeScript, React, Python, and Git. I'm comfortable working with AI APIs, cloud storage, and CI/CD pipelines — and I'm just as comfortable asking for help, taking feedback, and figuring things out as part of a team.</p>
+            <p>I'm looking for internship or early career roles where I can contribute real work, learn from people who know more than me, and keep getting better.</p>
           </div>
         </Reveal>
       </section>

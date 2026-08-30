@@ -53,15 +53,15 @@ img { display:block; }
 .portrait-layer-color { background:#4f7fa8; }
 .portrait-layer-mono { background:#4f7fa8; opacity:var(--gray-reveal); will-change:opacity; }
 .portrait-layer-mono .portrait { filter:grayscale(1) contrast(.98); }
-/* Always show the entire image — no cropping ever */
+/* Full image always visible — natural width, height auto, centered in panel */
 .portrait {
   position: relative;
   z-index: 1;
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center center;
+  height: auto;
+  max-height: none;
+  object-fit: fill;
   backface-visibility: hidden;
   transform: translateZ(0);
 }
