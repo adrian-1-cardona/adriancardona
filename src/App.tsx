@@ -9,12 +9,21 @@ import { ScrollTypewriter } from "@/components/ui/scroll-typewriter";
 const experience = [
   {
     dates: "JAN 2026 — PRESENT",
-    role: "Web Development Intern",
+    role: "Software Engineering Intern",
     company: "Cal Poly Bailey College of Science and Mathematics",
     location: "San Luis Obispo, California",
-    impact: "Python · Cloud · Git",
+    impact: "Python · Power Automate · Git",
     description:
-      "Built internal tools using Python and cloud storage so the college team could find, organize, and back up their media files without needing IT help. Took direction from non-technical staff, asked questions to understand what they actually needed, and delivered something they could use on day one.",
+      "Built internal tools with Python and Microsoft Power Automate so college staff can organize, find, and recover university media files without doing it by hand. Took direction from non-technical staff, asked questions to understand what they needed, and made the workflow reliable enough that large transfers can recover from errors automatically.",
+  },
+  {
+    dates: "AUG 2026 — PRESENT",
+    role: "Undergraduate Researcher",
+    company: "Cal Poly Department of Computer Science and Software Engineering",
+    location: "San Luis Obispo, California",
+    impact: "Python · Automated Testing · CI",
+    description:
+      "Built a Python backend tool so AI researchers can run the same experiment multiple times and get results they can actually compare and trust. Used automated testing and repeatable checks so the team can catch mistakes early — before the results end up in their published work.",
   },
   {
     dates: "JUL 2025 — MAR 2026",
@@ -23,16 +32,16 @@ const experience = [
     location: "Los Angeles, California",
     impact: "SQL · Research · Agile",
     description:
-      "Worked with a cross-functional team using SQL and spreadsheet tools to look at student data and figure out why students weren't getting financial aid. Wrote a clear report for non-technical stakeholders so they could act on the findings. Welcomed feedback from senior researchers and revised the work based on their direction.",
+      "Worked with a cross-functional team using SQL and data tools to look at student records and figure out why community college students weren't completing the FAFSA. Wrote a clear report for non-technical stakeholders so they could act on the findings. Welcomed feedback from senior researchers and revised the work based on their direction.",
   },
   {
     dates: "FEB 2025 — APR 2025",
     role: "AI Document Insights Extern",
     company: "Extern",
     location: "Los Angeles, California",
-    impact: "Python · AI tools · GitHub",
+    impact: "Python · Gemini API · GitHub",
     description:
-      "Used Python and AI developer tools including GitHub Copilot and the Gemini API to build a tool that lets people ask plain-English questions about complex documents and get reliable answers. Collaborated with a small team, took feedback on what was and wasn't working, and presented the finished product to the client.",
+      "Used Python, LlamaIndex, Gemini API, and RAG to build a tool that lets people ask plain-English questions about mortgage documents and get answers backed by the actual document. Tested different AI models and retrieval methods, took feedback from the team throughout, and presented the finished system to the client.",
   },
 ];
 
@@ -42,7 +51,7 @@ const projects = [
     name: "Guppty",
     kicker: "A programming language, built from scratch.",
     description:
-      "Built a working programming language in Rust — the kind of project that shows you understand how computers actually run code. Used GitHub Actions and CI/CD to automatically test every change, so the project stays reliable as it grows. Designed to be easy for other developers to read and contribute to.",
+      "Built a programming language in Rust with a compiler and interpreter, then used Git, GitHub Actions CI/CD, and automated testing to make sure programs keep working correctly when the code changes.",
     proof: "CI-tested · Open source",
     stack: "RUST / GITHUB ACTIONS / CI/CD",
     href: "https://adrian-1-cardona.github.io/Guppty/#installation",
@@ -52,7 +61,7 @@ const projects = [
     name: "Gitex",
     kicker: "Ask a codebase. Get an answer you can trust.",
     description:
-      "Built a full-stack web app using TypeScript and React where developers can ask questions about any codebase and get accurate answers backed by real sources. Used Git and GitHub for version control, set up CI/CD pipelines so every update ships safely, and integrated AI APIs to make the answers reliable — not just guesses.",
+      "Built a full-stack TypeScript and React app using Gemini AI, APIs, Convex vector search, GitHub Actions CI/CD, and Sentry monitoring so users can ask questions about code and developers can catch problems before and after release. Used GitHub, Claude Code, Cursor, Codex, and GitHub Copilot throughout.",
     proof: "TypeScript · React · CI/CD",
     stack: "TYPESCRIPT / REACT / CI/CD",
     href: "https://gitex.dev",
