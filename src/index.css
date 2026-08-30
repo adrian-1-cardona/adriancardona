@@ -49,18 +49,19 @@ img { display:block; }
 .hero-velocity-row-bottom { color:var(--paper); font:600 clamp(4rem,8.4vw,9.4rem)/.8 "Oswald",sans-serif; letter-spacing:-.065em; }
 .portrait-frame,.portrait-layer { position:absolute; inset:0; }
 .portrait-frame { z-index:2; transform:scale(var(--frame-scale)); will-change:transform; }
-.portrait-layer { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.portrait-layer { display:flex; align-items:center; justify-content:center; }
 .portrait-layer-color { background:#4f7fa8; }
 .portrait-layer-mono { background:#4f7fa8; opacity:var(--gray-reveal); will-change:opacity; }
 .portrait-layer-mono .portrait { filter:grayscale(1) contrast(.98); }
+/* Always show the entire image — no cropping ever */
 .portrait {
   position: relative;
   z-index: 1;
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 20%;
+  object-fit: contain;
+  object-position: center center;
   backface-visibility: hidden;
   transform: translateZ(0);
 }
