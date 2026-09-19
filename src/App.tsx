@@ -451,7 +451,7 @@ export default function App() {
         <div className="social-row">
           <a href="https://github.com/adrian-1-cardona" target="_blank" rel="noreferrer">GITHUB ↗</a>
           <a href="https://linkedin.com/in/adrian-cardona/" target="_blank" rel="noreferrer">LINKEDIN ↗</a>
-          <a href="/ADRIAN_CARDONA_RESUME.pdf" target="_blank" rel="noreferrer">RÉSUMÉ ↗</a>
+          <a href="/ADRIAN_CARDONA_RESUME.pdf" target="_blank" rel="noreferrer">RESUME</a>
           <a href="tel:3104896795">310 489 6795</a>
         </div>
       </section>

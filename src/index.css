@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Mr+Dafoe&family=Oswald:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mr+Dafoe&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -6,7 +6,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root { --ink:#11150f; --paper:#f1f0e9; --electric:#c8ff27; --blue:#30352d; --line:rgba(17,21,15,.2); color:var(--ink); background:var(--paper); font-family:"DM Mono",monospace; font-synthesis:none; --background:oklch(.94 .01 75); --foreground:oklch(.14 .01 270); --card:oklch(.94 .01 75); --card-foreground:oklch(.14 .01 270); --popover:oklch(.94 .01 75); --popover-foreground:oklch(.14 .01 270); --primary:oklch(.86 .25 125); --primary-foreground:oklch(.18 .02 125); --secondary:oklch(.27 .01 260); --secondary-foreground:oklch(.98 .01 75); --muted:oklch(.88 .01 75); --muted-foreground:oklch(.46 .01 260); --accent:oklch(.86 .25 125); --accent-foreground:oklch(.18 .02 125); --destructive:oklch(.577 .245 27.325); --border:oklch(.78 .01 75); --input:oklch(.78 .01 75); --ring:oklch(.86 .25 125); --chart-1:oklch(.86 .25 125); --chart-2:oklch(.42 .02 260); --chart-3:oklch(.56 .03 75); --chart-4:oklch(.31 .02 260); --chart-5:oklch(.76 .08 55); --radius:.25rem; --sidebar:oklch(.94 .01 75); --sidebar-foreground:oklch(.14 .01 270); --sidebar-primary:oklch(.86 .25 125); --sidebar-primary-foreground:oklch(.18 .02 125); --sidebar-accent:oklch(.88 .01 75); --sidebar-accent-foreground:oklch(.14 .01 270); --sidebar-border:oklch(.78 .01 75); --sidebar-ring:oklch(.86 .25 125); }
+:root { --ink:#1d1c1a; --paper:#cbc4b8; --electric:#a69e91; --blue:#272522; --clay:#302d29; --contact-accent:#b9b1a4; --portrait:#5b5751; --hero-surface:#24221f; --line:rgba(29,28,26,.2); color:var(--ink); background:var(--paper); font-family:"Geist Variable",sans-serif; font-synthesis:none; --background:oklch(.8 .018 75); --foreground:oklch(.22 .008 75); --card:oklch(.8 .018 75); --card-foreground:oklch(.22 .008 75); --popover:oklch(.8 .018 75); --popover-foreground:oklch(.22 .008 75); --primary:oklch(.68 .018 75); --primary-foreground:oklch(.22 .008 75); --secondary:oklch(.3 .008 75); --secondary-foreground:oklch(.8 .018 75); --muted:oklch(.73 .015 75); --muted-foreground:oklch(.43 .012 75); --accent:oklch(.68 .018 75); --accent-foreground:oklch(.22 .008 75); --destructive:oklch(.52 .12 27.325); --border:oklch(.64 .015 75); --input:oklch(.64 .015 75); --ring:oklch(.68 .018 75); --chart-1:oklch(.68 .018 75); --chart-2:oklch(.48 .012 75); --chart-3:oklch(.58 .015 75); --chart-4:oklch(.34 .01 75); --chart-5:oklch(.52 .02 55); --radius:.25rem; --sidebar:oklch(.8 .018 75); --sidebar-foreground:oklch(.22 .008 75); --sidebar-primary:oklch(.68 .018 75); --sidebar-primary-foreground:oklch(.22 .008 75); --sidebar-accent:oklch(.73 .015 75); --sidebar-accent-foreground:oklch(.22 .008 75); --sidebar-border:oklch(.64 .015 75); --sidebar-ring:oklch(.68 .018 75); }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; background:var(--paper); scrollbar-width:none; -ms-overflow-style:none; }
 body { margin:0; min-width:320px; overflow-x:hidden; background:var(--paper); color:var(--ink); scrollbar-width:none; -ms-overflow-style:none; -webkit-font-smoothing:antialiased; }
@@ -16,7 +16,7 @@ a { text-decoration:none; }
 img { display:block; }
 ::selection { background:var(--electric); color:var(--ink); }
 
-.menu-toggle { position:fixed; z-index:100; top:clamp(1rem,2.2vw,2rem); right:clamp(1rem,2.2vw,2rem); display:flex; flex-direction:column; justify-content:center; gap:5px; width:3.5rem; height:3.5rem; padding:0 1rem; border:1px solid rgba(255,255,255,.42); border-radius:50%; background:rgba(17,21,15,.72); color:white; cursor:pointer; backdrop-filter:blur(12px); transition:background 240ms ease,border-color 240ms ease,transform 240ms ease; }
+.menu-toggle { position:fixed; z-index:100; top:clamp(1rem,2.2vw,2rem); right:clamp(1rem,2.2vw,2rem); display:flex; flex-direction:column; justify-content:center; gap:5px; width:3.5rem; height:3.5rem; padding:0 1rem; border:1px solid rgba(197,193,183,.34); border-radius:50%; background:rgba(23,26,23,.82); color:var(--paper); cursor:pointer; backdrop-filter:blur(12px); transition:background 240ms ease,border-color 240ms ease,transform 240ms ease; }
 .menu-toggle:hover { transform:scale(1.06); background:var(--electric); border-color:var(--electric); }
 .menu-toggle span { display:block; width:100%; height:1.5px; border-radius:1px; background:currentColor; transform-origin:center; transition:transform 420ms cubic-bezier(.16,1,.3,1),opacity 180ms ease,width 240ms ease; }
 .menu-toggle span:nth-child(2) { width:72%; margin-left:auto; }
@@ -31,26 +31,26 @@ img { display:block; }
 .menu-overlay nav { align-self:center; margin:clamp(3rem,5vh,5rem) 0; border-top:1px solid var(--ink); }
 .menu-overlay nav a { display:grid; grid-template-columns:3.5rem minmax(0,1fr) minmax(8rem,.25fr) auto; align-items:center; gap:1rem; padding:clamp(.45rem,1.1vh,.9rem) 0; border-bottom:1px solid var(--ink); transition:padding 260ms cubic-bezier(.16,1,.3,1),background 180ms ease; }
 .menu-overlay nav a:hover,.menu-overlay nav a:focus-visible { padding-inline:1rem; background:var(--paper); outline:none; }
-.menu-label { font:600 clamp(2.2rem,6.2vh,5.6rem)/.86 "Oswald",sans-serif; letter-spacing:-.055em; text-transform:uppercase; }
+.menu-label { font:600 clamp(2.2rem,6.2vh,5.6rem)/.9 "Geist Variable",sans-serif; letter-spacing:-.04em; text-transform:uppercase; }
 .menu-detail { opacity:.62; }
 .menu-arrow { font-size:1.5rem; transition:transform 220ms ease; }
 .menu-overlay nav a:hover .menu-arrow { transform:translate(4px,4px); }
 .menu-footer { display:flex; justify-content:space-between; gap:1rem; padding-top:1rem; border-top:1px solid var(--ink); }
 
 .hero-track { --hero-progress:0; --frame-scale:1; --gray-reveal:0; --chrome-reveal:0; --eyebrow-reveal:0; --title-reveal:0; --details-reveal:0; position:relative; height:220svh; background:var(--ink); }
-.hero-sticky { position:sticky; top:0; height:100svh; min-height:540px; overflow:hidden; isolation:isolate; background:var(--ink); color:white; }
-.hero-scene { position:absolute; z-index:0; inset:0; overflow:hidden; background:#20271c; opacity:var(--chrome-reveal); }
-.hero-scene::before { content:""; position:absolute; inset:-35%; background:repeating-radial-gradient(ellipse at 24% 38%,transparent 0 8.5rem,rgba(200,255,39,.085) 8.6rem 8.75rem,transparent 8.85rem 17rem); transform:rotate(-12deg) scale(calc(.96 + var(--hero-progress) * .08)); }
+.hero-sticky { position:sticky; top:0; height:100svh; min-height:540px; overflow:hidden; isolation:isolate; background:var(--ink); color:var(--paper); }
+.hero-scene { position:absolute; z-index:0; inset:0; overflow:hidden; background:var(--hero-surface); opacity:var(--chrome-reveal); }
+.hero-scene::before { content:""; position:absolute; inset:-35%; background:repeating-radial-gradient(ellipse at 24% 38%,transparent 0 8.5rem,rgba(133,139,112,.09) 8.6rem 8.75rem,transparent 8.85rem 17rem); transform:rotate(-12deg) scale(calc(.96 + var(--hero-progress) * .08)); }
 .hero-velocity-copy { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; gap:.02em; }
 .hero-velocity-row>div { align-items:center; }
-.hero-velocity-row span,.hero-velocity-row strong { display:block; width:max-content; font-family:"Oswald",sans-serif; text-transform:uppercase; }
-.hero-velocity-row i { margin:0 .16em; color:var(--electric); font:.45em/1 "Oswald",sans-serif; }
-.hero-velocity-row-top { color:var(--electric); font:500 clamp(4.5rem,9.8vw,11rem)/.78 "Oswald",sans-serif; letter-spacing:-.055em; }
-.hero-velocity-row-bottom { color:var(--paper); font:600 clamp(4rem,8.4vw,9.4rem)/.8 "Oswald",sans-serif; letter-spacing:-.065em; }
+.hero-velocity-row span,.hero-velocity-row strong { display:block; width:max-content; font-family:"Geist Variable",sans-serif; text-transform:uppercase; }
+.hero-velocity-row i { margin:0 .16em; color:var(--electric); font:.45em/1 "Geist Variable",sans-serif; }
+.hero-velocity-row-top { color:var(--electric); font:500 clamp(4.5rem,9.8vw,11rem)/.82 "Geist Variable",sans-serif; letter-spacing:-.04em; }
+.hero-velocity-row-bottom { color:var(--paper); font:600 clamp(4rem,8.4vw,9.4rem)/.84 "Geist Variable",sans-serif; letter-spacing:-.045em; }
 .portrait-frame { position:absolute; inset:0; z-index:2; transform:scale(var(--frame-scale)); will-change:transform; }
 .portrait-layer { position:absolute; inset:0; }
-.portrait-layer-color { background:#4f7fa8; }
-.portrait-layer-mono { background:#4f7fa8; opacity:var(--gray-reveal); will-change:opacity; }
+.portrait-layer-color { background:var(--portrait); }
+.portrait-layer-mono { background:var(--portrait); opacity:var(--gray-reveal); will-change:opacity; }
 .portrait-layer-mono .portrait { filter:grayscale(1) contrast(.98); }
 /* Fill the entire panel — no borders ever.
    object-position 30% from top keeps face + tie in frame on any aspect ratio. */
@@ -65,84 +65,84 @@ img { display:block; }
   backface-visibility: hidden;
   transform: translateZ(0);
 }
-.hero-shade { position:absolute; z-index:3; inset:0; background:linear-gradient(0deg,rgba(17,21,15,.42),transparent 30%); opacity:calc(var(--chrome-reveal) * .5); }
+.hero-shade { position:absolute; z-index:3; inset:0; background:linear-gradient(0deg,rgba(23,26,23,.52),transparent 30%); opacity:calc(var(--chrome-reveal) * .5); }
 .hero-intro { position:absolute; z-index:5; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; }
 .eyebrow,.section-number { font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; }
-.hero-intro h1 { margin:0; color:var(--electric); font:400 clamp(5.8rem,16vw,16rem)/.8 "Mr Dafoe",cursive; letter-spacing:-.045em; text-align:center; text-shadow:0 10px 34px rgba(17,21,15,.28); opacity:var(--title-reveal); transform:translateY(calc((1 - var(--title-reveal)) * 90px)) rotate(-5deg) scale(calc(.9 + var(--title-reveal) * .1)); will-change:opacity,transform; }
-.hero-details { position:absolute; z-index:6; inset:auto 2.2vw 1.45rem; display:grid; grid-template-columns:minmax(0,1fr) auto auto; align-items:end; gap:clamp(1rem,4vw,7rem); padding-top:1rem; border-top:1px solid rgba(255,255,255,.35); opacity:var(--details-reveal); transform:translateY(calc((1 - var(--details-reveal)) * 16px)); will-change:opacity,transform; }
+.hero-intro h1 { margin:0; color:var(--paper); font:400 clamp(5.8rem,16vw,16rem)/.8 "Mr Dafoe",cursive; letter-spacing:-.045em; text-align:center; text-shadow:0 10px 34px rgba(29,28,26,.32); opacity:var(--title-reveal); transform:translateY(calc((1 - var(--title-reveal)) * 70px)) rotate(-5deg) scale(calc(.94 + var(--title-reveal) * .06)); will-change:opacity,transform; }
+.hero-details { position:absolute; z-index:6; inset:auto 2.2vw 1.45rem; display:grid; grid-template-columns:minmax(0,1fr) auto auto; align-items:end; gap:clamp(1rem,4vw,7rem); padding-top:1rem; border-top:1px solid rgba(197,193,183,.32); opacity:var(--details-reveal); transform:translateY(calc((1 - var(--details-reveal)) * 16px)); will-change:opacity,transform; }
 .hero-details>p { margin:0; font-size:clamp(.65rem,.8vw,.8rem); line-height:1.55; text-transform:uppercase; }
 .hero-stat { display:grid; grid-template-columns:auto auto; align-items:baseline; gap:.6rem; }
-.hero-stat strong { font:600 clamp(1.8rem,3.4vw,3.4rem)/1 "Oswald",sans-serif; }
+.hero-stat strong { font:600 clamp(1.8rem,3.4vw,3.4rem)/1 "Geist Variable",sans-serif; }
 .hero-stat span { max-width:7rem; font-size:.56rem; letter-spacing:.08em; opacity:.6; }
 
 .statement-section,.work-section,.experience-section,.skills-section,.contact-section { padding:clamp(5rem,10vw,10rem) 3vw; }
 .section-number { margin-bottom:clamp(2.5rem,6vw,6rem); }
-.statement { max-width:16ch; margin:0; font:600 clamp(3.6rem,10.8vw,10.5rem)/.9 "Oswald",sans-serif; letter-spacing:-.055em; text-transform:uppercase; }
+.statement { max-width:16ch; margin:0; font:600 clamp(3.6rem,10.8vw,10.5rem)/.94 "Geist Variable",sans-serif; letter-spacing:-.045em; text-transform:uppercase; }
 .statement em,.contact-section h2 em { color:var(--electric); font-style:normal; }
 .profile-grid { display:grid; grid-template-columns:1.3fr 1fr; gap:10vw; margin-top:clamp(4rem,9vw,9rem); padding-top:2rem; border-top:1px solid var(--line); }
-.profile-lede { max-width:25ch; margin:0; font:500 clamp(1.6rem,3vw,3rem)/1.08 "Oswald",sans-serif; text-transform:uppercase; }
+.profile-lede { max-width:25ch; margin:0; font:500 clamp(1.6rem,3vw,3rem)/1.12 "Geist Variable",sans-serif; text-transform:uppercase; }
 .profile-copy { max-width:50rem; font-size:clamp(.78rem,1vw,1rem); line-height:1.75; }
 .profile-copy p:first-child { margin-top:0; }
 .profile-copy p:last-child { opacity:.55; }
-.marquee { overflow:hidden; padding:1.4rem 0; border-block:1px solid var(--ink); background:var(--electric); font:600 clamp(2.1rem,5vw,5rem)/1 "Oswald",sans-serif; letter-spacing:-.04em; white-space:nowrap; }
+.marquee { overflow:hidden; padding:1.4rem 0; border-block:1px solid var(--ink); background:var(--electric); font:600 clamp(2.1rem,5vw,5rem)/1 "Geist Variable",sans-serif; letter-spacing:-.035em; white-space:nowrap; }
 .marquee>div { display:inline-flex; align-items:center; gap:2rem; min-width:max-content; animation:marquee 26s linear infinite; }
 .marquee i { font-size:.55em; font-style:normal; }
 @keyframes marquee { to { transform:translateX(-50%); } }
 
 .work-section { color:var(--paper); background:var(--ink); }
 .section-heading { display:grid; grid-template-columns:1fr 1.7fr; align-items:start; margin-bottom:clamp(4rem,8vw,8rem); }
-.section-heading h2,.work-hyper-title,.experience-typing-title { margin:0; font:600 clamp(4.2rem,10vw,10rem)/.83 "Oswald",sans-serif; letter-spacing:-.065em; text-transform:uppercase; }
+.section-heading h2,.work-hyper-title,.experience-typing-title { margin:0; font:600 clamp(4.2rem,10vw,10rem)/.88 "Geist Variable",sans-serif; letter-spacing:-.045em; text-transform:uppercase; }
 .work-hyper-stack { display:flex; flex-direction:column; align-items:flex-start; }
 .work-hyper-title { display:block; max-width:none; padding:0; overflow:visible; white-space:nowrap; }
-.work-hyper-title span { font-family:"Oswald",sans-serif; }
+.work-hyper-title span { font-family:"Geist Variable",sans-serif; }
 .experience-typing-title { display:block; max-width:10ch; white-space:normal; }
-.project-list { border-top:1px solid rgba(242,239,232,.35); }
-.project-card { position:relative; display:grid; grid-template-columns:6vw minmax(0,1.8fr) minmax(14rem,.8fr) auto; gap:clamp(1rem,3vw,4rem); padding:clamp(2rem,4vw,4.6rem) 0; border-bottom:1px solid rgba(242,239,232,.35); overflow:hidden; transition:color 280ms ease,padding 360ms cubic-bezier(0.16,1,0.3,1); }
+.project-list { border-top:1px solid rgba(197,193,183,.3); }
+.project-card { position:relative; display:grid; grid-template-columns:6vw minmax(0,1.8fr) minmax(14rem,.8fr) auto; gap:clamp(1rem,3vw,4rem); padding:clamp(2rem,4vw,4.6rem) 0; border-bottom:1px solid rgba(197,193,183,.3); overflow:hidden; transition:color 280ms ease,padding 360ms cubic-bezier(0.16,1,0.3,1); }
 .project-card::before { content:""; position:absolute; inset:0; z-index:0; background:var(--electric); transform:translateY(102%); transition:transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1); }
 .project-card>* { position:relative; z-index:1; }
 .project-card:hover { color:var(--ink); padding-inline:1.2rem; }
 .project-card:hover::before { transform:translateY(0); }
 .project-index,.project-meta span,.experience-dates,.experience-location,.coursework { font-size:.63rem; line-height:1.5; letter-spacing:.08em; text-transform:uppercase; }
 .project-kicker { margin:0 0 1.2rem; font-size:.72rem; text-transform:uppercase; opacity:.55; }
-.project-main h3 { margin:0; font:600 clamp(4rem,9vw,9rem)/.8 "Oswald",sans-serif; letter-spacing:-.07em; text-transform:uppercase; }
+.project-main h3 { margin:0; font:600 clamp(4rem,9vw,9rem)/.88 "Geist Variable",sans-serif; letter-spacing:-.05em; text-transform:uppercase; }
 .project-description { max-width:56rem; margin:2.2rem 0 0; font-size:clamp(.72rem,.9vw,.9rem); line-height:1.65; opacity:.58; }
 .project-meta { display:flex; flex-direction:column; justify-content:flex-end; gap:.8rem; }
-.project-meta strong { font:500 clamp(1.4rem,2vw,2rem)/1.1 "Oswald",sans-serif; text-transform:uppercase; }
+.project-meta strong { font:500 clamp(1.4rem,2vw,2rem)/1.1 "Geist Variable",sans-serif; text-transform:uppercase; }
 .project-arrow { align-self:start; font-size:2rem; transition:transform 180ms ease; }
 .project-card:hover .project-arrow { transform:translate(4px,-4px); }
 
-.experience-section { background:var(--blue); color:white; }
+.experience-section { background:var(--blue); color:var(--paper); }
 .section-heading.compact { margin-bottom:clamp(3rem,6vw,6rem); }
-.experience-list { border-top:1px solid rgba(255,255,255,.4); }
-.experience-row { display:grid; grid-template-columns:5vw minmax(0,1fr) minmax(0,1fr); gap:3vw; padding:clamp(2rem,4vw,4rem) 0; border-bottom:1px solid rgba(255,255,255,.4); }
-.experience-row h3 { max-width:18ch; margin:.8rem 0; font:500 clamp(2rem,4vw,4rem)/.95 "Oswald",sans-serif; letter-spacing:-.045em; text-transform:uppercase; }
+.experience-list { border-top:1px solid rgba(197,193,183,.32); }
+.experience-row { display:grid; grid-template-columns:5vw minmax(0,1fr) minmax(0,1fr); gap:3vw; padding:clamp(2rem,4vw,4rem) 0; border-bottom:1px solid rgba(197,193,183,.32); }
+.experience-row h3 { max-width:18ch; margin:.8rem 0; font:500 clamp(2rem,4vw,4rem)/1 "Geist Variable",sans-serif; letter-spacing:-.035em; text-transform:uppercase; }
 .experience-company { max-width:38rem; margin:0 0 .4rem; font-size:clamp(.72rem,.9vw,.9rem); line-height:1.4; }
 .experience-summary { align-self:end; max-width:40rem; }
 .experience-summary strong { display:inline-block; margin-bottom:1rem; padding:.38rem .6rem; background:var(--electric); color:var(--ink); font-size:.65rem; text-transform:uppercase; }
 .experience-summary p { margin:0; font-size:clamp(.72rem,.9vw,.9rem); line-height:1.65; }
 .skills-section { background:var(--paper); }
-.skills-cloud { display:flex; flex-wrap:wrap; align-items:baseline; gap:0 .3em; font:600 clamp(3.2rem,8.2vw,8.2rem)/1.05 "Oswald",sans-serif; letter-spacing:-.065em; text-transform:uppercase; }
+.skills-cloud { display:flex; flex-wrap:wrap; align-items:baseline; gap:0 .3em; font:600 clamp(3.2rem,8.2vw,8.2rem)/1.06 "Geist Variable",sans-serif; letter-spacing:-.045em; text-transform:uppercase; }
 .skill-item { display:inline-flex; align-items:baseline; white-space:nowrap; }
 .skill-word { display:inline-block; }
-.skill-sep { margin-left:.3em; color:rgba(17,16,15,.18); }
-/* Accent every 4th skill in electric yellow */
+.skill-sep { margin-left:.3em; color:rgba(23,26,23,.2); }
+/* Accent every 4th skill in muted sage */
 .skill-item:nth-child(4n+1) .skill-word { color:var(--electric); }
 .coursework { max-width:75rem; margin:clamp(4rem,8vw,8rem) 0 0 auto; padding-top:1.5rem; border-top:1px solid var(--line); line-height:1.8; }
 
-.contact-section { position:relative; overflow:hidden; background:#ff4e2f; color:var(--ink); min-height:90svh; }
-.contact-section h2 { position:relative; z-index:1; width:100%; max-width:none; margin:0; font:600 clamp(4rem,11vw,11rem)/.8 "Oswald",sans-serif; letter-spacing:-.065em; word-break:break-word; }
-.contact-section h2 em { color:var(--paper); }
+.contact-section { position:relative; overflow:hidden; background:var(--clay); color:var(--paper); min-height:90svh; }
+.contact-section h2 { position:relative; z-index:1; width:100%; max-width:none; margin:0; font:600 clamp(4rem,11vw,11rem)/.88 "Geist Variable",sans-serif; letter-spacing:-.045em; word-break:break-word; }
+.contact-section h2 em { color:var(--contact-accent); }
 .contact-hyper-stack { position:relative; z-index:1; }
-.contact-hyper-stack h2 { font:600 clamp(4rem,11vw,11rem)/.8 "Oswald",sans-serif; letter-spacing:-.065em; word-break:break-word; }
-.contact-hyper-em h2 { color:var(--paper); }
-.contact-sub-hyper { margin:.6em 0 0; font:500 clamp(1.1rem,2.2vw,2.2rem)/1 "Oswald",sans-serif; letter-spacing:.06em; text-transform:uppercase; opacity:.6; }
-.contact-bottom { display:grid; grid-template-columns:1fr 1fr; align-items:end; gap:4rem; margin-top:clamp(4rem,8vw,8rem); padding-top:1.5rem; border-top:1px solid var(--ink); }
+.contact-hyper-stack h2 { font:600 clamp(4rem,11vw,11rem)/.88 "Geist Variable",sans-serif; letter-spacing:-.045em; word-break:break-word; }
+.contact-hyper-em h2 { color:var(--contact-accent); }
+.contact-sub-hyper { margin:.6em 0 0; font:500 clamp(1.1rem,2.2vw,2.2rem)/1.05 "Geist Variable",sans-serif; letter-spacing:.035em; text-transform:uppercase; opacity:.6; }
+.contact-bottom { display:grid; grid-template-columns:1fr 1fr; align-items:end; gap:4rem; margin-top:clamp(4rem,8vw,8rem); padding-top:1.5rem; border-top:1px solid rgba(197,193,183,.55); }
 .contact-bottom>p { margin:0; font-size:clamp(.75rem,1vw,1rem); line-height:1.6; text-transform:uppercase; }
 .contact-button { display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.4rem; background:var(--electric); color:var(--ink); font-size:.7rem; letter-spacing:.08em; transition:background 180ms ease,color 180ms ease; }
 .contact-button:hover { background:var(--paper); color:var(--ink); }
-.contact-button i { font:normal 1.5rem/1 "Oswald",sans-serif; }
-.social-row { display:grid; grid-template-columns:repeat(4,1fr); margin-top:5rem; border-top:1px solid var(--ink); }
-.social-row a { padding:1.1rem 0; border-right:1px solid var(--ink); font-size:.62rem; letter-spacing:.07em; }
+.contact-button i { font:normal 1.5rem/1 "Geist Variable",sans-serif; }
+.social-row { display:grid; grid-template-columns:repeat(4,1fr); margin-top:5rem; border-top:1px solid rgba(197,193,183,.55); }
+.social-row a { padding:1.1rem 0; border-right:1px solid rgba(197,193,183,.55); font-size:.62rem; letter-spacing:.07em; }
 .social-row a:not(:first-child) { padding-left:1rem; }
 .social-row a:last-child { border-right:0; }
 footer { display:flex; justify-content:space-between; padding:1.4rem 3vw; background:var(--ink); color:var(--paper); font-size:.58rem; letter-spacing:.08em; }
@@ -201,9 +201,9 @@ footer { display:flex; justify-content:space-between; padding:1.4rem 3vw; backgr
   .contact-section h2,.contact-hyper-stack h2 { font-size:clamp(3rem,14vw,5.5rem); letter-spacing:-.05em; }
   .contact-bottom { gap:2rem; }
   .social-row { grid-template-columns:1fr 1fr; }
-  .social-row a { border-bottom:1px solid var(--ink); }
+  .social-row a { border-bottom:1px solid rgba(197,193,183,.55); }
   .social-row a:nth-child(3),.social-row a:nth-child(4) { border-bottom:none; }
-  .social-row a:nth-child(2) { border-right:1px solid var(--ink); }
+  .social-row a:nth-child(2) { border-right:1px solid rgba(197,193,183,.55); }
 
   /* Footer */
   footer { padding-inline:1.25rem; }
@@ -230,7 +230,7 @@ footer { display:flex; justify-content:space-between; padding:1.4rem 3vw; backgr
   .contact-section h2,.contact-hyper-stack h2 { font-size:15vw; letter-spacing:-.045em; }
   .contact-button { font-size:.6rem; padding:1rem; }
   .social-row { grid-template-columns:1fr; }
-  .social-row a { border-right:none; border-bottom:1px solid var(--ink); }
+  .social-row a { border-right:none; border-bottom:1px solid rgba(197,193,183,.55); }
   .social-row a:last-child { border-bottom:none; }
 }
 
