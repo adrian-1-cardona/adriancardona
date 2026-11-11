@@ -1,8 +1,8 @@
-import { useState } from "react"
-import { FileText, Menu, X, ArrowUpRight } from "lucide-react"
+import { useEffect, useState } from "react";
+import { FileText, Menu, X, ArrowUpRight, Sparkles } from "lucide-react";
 
 interface NavbarProps {
-  onNavigate: (sectionId: string) => void
+  onNavigate: (sectionId: string) => void;
 }
 
 const NAV_ITEMS = [
@@ -11,35 +11,54 @@ const NAV_ITEMS = [
   { id: "experience", label: "Experience" },
   { id: "blog", label: "Blog" },
   { id: "faq", label: "FAQ" },
-]
+];
 
 export default function Navbar({ onNavigate }: NavbarProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleLinkClick = (id: string) => {
-    setMobileMenuOpen(false)
-    onNavigate(id)
-  }
+    setMobileMenuOpen(false);
+    onNavigate(id);
+  };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#e5e7eb] transition-all">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/90 backdrop-blur-md border-b border-[#e5e7eb] shadow-xs text-[#37383c]"
+          : "bg-transparent text-white"
+      }`}
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        {/* Brand */}
+        {/* Brand with 4-point sparkle icon */}
         <button
           onClick={() => handleLinkClick("top")}
-          className="text-left font-bold text-[#37383c] tracking-tight text-base sm:text-lg flex items-center gap-2 focus:outline-none"
+          className="text-left font-bold tracking-tight text-base sm:text-lg flex items-center gap-2 focus:outline-none"
         >
-          <span className="w-2.5 h-2.5 rounded-full bg-[#4e95ff]" />
-          <span>Adrian Cardona</span>
+          <Sparkles className={`w-4 h-4 ${scrolled ? "text-[#4e95ff]" : "text-white"}`} />
+          <span className="font-semibold">Adrian Cardona</span>
         </button>
 
         {/* Desktop Links */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#686a71]">
+        <nav
+          className={`hidden md:flex items-center gap-8 text-sm font-medium transition-colors ${
+            scrolled ? "text-[#686a71]" : "text-white/90"
+          }`}
+        >
           {NAV_ITEMS.map((item) => (
             <button
               key={item.id}
               onClick={() => handleLinkClick(item.id)}
-              className="hover:text-[#37383c] transition focus:outline-none"
+              className="hover:text-white transition focus:outline-none"
             >
               {item.label}
             </button>
@@ -52,7 +71,11 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             href="/ADRIAN_CARDONA_RESUME.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-[#686a71] hover:text-[#37383c] px-3 py-1.5 rounded-full hover:bg-slate-100 transition"
+            className={`hidden sm:inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full transition ${
+              scrolled
+                ? "text-[#686a71] hover:text-[#37383c] hover:bg-slate-100"
+                : "text-white/90 hover:text-white hover:bg-white/10"
+            }`}
           >
             <FileText className="w-3.5 h-3.5" />
             <span>Resume</span>
@@ -68,21 +91,17 @@ export default function Navbar({ onNavigate }: NavbarProps) {
           {/* Mobile menu toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-[#686a71] hover:text-[#37383c] p-1"
+            className={`md:hidden p-1 ${scrolled ? "text-[#686a71]" : "text-white"}`}
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? (
-              <X className="w-5 h-5" />
-            ) : (
-              <Menu className="w-5 h-5" />
-            )}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-[#e5e7eb] px-4 py-4 flex flex-col gap-2 shadow-lg animate-in fade-in duration-150">
+        <div className="md:hidden bg-white text-[#37383c] border-b border-[#e5e7eb] px-4 py-4 flex flex-col gap-2 shadow-lg animate-in fade-in duration-150">
           {NAV_ITEMS.map((item) => (
             <button
               key={item.id}
@@ -104,5 +123,5 @@ export default function Navbar({ onNavigate }: NavbarProps) {
         </div>
       )}
     </header>
-  )
+  );
 }
