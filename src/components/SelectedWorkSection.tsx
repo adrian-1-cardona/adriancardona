@@ -79,53 +79,59 @@ export default function SelectedWorkSection() {
           </div>
         </div>
 
-        {/* Right Card: Pale Cool-Gray Card (Gitex - Matches Cluely Right Card) */}
-        <div className="rounded-3xl bg-[#f0f3f8] border border-slate-200/70 p-8 flex flex-col justify-between shadow-xs">
-          <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-[#9ca3af] mb-2">
-              Full-Stack AI Platform
-            </div>
-            <h3 className="text-2xl font-bold text-[#37383c] tracking-tight mb-3">
-              {gitex.name}: Grounded Codebase Intelligence
-            </h3>
-            <p className="text-[#686a71] text-sm sm:text-base leading-relaxed mb-6 font-normal">
-              {gitex.description}
-            </p>
-
-            {/* Visual: Grounding & Citation Panel */}
-            <div className="rounded-2xl bg-[#1e2024] text-slate-200 p-5 shadow-sm mb-6 text-left font-mono text-xs border border-[#37383c]">
-              <div className="flex items-center justify-between text-[11px] text-slate-400 pb-2 mb-3 border-b border-[#37383c]">
-                <span>query_stream: &quot;trace closure resolution&quot;</span>
-                <span className="text-emerald-400">Score: 0.942</span>
+        {/* Right Card: Cluely Frame Card (Gitex - Matches Cluely Right Card) */}
+        <div className="card-cluely-frame flex flex-col justify-between">
+          <div className="rounded-2xl bg-white p-6 sm:p-8 h-full flex flex-col justify-between shadow-xs border border-white/60">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-wider text-[#9ca3af] mb-2 font-mono">
+                Full-Stack AI Platform
               </div>
-              <div className="space-y-1.5 text-slate-300 text-[11px]">
-                <div className="text-[#4e95ff]">
-                  &gt; Vector embedding matched chunk:
+              <h3 className="text-2xl font-bold text-[#19191d] tracking-tight mb-3">
+                {gitex.name}: Grounded Codebase Intelligence
+              </h3>
+              <p className="text-[#686a71] text-sm sm:text-base leading-relaxed mb-6 font-normal">
+                {gitex.description}
+              </p>
+
+              {/* Visual: Grounding & Citation Panel */}
+              <div className="rounded-2xl bg-[#1e2024] text-slate-200 p-5 shadow-sm mb-6 text-left font-mono text-xs border border-[#37383c]">
+                <div className="flex items-center justify-between text-[11px] text-slate-400 pb-2 mb-3 border-b border-[#37383c]">
+                  <span>
+                    query_stream: &quot;trace closure resolution&quot;
+                  </span>
+                  <span className="text-emerald-400">Score: 0.942</span>
                 </div>
-                <div className="bg-[#26282d] p-2 rounded border border-[#37383c] text-slate-300">
-                  compiler/vm.rs:L142-168 (Upvalue capture)
-                </div>
-                <div className="text-emerald-400 flex items-center gap-1.5 pt-1">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Grounding verification: 100% verified against AST</span>
+                <div className="space-y-1.5 text-slate-300 text-[11px]">
+                  <div className="text-[#4e95ff]">
+                    &gt; Vector embedding matched chunk:
+                  </div>
+                  <div className="bg-[#26282d] p-2 rounded border border-[#37383c] text-slate-300">
+                    compiler/vm.rs:L142-168 (Upvalue capture)
+                  </div>
+                  <div className="text-emerald-400 flex items-center gap-1.5 pt-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>
+                      Grounding verification: 100% verified against AST
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="flex items-center justify-between pt-4 border-t border-slate-200 text-xs">
-            <span className="font-mono text-[#686a71]">
-              TypeScript · Convex · Gemini API
-            </span>
-            <a
-              href="https://gitex.dev"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-[#4e95ff] hover:text-[#3a85f5] inline-flex items-center gap-1"
-            >
-              <span>Visit Gitex.dev</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
+            <div className="flex items-center justify-between pt-4 border-t border-slate-100 text-xs">
+              <span className="font-mono text-[#686a71]">
+                TypeScript · Convex · Gemini API
+              </span>
+              <a
+                href="https://gitex.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-[#4e95ff] hover:text-[#3a85f5] inline-flex items-center gap-1"
+              >
+                <span>Visit Gitex.dev</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
