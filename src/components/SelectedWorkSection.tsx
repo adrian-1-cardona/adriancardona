@@ -9,10 +9,10 @@ export default function SelectedWorkSection() {
     <section id="systems" className="py-24 px-4 sm:px-6 max-w-6xl mx-auto">
       {/* Centered Heading (Matches Cluely 'How Cluely helps during a meeting') */}
       <div className="text-center max-w-2xl mx-auto mb-14">
-        <h2 className="text-3xl sm:text-4xl font-bold text-[#37383c] tracking-tight mb-3">
+        <h2 className="section-heading text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight mb-3">
           How Adrian builds reliable software
         </h2>
-        <p className="text-[#686a71] text-base sm:text-lg">
+        <p className="text-[#8c929d] text-base sm:text-lg">
           Purpose-built engineering from low-level compiler virtual machines to
           enterprise AI pipelines.
         </p>

@@ -37,10 +37,10 @@ export default function BlogSection({
     <section id="blog" className="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
       {/* Centered Heading */}
       <div className="text-center max-w-2xl mx-auto mb-14">
-        <h2 className="text-3xl sm:text-4xl font-bold text-[#37383c] tracking-tight mb-3">
+        <h2 className="section-heading text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight mb-3">
           Engineering Notes &amp; Writing
         </h2>
-        <p className="text-[#686a71] text-base sm:text-lg">
+        <p className="text-[#8c929d] text-base sm:text-lg">
           In-depth technical writing on compilers, retrieval architectures, and
           dependable software.
         </p>

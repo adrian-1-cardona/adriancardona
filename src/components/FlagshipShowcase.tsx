@@ -7,10 +7,10 @@ export default function FlagshipShowcase() {
       className="py-20 px-4 sm:px-6 max-w-5xl mx-auto text-center"
     >
       {/* Centered Heading (Matches Cluely 'Instant meeting notes') */}
-      <h2 className="text-3xl sm:text-4xl font-bold text-[#37383c] tracking-tight mb-3">
+      <h2 className="section-heading text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight mb-3">
         Deterministic Research Infrastructure
       </h2>
-      <p className="text-[#686a71] text-base sm:text-lg max-w-2xl mx-auto mb-12">
+      <p className="text-[#8c929d] text-base sm:text-lg max-w-2xl mx-auto mb-12">
         Automated experiment orchestration and live telemetry built for Cal Poly
         CSSE researchers to eliminate non-determinism in empirical computer
         science.

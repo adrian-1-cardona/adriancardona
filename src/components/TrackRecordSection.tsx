@@ -43,10 +43,10 @@ export default function TrackRecordSection() {
         {/* Right Column: Key Stats Matrix */}
         <div className="lg:col-span-5 text-left space-y-8 pl-0 lg:pl-6">
           <div>
-            <h3 className="text-3xl sm:text-4xl font-bold text-[#37383c] tracking-tight mb-2">
+            <h3 className="section-heading text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight mb-2">
               Verifiable track record
             </h3>
-            <p className="text-[#686a71] text-sm leading-relaxed">
+            <p className="text-[#8c929d] text-sm leading-relaxed">
               Consistently translating engineering rigor into reliable software
               and empirical academic findings.
             </p>

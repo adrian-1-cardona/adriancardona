@@ -54,10 +54,10 @@ export default function FaqSection() {
     >
       {/* Centered Heading */}
       <div className="text-center mb-12">
-        <h2 className="text-3xl sm:text-4xl font-bold text-[#37383c] tracking-tight mb-2">
+        <h2 className="section-heading text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight mb-2">
           Frequently asked questions
         </h2>
-        <p className="text-[#686a71] text-sm sm:text-base">
+        <p className="text-[#8c929d] text-sm sm:text-base">
           Everything you need to know about Adrian&apos;s background,
           availability, and technical focus.
         </p>

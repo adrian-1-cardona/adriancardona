@@ -100,6 +100,83 @@ body {
   transform: translateY(-1px);
 }
 
+/* Authentic Cluely Hero & Radial Dissolve Mask */
+.hero-cluely {
+  background-image: 
+    radial-gradient(87.76% 87.72% at 50% 9.2%, rgba(255, 255, 255, 0) 41.36%, #ffffff 71.93%),
+    image-set(
+      url("/images/cluely/background.png") 1x,
+      url("/images/cluely/background@2x.png") 2x
+    );
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: max(100vw, 100rem);
+}
+
+/* Authentic Cluely Premium Button (Radial depth, inset highlights, ambient blue glow) */
+.btn-cluely-cta {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 9999px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  background: 
+    radial-gradient(101.79% 101.79% at 65.61% 81.79%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 100%),
+    radial-gradient(114.65% 114.65% at 9.73% 17.27%, #1e82e0 0%, #1c38ea 100%);
+  box-shadow: 
+    0px 14px 28px rgba(78, 149, 255, 0.4),
+    inset -2px -2px 4px rgba(191, 229, 251, 0.4),
+    inset 2px 2px 4px rgba(19, 26, 228, 0.15);
+  border: none;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.btn-cluely-cta:hover {
+  transform: scale(1.025);
+  box-shadow: 
+    0px 18px 32px rgba(78, 149, 255, 0.5),
+    inset -2px -2px 4px rgba(191, 229, 251, 0.5),
+    inset 2px 2px 4px rgba(19, 26, 228, 0.2);
+}
+
+.btn-cluely-cta:active {
+  transform: scale(0.98);
+}
+
+/* Authentic Cluely Section Heading Metallic Gradient */
+.section-heading {
+  background: linear-gradient(to right, #19191d 0%, #4b4b5c 50%, #626275 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Authentic Cluely Feature Card Metallic Gradient Frame */
+.card-cluely-frame {
+  background-image: radial-gradient(92.09% 126.39% at 50% 100%, #dde2ee 58.91%, #bbc5dd 100%);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  padding: 1.25rem;
+}
+
+/* Authentic Cluely Bottom Banner Metallic Subtext Gradient */
+.banner-gradient-text {
+  background: linear-gradient(96.56deg, #667799 21.01%, #94a0b8 34.62%, #667799 47.64%, #667799 69.29%, #94a0b8 79.76%, #667799 90.35%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .btn-secondary {
   display: inline-flex;
   align-items: center;
