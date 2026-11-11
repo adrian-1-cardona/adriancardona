@@ -1,4 +1,4 @@
-import { Cpu, ShieldCheck, Repeat } from "lucide-react";
+import { Cpu, ShieldCheck, Repeat } from "lucide-react"
 
 export default function TenetsSection() {
   return (
@@ -8,7 +8,8 @@ export default function TenetsSection() {
         Dependable in every way
       </h2>
       <p className="text-[#686a71] text-base sm:text-lg max-w-2xl mx-auto mb-12">
-        Core engineering principles that guide architecture, automated testing, and systems implementation.
+        Core engineering principles that guide architecture, automated testing,
+        and systems implementation.
       </p>
 
       {/* 3-Column Card Grid */}
@@ -22,7 +23,9 @@ export default function TenetsSection() {
               Zero GC Overhead
             </h3>
             <p className="text-sm text-[#686a71] leading-relaxed">
-              Guppty achieves deterministic memory bounds by compiling to stack bytecode and managing closure upvalues explicitly in pure Rust, avoiding periodic garbage collection latency pauses.
+              Guppty achieves deterministic memory bounds by compiling to stack
+              bytecode and managing closure upvalues explicitly in pure Rust,
+              avoiding periodic garbage collection latency pauses.
             </p>
           </div>
         </div>
@@ -36,7 +39,9 @@ export default function TenetsSection() {
               100% Citation Grounding
             </h3>
             <p className="text-sm text-[#686a71] leading-relaxed">
-              Every LLM output generated in Gitex and document intelligence pipelines must provide verifiable AST-linked bracketed citations, with automated validation suites rejecting hallucinations.
+              Every LLM output generated in Gitex and document intelligence
+              pipelines must provide verifiable AST-linked bracketed citations,
+              with automated validation suites rejecting hallucinations.
             </p>
           </div>
         </div>
@@ -50,7 +55,9 @@ export default function TenetsSection() {
               Bit-for-Bit Determinism
             </h3>
             <p className="text-sm text-[#686a71] leading-relaxed">
-              Cal Poly CSSE research runners isolate subprocess memory, lock pseudo-random seeds, and execute continuous integration checks to ensure scientific experiments replicate identically.
+              Cal Poly CSSE research runners isolate subprocess memory, lock
+              pseudo-random seeds, and execute continuous integration checks to
+              ensure scientific experiments replicate identically.
             </p>
           </div>
         </div>
@@ -66,5 +73,5 @@ export default function TenetsSection() {
         <span>// GITHUB ACTIONS</span>
       </div>
     </section>
-  );
+  )
 }

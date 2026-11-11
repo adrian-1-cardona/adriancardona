@@ -1,14 +1,19 @@
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react"
 
 export default function FlagshipShowcase() {
   return (
-    <section id="projects" className="py-20 px-4 sm:px-6 max-w-5xl mx-auto text-center">
+    <section
+      id="projects"
+      className="py-20 px-4 sm:px-6 max-w-5xl mx-auto text-center"
+    >
       {/* Centered Heading (Matches Cluely 'Instant meeting notes') */}
       <h2 className="text-3xl sm:text-4xl font-bold text-[#37383c] tracking-tight mb-3">
         Deterministic Research Infrastructure
       </h2>
       <p className="text-[#686a71] text-base sm:text-lg max-w-2xl mx-auto mb-12">
-        Automated experiment orchestration and live telemetry built for Cal Poly CSSE researchers to eliminate non-determinism in empirical computer science.
+        Automated experiment orchestration and live telemetry built for Cal Poly
+        CSSE researchers to eliminate non-determinism in empirical computer
+        science.
       </p>
 
       {/* Soft Periwinkle Backdrop Container Framing White Paper Card (Matches Cluely) */}
@@ -35,7 +40,10 @@ export default function FlagshipShowcase() {
           {/* Document Body */}
           <div className="space-y-6 text-sm text-[#686a71] leading-relaxed font-normal">
             <p>
-              When AI researchers execute long-running model evaluations across distributed environments, subtle variations in GPU execution order, CPU thread scheduling, and PRNG seeds corrupt experimental fidelity.
+              When AI researchers execute long-running model evaluations across
+              distributed environments, subtle variations in GPU execution
+              order, CPU thread scheduling, and PRNG seeds corrupt experimental
+              fidelity.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
@@ -44,7 +52,9 @@ export default function FlagshipShowcase() {
                   Subprocess Worker Isolation
                 </div>
                 <p className="text-xs text-[#686a71]">
-                  Each evaluation trial runs in an isolated ephemeral subprocess to prevent tensor memory leaks and state contamination between trials.
+                  Each evaluation trial runs in an isolated ephemeral subprocess
+                  to prevent tensor memory leaks and state contamination between
+                  trials.
                 </p>
               </div>
 
@@ -53,7 +63,9 @@ export default function FlagshipShowcase() {
                   Live Desktop Telemetry
                 </div>
                 <p className="text-xs text-[#686a71]">
-                  A cross-platform desktop monitor streams trial progress, accuracy, loss, and hardware memory without burdening the compute loop.
+                  A cross-platform desktop monitor streams trial progress,
+                  accuracy, loss, and hardware memory without burdening the
+                  compute loop.
                 </p>
               </div>
             </div>
@@ -71,12 +83,13 @@ export default function FlagshipShowcase() {
                 tests/test_harness.py::test_subprocess_isolation PASSED
               </div>
               <div className="text-slate-400">
-                ======================== 14 passed in 3.42s ========================
+                ======================== 14 passed in 3.42s
+                ========================
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-  );
+  )
 }
