@@ -52,37 +52,37 @@ export default function FaqSection() {
       id="faq"
       className="py-20 px-4 sm:px-6 max-w-4xl mx-auto text-left"
     >
-      {/* Centered Heading (Matches Cluely FAQ) */}
+      {/* Centered Heading */}
       <div className="text-center mb-12">
-        <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight mb-2">
+        <h2 className="text-3xl sm:text-4xl font-bold text-[#37383c] tracking-tight mb-2">
           Frequently asked questions
         </h2>
-        <p className="text-slate-600 text-sm sm:text-base">
+        <p className="text-[#686a71] text-sm sm:text-base">
           Everything you need to know about Adrian&apos;s background,
           availability, and technical focus.
         </p>
       </div>
 
       {/* Accordion List */}
-      <div className="divide-y divide-slate-200 border-y border-slate-200">
+      <div className="divide-y divide-[#e5e7eb] border-y border-[#e5e7eb]">
         {FAQ_ITEMS.map((item, index) => {
           const isOpen = openIndex === index
           return (
             <div key={index} className="py-4">
               <button
                 onClick={() => toggle(index)}
-                className="w-full flex items-center justify-between text-left py-2 font-semibold text-slate-900 hover:text-blue-600 transition focus:outline-none text-base sm:text-lg"
+                className="w-full flex items-center justify-between text-left py-2 font-semibold text-[#37383c] hover:text-[#4e95ff] transition focus:outline-none text-base sm:text-lg"
               >
                 <span>{item.question}</span>
                 <ChevronDown
-                  className={`w-5 h-5 text-slate-400 transition-transform duration-200 shrink-0 ml-4 ${
-                    isOpen ? "rotate-180 text-blue-600" : ""
+                  className={`w-5 h-5 text-[#9ca3af] transition-transform duration-200 shrink-0 ml-4 ${
+                    isOpen ? "rotate-180 text-[#4e95ff]" : ""
                   }`}
                 />
               </button>
 
               {isOpen && (
-                <div className="pt-2 pb-3 text-slate-600 text-sm leading-relaxed animate-in fade-in duration-150">
+                <div className="pt-2 pb-3 text-[#686a71] text-sm leading-relaxed animate-in fade-in duration-150">
                   {item.answer}
                 </div>
               )}

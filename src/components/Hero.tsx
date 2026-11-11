@@ -1,11 +1,4 @@
-import {
-  ArrowRight,
-  Download,
-  Terminal,
-  Cpu,
-  Play,
-  CheckCircle2,
-} from "lucide-react"
+import { ArrowRight, Download, Cpu, Play, CheckCircle2 } from "lucide-react"
 import { useState } from "react"
 import { PROFILE } from "@/data/portfolioData"
 
@@ -26,26 +19,26 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
   return (
     <section
       id="top"
-      className="relative pt-16 pb-20 px-4 sm:px-6 bg-gradient-to-b from-[#eaf2fe] via-[#f5f9ff] to-white overflow-hidden text-center"
+      className="relative pt-16 pb-20 px-4 sm:px-6 bg-gradient-to-b from-[#edf4ff] via-[#f7faff] to-white overflow-hidden text-center"
     >
       <div className="max-w-4xl mx-auto">
         {/* Eyebrow */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100/70 border border-blue-200/80 text-blue-700 text-xs font-semibold mb-6">
-          <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
-          <span>Cal Poly San Luis Obispo · Systems & Compilers</span>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#edf4ff] border border-[#d4e4fc] text-[#4e95ff] text-xs font-semibold mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#4e95ff]" />
+          <span>Cal Poly San Luis Obispo · Systems &amp; Compilers</span>
         </div>
 
-        {/* Serif Headline (Matching Cluely's elegant serif style) */}
-        <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-normal text-slate-900 tracking-tight leading-[1.08] mb-6">
+        {/* EB Garamond Headline (Matching Cluely's exact font and color #37383c) */}
+        <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-normal text-[#37383c] tracking-tight leading-[1.08] mb-6">
           Software Engineering
           <br />
-          <span className="italic font-light text-slate-700">
+          <span className="italic font-light text-[#595a5f]">
             &amp; Systems Research
           </span>
         </h1>
 
         {/* Subhead text */}
-        <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto mb-8 font-normal leading-relaxed">
+        <p className="text-base sm:text-lg text-[#686a71] max-w-2xl mx-auto mb-8 font-normal leading-relaxed">
           Undergraduate researcher at Cal Poly CSSE. Building high-performance
           compilers in Rust, deterministic research engines, and
           zero-hallucination AI pipelines.
@@ -64,7 +57,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
             rel="noopener noreferrer"
             className="btn-secondary"
           >
-            <Download className="w-4 h-4 text-slate-500" />
+            <Download className="w-4 h-4 text-[#686a71]" />
             <span>Resume (PDF)</span>
           </a>
         </div>
@@ -73,14 +66,13 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
       {/* Scenic Hero Window Presentation (Matches Cluely hero window) */}
       <div className="max-w-5xl mx-auto relative">
         {/* Soft Scenic Landscape Backdrop Container */}
-        <div className="rounded-3xl p-3 sm:p-6 bg-gradient-to-br from-blue-300 via-sky-200 to-amber-100 shadow-[0_20px_60px_-15px_rgba(37,99,235,0.15)] border border-blue-200/60 relative overflow-hidden">
-          {/* Subtle horizon atmospheric curve */}
+        <div className="rounded-3xl p-3 sm:p-6 bg-gradient-to-br from-[#c8defe] via-[#e2edfe] to-[#feddc7] shadow-[0_20px_60px_-15px_rgba(78,149,255,0.18)] border border-[#d4e4fc] relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-white/40 via-transparent to-transparent pointer-events-none" />
 
           {/* Floating Application Window */}
-          <div className="relative rounded-2xl bg-slate-950 text-slate-200 border border-slate-800 shadow-2xl overflow-hidden text-left">
+          <div className="relative rounded-2xl bg-[#1e2024] text-slate-200 border border-[#37383c] shadow-2xl overflow-hidden text-left">
             {/* Window Chrome Header */}
-            <div className="px-4 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+            <div className="px-4 py-3 bg-[#26282d] border-b border-[#37383c] flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
                 <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
@@ -93,7 +85,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
               <button
                 onClick={handleRunSimulation}
                 disabled={isRunning}
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium transition focus:outline-none"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#4e95ff] hover:bg-[#3a85f5] text-white text-xs font-medium transition focus:outline-none shadow-xs"
               >
                 <Play
                   className={`w-3 h-3 ${isRunning ? "animate-spin" : ""}`}
@@ -110,7 +102,8 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                   // Guppty Stack Virtual Machine (Rust)
                 </div>
                 <div>
-                  <span className="text-blue-400">match</span> instruction {"{"}
+                  <span className="text-[#4e95ff]">match</span> instruction{" "}
+                  {"{"}
                 </div>
                 <div className="pl-4">
                   <span className="text-amber-300">OpCode::PushConstant</span>
@@ -139,33 +132,33 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
               </div>
 
               {/* Right Telemetry / Execution Output */}
-              <div className="md:col-span-5 bg-slate-900/60 rounded-xl p-4 border border-slate-800 flex flex-col justify-between">
+              <div className="md:col-span-5 bg-[#26282d]/80 rounded-xl p-4 border border-[#37383c] flex flex-col justify-between">
                 <div>
                   <div className="text-xs uppercase tracking-wider text-slate-400 font-bold mb-3 flex items-center gap-1.5">
-                    <Cpu className="w-3.5 h-3.5 text-blue-400" />
+                    <Cpu className="w-3.5 h-3.5 text-[#4e95ff]" />
                     <span>Real-time Telemetry</span>
                   </div>
 
                   <div className="space-y-2 text-xs">
-                    <div className="flex justify-between py-1 border-b border-slate-800">
+                    <div className="flex justify-between py-1 border-b border-[#37383c]">
                       <span className="text-slate-400">VM Execution:</span>
                       <span className="text-emerald-400 font-bold">
                         0.82 ms
                       </span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-slate-800">
+                    <div className="flex justify-between py-1 border-b border-[#37383c]">
                       <span className="text-slate-400">Memory Allocation:</span>
                       <span className="text-emerald-400 font-bold">
                         0 heap pauses
                       </span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-slate-800">
+                    <div className="flex justify-between py-1 border-b border-[#37383c]">
                       <span className="text-slate-400">Pratt Parser:</span>
                       <span className="text-slate-200">Zero syntax errors</span>
                     </div>
                     <div className="flex justify-between py-1">
                       <span className="text-slate-400">Test Harness:</span>
-                      <span className="text-blue-400">CI verified</span>
+                      <span className="text-[#4e95ff]">CI verified</span>
                     </div>
                   </div>
                 </div>

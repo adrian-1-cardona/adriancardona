@@ -47,7 +47,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-blue-100 selection:text-blue-900 font-sans antialiased">
+    <div className="min-h-screen bg-white text-[#37383c] selection:bg-[#4e95ff]/20 selection:text-[#37383c] font-sans antialiased">
       {/* Sticky Header Navigation */}
       <Navbar onNavigate={scrollToSection} />
 

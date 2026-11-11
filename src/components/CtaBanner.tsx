@@ -13,12 +13,12 @@ export default function CtaBanner() {
 
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 max-w-5xl mx-auto">
-      {/* Soft Gradient Banner (Matches Cluely bottom banner) */}
-      <div className="rounded-3xl bg-gradient-to-r from-blue-50 via-sky-50 to-indigo-50 border border-blue-100 p-8 sm:p-14 text-center relative overflow-hidden shadow-xs">
-        <h2 className="font-display text-3xl sm:text-5xl font-normal text-slate-900 tracking-tight leading-tight mb-4">
+      {/* Soft Gradient Banner (Matches Cluely bottom banner with Cluely blue #4e95ff) */}
+      <div className="rounded-3xl bg-gradient-to-r from-[#edf4ff] via-[#f5f9ff] to-[#e8f1ff] border border-[#d4e4fc] p-8 sm:p-14 text-center relative overflow-hidden shadow-xs">
+        <h2 className="font-display text-3xl sm:text-5xl font-normal text-[#37383c] tracking-tight leading-tight mb-4">
           Engineering that delivers clarity, not noise.
         </h2>
-        <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed font-normal">
+        <p className="text-[#686a71] text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed font-normal">
           Available for software engineering roles, compiler engineering, and
           research collaborations.
         </p>
@@ -46,7 +46,7 @@ export default function CtaBanner() {
               </>
             ) : (
               <>
-                <Copy className="w-3.5 h-3.5 text-slate-500" />
+                <Copy className="w-3.5 h-3.5 text-[#686a71]" />
                 <span>{PROFILE.email}</span>
               </>
             )}

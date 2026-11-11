@@ -1,15 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap");
+@import "@fontsource-variable/geist";
 @import "tailwindcss";
 
 :root {
   --bg-primary: #ffffff;
-  --bg-hero: #f0f6ff;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
-  --brand-blue: #2563eb;
-  --brand-blue-hover: #1d4ed8;
-  --border-subtle: #e2e8f0;
+  --bg-hero: #edf4ff;
+  --text-dark: #37383c;
+  --text-secondary: #686a71;
+  --text-muted: #9ca3af;
+  --cluely-blue: #4e95ff;
+  --cluely-blue-hover: #3a85f5;
+  --cluely-blue-tint: #edf4ff;
+  --cluely-blue-border: #d4e4fc;
+  --border-subtle: #e5e7eb;
 }
 
 * {
@@ -19,8 +22,8 @@
 html {
   scroll-behavior: smooth;
   background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--text-dark);
+  font-family: "Geist Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -30,19 +33,19 @@ body {
   min-width: 320px;
   overflow-x: hidden;
   background-color: var(--bg-primary);
-  color: var(--text-primary);
+  color: var(--text-dark);
   line-height: 1.6;
 }
 
 ::selection {
-  background: rgba(37, 99, 235, 0.15);
+  background: rgba(78, 149, 255, 0.2);
   color: #1e3a8a;
 }
 
-/* Serif Headline Typography */
+/* EB Garamond Display Typography (Cluely Headline Font) */
 .font-display {
-  font-family: "Newsreader", Georgia, serif;
-  letter-spacing: -0.02em;
+  font-family: "EB Garamond", Georgia, serif;
+  letter-spacing: -0.015em;
 }
 
 /* Custom Scrollbar */
@@ -58,7 +61,7 @@ body {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #9ca3af;
 }
 
 /* Section Margins */
@@ -72,13 +75,13 @@ body {
   scroll-margin-top: 80px;
 }
 
-/* Cluely-style buttons */
+/* Cluely Buttons (#4e95ff) */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background-color: var(--brand-blue);
+  background-color: #4e95ff;
   color: #ffffff;
   font-weight: 500;
   font-size: 0.875rem;
@@ -88,12 +91,12 @@ body {
   cursor: pointer;
   transition: all 150ms ease;
   text-decoration: none;
-  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 2px 8px rgba(78, 149, 255, 0.25);
 }
 
 .btn-primary:hover {
-  background-color: var(--brand-blue-hover);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  background-color: #3a85f5;
+  box-shadow: 0 4px 14px rgba(78, 149, 255, 0.35);
   transform: translateY(-1px);
 }
 
@@ -103,7 +106,7 @@ body {
   justify-content: center;
   gap: 6px;
   background-color: #ffffff;
-  color: #1e293b;
+  color: #37383c;
   font-weight: 500;
   font-size: 0.875rem;
   padding: 0.55rem 1.15rem;
