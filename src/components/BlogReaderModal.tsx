@@ -144,12 +144,8 @@ export default function BlogReaderModal({
 
             {/* Author Attribution */}
             <div className="flex items-center gap-3 mt-6 pt-6 border-t border-white/5">
-              <div className="w-10 h-10 rounded-full overflow-hidden border border-white/15 bg-neutral-900 shrink-0">
-                <img
-                  src="/adrian-portrait-desktop.webp"
-                  alt="Adrian Cardona"
-                  className="w-full h-full object-cover"
-                />
+              <div className="w-10 h-10 rounded-full border border-white/15 bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center text-xs font-bold text-white shadow-inner shrink-0 tracking-wider">
+                AC
               </div>
               <div className="text-left">
                 <div className="text-sm font-semibold text-white">
