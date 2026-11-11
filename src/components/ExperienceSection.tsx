@@ -1,97 +1,40 @@
-import { Briefcase, Calendar, MapPin, CheckCircle } from "lucide-react"
 import { EXPERIENCES } from "@/data/portfolioData"
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="py-24 px-4 sm:px-6 max-w-5xl mx-auto">
-      {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <div className="apple-eyebrow mb-2">Track Record</div>
-        <h2 className="apple-headline apple-gradient-text text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-          Engineering in the field.
-        </h2>
-        <p className="text-neutral-400 text-base sm:text-lg">
-          Four software engineering and academic research roles across Cal Poly
-          and California state initiatives.
-        </p>
-      </div>
+    <section id="experience" className="pt-4">
+      <h2 className="section-heading">
+        4 ROLES OF <span>EXPERIENCE</span>
+      </h2>
 
-      {/* Experience Chronology Cards */}
-      <div className="space-y-6">
+      <div className="space-y-4">
         {EXPERIENCES.map((exp, index) => (
           <article
             key={exp.id}
-            className="apple-card rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all duration-300"
+            className="solid-card p-6 flex flex-col md:flex-row md:items-start justify-between gap-6"
           >
-            {/* Top hairline */}
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-
-            <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
-              <div>
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-xs font-semibold text-blue-400 uppercase tracking-wider">
-                    {exp.type}
-                  </span>
-                  {exp.current && (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-medium text-emerald-400">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      Active Role
-                    </span>
-                  )}
-                </div>
-
-                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  {exp.role}
-                </h3>
-                <div className="text-base font-medium text-neutral-300 mt-0.5">
-                  {exp.company}
-                </div>
-              </div>
-
-              {/* Meta: Period & Location */}
-              <div className="flex flex-col md:items-end gap-1 text-xs text-neutral-400 shrink-0">
-                <div className="inline-flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-neutral-500" />
-                  <span>{exp.period}</span>
-                </div>
-                <div className="inline-flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-neutral-500" />
-                  <span>{exp.location}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Description */}
-            <p className="text-neutral-300 text-sm sm:text-base leading-relaxed mb-5">
-              {exp.description}
-            </p>
-
-            {/* Bulleted Achievements */}
-            <div className="space-y-2 mb-6">
-              {exp.achievements.map((item, aIdx) => (
-                <div
-                  key={aIdx}
-                  className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-400"
-                >
-                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400/80 mt-2 shrink-0" />
-                  <span className="leading-relaxed">{item}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Skills & Technologies */}
-            <div className="pt-4 border-t border-white/[0.06] flex flex-wrap items-center gap-2">
-              <span className="text-[11px] font-medium text-neutral-500 mr-1 uppercase tracking-wider">
-                Technologies:
+            <div className="flex items-start gap-4">
+              <span className="text-sm font-mono font-bold text-[#6a6b6e] shrink-0 mt-0.5">
+                0{index + 1}
               </span>
-              {exp.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs text-neutral-300 font-medium"
-                >
-                  {skill}
-                </span>
-              ))}
+
+              <div>
+                <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight mb-1">
+                  {exp.company}
+                </h3>
+                <p className="text-xs sm:text-sm text-[#998f8f] leading-relaxed max-w-xl">
+                  {exp.description}
+                </p>
+              </div>
+            </div>
+
+            <div className="md:text-right shrink-0 border-t md:border-t-0 pt-3 md:pt-0 border-[#2a2725]">
+              <strong className="text-sm font-semibold text-white block">
+                {exp.role}
+              </strong>
+              <time className="text-xs text-[#6a6b6e] font-mono mt-0.5 block">
+                {exp.period}
+              </time>
             </div>
           </article>
         ))}

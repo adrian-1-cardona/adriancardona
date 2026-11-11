@@ -62,24 +62,24 @@ export default function BlogReaderModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/85 backdrop-blur-xl animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/90">
       {/* Top Reading Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-white/10 z-50">
+      <div className="fixed top-0 left-0 right-0 h-1 bg-[#2a2725] z-50">
         <div
-          className="h-full bg-blue-500 transition-all duration-150"
+          className="h-full bg-[#f46c38] transition-all duration-150"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
 
       <div
         onScroll={handleScroll}
-        className="relative w-full h-full sm:h-auto sm:max-h-[92vh] sm:max-w-4xl bg-neutral-950 sm:border sm:border-white/15 sm:rounded-3xl overflow-y-auto shadow-2xl flex flex-col"
+        className="relative w-full h-full sm:h-auto sm:max-h-[92vh] sm:max-w-3xl bg-[#1c1a19] border border-[#2e2b29] sm:rounded-2xl overflow-y-auto shadow-2xl flex flex-col"
       >
-        {/* Apple Reader Top Bar */}
-        <div className="sticky top-0 z-40 px-6 py-4 bg-neutral-950/90 backdrop-blur-md border-b border-white/10 flex items-center justify-between">
+        {/* Reader Top Bar */}
+        <div className="sticky top-0 z-40 px-6 py-4 bg-[#1c1a19] border-b border-[#2e2b29] flex items-center justify-between">
           <button
             onClick={onClose}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-neutral-400 hover:text-white transition focus:outline-none"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-[#998f8f] hover:text-white transition focus:outline-none"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>All Articles</span>
@@ -88,7 +88,7 @@ export default function BlogReaderModal({
           <div className="flex items-center gap-3">
             <button
               onClick={handleCopyShare}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] hover:bg-white/10 border border-white/10 text-xs text-neutral-300 transition focus:outline-none"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#242220] hover:bg-[#2c2927] border border-[#35312e] text-xs text-[#998f8f] hover:text-white transition focus:outline-none"
               title="Copy link to article"
             >
               {copiedLink ? (
@@ -106,7 +106,7 @@ export default function BlogReaderModal({
 
             <button
               onClick={onClose}
-              className="p-1 rounded-full hover:bg-white/10 text-neutral-400 hover:text-white transition focus:outline-none"
+              className="p-1 rounded text-[#998f8f] hover:text-white transition focus:outline-none"
               aria-label="Close Reader"
             >
               <X className="w-5 h-5" />
@@ -115,100 +115,100 @@ export default function BlogReaderModal({
         </div>
 
         {/* Reader Content Body */}
-        <article className="p-6 sm:p-12 md:p-16 max-w-3xl mx-auto w-full">
+        <article className="p-6 sm:p-10 md:p-12 max-w-2xl mx-auto w-full">
           {/* Article Header */}
-          <div className="mb-10 text-left border-b border-white/10 pb-8">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs font-semibold uppercase tracking-wider text-blue-400">
+          <div className="mb-8 text-left border-b border-[#2e2b29] pb-6">
+            <div className="flex items-center gap-3 mb-3 text-xs text-[#998f8f]">
+              <span className="font-semibold uppercase tracking-wider text-[#f46c38]">
                 {post.category}
               </span>
-              <span className="text-neutral-600">·</span>
-              <div className="flex items-center gap-1 text-xs text-neutral-400">
-                <Calendar className="w-3 h-3 text-neutral-500" />
+              <span>·</span>
+              <div className="flex items-center gap-1">
+                <Calendar className="w-3 h-3" />
                 <span>{post.publishDate}</span>
               </div>
-              <span className="text-neutral-600">·</span>
-              <div className="flex items-center gap-1 text-xs text-neutral-400">
-                <Clock className="w-3 h-3 text-neutral-500" />
+              <span>·</span>
+              <div className="flex items-center gap-1">
+                <Clock className="w-3 h-3" />
                 <span>{post.readTime}</span>
               </div>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-bold text-white tracking-tight leading-[1.12] mb-4">
+            <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight leading-snug mb-3">
               {post.title}
             </h1>
 
-            <p className="text-lg sm:text-xl text-neutral-400 font-normal leading-relaxed">
+            <p className="text-base sm:text-lg text-[#998f8f] font-normal leading-relaxed">
               {post.subtitle}
             </p>
 
-            {/* Author Attribution */}
-            <div className="flex items-center gap-3 mt-6 pt-6 border-t border-white/5">
-              <div className="w-10 h-10 rounded-full border border-white/15 bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center text-xs font-bold text-white shadow-inner shrink-0 tracking-wider">
+            {/* Author Attribution (Monogram, NO photo) */}
+            <div className="flex items-center gap-3 mt-6 pt-4 border-t border-[#2e2b29]">
+              <div className="w-8 h-8 rounded-lg bg-[#262321] border border-[#35312e] flex items-center justify-center text-xs font-bold text-white tracking-wider">
                 AC
               </div>
-              <div className="text-left">
-                <div className="text-sm font-semibold text-white">
-                  Adrian Cardona
-                </div>
-                <div className="text-xs text-neutral-400">
+              <div className="text-left text-xs">
+                <div className="font-semibold text-white">Adrian Cardona</div>
+                <div className="text-[#998f8f]">
                   Undergraduate Researcher · Cal Poly SLO
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Key Takeaways Callout Box */}
-          <div className="rounded-2xl p-5 sm:p-6 bg-blue-950/20 border border-blue-500/20 mb-10 text-left">
-            <div className="text-xs font-semibold uppercase tracking-wider text-blue-400 mb-3">
+          {/* Key Insights Box */}
+          <div className="rounded-xl p-5 bg-[#242220] border border-[#35312e] mb-8 text-left">
+            <div className="text-xs font-bold uppercase tracking-wider text-[#f46c38] mb-2.5">
               Key Engineering Insights
             </div>
             <ul className="space-y-2">
               {post.keyTakeaways.map((item, idx) => (
                 <li
                   key={idx}
-                  className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-300"
+                  className="flex items-start gap-2.5 text-xs sm:text-sm text-[#998f8f]"
                 >
-                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 shrink-0" />
-                  <span className="leading-relaxed">{item}</span>
+                  <span className="text-[#f46c38] font-bold shrink-0">•</span>
+                  <span className="leading-relaxed text-neutral-200">
+                    {item}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Structured Sections */}
-          <div className="space-y-10 text-left">
+          <div className="space-y-8 text-left">
             {post.sections.map((section, sIdx) => (
-              <section key={sIdx} className="space-y-4">
-                <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+              <section key={sIdx} className="space-y-3">
+                <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
                   {section.heading}
                 </h2>
 
                 {section.paragraphs.map((p, pIdx) => (
                   <p
                     key={pIdx}
-                    className="text-neutral-300 text-base sm:text-lg leading-relaxed font-normal"
+                    className="text-[#998f8f] text-sm sm:text-base leading-relaxed font-normal"
                   >
                     {p}
                   </p>
                 ))}
 
                 {section.codeBlock && (
-                  <div className="my-6 rounded-2xl bg-black border border-white/10 overflow-hidden">
-                    <div className="px-4 py-2 bg-neutral-900/80 border-b border-white/10 text-xs font-mono text-neutral-400 flex items-center justify-between">
+                  <div className="my-4 rounded-xl bg-[#151312] border border-[#2e2b29] overflow-hidden">
+                    <div className="px-4 py-2 bg-[#201e1d] border-b border-[#2e2b29] text-xs font-mono text-[#998f8f] flex items-center justify-between">
                       <span>{section.codeBlock.title}</span>
-                      <span className="uppercase text-[10px] text-neutral-500 font-medium">
+                      <span className="uppercase text-[10px] text-[#6a6b6e] font-medium">
                         {section.codeBlock.language}
                       </span>
                     </div>
-                    <pre className="p-4 sm:p-5 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto text-neutral-300">
+                    <pre className="p-4 font-mono text-xs leading-relaxed overflow-x-auto text-neutral-300">
                       <code>{section.codeBlock.code}</code>
                     </pre>
                   </div>
                 )}
 
                 {section.callout && (
-                  <blockquote className="my-6 pl-4 border-l-2 border-blue-400 text-neutral-300 italic text-base sm:text-lg bg-white/[0.02] p-4 rounded-r-xl">
+                  <blockquote className="my-4 pl-4 border-l-2 border-[#f46c38] text-neutral-300 text-sm sm:text-base bg-[#201e1d] p-3 rounded-r-lg">
                     {section.callout}
                   </blockquote>
                 )}
@@ -216,27 +216,27 @@ export default function BlogReaderModal({
             ))}
           </div>
 
-          {/* Reader Footer - Next Article Card */}
-          <div className="mt-16 pt-10 border-t border-white/10 text-left">
-            <div className="text-xs uppercase tracking-wider text-neutral-500 font-semibold mb-3">
+          {/* Next Article Card */}
+          <div className="mt-12 pt-8 border-t border-[#2e2b29] text-left">
+            <div className="text-xs uppercase tracking-wider text-[#6a6b6e] font-semibold mb-2">
               Read Next
             </div>
             <button
               onClick={() => onSelectPost(nextPost)}
-              className="w-full text-left p-6 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 transition-all flex items-center justify-between group focus:outline-none"
+              className="w-full text-left p-5 rounded-xl bg-[#201e1d] hover:bg-[#252221] border border-[#2e2b29] transition flex items-center justify-between group focus:outline-none"
             >
               <div>
-                <div className="text-xs text-blue-400 font-medium mb-1">
+                <div className="text-xs text-[#f46c38] font-medium mb-1">
                   {nextPost.category}
                 </div>
-                <div className="text-lg sm:text-xl font-bold text-white group-hover:text-blue-300 transition">
+                <div className="text-base sm:text-lg font-bold text-white group-hover:text-neutral-200 transition">
                   {nextPost.title}
                 </div>
-                <div className="text-xs text-neutral-400 mt-1">
+                <div className="text-xs text-[#998f8f] mt-1">
                   {nextPost.readTime}
                 </div>
               </div>
-              <ArrowRight className="w-5 h-5 text-neutral-400 group-hover:text-white group-hover:translate-x-1 transition shrink-0 ml-4" />
+              <ArrowRight className="w-5 h-5 text-[#998f8f] group-hover:text-white group-hover:translate-x-1 transition shrink-0 ml-4" />
             </button>
           </div>
         </article>

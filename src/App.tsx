@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react"
 import Navbar from "@/components/Navbar"
+import ProfileCard from "@/components/ProfileCard"
 import Hero from "@/components/Hero"
 import ProjectsSection from "@/components/ProjectsSection"
 import ExperienceSection from "@/components/ExperienceSection"
+import ToolsSection from "@/components/ToolsSection"
 import BlogSection from "@/components/BlogSection"
-import ArchitectureSection from "@/components/ArchitectureSection"
-import PrinciplesSection from "@/components/PrinciplesSection"
+import ThoughtsSection from "@/components/ThoughtsSection"
 import ContactSection from "@/components/ContactSection"
 import Footer from "@/components/Footer"
 
 export default function App() {
-  const [activeSection, setActiveSection] = useState<string>("overview")
+  const [activeSection, setActiveSection] = useState<string>("top")
   const [selectedPostSlug, setSelectedPostSlug] = useState<string | null>(null)
 
-  // Handle URL hash on initial load and popstate
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.replace("#", "")
@@ -31,20 +31,20 @@ export default function App() {
     return () => window.removeEventListener("popstate", handleHash)
   }, [])
 
-  // IntersectionObserver to spy on active section during scroll
+  // IntersectionObserver for section scroll tracking
   useEffect(() => {
     const sections = [
-      "overview",
-      "work",
+      "top",
+      "projects",
       "experience",
+      "tools",
       "blog",
-      "architecture",
-      "principles",
+      "thoughts",
       "contact",
     ]
     const observerOptions = {
       root: null,
-      rootMargin: "-25% 0px -65% 0px",
+      rootMargin: "-20% 0px -60% 0px",
       threshold: 0,
     }
 
@@ -68,65 +68,39 @@ export default function App() {
     setActiveSection(id)
     const element = document.getElementById(id)
     if (element) {
-      const offsetTop =
-        element.getBoundingClientRect().top + window.scrollY - 80
-      window.scrollTo({
-        top: offsetTop,
+      element.scrollIntoView({
         behavior: "smooth",
+        block: "start",
       })
       window.history.pushState(null, "", `#${id}`)
     }
   }
 
-  const handleScrollTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    })
-    window.history.pushState(null, "", "#overview")
-    setActiveSection("overview")
-  }
-
   return (
-    <div className="min-h-screen bg-black text-[#f5f5f7] selection:bg-blue-500/30 selection:text-white font-sans antialiased relative">
-      {/* Floating Apple Navigation */}
-      <Navbar
-        activeSection={activeSection}
-        onNavigate={scrollToSection}
-        onOpenBlog={() => scrollToSection("blog")}
-      />
+    <div className="min-h-screen bg-[#151312] text-white selection:bg-[#f46c38] selection:text-white font-sans antialiased">
+      {/* Top Floating Navigation Bar */}
+      <Navbar activeSection={activeSection} onNavigate={scrollToSection} />
 
-      <main className="relative z-10">
-        {/* Apple Flagship Hero */}
-        <Hero
-          onExploreWork={() => scrollToSection("work")}
-          onReadBlog={() => scrollToSection("blog")}
-        />
+      {/* Two-Column Site Layout */}
+      <div className="max-w-[1140px] mx-auto px-4 sm:px-6 pt-24 pb-20 flex flex-col lg:flex-row items-start gap-12 lg:gap-16">
+        {/* Left Column: Sticky Profile Card */}
+        <ProfileCard />
 
-        {/* Selected Projects */}
-        <ProjectsSection />
-
-        {/* Professional Experience */}
-        <ExperienceSection />
-
-        {/* Engineering Blog (Apple Newsroom / Longform Reader) */}
-        <BlogSection
-          selectedPostSlug={selectedPostSlug}
-          onPostOpened={(slug) => setSelectedPostSlug(slug)}
-        />
-
-        {/* Technical Architecture & Specs */}
-        <ArchitectureSection />
-
-        {/* Engineering Principles */}
-        <PrinciplesSection />
-
-        {/* Contact & Connect */}
-        <ContactSection />
-      </main>
-
-      {/* Global Apple Minimalist Footer */}
-      <Footer onScrollTop={handleScrollTop} />
+        {/* Right Column: Main Content Stream */}
+        <main className="flex-1 min-w-0 w-full space-y-20">
+          <Hero />
+          <ProjectsSection />
+          <ExperienceSection />
+          <ToolsSection />
+          <BlogSection
+            selectedPostSlug={selectedPostSlug}
+            onPostOpened={(slug) => setSelectedPostSlug(slug)}
+          />
+          <ThoughtsSection />
+          <ContactSection />
+          <Footer />
+        </main>
+      </div>
     </div>
   )
 }
