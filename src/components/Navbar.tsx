@@ -82,19 +82,21 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             className={`hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition ${
               scrolled
                 ? "text-[#686a71] hover:text-[#37383c] hover:bg-slate-100"
-                : "text-white/90 hover:text-white hover:bg-white/10"
+                : "text-white/80 hover:text-white"
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
             <span>Resume</span>
           </a>
 
-          <button
-            onClick={() => handleLinkClick("contact")}
-            className="btn-primary !text-xs !py-1.5 !px-4"
-          >
-            <span>Get in Touch</span>
-          </button>
+          {scrolled && (
+            <button
+              onClick={() => handleLinkClick("contact")}
+              className="btn-cluely-cta !text-xs !py-1.5 !px-4 animate-in fade-in cursor-pointer"
+            >
+              <span>Get in Touch</span>
+            </button>
+          )}
 
           {/* Mobile menu toggle (visible strictly on mobile screens < sm) */}
           <button

@@ -29,11 +29,11 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
   return (
     <section
       id="top"
-      className="hero-cluely relative pt-32 sm:pt-36 md:pt-44 pb-20 px-4 sm:px-6 overflow-hidden text-center"
+      className="hero-cluely relative pt-20 sm:pt-24 lg:pt-28 pb-16 px-3 sm:px-6 overflow-hidden text-center flex flex-col items-center gap-6 lg:gap-8"
     >
-      <div className="relative z-10 max-w-4xl mx-auto">
+      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
         {/* EB Garamond Headline in Crisp White (Matches Cluely Display Typography - 80px, leading-[96%], tracking-[-1px]) */}
-        <h1 className="font-display text-[46px] sm:text-[68px] lg:text-[80px] font-medium text-white tracking-[-1px] leading-[96%] mb-6 drop-shadow-sm">
+        <h1 className="font-display text-[44px] sm:text-[64px] lg:text-[76px] font-medium text-white tracking-[-1px] leading-[96%] mb-4 drop-shadow-sm">
           Software Engineering
           <br />
           <span className="italic font-light opacity-95">
@@ -42,14 +42,14 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
         </h1>
 
         {/* Subhead text (Exact Cluely scale: 19px, leading-[140%], tracking-[-0.02em]) */}
-        <p className="text-[16px] sm:text-[19px] leading-[140%] text-white/95 max-w-[560px] mx-auto mb-9 font-normal tracking-[-0.02em] drop-shadow-xs">
+        <p className="text-[16px] sm:text-[18px] leading-[140%] text-white/95 max-w-[560px] mx-auto mb-6 font-normal tracking-[-0.02em] drop-shadow-xs">
           Undergraduate researcher at Cal Poly CSSE. Building high-performance
           compilers in Rust, deterministic research engines, and
           zero-hallucination AI pipelines.
         </p>
 
         {/* Single Focal Action Button (Exact Cluely gradient button with radial depth & inset highlight) */}
-        <div className="flex items-center justify-center mb-14">
+        <div className="flex items-center justify-center">
           <button
             onClick={onGetInTouch}
             className="btn-cluely-cta cursor-pointer"
@@ -235,37 +235,30 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
               </p>
             </div>
 
-            {/* macOS Centered Floating Dock */}
-            <div className="mt-6 z-10 inline-flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-white/20 border border-white/30 backdrop-blur-md shadow-xl">
-              <div
-                className="w-8 h-8 rounded-lg bg-[#26282d] text-white flex items-center justify-center shadow-xs"
-                title="Terminal"
-              >
-                <Terminal className="w-4 h-4 text-[#4e95ff]" />
-              </div>
-              <div
-                className="w-8 h-8 rounded-lg bg-[#26282d] text-white flex items-center justify-center shadow-xs"
-                title="Rust Compiler"
-              >
-                <Cpu className="w-4 h-4 text-emerald-400" />
-              </div>
-              <div
-                className="w-8 h-8 rounded-lg bg-[#26282d] text-white flex items-center justify-center shadow-xs"
-                title="Convex DB"
-              >
-                <Database className="w-4 h-4 text-purple-400" />
-              </div>
-              <div
-                className="w-8 h-8 rounded-lg bg-[#26282d] text-white flex items-center justify-center shadow-xs"
-                title="React / TypeScript"
-              >
-                <Code className="w-4 h-4 text-amber-400" />
-              </div>
-              <div
-                className="w-8 h-8 rounded-lg bg-[#26282d] text-white flex items-center justify-center shadow-xs"
-                title="Grounded AI"
-              >
-                <Sparkles className="w-4 h-4 text-blue-300" />
+            {/* macOS Centered Floating Dock (Exact Cluely Dock with Authentic Icons) */}
+            <div className="mt-5 z-10 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-white/10 bg-white/10 backdrop-blur-lg shadow-xl">
+              <img
+                src="/images/cluely/launchpad.png"
+                alt="Launchpad"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs"
+              />
+              <img
+                src="/images/cluely/safari.png"
+                alt="Safari"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs"
+              />
+              <img
+                src="/images/cluely/settings.png"
+                alt="Settings"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs"
+              />
+              <img
+                src="/images/cluely/zoom.png"
+                alt="Zoom"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs"
+              />
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#26282d] text-white flex items-center justify-center shadow-xs">
+                <Terminal className="w-3.5 h-3.5 text-[#4e95ff]" />
               </div>
             </div>
           </div>
