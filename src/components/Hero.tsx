@@ -43,9 +43,10 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
 
         {/* Subhead text (Exact Cluely scale: 19px, leading-[140%], tracking-[-0.02em]) */}
         <p className="text-[16px] sm:text-[18px] leading-[140%] text-white/95 max-w-[580px] mx-auto mb-6 font-normal tracking-[-0.02em] drop-shadow-xs">
-          Software engineer and undergraduate researcher at Cal Poly San Luis
-          Obispo. Building fault-tolerant enterprise pipelines at Bailey College
-          and reproducible AI research runners for CSSE faculty.
+          Computer Science undergraduate at Cal Poly San Luis Obispo (Expected
+          May 2027). Building practical data pipelines for 58k+ records at
+          Bailey College, statewide educational analytics, and compiled
+          developer tooling.
         </p>
 
         {/* Single Focal Action Button (Exact Cluely gradient button with radial depth & inset highlight) */}
@@ -189,9 +190,11 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
 
                     <div className="space-y-2 text-xs">
                       <div className="flex justify-between py-1 border-b border-[#37383c]">
-                        <span className="text-slate-400">Pipeline Status:</span>
+                        <span className="text-slate-400">
+                          Migrated Records:
+                        </span>
                         <span className="text-emerald-400 font-bold">
-                          Active (200 OK)
+                          58,579 items
                         </span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-[#37383c]">
@@ -207,10 +210,8 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                         <span className="text-slate-200">Automated flow</span>
                       </div>
                       <div className="flex justify-between py-1">
-                        <span className="text-slate-400">Staff Workload:</span>
-                        <span className="text-[#4e95ff]">
-                          Zero manual cataloging
-                        </span>
+                        <span className="text-slate-400">Recovery Mode:</span>
+                        <span className="text-[#4e95ff]">Resumable state</span>
                       </div>
                     </div>
                   </div>
@@ -218,7 +219,9 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                   {ranSuccessfully && (
                     <div className="mt-3 p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-xs flex items-center gap-2 animate-in fade-in">
                       <CheckCircle2 className="w-4 h-4 shrink-0" />
-                      <span>Production pipeline synced successfully.</span>
+                      <span>
+                        58,579 records synced with collision-safe writes.
+                      </span>
                     </div>
                   )}
                 </div>
@@ -237,9 +240,8 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-mono">
-                &quot;Cal Poly Bailey College pipeline active: fault-tolerant
-                media processing, SharePoint API sync, zero manual
-                cataloging.&quot;
+                &quot;Cal Poly Bailey College migration active: 58,579 records,
+                collision-safe writes, zero data loss.&quot;
               </p>
             </div>
 

@@ -105,31 +105,20 @@ export default function TrackRecordSection() {
         </div>
 
         {/* Right Column: Key Stats Matrix (Matches Cluely Section 5 Right Column) */}
-        <div className="lg:col-span-5 text-left space-y-8 pl-0 lg:pl-4">
+        <div className="lg:col-span-5 text-left space-y-7 pl-0 lg:pl-4">
           <div>
             <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-[#19191d] tracking-tight mb-3">
               Verifiable track record
             </h2>
             <p className="text-[#686a71] text-sm sm:text-[15px] leading-relaxed font-normal">
-              Consistently translating engineering rigor into reliable software,
-              compiler runtimes, and empirical academic research.
+              Computer Science undergraduate at Cal Poly San Luis Obispo
+              building practical, fault-tolerant data pipelines and systems
+              infrastructure.
             </p>
           </div>
 
-          <div className="space-y-6 pt-2">
+          <div className="space-y-6 pt-1">
             <div>
-              <div className="text-4xl sm:text-5xl font-extrabold text-[#19191d] tracking-tight font-mono">
-                4
-              </div>
-              <div className="font-semibold text-[#19191d] text-sm mt-1">
-                Engineering &amp; Research Roles
-              </div>
-              <div className="text-xs text-[#686a71] mt-0.5">
-                Cal Poly Bailey College, Cal Poly CSSE, FoundationCCC, Extern AI
-              </div>
-            </div>
-
-            <div className="border-t border-[#e5e7eb] pt-6">
               <div className="text-4xl sm:text-5xl font-extrabold text-[#19191d] tracking-tight font-mono">
                 3.5
               </div>
@@ -137,20 +126,55 @@ export default function TrackRecordSection() {
                 Cal Poly San Luis Obispo GPA
               </div>
               <div className="text-xs text-[#686a71] mt-0.5">
-                Computer Science B.S. with continuous academic honors
+                B.S. in Computer Science · Expected Graduation May 2027
               </div>
             </div>
 
             <div className="border-t border-[#e5e7eb] pt-6">
               <div className="text-4xl sm:text-5xl font-extrabold text-[#19191d] tracking-tight font-mono">
-                100%
+                58,579
               </div>
               <div className="font-semibold text-[#19191d] text-sm mt-1">
-                Deterministic Pass Rate
+                Media Records Migrated
               </div>
               <div className="text-xs text-[#686a71] mt-0.5">
-                Verified across automated GitHub Actions CI &amp; Pytest suites
+                Resumable migration pipeline engineered for Bailey College with
+                zero data loss
               </div>
+            </div>
+
+            <div className="border-t border-[#e5e7eb] pt-6">
+              <div className="text-4xl sm:text-5xl font-extrabold text-[#19191d] tracking-tight font-mono">
+                3
+              </div>
+              <div className="font-semibold text-[#19191d] text-sm mt-1">
+                Engineering Appointments
+              </div>
+              <div className="text-xs text-[#686a71] mt-0.5">
+                Cal Poly Bailey College, FoundationCCC, and Outamation / Extern
+              </div>
+            </div>
+          </div>
+
+          {/* Real Coursework Highlights */}
+          <div className="border-t border-[#e5e7eb] pt-5">
+            <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#686a71] mb-2.5">
+              Relevant Coursework
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {[
+                "Data Structures & Algorithms",
+                "Systems Programming",
+                "Databases",
+                "Computer Security",
+              ].map((course, idx) => (
+                <span
+                  key={idx}
+                  className="px-2.5 py-1 rounded-md bg-white text-xs text-[#37383c] font-medium border border-slate-200/80 shadow-2xs"
+                >
+                  {course}
+                </span>
+              ))}
             </div>
           </div>
         </div>
