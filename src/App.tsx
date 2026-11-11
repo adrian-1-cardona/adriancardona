@@ -55,6 +55,9 @@ export default function App() {
         {/* Hero Section with Scenic App Window Mockup */}
         <Hero onGetInTouch={() => scrollToSection("contact")} />
 
+        {/* Experience & Track Record (Starts with Adrian's Experience) */}
+        <TrackRecordSection />
+
         {/* Selected Systems & Architecture (2 Large Feature Cards) */}
         <SelectedWorkSection />
 
@@ -63,9 +66,6 @@ export default function App() {
 
         {/* Architectural Tenets (3-Column Bento Cards) */}
         <TenetsSection />
-
-        {/* Track Record & Real-time Stats (Split View) */}
-        <TrackRecordSection />
 
         {/* Engineering Blog (Editorial Cards & Longform Reader) */}
         <BlogSection

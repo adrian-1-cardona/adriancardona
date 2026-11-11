@@ -6,9 +6,9 @@ interface NavbarProps {
 }
 
 const NAV_ITEMS = [
+  { id: "experience", label: "Experience" },
   { id: "systems", label: "Systems" },
   { id: "projects", label: "Projects" },
-  { id: "experience", label: "Experience" },
   { id: "blog", label: "Blog" },
   { id: "faq", label: "FAQ" },
 ]
