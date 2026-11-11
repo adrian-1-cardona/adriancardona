@@ -120,8 +120,9 @@ export default function TenetsSection() {
                 Doesn&apos;t join meetings.
               </h3>
               <p className="text-xs text-[#686a71] leading-relaxed">
-                Guppty never joins your calls or halts execution for garbage
-                collection pauses, keeping runtime overhead undetectable.
+                Background services never join calls or halt execution for
+                garbage collection pauses, keeping runtime overhead
+                undetectable.
               </p>
             </div>
           </div>

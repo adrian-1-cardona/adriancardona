@@ -7,13 +7,18 @@ export default function FlagshipShowcase() {
       className="py-20 px-4 sm:px-6 max-w-5xl mx-auto text-center"
     >
       {/* Centered Heading (Matches Cluely 'Instant meeting notes') */}
+      <div className="mb-3">
+        <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff] bg-blue-50 px-3 py-1 rounded-full border border-blue-200/60">
+          Secondary Explorations // Independent Projects
+        </span>
+      </div>
       <h2 className="section-heading text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight mb-3">
-        Deterministic Research Infrastructure
+        Independent Systems Projects
       </h2>
       <p className="text-[#8c929d] text-base sm:text-lg max-w-2xl mx-auto mb-12">
-        Automated experiment orchestration and live telemetry built for Cal Poly
-        CSSE researchers to eliminate non-determinism in empirical computer
-        science.
+        Self-directed software engineering projects designed to stress-test
+        compiler runtimes, custom bytecode virtual machines, and vector search
+        systems.
       </p>
 
       {/* Soft Periwinkle Backdrop Container Framing White Paper Card (Matches Cluely) */}

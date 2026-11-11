@@ -13,15 +13,14 @@ const FAQ_ITEMS: FaqItem[] = [
       "Adrian is targeting Software Engineering internships and full-time engineering roles for 2026. Key areas of interest include systems programming, compiler design, developer tooling, and reliable AI/data infrastructure.",
   },
   {
-    question:
-      "What is the technical breakdown of the Guppty programming language?",
+    question: "What are Adrian's primary software engineering appointments?",
     answer:
-      "Guppty is implemented in pure Rust. It features a zero-allocation handwritten lexer, Pratt parser for operator precedence, a recursive-descent bytecode compiler, and a stack-based virtual machine. It supports first-class closures via an Upvalue model and includes span-aware error formatting with automated GitHub Actions CI.",
+      "Adrian currently serves as a Software Engineering Intern at the Cal Poly Bailey College of Science and Mathematics, architecting fault-tolerant TypeScript media ingestion pipelines and Microsoft Power Automate flows. Concurrently, he is an Undergraduate Researcher at the Cal Poly CSSE Department, engineering deterministic Python benchmarking runners and telemetry tools for faculty.",
   },
   {
-    question: "How does Gitex guarantee zero hallucinations in codebase Q&A?",
+    question: "What independent systems projects has Adrian built?",
     answer:
-      "Gitex pairs Convex vector retrieval with strict prompt contracts. Every LLM assertion is required to quote an exact source citation range (e.g. file and line numbers). An automated citation validator cross-references citations against the repository AST before returning the answer to the user.",
+      "As secondary exploratory work, Adrian built Guppty (a compiled language runtime in pure Rust with a Pratt parser, recursive-descent bytecode compiler, and stack VM) and Gitex (a grounded vector search engine with automated AST citation verification).",
   },
   {
     question: "What research was conducted at Cal Poly CSSE?",

@@ -42,10 +42,10 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
         </h1>
 
         {/* Subhead text (Exact Cluely scale: 19px, leading-[140%], tracking-[-0.02em]) */}
-        <p className="text-[16px] sm:text-[18px] leading-[140%] text-white/95 max-w-[560px] mx-auto mb-6 font-normal tracking-[-0.02em] drop-shadow-xs">
-          Undergraduate researcher at Cal Poly CSSE. Building high-performance
-          compilers in Rust, deterministic research engines, and
-          zero-hallucination AI pipelines.
+        <p className="text-[16px] sm:text-[18px] leading-[140%] text-white/95 max-w-[580px] mx-auto mb-6 font-normal tracking-[-0.02em] drop-shadow-xs">
+          Software engineer and undergraduate researcher at Cal Poly San Luis
+          Obispo. Building fault-tolerant enterprise pipelines at Bailey College
+          and reproducible AI research runners for CSSE faculty.
         </p>
 
         {/* Single Focal Action Button (Exact Cluely gradient button with radial depth & inset highlight) */}
@@ -101,7 +101,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 border border-white/20 text-white text-[11px] backdrop-blur-md shadow-inner">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="font-mono text-[10px] tracking-wide">
-                guppty-vm: running
+                cal-poly-bailey: running
               </span>
             </div>
 
@@ -123,7 +123,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                   <span className="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block" />
                   <span className="w-3 h-3 rounded-full bg-[#27c93f] inline-block" />
                   <span className="text-xs font-mono text-slate-400 ml-2">
-                    guppty-vm // compiler/vm.rs
+                    cal-poly-bailey // pipeline/ingest.ts
                   </span>
                 </div>
 
@@ -135,7 +135,9 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                   <Play
                     className={`w-3 h-3 ${isRunning ? "animate-spin" : ""}`}
                   />
-                  <span>{isRunning ? "Verifying..." : "Run Bytecode VM"}</span>
+                  <span>
+                    {isRunning ? "Dispatching..." : "Execute Pipeline"}
+                  </span>
                 </button>
               </div>
 
@@ -144,37 +146,36 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                 {/* Left Code Inspection */}
                 <div className="md:col-span-7 space-y-1.5 text-slate-300 overflow-x-auto">
                   <div className="text-slate-500">
-                    // Guppty Stack Virtual Machine in pure Rust
+                    // Fault-tolerant media ingestion at Cal Poly Bailey College
                   </div>
                   <div>
-                    <span className="text-[#4e95ff]">match</span> instruction{" "}
-                    {"{"}
+                    <span className="text-[#4e95ff]">
+                      export async function
+                    </span>{" "}
+                    ingestMedia(item: MediaItem) {"{"}
+                  </div>
+                  <div className="pl-4 text-slate-400">
+                    const token = await getSharePointAuth();
+                  </div>
+                  <div className="pl-4 text-slate-400">
+                    const retry = new ExponentialBackoff();
                   </div>
                   <div className="pl-4">
-                    <span className="text-amber-300">OpCode::PushConstant</span>
-                    (idx) =&gt; {"{"}
+                    <span className="text-[#4e95ff]">return</span>{" "}
+                    retry.execute( async () =&gt; {"{"}
                   </div>
                   <div className="pl-8 text-slate-400">
-                    let val = self.chunk.read_constant(idx);
+                    const res = await powerAutomate.sync({"{"}
                   </div>
-                  <div className="pl-8 text-slate-400">
-                    self.stack.push(val);
+                  <div className="pl-12 text-slate-400">
+                    action: &quot;PROCESS_MEDIA&quot;,
                   </div>
-                  <div className="pl-4">{"}"}</div>
-                  <div className="pl-4">
-                    <span className="text-amber-300">OpCode::BinaryAdd</span>{" "}
-                    =&gt; {"{"}
+                  <div className="pl-12 text-slate-400">catalogId: item.id</div>
+                  <div className="pl-8 text-slate-400">{"});"}</div>
+                  <div className="pl-8 text-emerald-400">
+                    return {"{ status: 'SYNCED', ref: res.id };"}
                   </div>
-                  <div className="pl-8 text-slate-400">
-                    let b = self.stack.pop()?;
-                  </div>
-                  <div className="pl-8 text-slate-400">
-                    let a = self.stack.pop()?;
-                  </div>
-                  <div className="pl-8 text-slate-400">
-                    self.stack.push(a.add(b)?);
-                  </div>
-                  <div className="pl-4">{"}"}</div>
+                  <div className="pl-4">{"});"}</div>
                   <div>{"}"}</div>
                 </div>
 
@@ -183,33 +184,33 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                   <div>
                     <div className="text-xs uppercase tracking-wider text-slate-400 font-bold mb-3 flex items-center gap-1.5">
                       <Cpu className="w-3.5 h-3.5 text-[#4e95ff]" />
-                      <span>Real-time Telemetry</span>
+                      <span>Production Telemetry</span>
                     </div>
 
                     <div className="space-y-2 text-xs">
                       <div className="flex justify-between py-1 border-b border-[#37383c]">
-                        <span className="text-slate-400">VM Execution:</span>
+                        <span className="text-slate-400">Pipeline Status:</span>
                         <span className="text-emerald-400 font-bold">
-                          0.82 ms
+                          Active (200 OK)
                         </span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-[#37383c]">
                         <span className="text-slate-400">
-                          Memory Allocation:
+                          Transfer Failures:
                         </span>
                         <span className="text-emerald-400 font-bold">
-                          0 heap pauses
+                          0 data loss
                         </span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-[#37383c]">
-                        <span className="text-slate-400">Pratt Parser:</span>
-                        <span className="text-slate-200">
-                          Zero syntax errors
-                        </span>
+                        <span className="text-slate-400">SharePoint Sync:</span>
+                        <span className="text-slate-200">Automated flow</span>
                       </div>
                       <div className="flex justify-between py-1">
-                        <span className="text-slate-400">Test Harness:</span>
-                        <span className="text-[#4e95ff]">CI verified</span>
+                        <span className="text-slate-400">Staff Workload:</span>
+                        <span className="text-[#4e95ff]">
+                          Zero manual cataloging
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -217,7 +218,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                   {ranSuccessfully && (
                     <div className="mt-3 p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-xs flex items-center gap-2 animate-in fade-in">
                       <CheckCircle2 className="w-4 h-4 shrink-0" />
-                      <span>Bytecode execution verified without error.</span>
+                      <span>Production pipeline synced successfully.</span>
                     </div>
                   )}
                 </div>
@@ -236,8 +237,9 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-mono">
-                &quot;Guppty Pratt bytecode compiled: zero GC overhead, 100%
-                deterministic reproducibility.&quot;
+                &quot;Cal Poly Bailey College pipeline active: fault-tolerant
+                media processing, SharePoint API sync, zero manual
+                cataloging.&quot;
               </p>
             </div>
 

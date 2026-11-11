@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
-import { Sparkles, Play } from "lucide-react"
+import { Sparkles, Play, Briefcase, GraduationCap } from "lucide-react"
 
-// Continuous waveform sequence with realistic voice frequencies
+// Continuous waveform sequence with realistic voice / data frequencies
 const WAVE_BARS = [
   35, 60, 45, 80, 95, 70, 50, 40, 65, 85, 90, 75, 55, 45, 30, 25, 35, 50, 40,
   60, 45, 35, 25, 20, 30, 45, 60, 50, 40, 30, 45, 65, 85, 95, 80, 60, 40, 55,
@@ -10,8 +10,8 @@ const WAVE_BARS = [
 
 export default function SelectedWorkSection() {
   const [seconds, setSeconds] = useState(12)
-  const [leftActiveChip, setActiveLeftChip] = useState("Assist")
-  const [rightActiveChip, setActiveRightChip] = useState("Assist")
+  const [leftActiveChip, setActiveLeftChip] = useState("Ingestion")
+  const [rightActiveChip, setActiveRightChip] = useState("Determinism")
   const [isWindowHidden, setIsWindowHidden] = useState(false)
 
   // Live timer tick matching Cluely's 00:12 counter
@@ -26,17 +26,23 @@ export default function SelectedWorkSection() {
 
   // Dynamic prompts based on active chip
   const leftPromptMap: Record<string, string> = {
-    Assist: "Ask about your screen or conversation, or ⌘ ↵ for Assist",
-    Say: "Suggesting compiler performance points based on bytecode AST...",
-    Questions: "Generating technical questions on Pratt parsing precedence...",
-    Recap: "Summarizing runtime closures and upvalue allocation benchmarks...",
+    Ingestion:
+      "Monitoring media ingestion and SharePoint file transfers, or ⌘ ↵ for status",
+    Automate:
+      "Dispatching automated cataloging task to Power Automate workflow...",
+    Sync: "Authenticating with Microsoft Graph API and verifying transfer tokens...",
+    Retry:
+      "Exponential backoff active: 0 transfer dropouts across 10,000+ files...",
   }
 
   const rightPromptMap: Record<string, string> = {
-    Assist: "Ask about your screen or conversation, or ⌘ ↵ for Assist",
-    Say: "Evaluating AST nodes and verifying vector retrieval citations...",
-    Questions: "Formulating architectural questions for compiler review...",
-    Recap: "Recapping verified facts and zero-hallucination citations...",
+    Determinism: "Query experiment logs or ⌘ ↵ for telemetry diagnostics",
+    Isolation:
+      "Isolating worker thread memory to eliminate tensor cache leaks...",
+    Pytest:
+      "14 deterministic regression tests passing across GitHub Actions CI...",
+    Telemetry:
+      "Emitting trial telemetry checkpoints to real-time desktop monitor...",
   }
 
   return (
@@ -47,13 +53,17 @@ export default function SelectedWorkSection() {
       {/* Section Heading (Left-aligned matching Cluely screenshot) */}
       <div className="mb-10">
         <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-[#19191d] tracking-tight">
-          How Adrian builds dependable software
+          How Adrian delivers reliable engineering
         </h2>
+        <p className="text-[#686a71] text-sm sm:text-base mt-2 max-w-2xl">
+          Deep architectural systems engineered across university enterprise
+          pipelines and empirical academic research appointments.
+        </p>
       </div>
 
       {/* Two Large Cards (Matches Cluely Left Blue + Right Pale Glass Container) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-        {/* Left Card: Vibrant Blue Card (Guppty - Matches Cluely Blue Waveform Card) */}
+        {/* Left Card: Cal Poly Bailey College (Software Engineering Intern) */}
         <div
           className="relative flex flex-col justify-between gap-6 rounded-3xl p-7 sm:p-9 lg:p-10 text-white overflow-hidden shadow-xl"
           style={{
@@ -66,8 +76,15 @@ export default function SelectedWorkSection() {
         >
           {/* Card Title & Description */}
           <div>
+            <div className="flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-wider text-blue-100 mb-2.5">
+              <Briefcase className="w-3.5 h-3.5" />
+              <span>
+                Cal Poly Bailey College // Software Engineering Intern
+              </span>
+            </div>
+
             <h3 className="text-2xl sm:text-[28px] leading-tight font-medium tracking-[-0.5px] text-white flex items-center flex-wrap gap-2 mb-3">
-              <span>Guppty</span>
+              <span>Bailey College</span>
               <span className="-mx-0.5 inline-flex -translate-y-0.5 items-center gap-1.5 rounded-[110px] bg-white/20 px-2.5 py-0.5 align-middle shadow-[inset_2px_2px_9px_rgba(255,255,255,0.5),inset_1px_1px_4.5px_rgba(255,255,255,0.5)] backdrop-blur-3xl text-xs sm:text-sm font-medium text-white">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -116,31 +133,32 @@ export default function SelectedWorkSection() {
                 </svg>
                 <span>listens</span>
               </span>
-              <span>in to the execution</span>
+              <span>to workflow needs</span>
             </h3>
             <p className="text-white/85 text-sm sm:text-[15px] leading-relaxed font-normal max-w-lg">
-              It picks up the context of compiler bytecode in real time, so it
-              executes without garbage collection pauses.
+              Architected internal media management pipelines and automated
+              SharePoint workflows, eliminating manual cataloging for university
+              staff with zero data loss.
             </p>
           </div>
 
-          {/* Running Timer & Live Recording Indicator */}
+          {/* Running Timer & Live Ingestion Indicator */}
           <div className="flex flex-col items-center justify-center my-3">
             <span className="text-4xl sm:text-5xl lg:text-[52px] leading-none font-semibold tracking-[-0.5px] text-white/95 font-mono tabular-nums select-none">
               {formattedTimer}
             </span>
             <div className="flex items-center gap-2 mt-2">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
               </span>
               <span className="text-xs tracking-wide text-white/80 font-medium">
-                Recording
+                Ingestion Live · 0 Errors
               </span>
             </div>
           </div>
 
-          {/* Continuous Audio Waveform Conveyor Belt Stream */}
+          {/* Continuous Audio/Data Waveform Conveyor Belt Stream */}
           <div className="w-full overflow-hidden my-3 py-1">
             <div className="animate-waveform-scroll gap-1 items-center h-14">
               {/* First Track Segment */}
@@ -173,54 +191,54 @@ export default function SelectedWorkSection() {
             {/* Chip Buttons Row */}
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 mb-3 text-xs">
               <button
-                onClick={() => setActiveLeftChip("Assist")}
+                onClick={() => setActiveLeftChip("Ingestion")}
                 className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  leftActiveChip === "Assist"
+                  leftActiveChip === "Ingestion"
                     ? "bg-white/25 text-white shadow-xs"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span>✦</span>
-                <span>Assist</span>
+                <span>Ingestion</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/30" />
 
               <button
-                onClick={() => setActiveLeftChip("Say")}
+                onClick={() => setActiveLeftChip("Automate")}
                 className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  leftActiveChip === "Say"
+                  leftActiveChip === "Automate"
                     ? "bg-white/25 text-white shadow-xs"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span>🪄</span>
-                <span>What should I say?</span>
+                <span>Power Automate</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/30" />
 
               <button
-                onClick={() => setActiveLeftChip("Questions")}
+                onClick={() => setActiveLeftChip("Sync")}
                 className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  leftActiveChip === "Questions"
+                  leftActiveChip === "Sync"
                     ? "bg-white/25 text-white shadow-xs"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span>💬</span>
-                <span>Follow-up questions</span>
+                <span>SharePoint Sync</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/30" />
 
               <button
-                onClick={() => setActiveLeftChip("Recap")}
+                onClick={() => setActiveLeftChip("Retry")}
                 className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  leftActiveChip === "Recap"
+                  leftActiveChip === "Retry"
                     ? "bg-white/25 text-white shadow-xs"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span>🔄</span>
-                <span>Recap</span>
+                <span>Retry Policy</span>
               </button>
             </div>
 
@@ -228,7 +246,7 @@ export default function SelectedWorkSection() {
             <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-black/45 border border-white/15 text-xs">
               <div className="text-white/75 truncate font-mono text-[11px] flex items-center gap-1.5">
                 <span>{leftPromptMap[leftActiveChip]}</span>
-                {leftActiveChip === "Assist" && (
+                {leftActiveChip === "Ingestion" && (
                   <span className="inline-flex items-center gap-1 ml-1">
                     <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
                       ⌘
@@ -251,7 +269,7 @@ export default function SelectedWorkSection() {
           </div>
         </div>
 
-        {/* Right Card: Soft Glass / Periwinkle Container (Gitex - Matches Cluely Right Card) */}
+        {/* Right Card: Cal Poly CSSE (Undergraduate Systems & AI Researcher) */}
         <div
           className="relative flex flex-col justify-between gap-6 rounded-3xl p-7 sm:p-9 lg:p-10 overflow-hidden shadow-lg border border-[#36393F]/10"
           style={{
@@ -261,16 +279,22 @@ export default function SelectedWorkSection() {
         >
           {/* Card Title & Description */}
           <div>
+            <div className="flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-wider text-[#4e95ff] mb-2.5">
+              <GraduationCap className="w-3.5 h-3.5" />
+              <span>Cal Poly CSSE // Undergraduate Researcher</span>
+            </div>
+
             <h3 className="text-2xl sm:text-[28px] leading-tight font-medium tracking-[-0.5px] text-[#19191d] flex items-center flex-wrap gap-2 mb-3">
-              <span>When you need help, Gitex</span>
+              <span>When researchers need rigor, CSSE</span>
               <span className="-mx-0.5 inline-flex -translate-y-0.5 items-center gap-1.5 rounded-[110px] bg-white px-2.5 py-0.5 align-middle shadow-xs border border-slate-200/80 text-xs sm:text-sm font-medium text-[#19191d]">
                 <Sparkles className="w-3.5 h-3.5 text-[#4e95ff]" />
                 <span>assists</span>
               </span>
-              <span>you instantly</span>
+              <span>instantly</span>
             </h3>
             <p className="text-[#686a71] text-sm sm:text-[15px] leading-relaxed font-normal max-w-lg">
-              Hit Cmd/Ctrl + Enter and Gitex helps you with AI in the moment.
+              Hit Cmd/Ctrl + Enter and the research runner verifies experiment
+              reproducibility with bit-for-bit determinism.
             </p>
           </div>
 
@@ -306,74 +330,74 @@ export default function SelectedWorkSection() {
             {/* Top Prompt Pill */}
             <div className="flex justify-end mb-3">
               <div className="w-fit rounded-xl rounded-br-xs px-3 py-1.5 text-xs font-semibold text-white bg-[#0544a9] shadow-[inset_0_1px_0_rgba(129,182,255,0.4)]">
-                Assist
+                Deterministic
               </div>
             </div>
 
-            {/* AI Response Output */}
+            {/* AI / Systems Response Output */}
             <div className="text-xs sm:text-[13px] text-white/90 leading-relaxed font-normal mb-5 space-y-2">
-              <div className="text-white/40 text-[11px] font-mono">
-                Viewed screen · verified AST citations
+              <div className="text-emerald-400 text-[11px] font-mono">
+                100% Verified Reproducibility · Subprocess Isolation
               </div>
               <p>
-                Gitex is an AI meeting and engineering assistant that listens in
-                real time, understands what&apos;s being said, and gives you
-                instant answers, notes, and next steps, all while staying
-                completely undetectable on your screen.
+                Engineered automated benchmarking harnesses for university AI
+                and software engineering faculty. Isolates subprocess memory,
+                locks PRNG seeds, and streams live telemetry into long-running
+                experimental simulations.
               </p>
             </div>
 
             {/* Action Chips Row */}
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-4 text-xs">
               <button
-                onClick={() => setActiveRightChip("Assist")}
+                onClick={() => setActiveRightChip("Determinism")}
                 className={`flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full transition cursor-pointer ${
-                  rightActiveChip === "Assist"
+                  rightActiveChip === "Determinism"
                     ? "bg-white/20 text-white font-medium"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span className="text-[#b2b3ba]">✦</span>
-                <span>Assist</span>
+                <span>Determinism</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/20" />
 
               <button
-                onClick={() => setActiveRightChip("Say")}
+                onClick={() => setActiveRightChip("Isolation")}
                 className={`flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full transition cursor-pointer ${
-                  rightActiveChip === "Say"
+                  rightActiveChip === "Isolation"
                     ? "bg-white/20 text-white font-medium"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span className="text-[#b2b3ba]">🪄</span>
-                <span>What should I say?</span>
+                <span>Subprocess Isolation</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/20" />
 
               <button
-                onClick={() => setActiveRightChip("Questions")}
+                onClick={() => setActiveRightChip("Pytest")}
                 className={`flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full transition cursor-pointer ${
-                  rightActiveChip === "Questions"
+                  rightActiveChip === "Pytest"
                     ? "bg-white/20 text-white font-medium"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span className="text-[#b2b3ba]">💬</span>
-                <span>Follow-up questions</span>
+                <span>Pytest Suites</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/20" />
 
               <button
-                onClick={() => setActiveRightChip("Recap")}
+                onClick={() => setActiveRightChip("Telemetry")}
                 className={`flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full transition cursor-pointer ${
-                  rightActiveChip === "Recap"
+                  rightActiveChip === "Telemetry"
                     ? "bg-white/20 text-white font-medium"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span className="text-[#b2b3ba]">🔄</span>
-                <span>Recap</span>
+                <span>Checkpoint Telemetry</span>
               </button>
             </div>
 
@@ -381,7 +405,7 @@ export default function SelectedWorkSection() {
             <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs">
               <div className="text-white/75 truncate font-mono text-[11px] flex items-center gap-1.5">
                 <span>{rightPromptMap[rightActiveChip]}</span>
-                {rightActiveChip === "Assist" && (
+                {rightActiveChip === "Determinism" && (
                   <span className="inline-flex items-center gap-1 ml-1">
                     <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
                       ⌘
