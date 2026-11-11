@@ -1,22 +1,19 @@
 import { useState } from "react"
-import { FileText, Menu, X } from "lucide-react"
+import { FileText, Menu, X, ArrowUpRight } from "lucide-react"
 
 interface NavbarProps {
-  activeSection: string
   onNavigate: (sectionId: string) => void
 }
 
 const NAV_ITEMS = [
-  { id: "top", label: "Home" },
+  { id: "systems", label: "Systems" },
   { id: "projects", label: "Projects" },
   { id: "experience", label: "Experience" },
-  { id: "tools", label: "Tools" },
   { id: "blog", label: "Blog" },
-  { id: "thoughts", label: "Thoughts" },
-  { id: "contact", label: "Contact" },
+  { id: "faq", label: "FAQ" },
 ]
 
-export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
+export default function Navbar({ onNavigate }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const handleLinkClick = (id: string) => {
@@ -25,53 +22,72 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
   }
 
   return (
-    <header className="fixed top-5 left-1/2 -translate-x-1/2 z-50">
-      <nav className="solid-nav">
-        {NAV_ITEMS.map((item) => {
-          const isActive = activeSection === item.id
-          return (
-            <button
-              key={item.id}
-              onClick={() => handleLinkClick(item.id)}
-              className={isActive ? "is-active font-semibold" : ""}
-            >
-              {item.label}
-            </button>
-          )
-        })}
-
-        <a
-          href="/ADRIAN_CARDONA_RESUME.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden sm:inline-flex items-center gap-1 text-[#f46c38] font-medium"
-        >
-          <FileText className="w-3.5 h-3.5" />
-          <span>Resume</span>
-        </a>
-
-        {/* Mobile menu toggle */}
+    <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-slate-100 transition-all">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        {/* Brand */}
         <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="sm:hidden text-neutral-400 hover:text-white p-1"
-          aria-label="Toggle navigation"
+          onClick={() => handleLinkClick("top")}
+          className="text-left font-bold text-slate-900 tracking-tight text-base sm:text-lg flex items-center gap-2 focus:outline-none"
         >
-          {mobileMenuOpen ? (
-            <X className="w-4 h-4" />
-          ) : (
-            <Menu className="w-4 h-4" />
-          )}
+          <span className="w-2.5 h-2.5 rounded-full bg-blue-600" />
+          <span>Adrian Cardona</span>
         </button>
-      </nav>
 
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="sm:hidden mt-2 bg-[#1c1a19] border border-[#2e2b29] rounded-xl p-3 shadow-2xl flex flex-col gap-1 w-64 mx-auto animate-in fade-in duration-150">
+        {/* Desktop Links */}
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
           {NAV_ITEMS.map((item) => (
             <button
               key={item.id}
               onClick={() => handleLinkClick(item.id)}
-              className="text-left px-3 py-2 rounded-lg text-sm text-[#998f8f] hover:text-white hover:bg-[#252220] transition"
+              className="hover:text-slate-900 transition focus:outline-none"
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
+
+        {/* Right CTA */}
+        <div className="flex items-center gap-3">
+          <a
+            href="/ADRIAN_CARDONA_RESUME.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-full hover:bg-slate-100 transition"
+          >
+            <FileText className="w-3.5 h-3.5" />
+            <span>Resume</span>
+          </a>
+
+          <button
+            onClick={() => handleLinkClick("contact")}
+            className="btn-primary !text-xs !py-1.5 !px-4"
+          >
+            <span>Get in Touch</span>
+          </button>
+
+          {/* Mobile menu toggle */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden text-slate-600 hover:text-slate-900 p-1"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white border-b border-slate-200 px-4 py-4 flex flex-col gap-2 shadow-lg animate-in fade-in duration-150">
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => handleLinkClick(item.id)}
+              className="text-left px-3 py-2 rounded-lg text-sm text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium"
             >
               {item.label}
             </button>
@@ -80,10 +96,10 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
             href="/ADRIAN_CARDONA_RESUME.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-3 py-2 text-sm text-[#f46c38] border-t border-[#2e2b29] mt-1"
+            className="flex items-center justify-between px-3 py-2 text-sm font-medium text-slate-700 hover:text-blue-600"
           >
-            <FileText className="w-3.5 h-3.5" />
-            <span>Resume (PDF)</span>
+            <span>View Resume (PDF)</span>
+            <ArrowUpRight className="w-4 h-4 opacity-50" />
           </a>
         </div>
       )}

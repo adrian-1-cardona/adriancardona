@@ -62,24 +62,24 @@ export default function BlogReaderModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/90">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 md:p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-150">
       {/* Top Reading Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-[#2a2725] z-50">
+      <div className="fixed top-0 left-0 right-0 h-1 bg-slate-200 z-50">
         <div
-          className="h-full bg-[#f46c38] transition-all duration-150"
+          className="h-full bg-blue-600 transition-all duration-150"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
 
       <div
         onScroll={handleScroll}
-        className="relative w-full h-full sm:h-auto sm:max-h-[92vh] sm:max-w-3xl bg-[#1c1a19] border border-[#2e2b29] sm:rounded-2xl overflow-y-auto shadow-2xl flex flex-col"
+        className="relative w-full h-full sm:h-auto sm:max-h-[92vh] sm:max-w-3xl bg-white border border-slate-200 sm:rounded-2xl overflow-y-auto shadow-2xl flex flex-col"
       >
         {/* Reader Top Bar */}
-        <div className="sticky top-0 z-40 px-6 py-4 bg-[#1c1a19] border-b border-[#2e2b29] flex items-center justify-between">
+        <div className="sticky top-0 z-40 px-6 py-4 bg-white/95 backdrop-blur-md border-b border-slate-200 flex items-center justify-between">
           <button
             onClick={onClose}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-[#998f8f] hover:text-white transition focus:outline-none"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 transition focus:outline-none"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>All Articles</span>
@@ -88,13 +88,13 @@ export default function BlogReaderModal({
           <div className="flex items-center gap-3">
             <button
               onClick={handleCopyShare}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#242220] hover:bg-[#2c2927] border border-[#35312e] text-xs text-[#998f8f] hover:text-white transition focus:outline-none"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-xs text-slate-700 transition focus:outline-none font-medium"
               title="Copy link to article"
             >
               {copiedLink ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-emerald-400">Copied</span>
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="text-emerald-600">Copied</span>
                 </>
               ) : (
                 <>
@@ -106,7 +106,7 @@ export default function BlogReaderModal({
 
             <button
               onClick={onClose}
-              className="p-1 rounded text-[#998f8f] hover:text-white transition focus:outline-none"
+              className="p-1 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition focus:outline-none"
               aria-label="Close Reader"
             >
               <X className="w-5 h-5" />
@@ -117,9 +117,9 @@ export default function BlogReaderModal({
         {/* Reader Content Body */}
         <article className="p-6 sm:p-10 md:p-12 max-w-2xl mx-auto w-full">
           {/* Article Header */}
-          <div className="mb-8 text-left border-b border-[#2e2b29] pb-6">
-            <div className="flex items-center gap-3 mb-3 text-xs text-[#998f8f]">
-              <span className="font-semibold uppercase tracking-wider text-[#f46c38]">
+          <div className="mb-8 text-left border-b border-slate-100 pb-6">
+            <div className="flex items-center gap-3 mb-3 text-xs text-slate-500 font-medium">
+              <span className="text-blue-600 font-semibold uppercase tracking-wider">
                 {post.category}
               </span>
               <span>·</span>
@@ -134,22 +134,21 @@ export default function BlogReaderModal({
               </div>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight leading-snug mb-3">
+            <h1 className="text-2xl sm:text-4xl font-normal font-display text-slate-900 tracking-tight leading-snug mb-3">
               {post.title}
             </h1>
 
-            <p className="text-base sm:text-lg text-[#998f8f] font-normal leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-600 font-normal leading-relaxed">
               {post.subtitle}
             </p>
 
-            {/* Author Attribution (Monogram, NO photo) */}
-            <div className="flex items-center gap-3 mt-6 pt-4 border-t border-[#2e2b29]">
-              <div className="w-8 h-8 rounded-lg bg-[#262321] border border-[#35312e] flex items-center justify-center text-xs font-bold text-white tracking-wider">
-                AC
-              </div>
+            {/* Author Attribution (Clean text, no photo) */}
+            <div className="flex items-center gap-3 mt-6 pt-4 border-t border-slate-100">
               <div className="text-left text-xs">
-                <div className="font-semibold text-white">Adrian Cardona</div>
-                <div className="text-[#998f8f]">
+                <div className="font-semibold text-slate-900">
+                  Adrian Cardona
+                </div>
+                <div className="text-slate-500">
                   Undergraduate Researcher · Cal Poly SLO
                 </div>
               </div>
@@ -157,20 +156,18 @@ export default function BlogReaderModal({
           </div>
 
           {/* Key Insights Box */}
-          <div className="rounded-xl p-5 bg-[#242220] border border-[#35312e] mb-8 text-left">
-            <div className="text-xs font-bold uppercase tracking-wider text-[#f46c38] mb-2.5">
+          <div className="rounded-xl p-5 bg-blue-50/60 border border-blue-100 mb-8 text-left">
+            <div className="text-xs font-bold uppercase tracking-wider text-blue-700 mb-2.5">
               Key Engineering Insights
             </div>
             <ul className="space-y-2">
               {post.keyTakeaways.map((item, idx) => (
                 <li
                   key={idx}
-                  className="flex items-start gap-2.5 text-xs sm:text-sm text-[#998f8f]"
+                  className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700"
                 >
-                  <span className="text-[#f46c38] font-bold shrink-0">•</span>
-                  <span className="leading-relaxed text-neutral-200">
-                    {item}
-                  </span>
+                  <span className="text-blue-600 font-bold shrink-0">•</span>
+                  <span className="leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>
@@ -180,35 +177,35 @@ export default function BlogReaderModal({
           <div className="space-y-8 text-left">
             {post.sections.map((section, sIdx) => (
               <section key={sIdx} className="space-y-3">
-                <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
                   {section.heading}
                 </h2>
 
                 {section.paragraphs.map((p, pIdx) => (
                   <p
                     key={pIdx}
-                    className="text-[#998f8f] text-sm sm:text-base leading-relaxed font-normal"
+                    className="text-slate-600 text-sm sm:text-base leading-relaxed font-normal"
                   >
                     {p}
                   </p>
                 ))}
 
                 {section.codeBlock && (
-                  <div className="my-4 rounded-xl bg-[#151312] border border-[#2e2b29] overflow-hidden">
-                    <div className="px-4 py-2 bg-[#201e1d] border-b border-[#2e2b29] text-xs font-mono text-[#998f8f] flex items-center justify-between">
+                  <div className="my-4 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden shadow-sm">
+                    <div className="px-4 py-2 bg-slate-950 border-b border-slate-800 text-xs font-mono text-slate-400 flex items-center justify-between">
                       <span>{section.codeBlock.title}</span>
-                      <span className="uppercase text-[10px] text-[#6a6b6e] font-medium">
+                      <span className="uppercase text-[10px] text-slate-500 font-medium">
                         {section.codeBlock.language}
                       </span>
                     </div>
-                    <pre className="p-4 font-mono text-xs leading-relaxed overflow-x-auto text-neutral-300">
+                    <pre className="p-4 font-mono text-xs leading-relaxed overflow-x-auto text-slate-200">
                       <code>{section.codeBlock.code}</code>
                     </pre>
                   </div>
                 )}
 
                 {section.callout && (
-                  <blockquote className="my-4 pl-4 border-l-2 border-[#f46c38] text-neutral-300 text-sm sm:text-base bg-[#201e1d] p-3 rounded-r-lg">
+                  <blockquote className="my-4 pl-4 border-l-2 border-blue-600 text-slate-700 text-sm sm:text-base bg-blue-50/40 p-3 rounded-r-lg">
                     {section.callout}
                   </blockquote>
                 )}
@@ -217,26 +214,26 @@ export default function BlogReaderModal({
           </div>
 
           {/* Next Article Card */}
-          <div className="mt-12 pt-8 border-t border-[#2e2b29] text-left">
-            <div className="text-xs uppercase tracking-wider text-[#6a6b6e] font-semibold mb-2">
+          <div className="mt-12 pt-8 border-t border-slate-100 text-left">
+            <div className="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">
               Read Next
             </div>
             <button
               onClick={() => onSelectPost(nextPost)}
-              className="w-full text-left p-5 rounded-xl bg-[#201e1d] hover:bg-[#252221] border border-[#2e2b29] transition flex items-center justify-between group focus:outline-none"
+              className="w-full text-left p-5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 transition flex items-center justify-between group focus:outline-none"
             >
               <div>
-                <div className="text-xs text-[#f46c38] font-medium mb-1">
+                <div className="text-xs text-blue-600 font-medium mb-1">
                   {nextPost.category}
                 </div>
-                <div className="text-base sm:text-lg font-bold text-white group-hover:text-neutral-200 transition">
+                <div className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-600 transition">
                   {nextPost.title}
                 </div>
-                <div className="text-xs text-[#998f8f] mt-1">
+                <div className="text-xs text-slate-500 mt-1">
                   {nextPost.readTime}
                 </div>
               </div>
-              <ArrowRight className="w-5 h-5 text-[#998f8f] group-hover:text-white group-hover:translate-x-1 transition shrink-0 ml-4" />
+              <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition shrink-0 ml-4" />
             </button>
           </div>
         </article>

@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react"
 import Navbar from "@/components/Navbar"
-import ProfileCard from "@/components/ProfileCard"
 import Hero from "@/components/Hero"
-import ProjectsSection from "@/components/ProjectsSection"
-import ExperienceSection from "@/components/ExperienceSection"
-import ToolsSection from "@/components/ToolsSection"
+import SelectedWorkSection from "@/components/SelectedWorkSection"
+import FlagshipShowcase from "@/components/FlagshipShowcase"
+import TenetsSection from "@/components/TenetsSection"
+import TrackRecordSection from "@/components/TrackRecordSection"
 import BlogSection from "@/components/BlogSection"
-import ThoughtsSection from "@/components/ThoughtsSection"
-import ContactSection from "@/components/ContactSection"
+import FaqSection from "@/components/FaqSection"
+import CtaBanner from "@/components/CtaBanner"
 import Footer from "@/components/Footer"
 
 export default function App() {
-  const [activeSection, setActiveSection] = useState<string>("top")
   const [selectedPostSlug, setSelectedPostSlug] = useState<string | null>(null)
 
   useEffect(() => {
@@ -20,9 +19,6 @@ export default function App() {
       if (hash.startsWith("blog/")) {
         const slug = hash.replace("blog/", "")
         setSelectedPostSlug(slug)
-        setActiveSection("blog")
-      } else if (hash) {
-        setActiveSection(hash)
       }
     }
 
@@ -31,41 +27,7 @@ export default function App() {
     return () => window.removeEventListener("popstate", handleHash)
   }, [])
 
-  // IntersectionObserver for section scroll tracking
-  useEffect(() => {
-    const sections = [
-      "top",
-      "projects",
-      "experience",
-      "tools",
-      "blog",
-      "thoughts",
-      "contact",
-    ]
-    const observerOptions = {
-      root: null,
-      rootMargin: "-20% 0px -60% 0px",
-      threshold: 0,
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id)
-        }
-      })
-    }, observerOptions)
-
-    sections.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
-    })
-
-    return () => observer.disconnect()
-  }, [])
-
   const scrollToSection = (id: string) => {
-    setActiveSection(id)
     const element = document.getElementById(id)
     if (element) {
       element.scrollIntoView({
@@ -76,31 +38,50 @@ export default function App() {
     }
   }
 
+  const handleScrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
+    window.history.pushState(null, "", "#top")
+  }
+
   return (
-    <div className="min-h-screen bg-[#151312] text-white selection:bg-[#f46c38] selection:text-white font-sans antialiased">
-      {/* Top Floating Navigation Bar */}
-      <Navbar activeSection={activeSection} onNavigate={scrollToSection} />
+    <div className="min-h-screen bg-white text-slate-900 selection:bg-blue-100 selection:text-blue-900 font-sans antialiased">
+      {/* Sticky Header Navigation */}
+      <Navbar onNavigate={scrollToSection} />
 
-      {/* Two-Column Site Layout */}
-      <div className="max-w-[1140px] mx-auto px-4 sm:px-6 pt-24 pb-20 flex flex-col lg:flex-row items-start gap-12 lg:gap-16">
-        {/* Left Column: Sticky Profile Card */}
-        <ProfileCard />
+      <main>
+        {/* Hero Section with Scenic App Window Mockup */}
+        <Hero onGetInTouch={() => scrollToSection("contact")} />
 
-        {/* Right Column: Main Content Stream */}
-        <main className="flex-1 min-w-0 w-full space-y-20">
-          <Hero />
-          <ProjectsSection />
-          <ExperienceSection />
-          <ToolsSection />
-          <BlogSection
-            selectedPostSlug={selectedPostSlug}
-            onPostOpened={(slug) => setSelectedPostSlug(slug)}
-          />
-          <ThoughtsSection />
-          <ContactSection />
-          <Footer />
-        </main>
-      </div>
+        {/* Selected Systems & Architecture (2 Large Feature Cards) */}
+        <SelectedWorkSection />
+
+        {/* Flagship Research Showcase (Large Paper Document Card) */}
+        <FlagshipShowcase />
+
+        {/* Architectural Tenets (3-Column Bento Cards) */}
+        <TenetsSection />
+
+        {/* Track Record & Real-time Stats (Split View) */}
+        <TrackRecordSection />
+
+        {/* Engineering Blog (Editorial Cards & Longform Reader) */}
+        <BlogSection
+          selectedPostSlug={selectedPostSlug}
+          onPostOpened={(slug) => setSelectedPostSlug(slug)}
+        />
+
+        {/* Frequently Asked Questions (Accordion for Recruiters & Visitors) */}
+        <FaqSection />
+
+        {/* Bottom Call to Action Banner */}
+        <CtaBanner />
+      </main>
+
+      {/* 4-Column Modern Footer */}
+      <Footer onScrollTop={handleScrollTop} />
     </div>
   )
 }
