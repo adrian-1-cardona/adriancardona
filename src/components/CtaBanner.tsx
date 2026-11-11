@@ -60,12 +60,12 @@ export default function CtaBanner() {
           <img
             src="/images/cluely/command-btn.png"
             alt="Command Key"
-            className="absolute top-0 right-14 w-20 h-auto drop-shadow-xl transform -rotate-12 transition-transform"
+            className="absolute top-0 right-14 w-20 h-auto drop-shadow-xl animate-float-slow"
           />
           <img
             src="/images/cluely/return-btn.png"
             alt="Return Key"
-            className="absolute bottom-1 right-2 w-20 h-auto drop-shadow-2xl transform rotate-6 transition-transform"
+            className="absolute bottom-1 right-2 w-20 h-auto drop-shadow-2xl animate-float-reverse"
           />
         </div>
       </div>

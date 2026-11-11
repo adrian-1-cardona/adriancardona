@@ -52,10 +52,16 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
         <div className="flex items-center justify-center">
           <button
             onClick={onGetInTouch}
-            className="btn-cluely-cta cursor-pointer"
+            className="btn-cluely-cta cursor-pointer group"
           >
-            <span>Get in Touch</span>
-            <ArrowRight className="w-4 h-4" />
+            <span className="relative z-10 flex items-center gap-2">
+              <span>Get in Touch</span>
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+            </span>
+            {/* Shimmer light reflection effect */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-full">
+              <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 animate-shimmer" />
+            </div>
           </button>
         </div>
       </div>
@@ -240,24 +246,24 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
               <img
                 src="/images/cluely/launchpad.png"
                 alt="Launchpad"
-                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs transition-transform duration-200 hover:scale-125 hover:-translate-y-1 cursor-pointer"
               />
               <img
                 src="/images/cluely/safari.png"
                 alt="Safari"
-                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs transition-transform duration-200 hover:scale-125 hover:-translate-y-1 cursor-pointer"
               />
               <img
                 src="/images/cluely/settings.png"
                 alt="Settings"
-                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs transition-transform duration-200 hover:scale-125 hover:-translate-y-1 cursor-pointer"
               />
               <img
                 src="/images/cluely/zoom.png"
                 alt="Zoom"
-                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs transition-transform duration-200 hover:scale-125 hover:-translate-y-1 cursor-pointer"
               />
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#26282d] text-white flex items-center justify-center shadow-xs">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#26282d] text-white flex items-center justify-center shadow-xs transition-transform duration-200 hover:scale-125 hover:-translate-y-1 cursor-pointer">
                 <Terminal className="w-3.5 h-3.5 text-[#4e95ff]" />
               </div>
             </div>
