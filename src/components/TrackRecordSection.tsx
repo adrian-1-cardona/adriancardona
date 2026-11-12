@@ -4,7 +4,7 @@ export default function TrackRecordSection() {
   return (
     <section id="experience" className="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-        {/* Left Column: Work Experience with Company Logos */}
+        {/* Left Column: Work Experience with Official Company Logos */}
         <div
           className="lg:col-span-7 rounded-3xl p-6 sm:p-8 text-left shadow-lg border border-[#36393F]/10 relative overflow-hidden"
           style={{
@@ -105,8 +105,9 @@ export default function TrackRecordSection() {
           </div>
         </div>
 
-        {/* Right Column: Exact Resume Profile & Education */}
-        <div className="lg:col-span-5 text-left space-y-7 pl-0 lg:pl-4">
+        {/* Right Column: Balanced Profile, Education, Stats & Skills */}
+        <div className="lg:col-span-5 text-left space-y-6 pl-0 lg:pl-2">
+          {/* Profile & Contact */}
           <div>
             <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff] mb-2">
               // Education &amp; Profile
@@ -122,7 +123,7 @@ export default function TrackRecordSection() {
               <span>adriancardona.tech</span>
             </div>
 
-            {/* Education Card with Cal Poly Logo */}
+            {/* Education Card with Official Cal Poly SLO Seal */}
             <div className="p-5 rounded-2xl bg-white border border-[#e5e7eb] shadow-xs">
               <div className="flex items-start gap-3.5 mb-2">
                 <img
@@ -146,13 +147,142 @@ export default function TrackRecordSection() {
             </div>
           </div>
 
+          {/* Key Metrics 4-Grid (Matches ouckah.com/work stat banner) */}
+          <div className="grid grid-cols-2 gap-3.5">
+            <div className="p-4 rounded-2xl bg-[#f8fafc] border border-[#e5e7eb]">
+              <div className="text-3xl font-extrabold text-[#19191d] tracking-tight font-mono">
+                4
+              </div>
+              <div className="font-semibold text-[#19191d] text-xs mt-1">
+                Roles &amp; Appointments
+              </div>
+              <div className="text-[11px] text-[#686a71] mt-0.5">
+                Bailey, CSSE, FCCC, Extern
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-[#f8fafc] border border-[#e5e7eb]">
+              <div className="text-3xl font-extrabold text-[#19191d] tracking-tight font-mono">
+                3.5
+              </div>
+              <div className="font-semibold text-[#19191d] text-xs mt-1">
+                Cal Poly GPA
+              </div>
+              <div className="text-[11px] text-[#686a71] mt-0.5">
+                Out of 4.0 scale
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-[#f8fafc] border border-[#e5e7eb]">
+              <div className="text-2xl font-extrabold text-[#19191d] tracking-tight font-mono pt-1">
+                May &apos;27
+              </div>
+              <div className="font-semibold text-[#19191d] text-xs mt-1">
+                Graduation
+              </div>
+              <div className="text-[11px] text-[#686a71] mt-0.5">
+                San Luis Obispo, CA
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-[#f8fafc] border border-[#e5e7eb]">
+              <div className="text-3xl font-extrabold text-[#19191d] tracking-tight font-mono">
+                2
+              </div>
+              <div className="font-semibold text-[#19191d] text-xs mt-1">
+                Flagship Projects
+              </div>
+              <div className="text-[11px] text-[#686a71] mt-0.5">
+                Guppty &amp; Gitex
+              </div>
+            </div>
+          </div>
+
+          {/* Technical Stack Arsenal Card */}
+          <div className="p-5 rounded-2xl bg-white border border-[#e5e7eb] shadow-xs">
+            <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#19191d] mb-3">
+              Technical Arsenal
+            </div>
+
+            <div className="space-y-2.5 text-xs">
+              <div>
+                <div className="text-[11px] font-mono text-[#9ca3af] mb-1">
+                  Languages
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {[
+                    "TypeScript",
+                    "Python",
+                    "Rust",
+                    "JavaScript",
+                    "SQL",
+                    "HTML/CSS",
+                  ].map((lang) => (
+                    <span
+                      key={lang}
+                      className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[11px]"
+                    >
+                      {lang}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="text-[11px] font-mono text-[#9ca3af] mb-1">
+                  Systems &amp; Cloud
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {[
+                    "SharePoint",
+                    "Power Automate",
+                    "OneDrive",
+                    "Drupal",
+                    "CI/CD",
+                    "Git",
+                  ].map((sys) => (
+                    <span
+                      key={sys}
+                      className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[11px]"
+                    >
+                      {sys}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="text-[11px] font-mono text-[#9ca3af] mb-1">
+                  AI, Frameworks &amp; Tooling
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {[
+                    "React",
+                    "Gemini API",
+                    "LlamaIndex",
+                    "Codex",
+                    "pytest",
+                    "Tailwind CSS",
+                  ].map((ai) => (
+                    <span
+                      key={ai}
+                      className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[11px]"
+                    >
+                      {ai}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Action Links */}
-          <div className="space-y-2.5">
+          <div className="space-y-2.5 pt-1">
             <a
               href="/ADRIAN_CARDONA_RESUME.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-4 rounded-xl bg-white border border-[#e5e7eb] text-sm font-semibold text-[#19191d] hover:border-[#4e95ff] hover:text-[#4e95ff] shadow-xs transition"
+              className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-[#e5e7eb] text-sm font-semibold text-[#19191d] hover:border-[#4e95ff] hover:text-[#4e95ff] shadow-xs transition"
             >
               <span>Download Resume (PDF)</span>
               <span className="text-xs font-mono text-[#4e95ff]">↗</span>
@@ -161,7 +291,7 @@ export default function TrackRecordSection() {
               href="https://github.com/adrian-1-cardona"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-4 rounded-xl bg-white border border-[#e5e7eb] text-sm font-semibold text-[#19191d] hover:border-[#4e95ff] hover:text-[#4e95ff] shadow-xs transition"
+              className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-[#e5e7eb] text-sm font-semibold text-[#19191d] hover:border-[#4e95ff] hover:text-[#4e95ff] shadow-xs transition"
             >
               <span>GitHub (adrian-1-cardona)</span>
               <span className="text-xs font-mono text-[#4e95ff]">↗</span>
@@ -170,7 +300,7 @@ export default function TrackRecordSection() {
               href="https://linkedin.com/in/adrian-cardona"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-4 rounded-xl bg-white border border-[#e5e7eb] text-sm font-semibold text-[#19191d] hover:border-[#4e95ff] hover:text-[#4e95ff] shadow-xs transition"
+              className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-[#e5e7eb] text-sm font-semibold text-[#19191d] hover:border-[#4e95ff] hover:text-[#4e95ff] shadow-xs transition"
             >
               <span>LinkedIn (/in/adrian-cardona)</span>
               <span className="text-xs font-mono text-[#4e95ff]">↗</span>

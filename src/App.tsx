@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import Navbar from "@/components/Navbar"
 import Hero from "@/components/Hero"
 import SelectedWorkSection from "@/components/SelectedWorkSection"
-import FlagshipShowcase from "@/components/FlagshipShowcase"
 import TenetsSection from "@/components/TenetsSection"
 import TrackRecordSection from "@/components/TrackRecordSection"
 import BlogSection from "@/components/BlogSection"
@@ -52,19 +51,16 @@ export default function App() {
       <Navbar onNavigate={scrollToSection} />
 
       <main>
-        {/* Hero Section with Scenic App Window Mockup */}
+        {/* Hero Section with Live Code Execution Mockup */}
         <Hero onGetInTouch={() => scrollToSection("contact")} />
 
-        {/* Experience & Track Record (Starts with Adrian's Experience) */}
+        {/* Experience & Track Record (#1 Priority with Company Logos) */}
         <TrackRecordSection />
 
-        {/* Selected Systems & Architecture (2 Large Feature Cards) */}
+        {/* Interactive Flagship Projects: Guppty (Rust VM) & Gitex (Codebase AI) */}
         <SelectedWorkSection />
 
-        {/* Flagship Research Showcase (Large Paper Document Card) */}
-        <FlagshipShowcase />
-
-        {/* Architectural Tenets (3-Column Bento Cards) */}
+        {/* Architectural Tenets & Engineering Philosophy */}
         <TenetsSection />
 
         {/* Engineering Blog (Editorial Cards & Longform Reader) */}
@@ -73,7 +69,7 @@ export default function App() {
           onPostOpened={(slug) => setSelectedPostSlug(slug)}
         />
 
-        {/* Frequently Asked Questions (Accordion for Recruiters & Visitors) */}
+        {/* Frequently Asked Questions */}
         <FaqSection />
 
         {/* Bottom Call to Action Banner */}
