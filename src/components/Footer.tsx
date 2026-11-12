@@ -8,12 +8,12 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
         <div>
           <button
             onClick={onScrollTop}
-            className="font-bold text-[#37383c] tracking-tight text-base flex items-center gap-2 mb-2 focus:outline-none cursor-pointer"
+            className="font-bold text-[#111827] tracking-tight text-base flex items-center gap-2 mb-2 focus:outline-none cursor-pointer"
           >
-            <span className="w-2.5 h-2.5 rounded-full bg-[#4e95ff]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#111827]" />
             <span>Adrian Cardona</span>
           </button>
-          <p className="text-xs text-[#686a71] leading-relaxed max-w-xs mb-4">
+          <p className="text-xs text-[#4b5563] leading-relaxed max-w-xs mb-4">
             Undergraduate researcher at Cal Poly San Luis Obispo building
             high-performance systems and intelligent infrastructure.
           </p>
@@ -24,19 +24,19 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
 
         {/* Col 2: Systems */}
         <div>
-          <div className="font-semibold text-xs uppercase tracking-wider text-[#37383c] mb-3">
+          <div className="font-semibold text-xs uppercase tracking-wider text-[#111827] mb-3">
             Systems &amp; Software
           </div>
-          <ul className="space-y-2 text-xs text-[#686a71]">
+          <ul className="space-y-2 text-xs text-[#4b5563]">
             <li>
               <a
                 href="https://adrian-1-cardona.github.io/Guppty/#installation"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-[#4e95ff] transition inline-flex items-center gap-1"
+                className="hover:text-black transition inline-flex items-center gap-1 group"
               >
                 <span>Guppty Bytecode VM</span>
-                <span className="text-[11px] font-mono text-[#4e95ff]">↗</span>
+                <span className="text-[11px] font-mono text-[#9ca3af] group-hover:text-black transition">↗</span>
               </a>
             </li>
             <li>
@@ -44,10 +44,10 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 href="https://gitex.dev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-[#4e95ff] transition inline-flex items-center gap-1"
+                className="hover:text-black transition inline-flex items-center gap-1 group"
               >
-                <span>Gitex Codebase AI</span>
-                <span className="text-[11px] font-mono text-[#4e95ff]">↗</span>
+                <span>Gitex Codebase Q&amp;A</span>
+                <span className="text-[11px] font-mono text-[#9ca3af] group-hover:text-black transition">↗</span>
               </a>
             </li>
             <li>
@@ -55,10 +55,10 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 href="https://github.com/adrian-1-cardona"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-[#4e95ff] transition inline-flex items-center gap-1"
+                className="hover:text-black transition inline-flex items-center gap-1 group"
               >
                 <span>CSSE Experiment Runner</span>
-                <span className="text-[11px] font-mono text-[#4e95ff]">↗</span>
+                <span className="text-[11px] font-mono text-[#9ca3af] group-hover:text-black transition">↗</span>
               </a>
             </li>
           </ul>
@@ -66,27 +66,27 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
 
         {/* Col 3: Research & Writing */}
         <div>
-          <div className="font-semibold text-xs uppercase tracking-wider text-[#37383c] mb-3">
+          <div className="font-semibold text-xs uppercase tracking-wider text-[#111827] mb-3">
             Research &amp; Notes
           </div>
-          <ul className="space-y-2 text-xs text-[#686a71]">
+          <ul className="space-y-2 text-xs text-[#4b5563]">
             <li>
-              <a href="#blog" className="hover:text-[#4e95ff] transition">
+              <a href="#blog" className="hover:text-black transition">
                 Bytecode VM in Rust
               </a>
             </li>
             <li>
-              <a href="#blog" className="hover:text-[#4e95ff] transition">
+              <a href="#blog" className="hover:text-black transition">
                 Hallucination-free RAG
               </a>
             </li>
             <li>
-              <a href="#blog" className="hover:text-[#4e95ff] transition">
+              <a href="#blog" className="hover:text-black transition">
                 Deterministic Benchmarks
               </a>
             </li>
             <li>
-              <a href="#blog" className="hover:text-[#4e95ff] transition">
+              <a href="#blog" className="hover:text-black transition">
                 The Quiet Engineering Doctrine
               </a>
             </li>
@@ -95,19 +95,19 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
 
         {/* Col 4: Connect */}
         <div>
-          <div className="font-semibold text-xs uppercase tracking-wider text-[#37383c] mb-3">
+          <div className="font-semibold text-xs uppercase tracking-wider text-[#111827] mb-3">
             Connect &amp; Documents
           </div>
-          <ul className="space-y-2 text-xs text-[#686a71]">
+          <ul className="space-y-2 text-xs text-[#4b5563]">
             <li>
               <a
                 href={PROFILE.links.resume}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-[#4e95ff] transition inline-flex items-center gap-1 font-medium text-[#4e95ff]"
+                className="hover:text-black transition inline-flex items-center gap-1 font-medium text-[#111827] group"
               >
                 <span>Curriculum Vitae (PDF)</span>
-                <span className="text-[11px] font-mono">↗</span>
+                <span className="text-[11px] font-mono text-[#9ca3af] group-hover:text-black transition">↗</span>
               </a>
             </li>
             <li>
@@ -115,10 +115,10 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 href={PROFILE.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-[#4e95ff] transition inline-flex items-center gap-1"
+                className="hover:text-black transition inline-flex items-center gap-1 group"
               >
                 <span>LinkedIn</span>
-                <span className="text-[11px] font-mono text-[#686a71]">↗</span>
+                <span className="text-[11px] font-mono text-[#9ca3af] group-hover:text-black transition">↗</span>
               </a>
             </li>
             <li>
@@ -126,16 +126,16 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 href={PROFILE.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-[#4e95ff] transition inline-flex items-center gap-1"
+                className="hover:text-black transition inline-flex items-center gap-1 group"
               >
                 <span>GitHub</span>
-                <span className="text-[11px] font-mono text-[#686a71]">↗</span>
+                <span className="text-[11px] font-mono text-[#9ca3af] group-hover:text-black transition">↗</span>
               </a>
             </li>
             <li>
               <a
                 href={`mailto:${PROFILE.email}`}
-                className="hover:text-[#4e95ff] transition"
+                className="hover:text-black transition"
               >
                 {PROFILE.email}
               </a>

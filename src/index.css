@@ -229,15 +229,12 @@ body {
   will-change: transform;
 }
 
-/* Authentic Cluely Section Heading Metallic Gradient */
+/* Clean High-Contrast Section Heading (No Muddy Gradients) */
 .section-heading {
-  background: linear-gradient(to right, #19191d 0%, #4b4b5c 50%, #626275 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #111827;
 }
 
-/* Authentic Cluely Feature Card Metallic Gradient Frame */
+/* Clean Feature Card Frame */
 .card-cluely-frame {
   background-image: radial-gradient(92.09% 126.39% at 50% 100%, #dde2ee 58.91%, #bbc5dd 100%);
   border-radius: 24px;
@@ -246,12 +243,9 @@ body {
   padding: 1.25rem;
 }
 
-/* Authentic Cluely Bottom Banner Metallic Subtext Gradient */
+/* Solid Subtext (No Gradient Text) */
 .banner-gradient-text {
-  background: linear-gradient(96.56deg, #667799 21.01%, #94a0b8 34.62%, #667799 47.64%, #667799 69.29%, #94a0b8 79.76%, #667799 90.35%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #4b5563;
 }
 
 /* Audio Waveform Bounce Animation */

@@ -111,14 +111,14 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                   <span className="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block" />
                   <span className="w-3 h-3 rounded-full bg-[#27c93f] inline-block" />
                   <span className="text-xs font-mono text-slate-400 ml-2">
-                    cal-poly-bailey // pipeline/ingest.ts
+                    cal-poly-bailey · pipeline/ingest.ts
                   </span>
                 </div>
 
                 <button
                   onClick={handleRunSimulation}
                   disabled={isRunning}
-                  className="btn-cluely-cta !text-xs !py-1 !px-3.5 cursor-pointer"
+                  className="px-3.5 py-1 rounded-lg bg-[#374151] hover:bg-[#4b5563] text-white text-xs font-mono transition cursor-pointer flex items-center gap-1.5"
                 >
                   <span className="text-[10px]">▶</span>
                   <span>
@@ -135,7 +135,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                     // Resumable media migration pipeline at Cal Poly Bailey College
                   </div>
                   <div>
-                    <span className="text-[#4e95ff]">
+                    <span className="text-purple-400">
                       export async function
                     </span>{" "}
                     migrateBatch(records: MediaRecord[]) {"{"}
@@ -151,7 +151,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                   </div>
                   <div className="pl-4 text-slate-400">{"});"}</div>
                   <div className="pl-4">
-                    <span className="text-[#4e95ff]">return</span>{" "}
+                    <span className="text-purple-400">return</span>{" "}
                     pipeline.execute( async (record) =&gt; {"{"}
                   </div>
                   <div className="pl-8 text-slate-400">
@@ -197,7 +197,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                       </div>
                       <div className="flex justify-between py-1">
                         <span className="text-slate-400">Write Safety:</span>
-                        <span className="text-[#4e95ff]">
+                        <span className="text-slate-200">
                           Collision-Safe Writes
                         </span>
                       </div>
@@ -221,7 +221,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
             <div className="mt-4 sm:-mt-6 z-20 w-full max-w-xl rounded-2xl bg-black/60 border border-white/25 p-4 text-left backdrop-blur-xl shadow-2xl text-white">
               <div className="flex items-center justify-between text-xs text-white/70 mb-2">
                 <span className="font-semibold text-white">
-                  Cal Poly Bailey College // Web Development Intern
+                  Cal Poly Bailey College · Web Development Intern
                 </span>
                 <span className="font-mono text-[10px] bg-white/10 px-2 py-0.5 rounded text-white/80">
                   Jan 2026 – Present
@@ -257,7 +257,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                 alt="Zoom"
                 className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs transition-transform duration-200 hover:scale-125 hover:-translate-y-1 cursor-pointer"
               />
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#26282d] text-white flex items-center justify-center shadow-xs transition-transform duration-200 hover:scale-125 hover:-translate-y-1 cursor-pointer font-mono text-xs text-[#4e95ff] font-bold">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#26282d] text-white flex items-center justify-center shadow-xs transition-transform duration-200 hover:scale-125 hover:-translate-y-1 cursor-pointer font-mono text-xs text-slate-200 font-bold">
                 &gt;_
               </div>
             </div>

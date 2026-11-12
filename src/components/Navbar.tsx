@@ -86,7 +86,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
           {scrolled && (
             <button
               onClick={() => handleLinkClick("contact")}
-              className="btn-cluely-cta !text-xs !py-1.5 !px-4 animate-in fade-in cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#111827] text-white text-xs font-semibold hover:bg-black transition shadow-xs cursor-pointer animate-in fade-in"
             >
               <span>Get in Touch</span>
             </button>
@@ -118,7 +118,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             <button
               key={item.id}
               onClick={() => handleLinkClick(item.id)}
-              className="text-left px-3 py-2 rounded-lg text-sm text-[#37383c] hover:text-[#4e95ff] hover:bg-slate-50 font-medium cursor-pointer"
+              className="text-left px-3 py-2 rounded-lg text-sm text-[#37383c] hover:text-black hover:bg-slate-50 font-medium cursor-pointer"
             >
               {item.label}
             </button>
@@ -127,7 +127,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             href="/ADRIAN_CARDONA_RESUME.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between px-3 py-2 text-sm font-medium text-[#37383c] hover:text-[#4e95ff]"
+            className="flex items-center justify-between px-3 py-2 text-sm font-medium text-[#37383c] hover:text-black"
           >
             <span>View Resume (PDF)</span>
             <span className="text-xs opacity-60">↗</span>

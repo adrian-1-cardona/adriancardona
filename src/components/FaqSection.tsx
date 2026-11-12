@@ -52,13 +52,10 @@ export default function FaqSection() {
     >
       {/* Centered Heading */}
       <div className="text-center mb-12">
-        <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff] mb-2">
-          // Q&amp;A
-        </div>
-        <h2 className="font-display text-3xl sm:text-4xl lg:text-[44px] font-medium text-[#19191d] tracking-[-0.5px] leading-tight mb-2">
+        <h2 className="font-display text-3xl sm:text-4xl lg:text-[38px] font-medium text-[#111827] tracking-tight leading-tight mb-2">
           Frequently asked questions
         </h2>
-        <p className="text-[#686a71] text-sm sm:text-base">
+        <p className="text-[#4b5563] text-sm sm:text-base">
           Everything you need to know about Adrian&apos;s background,
           availability, and technical focus.
         </p>
@@ -72,22 +69,16 @@ export default function FaqSection() {
             <div key={index} className="py-4">
               <button
                 onClick={() => toggle(index)}
-                className="w-full flex items-center justify-between text-left py-2 font-semibold text-[#19191d] hover:text-[#4e95ff] transition focus:outline-none text-base sm:text-lg cursor-pointer"
+                className="w-full flex items-center justify-between text-left py-2 font-semibold text-[#111827] hover:text-black transition focus:outline-none text-base sm:text-lg cursor-pointer group"
               >
                 <span>{item.question}</span>
-                <span
-                  className={`w-6 h-6 flex items-center justify-center rounded-full text-base font-mono shrink-0 ml-4 transition-colors ${
-                    isOpen
-                      ? "bg-[#4e95ff] text-white"
-                      : "bg-slate-100 text-[#686a71]"
-                  }`}
-                >
+                <span className="text-xl font-mono text-[#6b7280] group-hover:text-[#111827] shrink-0 ml-4 font-light transition">
                   {isOpen ? "−" : "+"}
                 </span>
               </button>
 
               {isOpen && (
-                <div className="pt-2 pb-3 text-[#686a71] text-sm sm:text-base leading-relaxed animate-in fade-in duration-150">
+                <div className="pt-2 pb-3 text-[#4b5563] text-sm sm:text-base leading-relaxed animate-in fade-in duration-150">
                   {item.answer}
                 </div>
               )}

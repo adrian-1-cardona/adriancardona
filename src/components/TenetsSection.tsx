@@ -19,16 +19,13 @@ export default function TenetsSection() {
   return (
     <section
       id="tenets"
-      className="scroll-mt-24 py-24 px-4 sm:px-6 max-w-6xl mx-auto text-center"
+      className="scroll-mt-24 py-20 px-4 sm:px-6 max-w-6xl mx-auto text-center"
     >
       {/* Centered Heading */}
-      <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff] mb-2">
-        // Engineering Philosophy
-      </div>
-      <h2 className="font-display text-3xl sm:text-4xl lg:text-[44px] font-medium tracking-tight mb-3 text-[#19191d]">
+      <h2 className="font-display text-3xl sm:text-4xl lg:text-[38px] font-medium tracking-tight mb-3 text-[#111827]">
         Performance, Rigor &amp; Reproducibility
       </h2>
-      <p className="text-[#686a71] text-base sm:text-lg max-w-2xl mx-auto mb-14 font-normal">
+      <p className="text-[#4b5563] text-base sm:text-lg max-w-2xl mx-auto mb-14 font-normal">
         Architectural principles guiding compiler construction, fault-tolerant
         media pipelines, and grounded codebase intelligence.
       </p>
@@ -41,69 +38,68 @@ export default function TenetsSection() {
             {/* Visual: Pratt Parser & VM Process Monitor */}
             <div className="rounded-xl bg-[#f8fafc] border border-[#e5e7eb] p-4 mb-6 shadow-xs">
               <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#e5e7eb] text-xs">
-                <span className="font-semibold text-[#19191d]">
+                <span className="font-semibold text-[#111827]">
                   Compiler Pipeline (3)
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200/60 font-medium text-[11px]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>Zero GC Pauses</span>
+                <span className="text-xs font-mono text-emerald-700 font-medium">
+                  Zero GC Pauses
                 </span>
               </div>
 
               <div className="space-y-2.5 text-xs">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-md bg-blue-50 text-[#4e95ff] font-mono text-[10px] font-bold flex items-center justify-center border border-blue-200/60">
+                    <span className="w-6 h-6 rounded-md bg-slate-100 text-[#111827] font-mono text-[10px] font-bold flex items-center justify-center border border-slate-200">
                       VM
                     </span>
                     <div>
-                      <div className="font-medium text-[#19191d]">
+                      <div className="font-medium text-[#111827]">
                         guppty_vm (Rust)
                       </div>
-                      <div className="text-[10px] text-[#9ca3af]">
+                      <div className="text-[10px] text-[#6b7280]">
                         0.42 μs dispatch
                       </div>
                     </div>
                   </div>
-                  <span className="text-[11px] text-[#9ca3af] font-mono">
+                  <span className="text-[11px] text-[#6b7280] font-mono">
                     O(1)
                   </span>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-md bg-emerald-50 text-emerald-600 font-mono text-[10px] font-bold flex items-center justify-center border border-emerald-200/60">
+                    <span className="w-6 h-6 rounded-md bg-slate-100 text-[#111827] font-mono text-[10px] font-bold flex items-center justify-center border border-slate-200">
                       AST
                     </span>
                     <div>
-                      <div className="font-medium text-[#19191d]">
+                      <div className="font-medium text-[#111827]">
                         pratt_parser
                       </div>
-                      <div className="text-[10px] text-[#9ca3af]">
+                      <div className="text-[10px] text-[#6b7280]">
                         Precedence climbing
                       </div>
                     </div>
                   </div>
-                  <span className="text-[11px] text-[#9ca3af] font-mono">
+                  <span className="text-[11px] text-[#6b7280] font-mono">
                     Linear
                   </span>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-md bg-purple-50 text-purple-600 font-mono text-[10px] font-bold flex items-center justify-center border border-purple-200/60">
+                    <span className="w-6 h-6 rounded-md bg-slate-100 text-[#111827] font-mono text-[10px] font-bold flex items-center justify-center border border-slate-200">
                       MEM
                     </span>
                     <div>
-                      <div className="font-medium text-[#19191d]">
+                      <div className="font-medium text-[#111827]">
                         constant_pool
                       </div>
-                      <div className="text-[10px] text-[#9ca3af]">
+                      <div className="text-[10px] text-[#6b7280]">
                         Arena-allocated
                       </div>
                     </div>
                   </div>
-                  <span className="text-[11px] text-[#9ca3af] font-mono">
+                  <span className="text-[11px] text-[#6b7280] font-mono">
                     Static
                   </span>
                 </div>
@@ -111,10 +107,10 @@ export default function TenetsSection() {
             </div>
 
             <div>
-              <h3 className="text-base font-bold text-[#19191d] mb-1.5">
+              <h3 className="text-base font-bold text-[#111827] mb-1.5">
                 Deterministic Execution
               </h3>
-              <p className="text-xs text-[#686a71] leading-relaxed">
+              <p className="text-xs text-[#4b5563] leading-relaxed">
                 Stack-based bytecode runtimes compile and evaluate instructions
                 without garbage collection pauses, producing sub-microsecond
                 dispatch latency and predictable memory layouts.
@@ -136,26 +132,26 @@ export default function TenetsSection() {
             >
               {/* Layer 1: High-Level Source Code (Guppty Syntax) */}
               <div className="absolute inset-0 bg-[#f8fafc] p-3 text-xs font-mono flex flex-col justify-between">
-                <div className="flex justify-between items-center text-[10px] text-[#9ca3af] border-b border-[#e5e7eb] pb-1">
-                  <span>source // main.gup</span>
-                  <span className="px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 font-semibold">
+                <div className="flex justify-between items-center text-[10px] text-[#6b7280] border-b border-[#e5e7eb] pb-1">
+                  <span>source · main.gup</span>
+                  <span className="font-semibold text-[#111827]">
                     High-Level AST
                   </span>
                 </div>
                 <div className="space-y-1 text-slate-700 text-[11px] pt-1">
                   <div>
-                    <span className="text-purple-600 font-semibold">fn</span>{" "}
+                    <span className="text-purple-700 font-semibold">fn</span>{" "}
                     calculate(x, y) {"{"}
                   </div>
                   <div className="pl-3 text-slate-500">// pure computation</div>
                   <div className="pl-3">
-                    <span className="text-blue-600">return</span> (x * 2) + y;
+                    <span className="text-blue-700">return</span> (x * 2) + y;
                   </div>
                   <div>{"}"}</div>
                 </div>
-                <div className="text-[10px] text-[#9ca3af] pt-1 border-t border-[#e5e7eb] flex items-center justify-between">
+                <div className="text-[10px] text-[#6b7280] pt-1 border-t border-[#e5e7eb] flex items-center justify-between">
                   <span>Status: Validated</span>
-                  <span className="text-emerald-600 font-semibold">
+                  <span className="text-emerald-700 font-semibold">
                     ✓ Parsed
                   </span>
                 </div>
@@ -167,23 +163,23 @@ export default function TenetsSection() {
                 style={{ left: `${sliderPos}%` }}
               >
                 <div className="flex justify-between items-center text-[10px] text-slate-400 border-b border-white/10 pb-1">
-                  <span>disasm // vm.rs</span>
-                  <span className="px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 font-semibold">
+                  <span>disasm · vm.rs</span>
+                  <span className="font-semibold text-emerald-400">
                     Bytecode
                   </span>
                 </div>
                 <div className="space-y-1 text-[11px] pt-1 text-slate-300">
                   <div>
-                    <span className="text-[#4e95ff]">0x00</span> OP_GET_LOCAL 0
+                    <span className="text-slate-400">0x00</span> OP_GET_LOCAL 0
                   </div>
                   <div>
-                    <span className="text-[#4e95ff]">0x02</span> OP_PUSH_CONST 2
+                    <span className="text-slate-400">0x02</span> OP_PUSH_CONST 2
                   </div>
                   <div>
-                    <span className="text-[#4e95ff]">0x04</span> OP_MULTIPLY
+                    <span className="text-slate-400">0x04</span> OP_MULTIPLY
                   </div>
                   <div>
-                    <span className="text-[#4e95ff]">0x05</span> OP_RETURN
+                    <span className="text-slate-400">0x05</span> OP_RETURN
                   </div>
                 </div>
                 <div className="text-[10px] text-slate-400 pt-1 border-t border-white/10 flex items-center justify-between">
@@ -204,10 +200,10 @@ export default function TenetsSection() {
             </div>
 
             <div>
-              <h3 className="text-base font-bold text-[#19191d] mb-1.5">
+              <h3 className="text-base font-bold text-[#111827] mb-1.5">
                 Grounded AST Mapping
               </h3>
-              <p className="text-xs text-[#686a71] leading-relaxed">
+              <p className="text-xs text-[#4b5563] leading-relaxed">
                 Drag slider to inspect how high-level syntax maps into compact,
                 deterministic opcode instructions with span-aware source maps.
               </p>
@@ -221,10 +217,10 @@ export default function TenetsSection() {
             {/* Visual: Interactive CI/CD Stage Monitor */}
             <div className="rounded-xl bg-[#f8fafc] border border-[#e5e7eb] p-4 mb-6 shadow-xs">
               <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#e5e7eb] text-xs">
-                <span className="font-semibold text-[#19191d]">
+                <span className="font-semibold text-[#111827]">
                   CI/CD Testing Suites
                 </span>
-                <span className="text-emerald-600 font-mono text-[10px] font-bold">
+                <span className="text-emerald-700 font-mono text-[10px] font-bold">
                   PASSING
                 </span>
               </div>
@@ -235,13 +231,13 @@ export default function TenetsSection() {
                   onClick={() => setPipelineState("DIFF")}
                   className={`p-2 rounded-lg border transition cursor-pointer flex items-center justify-between ${
                     pipelineState === "DIFF"
-                      ? "bg-blue-50 border-blue-200 text-[#4e95ff]"
+                      ? "bg-slate-100 border-slate-300 text-[#111827] font-semibold"
                       : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
                   }`}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-emerald-500 font-bold text-xs">✓</span>
-                    <span className="font-mono text-[11px] font-medium">
+                    <span className="text-emerald-600 font-bold text-xs">✓</span>
+                    <span className="font-mono text-[11px]">
                       differential_testing
                     </span>
                   </div>
@@ -254,13 +250,13 @@ export default function TenetsSection() {
                   onClick={() => setPipelineState("EVALS")}
                   className={`p-2 rounded-lg border transition cursor-pointer flex items-center justify-between ${
                     pipelineState === "EVALS"
-                      ? "bg-blue-50 border-blue-200 text-[#4e95ff]"
+                      ? "bg-slate-100 border-slate-300 text-[#111827] font-semibold"
                       : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
                   }`}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-emerald-500 font-bold text-xs">✓</span>
-                    <span className="font-mono text-[11px] font-medium">
+                    <span className="text-emerald-600 font-bold text-xs">✓</span>
+                    <span className="font-mono text-[11px]">
                       retrieval_evaluations
                     </span>
                   </div>
@@ -273,13 +269,13 @@ export default function TenetsSection() {
                   onClick={() => setPipelineState("SECURITY")}
                   className={`p-2 rounded-lg border transition cursor-pointer flex items-center justify-between ${
                     pipelineState === "SECURITY"
-                      ? "bg-blue-50 border-blue-200 text-[#4e95ff]"
+                      ? "bg-slate-100 border-slate-300 text-[#111827] font-semibold"
                       : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
                   }`}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-emerald-500 font-bold text-xs">✓</span>
-                    <span className="font-mono text-[11px] font-medium">
+                    <span className="text-emerald-600 font-bold text-xs">✓</span>
+                    <span className="font-mono text-[11px]">
                       automated_test_suite
                     </span>
                   </div>
@@ -291,10 +287,10 @@ export default function TenetsSection() {
             </div>
 
             <div>
-              <h3 className="text-base font-bold text-[#19191d] mb-1.5">
+              <h3 className="text-base font-bold text-[#111827] mb-1.5">
                 CI-Enforced Testing &amp; Verification
               </h3>
-              <p className="text-xs text-[#686a71] leading-relaxed">
+              <p className="text-xs text-[#4b5563] leading-relaxed">
                 Dual execution backends tested with 38+ differential tests, and
                 160+ automated tests enforcing retrieval evaluations through
                 GitHub Actions CI to guarantee identical runtime behavior.
