@@ -133,11 +133,11 @@ export default function TrackRecordSection() {
               Adrian Cardona
             </h3>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#686a71] font-mono mb-5">
-              <span>310-489-6795</span>
+              <span>{PROFILE.phone}</span>
               <span className="text-slate-300">·</span>
-              <span>cardonaadrian101@gmail.com</span>
+              <span>{PROFILE.email}</span>
               <span className="text-slate-300">·</span>
-              <span>adriancardona.tech</span>
+              <span>San Luis Obispo, CA</span>
             </div>
 
             {/* Education Card with Official Cal Poly SLO Seal */}
@@ -160,6 +160,15 @@ export default function TrackRecordSection() {
               <div className="flex flex-wrap items-center justify-between text-xs font-mono text-[#686a71] mt-2 pt-2 border-t border-slate-100">
                 <span>GPA: 3.5 / 4.0</span>
                 <span>Expected May 2027</span>
+              </div>
+              <div className="mt-2.5 pt-2 border-t border-slate-100">
+                <div className="text-[10px] font-mono text-[#9ca3af] uppercase tracking-wider mb-1">
+                  Relevant Coursework
+                </div>
+                <div className="text-xs text-[#4b4b5c] leading-relaxed">
+                  Data Structures &amp; Algorithms, Systems Programming,
+                  Databases, Computer Security
+                </div>
               </div>
             </div>
 
@@ -226,52 +235,74 @@ export default function TrackRecordSection() {
                     Languages
                   </div>
                   <div className="flex flex-wrap gap-1">
-                    {["TypeScript", "Python", "Rust", "JavaScript", "SQL", "HTML/CSS"].map(
-                      (lang) => (
-                        <span
-                          key={lang}
-                          className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[10px]"
-                        >
-                          {lang}
-                        </span>
-                      ),
-                    )}
+                    {[
+                      "Python",
+                      "TypeScript",
+                      "JavaScript",
+                      "Rust",
+                      "SQL",
+                      "Java",
+                      "C",
+                      "C++",
+                      "HTML",
+                      "CSS",
+                    ].map((lang) => (
+                      <span
+                        key={lang}
+                        className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[10px]"
+                      >
+                        {lang}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
                 <div>
                   <div className="text-[10px] font-mono text-[#9ca3af] mb-1">
-                    Systems &amp; Cloud
+                    Frameworks &amp; Infrastructure
                   </div>
                   <div className="flex flex-wrap gap-1">
-                    {["SharePoint", "Power Automate", "OneDrive", "Drupal", "CI/CD", "Git"].map(
-                      (sys) => (
-                        <span
-                          key={sys}
-                          className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[10px]"
-                        >
-                          {sys}
-                        </span>
-                      ),
-                    )}
+                    {[
+                      "React",
+                      "Next.js",
+                      "FastAPI",
+                      "PostgreSQL",
+                      "Redis",
+                      "Convex",
+                      "Docker",
+                      "Tailwind",
+                    ].map((sys) => (
+                      <span
+                        key={sys}
+                        className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[10px]"
+                      >
+                        {sys}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
                 <div>
                   <div className="text-[10px] font-mono text-[#9ca3af] mb-1">
-                    AI, Frameworks &amp; Tooling
+                    AI &amp; Developer Tooling
                   </div>
                   <div className="flex flex-wrap gap-1">
-                    {["React", "Gemini API", "LlamaIndex", "Codex", "pytest", "Tailwind"].map(
-                      (ai) => (
-                        <span
-                          key={ai}
-                          className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[10px]"
-                        >
-                          {ai}
-                        </span>
-                      ),
-                    )}
+                    {[
+                      "Gemini API",
+                      "LlamaIndex",
+                      "Ollama",
+                      "GitHub Actions",
+                      "pytest",
+                      "Git",
+                      "Codex",
+                    ].map((ai) => (
+                      <span
+                        key={ai}
+                        className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[10px]"
+                      >
+                        {ai}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>

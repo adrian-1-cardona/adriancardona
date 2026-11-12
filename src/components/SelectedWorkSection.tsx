@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-// Dynamic audio/execution waveform distribution: tall ends, quiet center
+// Dynamic execution waveform distribution: tall ends, quiet center
 const BASE_WAVEFORM = [
   16, 26, 38, 30, 20, 14, 10, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
   4, 4, 4, 4, 4, 6, 10, 16, 24, 38, 28, 18, 10,
@@ -8,14 +8,14 @@ const BASE_WAVEFORM = [
 
 export default function SelectedWorkSection() {
   const [seconds, setSeconds] = useState(12)
-  const [leftActiveChip, setLeftActiveChip] = useState("Run VM")
-  const [rightActiveChip, setRightActiveChip] = useState("Architecture")
+  const [leftActiveChip, setLeftActiveChip] = useState("Differential Tests")
+  const [rightActiveChip, setRightActiveChip] = useState("Grounded Retrieval")
   const [isWindowHidden, setIsWindowHidden] = useState(false)
   const [isVmRunning, setIsVmRunning] = useState(false)
   const [vmCycleCount, setVmCycleCount] = useState(1420)
   const [queryInput, setQueryInput] = useState("")
 
-  // Live timer tick matching Cluely's 00:12 counter
+  // Live timer tick
   useEffect(() => {
     const interval = setInterval(() => {
       setSeconds((prev) => (prev >= 59 ? 0 : prev + 1))
@@ -25,31 +25,35 @@ export default function SelectedWorkSection() {
 
   const formattedTimer = `00:${seconds < 10 ? `0${seconds}` : seconds}`
 
-  // Guppty Rust VM interactive prompts & state
+  // Guppty Rust VM interactive prompts & state (Resume verified)
   const leftPromptMap: Record<string, string> = {
-    "Run VM": "fn main() -> OpCode::BinaryAdd(0x1A, 0x2C) => 0x46",
-    "Stack Frame": "Stack[0]: 42 (i64) · Stack[1]: 108 (i64) · SP: 0x7FFF",
-    Benchmark: "1,000,000 opcode dispatches executed in 8.42ms (Rust)",
-    "Reset IP": "Instruction pointer reset to 0x0000. Stack frame cleared.",
+    "Lexer & Parser":
+      'guppty::parse("fn main() { return (x * 2) + y; }") => AST(Ok)',
+    "Bytecode Compiler":
+      "emit_bytecodes() => [OP_GET_LOCAL, OP_PUSH_CONST, OP_MULTIPLY, OP_RETURN]",
+    "Stack VM":
+      "Stack[0]: 42 (i64) · Stack[1]: 108 (i64) · SP: 0x7FFF · 0.42 μs dispatch",
+    "Differential Tests":
+      "cargo test: 38+ tests verify VM and AST interpreter produce identical behavior",
   }
 
-  // Gitex Codebase AI answers matching the active chip
+  // Gitex Codebase AI answers matching the active chip (Resume verified)
   const gitexAnswers: Record<string, { prompt: string; body: string }> = {
-    Architecture: {
-      prompt: "Analyzing 14 source files across compiler/ and vm/...",
-      body: "Gitex analyzed 14 source files across compiler/ and vm/. The execution model uses a single-pass bytecode compiler with a flat instruction vector, passing evaluated expressions directly through the stack pointer for O(1) instruction dispatch.",
+    "Grounded Retrieval": {
+      prompt: "Query: \"Explain lexer closure handling and span-aware error syntax\"",
+      body: "Retrieved 4 grounded code chunks via Convex vector search. Citation from src/compiler/lexer.rs: Single-pass recursive descent compiler emitting compact opcodes with span-aware syntax errors.",
     },
-    "Verify Safety": {
-      prompt: "Auditing memory allocations and call frame boundaries...",
-      body: "AST traversal verified memory safety. Rust ownership semantics prevent dangling pointers in the call frame, and all constant pool allocations are arena-allocated at VM startup.",
+    "Refusal Accuracy": {
+      prompt: "Query: \"Query missing database migration schema in foreign scope\"",
+      body: "Evaluation result: 100% refusal accuracy across 31 benchmark queries. Correctly refused answer due to missing symbol scope in repository index without hallucinating.",
     },
-    "Refactor VM": {
-      prompt: "Benchmarking match dispatch against jump table pattern...",
-      body: "Suggested refactor for vm.rs: dispatch opcode loop via computed goto pattern or jump table to eliminate match branching overhead by ~14%.",
+    "Auth & Billing": {
+      prompt: "Query: \"Verify Clerk JWT auth middleware and Stripe webhook lifecycle\"",
+      body: "Engineered production-grade authentication with Clerk, tier-based rate limiting, and Stripe webhook subscription verification with zero unhandled exceptions.",
     },
-    "Call Graph": {
-      prompt: "Tracing token pipeline to virtual machine execution...",
-      body: "Call hierarchy: main() -> Compiler::compile_tokens() -> VM::interpret(bytecode) -> Evaluator::run_stack_frame() with zero dynamic heap allocations.",
+    "160+ Tests": {
+      prompt: "Query: \"Run CI retrieval evaluation and security test suite\"",
+      body: "CI run complete: 160+ automated tests passing in GitHub Actions. Retrieval accuracy threshold (100% groundedness) verified prior to merge.",
     },
   }
 
@@ -65,16 +69,20 @@ export default function SelectedWorkSection() {
   return (
     <section
       id="systems"
-      className="py-24 px-4 sm:px-6 max-w-6xl mx-auto text-left"
+      className="scroll-mt-24 py-24 px-4 sm:px-6 max-w-6xl mx-auto text-left"
     >
-      {/* Section Heading: Exact Cluely Editorial Style */}
+      {/* Section Heading: Authentic Engineering Focus */}
       <div className="mb-10 text-left">
         <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff] mb-2">
-          // Interactive Systems &amp; Projects
+          // Featured Technical Projects
         </div>
-        <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-semibold text-[#19191d] tracking-tight leading-tight">
-          How Adrian&apos;s projects run under the hood
+        <h2 className="font-display text-3xl sm:text-4xl lg:text-[42px] font-medium text-[#19191d] tracking-[-0.5px] leading-tight">
+          Systems programming and grounded code retrieval
         </h2>
+        <p className="text-sm sm:text-base text-[#686a71] mt-2 max-w-2xl font-normal">
+          Interactive execution environments for Guppty (Rust VM) and Gitex
+          (GitHub codebase Q&amp;A platform).
+        </p>
       </div>
 
       {/* Two Large Side-by-Side Cards (md:grid-cols-2 for desktop/laptop parity) */}
@@ -95,15 +103,15 @@ export default function SelectedWorkSection() {
           <div>
             <div className="flex items-center justify-between text-xs font-mono text-blue-100 mb-2">
               <span className="uppercase tracking-wider font-semibold">
-                Project // Rust Compiler &amp; VM
+                Guppty // Rust Compiler &amp; VM
               </span>
               <a
-                href="https://github.com/adrian-1-cardona"
+                href="https://adrian-1-cardona.github.io/Guppty/#installation"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition font-medium"
               >
-                GitHub ↗
+                Documentation ↗
               </a>
             </div>
 
@@ -127,17 +135,18 @@ export default function SelectedWorkSection() {
                     }`}
                   />
                 </span>
-                <span>executes</span>
+                <span>compiles</span>
               </span>
-              <span>bytecodes at native speed</span>
+              <span>and executes Rust bytecode</span>
             </h3>
-            <p className="text-white/85 text-sm sm:text-[15px] leading-relaxed font-normal max-w-lg">
-              A stack-based virtual machine written in Rust that compiles and
-              interprets bytecode instructions with zero-overhead dispatch.
+            <p className="text-white/85 text-sm sm:text-[14px] leading-relaxed font-normal max-w-lg">
+              Built a programming language in Rust with a lexer, parser,
+              bytecode compiler, and stack VM, supporting closures, functions,
+              control flow, and span-aware runtime errors.
             </p>
           </div>
 
-          {/* Running Telemetry & Active Status (00:12 above • Status) */}
+          {/* Running Telemetry & Active Status */}
           <div className="flex flex-col items-center justify-center my-3 select-none">
             <span className="text-4xl sm:text-5xl lg:text-[56px] leading-none font-semibold tracking-[-0.5px] text-white font-mono tabular-nums">
               {formattedTimer}
@@ -147,13 +156,13 @@ export default function SelectedWorkSection() {
                 className={`w-2 h-2 rounded-full transition-colors duration-300 ${
                   isVmRunning
                     ? "bg-emerald-300 animate-ping shadow-[0_0_8px_rgba(110,231,183,0.9)]"
-                    : "bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"
+                    : "bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]"
                 }`}
               />
-              <span className="text-xs text-white/85 font-medium tracking-wide">
+              <span className="text-xs text-white/90 font-medium tracking-wide font-mono">
                 {isVmRunning
-                  ? `Executing Cycle #${vmCycleCount}`
-                  : "Bytecode Engine Active"}
+                  ? `Executing Instruction #${vmCycleCount}`
+                  : "38+ Tests · CI Differential Testing Active"}
               </span>
             </div>
           </div>
@@ -180,64 +189,66 @@ export default function SelectedWorkSection() {
           </div>
 
           {/* Floating Dark Frosted Glass HUD */}
-          <div className="rounded-2xl bg-[#1e2025]/75 border border-white/20 p-4 backdrop-blur-xl shadow-2xl text-left">
+          <div className="rounded-2xl bg-[#1e2025]/85 border border-white/20 p-4 backdrop-blur-xl shadow-2xl text-left">
             {/* Quick Actions Row */}
             <div className="flex flex-wrap items-center justify-between gap-1.5 mb-3 text-xs text-white/70">
               <button
                 onClick={() => {
-                  setLeftActiveChip("Run VM")
+                  setLeftActiveChip("Lexer & Parser")
                   handleExecuteVm()
                 }}
                 className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  leftActiveChip === "Run VM"
+                  leftActiveChip === "Lexer & Parser"
                     ? "bg-white/25 text-white shadow-xs"
                     : "hover:text-white hover:bg-white/10"
                 }`}
               >
-                <span>⚡</span>
-                <span>Run VM</span>
-              </button>
-              <span className="text-white/30">·</span>
-
-              <button
-                onClick={() => setLeftActiveChip("Stack Frame")}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  leftActiveChip === "Stack Frame"
-                    ? "bg-white/25 text-white shadow-xs"
-                    : "hover:text-white hover:bg-white/10"
-                }`}
-              >
-                <span>📦</span>
-                <span>Stack Frame</span>
+                <span>Lexer &amp; Parser</span>
               </button>
               <span className="text-white/30">·</span>
 
               <button
                 onClick={() => {
-                  setLeftActiveChip("Benchmark")
+                  setLeftActiveChip("Bytecode Compiler")
                   handleExecuteVm()
                 }}
                 className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  leftActiveChip === "Benchmark"
+                  leftActiveChip === "Bytecode Compiler"
                     ? "bg-white/25 text-white shadow-xs"
                     : "hover:text-white hover:bg-white/10"
                 }`}
               >
-                <span>🧪</span>
-                <span>Benchmark</span>
+                <span>Bytecode Compiler</span>
               </button>
               <span className="text-white/30">·</span>
 
               <button
-                onClick={() => setLeftActiveChip("Reset IP")}
+                onClick={() => {
+                  setLeftActiveChip("Stack VM")
+                  handleExecuteVm()
+                }}
                 className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  leftActiveChip === "Reset IP"
+                  leftActiveChip === "Stack VM"
                     ? "bg-white/25 text-white shadow-xs"
                     : "hover:text-white hover:bg-white/10"
                 }`}
               >
-                <span>🔄</span>
-                <span>Reset IP</span>
+                <span>Stack VM</span>
+              </button>
+              <span className="text-white/30">·</span>
+
+              <button
+                onClick={() => {
+                  setLeftActiveChip("Differential Tests")
+                  handleExecuteVm()
+                }}
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
+                  leftActiveChip === "Differential Tests"
+                    ? "bg-white/25 text-white shadow-xs"
+                    : "hover:text-white hover:bg-white/10"
+                }`}
+              >
+                <span>38+ Tests</span>
               </button>
             </div>
 
@@ -249,15 +260,15 @@ export default function SelectedWorkSection() {
                 </span>
                 <span className="inline-flex items-center gap-1 shrink-0 ml-2">
                   <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
-                    ⌘
+                    cargo
                   </kbd>
-                  <span className="text-[10px] text-white/60">for Assist</span>
+                  <span className="text-[10px] text-white/60">test</span>
                 </span>
               </div>
               <div className="flex items-center justify-between pt-1 border-t border-white/5">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-md bg-white/10 text-[10px] text-white/90 font-medium flex items-center gap-1">
-                    <span className="text-xs">✦</span> Rust VM
+                  <span className="px-2 py-0.5 rounded-md bg-white/10 text-[10px] text-white/90 font-mono flex items-center gap-1">
+                    <span>Rust VM</span>
                   </span>
                   <span className="text-white/40 text-xs tracking-widest font-mono">
                     ···
@@ -266,7 +277,7 @@ export default function SelectedWorkSection() {
                 <button
                   onClick={handleExecuteVm}
                   className="w-6 h-6 rounded-full bg-[#1b64f2] text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-[#1554d1] transition text-[11px] font-bold"
-                  title="Execute Bytecode Step"
+                  title="Run VM Instruction"
                 >
                   ▶
                 </button>
@@ -276,7 +287,7 @@ export default function SelectedWorkSection() {
         </div>
 
         {/* ========================================================
-            RIGHT CARD: Gitex Codebase AI (TypeScript + React + Gemini)
+            RIGHT CARD: Gitex Codebase Q&A (TypeScript + React + Convex)
            ======================================================== */}
         <div
           className="relative flex flex-col justify-between gap-6 rounded-[32px] sm:rounded-[36px] p-7 sm:p-9 lg:p-10 overflow-hidden shadow-lg border border-[#e2e5eb]"
@@ -288,7 +299,7 @@ export default function SelectedWorkSection() {
           <div>
             <div className="flex items-center justify-between text-xs font-mono text-[#4e95ff] mb-2">
               <span className="uppercase tracking-wider font-semibold">
-                Project // Codebase Intelligence
+                Gitex // GitHub Codebase Q&amp;A
               </span>
               <a
                 href="https://gitex.dev"
@@ -296,36 +307,37 @@ export default function SelectedWorkSection() {
                 rel="noopener noreferrer"
                 className="hover:text-[#19191d] transition font-medium"
               >
-                Live App ↗
+                Live Demo ↗
               </a>
             </div>
 
             <h3 className="text-2xl sm:text-[28px] lg:text-[31px] leading-tight font-medium tracking-[-0.5px] text-[#19191d] flex items-center flex-wrap gap-2 mb-3">
-              <span>When you query code, Gitex</span>
+              <span>Gitex</span>
               <span className="-mx-0.5 inline-flex -translate-y-0.5 items-center gap-1.5 rounded-full bg-white px-3 py-1 align-middle shadow-xs border border-gray-200/90 text-xs sm:text-sm font-medium text-[#19191d]">
-                <span className="text-[#4e95ff] text-xs">✦</span>
-                <span>assists</span>
+                <span className="text-[#4e95ff] text-xs">●</span>
+                <span>indexes</span>
               </span>
-              <span>you instantly</span>
+              <span>codebases with vector search</span>
             </h3>
-            <p className="text-[#686a71] text-sm sm:text-[15px] leading-relaxed font-normal max-w-lg">
-              Hit Cmd/Ctrl + Enter and Gitex explains complex repositories with
-              grounded AST citations.
+            <p className="text-[#686a71] text-sm sm:text-[14px] leading-relaxed font-normal max-w-lg">
+              Built a GitHub codebase Q&amp;A platform with Gemini embeddings and
+              Convex vector search, achieving 100% groundedness and refusal
+              accuracy across 31 retrieval evaluations.
             </p>
           </div>
 
-          {/* Dynamic Island Notch Pill */}
+          {/* Status Bar Pill */}
           <div className="mx-auto flex w-fit items-center gap-3 rounded-full px-3.5 py-1.5 bg-[#1e2025] text-white text-xs shadow-xl border border-white/15 my-1 select-none">
-            <div className="w-4 h-4 rounded-full border border-white/40 flex items-center justify-center">
-              <div className="w-1.5 h-1.5 rounded-full bg-white/80" />
-            </div>
+            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-mono text-[11px] text-white/90">
+              Convex Vector DB · 31 Evals Passing
+            </span>
             <button
               onClick={() => setIsWindowHidden(!isWindowHidden)}
-              className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 text-[11px] font-medium text-white hover:bg-white/20 transition cursor-pointer"
+              className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 text-[11px] font-mono text-white/80 hover:bg-white/20 transition cursor-pointer"
             >
-              <span>{isWindowHidden ? "⌃ Show" : "⌄ Hide"}</span>
+              <span>{isWindowHidden ? "Show" : "Hide"}</span>
             </button>
-            <div className="w-2.5 h-2.5 rounded-xs bg-white/90 inline-block" />
           </div>
 
           {/* Floating Dark HUD Window */}
@@ -343,69 +355,65 @@ export default function SelectedWorkSection() {
             {/* Top Right Speech Badge */}
             <div className="flex items-center justify-between mb-2">
               <span className="text-[#8a8d98] text-[11px] font-normal font-mono">
-                Indexed AST // guppty-vm
+                Convex Vector Index // adrian-1-cardona/Guppty
               </span>
-              <div className="w-fit rounded-lg px-3 py-1 text-xs font-semibold text-white bg-[#0b63e5] shadow-xs">
-                Gitex AI
+              <div className="w-fit rounded-lg px-2.5 py-0.5 text-xs font-mono font-semibold text-white bg-[#0b63e5] shadow-xs">
+                Gitex Engine
               </div>
             </div>
 
             {/* Response Output Body Text */}
-            <p className="text-xs sm:text-[13px] text-white/90 leading-relaxed font-normal mb-4">
+            <p className="text-xs sm:text-[13px] text-white/90 leading-relaxed font-normal mb-4 font-sans">
               {gitexAnswers[rightActiveChip]?.body}
             </p>
 
             {/* Quick Actions Row */}
             <div className="flex flex-wrap items-center justify-between gap-1.5 mb-3 text-xs text-white/70">
               <button
-                onClick={() => setRightActiveChip("Architecture")}
+                onClick={() => setRightActiveChip("Grounded Retrieval")}
                 className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  rightActiveChip === "Architecture"
+                  rightActiveChip === "Grounded Retrieval"
                     ? "bg-white/20 text-white"
                     : "hover:text-white hover:bg-white/10"
                 }`}
               >
-                <span>🪄</span>
-                <span>Architecture</span>
+                <span>Grounded Retrieval</span>
               </button>
               <span className="text-white/30">·</span>
 
               <button
-                onClick={() => setRightActiveChip("Verify Safety")}
+                onClick={() => setRightActiveChip("Refusal Accuracy")}
                 className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  rightActiveChip === "Verify Safety"
+                  rightActiveChip === "Refusal Accuracy"
                     ? "bg-white/20 text-white"
                     : "hover:text-white hover:bg-white/10"
                 }`}
               >
-                <span>🪄</span>
-                <span>Verify Safety</span>
+                <span>Refusal Accuracy</span>
               </button>
               <span className="text-white/30">·</span>
 
               <button
-                onClick={() => setRightActiveChip("Refactor VM")}
+                onClick={() => setRightActiveChip("Auth & Billing")}
                 className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  rightActiveChip === "Refactor VM"
+                  rightActiveChip === "Auth & Billing"
                     ? "bg-white/20 text-white"
                     : "hover:text-white hover:bg-white/10"
                 }`}
               >
-                <span>💬</span>
-                <span>Refactor VM</span>
+                <span>Auth &amp; Billing</span>
               </button>
               <span className="text-white/30">·</span>
 
               <button
-                onClick={() => setRightActiveChip("Call Graph")}
+                onClick={() => setRightActiveChip("160+ Tests")}
                 className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  rightActiveChip === "Call Graph"
+                  rightActiveChip === "160+ Tests"
                     ? "bg-white/20 text-white"
                     : "hover:text-white hover:bg-white/10"
                 }`}
               >
-                <span>🔄</span>
-                <span>Call Graph</span>
+                <span>160+ Tests</span>
               </button>
             </div>
 
@@ -418,20 +426,20 @@ export default function SelectedWorkSection() {
                     queryInput || gitexAnswers[rightActiveChip]?.prompt || ""
                   }
                   onChange={(e) => setQueryInput(e.target.value)}
-                  placeholder="Ask about your repository, AST, or Git diff..."
+                  placeholder="Ask about repository citations, AST scopes, or retrieval evals..."
                   className="bg-transparent border-none outline-none text-white/90 placeholder:text-white/50 w-full text-xs font-mono"
                 />
                 <span className="inline-flex items-center gap-1 shrink-0 ml-2">
                   <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
-                    ⌘
+                    ↵
                   </kbd>
-                  <span className="text-[10px] text-white/60">for Assist</span>
+                  <span className="text-[10px] text-white/60">Query</span>
                 </span>
               </div>
               <div className="flex items-center justify-between pt-1 border-t border-white/5">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-md bg-white/10 text-[10px] text-white/90 font-medium flex items-center gap-1">
-                    <span className="text-xs">✦</span> Gemini AI
+                  <span className="px-2 py-0.5 rounded-md bg-white/10 text-[10px] text-white/90 font-mono flex items-center gap-1">
+                    <span>Gemini Embeddings</span>
                   </span>
                   <span className="text-white/40 text-xs tracking-widest font-mono">
                     ···
@@ -440,10 +448,10 @@ export default function SelectedWorkSection() {
                 <div
                   onClick={() => {
                     const chips = [
-                      "Architecture",
-                      "Verify Safety",
-                      "Refactor VM",
-                      "Call Graph",
+                      "Grounded Retrieval",
+                      "Refusal Accuracy",
+                      "Auth & Billing",
+                      "160+ Tests",
                     ]
                     const next =
                       chips[(chips.indexOf(rightActiveChip) + 1) % chips.length]
@@ -451,7 +459,7 @@ export default function SelectedWorkSection() {
                     setQueryInput("")
                   }}
                   className="w-6 h-6 rounded-full bg-[#1b64f2] text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-[#1554d1] transition text-[11px] font-bold"
-                  title="Query Codebase"
+                  title="Query Next Evaluation"
                 >
                   ▶
                 </div>

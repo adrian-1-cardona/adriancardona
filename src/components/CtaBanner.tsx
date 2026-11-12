@@ -22,11 +22,12 @@ export default function CtaBanner() {
             // Get In Touch
           </div>
           <h2 className="font-display text-3xl sm:text-5xl font-medium text-[#19191d] tracking-tight leading-tight mb-3">
-            Engineering that delivers clarity, not noise.
+            Let&apos;s build reliable software together.
           </h2>
           <p className="banner-gradient-text text-base sm:text-lg mb-8 leading-relaxed font-normal">
-            Available for software engineering roles, compiler engineering, and
-            systems research collaborations.
+            Available for Software Engineering internships and full-time roles
+            (Expected May 2027). Open to systems programming, web
+            infrastructure, and AI engineering opportunities.
           </p>
 
           <div className="flex flex-wrap items-center gap-3">

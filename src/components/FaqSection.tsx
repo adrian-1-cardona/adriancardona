@@ -9,32 +9,32 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "What roles and timeline is Adrian currently targeting?",
     answer:
-      "Adrian is targeting Software Engineering internships and full-time engineering roles for 2026. Key areas of interest include systems programming, compiler design, developer tooling, and reliable AI/data infrastructure.",
+      "Adrian is targeting Software Engineering internships and full-time engineering roles for 2026/2027 (Expected graduation: May 2027). Key areas of interest include systems programming, web infrastructure, compiler engineering, and AI/retrieval systems.",
   },
   {
     question: "What are Adrian's primary software engineering appointments?",
     answer:
-      "Adrian currently serves as a Software Engineering Intern at the Cal Poly Bailey College of Science and Mathematics, architecting fault-tolerant TypeScript media ingestion pipelines and Microsoft Power Automate flows. Concurrently, he is an Undergraduate Researcher at the Cal Poly CSSE Department, engineering deterministic Python benchmarking runners and telemetry tools for faculty.",
+      "Adrian currently serves as a Web Development Intern at the Cal Poly Bailey College of Science and Mathematics, building an internal digital asset management system with SharePoint and Power Automate, automating batch ingestion, and engineering a resumable migration pipeline for 58,579 media records. Concurrently, he is an Undergraduate Researcher at Cal Poly CSSE automating training and evaluation pipelines for cooperative AI agents.",
   },
   {
-    question: "What independent systems projects has Adrian built?",
+    question: "What independent software systems has Adrian built?",
     answer:
-      "As secondary exploratory work, Adrian built Guppty (a compiled language runtime in pure Rust with a Pratt parser, recursive-descent bytecode compiler, and stack VM) and Gitex (a grounded vector search engine with automated AST citation verification).",
+      "Adrian built Guppty (a programming language in Rust with a lexer, parser, bytecode compiler, and stack VM, with 38+ tests and CI-enforced differential testing) and Gitex (a GitHub codebase Q&A platform with Gemini embeddings and Convex vector search, achieving 100% groundedness and refusal accuracy across 31 retrieval evaluations).",
   },
   {
     question: "What research was conducted at Cal Poly CSSE?",
     answer:
-      "As an Undergraduate Researcher under CSSE faculty, Adrian designed automated Python benchmarking harnesses and desktop telemetry monitors to execute repeatable AI and ML experiments with locked seeds, subprocess worker isolation, and rigorous pytest suites.",
+      "As an Undergraduate Researcher under CSSE faculty, Adrian engineered a Python backend to automate training and evaluation pipelines for cooperative AI research, established GitHub Actions CI/CD with pytest to catch bugs automatically, and developed a desktop application to visualize system telemetry.",
   },
   {
     question: "What technologies does Adrian work with primarily?",
     answer:
-      "Core systems languages include Rust, TypeScript, Python, and C. On the web and data layer, Adrian works with React, Next.js, PostgreSQL, Convex Vector DB, Docker, and GitHub Actions CI/CD pipelines.",
+      "Languages: Python, TypeScript, JavaScript, Rust, SQL, Java, C, C++, HTML, CSS. Frameworks & Databases: React, Next.js, Node.js, FastAPI, PostgreSQL, Redis, Convex, Docker. Developer Tools: Git, GitHub Actions, Unix/Linux, Jira, VS Code. AI Tools: Gemini API, LlamaIndex, Ollama, Codex, Claude Code, Cursor.",
   },
   {
     question: "How can I get in touch or request a reference?",
     answer:
-      "You can send an email directly to cardonaadrian101@gmail.com, download the curriculum vitae via the link in the header, or connect on LinkedIn at linkedin.com/in/adrian-cardona.",
+      "You can send an email directly to cardona.adrian.1029@gmail.com, call 310-489-6795, download the resume via the link in the header, or connect on LinkedIn at linkedin.com/in/adrian-cardona.",
   },
 ]
 
