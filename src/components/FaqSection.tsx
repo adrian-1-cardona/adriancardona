@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { ChevronDown } from "lucide-react"
 
 interface FaqItem {
   question: string
@@ -49,14 +48,17 @@ export default function FaqSection() {
   return (
     <section
       id="faq"
-      className="py-20 px-4 sm:px-6 max-w-4xl mx-auto text-left"
+      className="scroll-mt-24 py-20 px-4 sm:px-6 max-w-4xl mx-auto text-left"
     >
       {/* Centered Heading */}
       <div className="text-center mb-12">
-        <h2 className="section-heading text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight mb-2">
+        <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff] mb-2">
+          // Q&amp;A
+        </div>
+        <h2 className="font-display text-3xl sm:text-4xl lg:text-[44px] font-medium text-[#19191d] tracking-[-0.5px] leading-tight mb-2">
           Frequently asked questions
         </h2>
-        <p className="text-[#8c929d] text-sm sm:text-base">
+        <p className="text-[#686a71] text-sm sm:text-base">
           Everything you need to know about Adrian&apos;s background,
           availability, and technical focus.
         </p>
@@ -70,18 +72,22 @@ export default function FaqSection() {
             <div key={index} className="py-4">
               <button
                 onClick={() => toggle(index)}
-                className="w-full flex items-center justify-between text-left py-2 font-semibold text-[#37383c] hover:text-[#4e95ff] transition focus:outline-none text-base sm:text-lg"
+                className="w-full flex items-center justify-between text-left py-2 font-semibold text-[#19191d] hover:text-[#4e95ff] transition focus:outline-none text-base sm:text-lg cursor-pointer"
               >
                 <span>{item.question}</span>
-                <ChevronDown
-                  className={`w-5 h-5 text-[#9ca3af] transition-transform duration-200 shrink-0 ml-4 ${
-                    isOpen ? "rotate-180 text-[#4e95ff]" : ""
+                <span
+                  className={`w-6 h-6 flex items-center justify-center rounded-full text-base font-mono shrink-0 ml-4 transition-colors ${
+                    isOpen
+                      ? "bg-[#4e95ff] text-white"
+                      : "bg-slate-100 text-[#686a71]"
                   }`}
-                />
+                >
+                  {isOpen ? "−" : "+"}
+                </span>
               </button>
 
               {isOpen && (
-                <div className="pt-2 pb-3 text-[#686a71] text-sm leading-relaxed animate-in fade-in duration-150">
+                <div className="pt-2 pb-3 text-[#686a71] text-sm sm:text-base leading-relaxed animate-in fade-in duration-150">
                   {item.answer}
                 </div>
               )}

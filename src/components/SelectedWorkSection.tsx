@@ -34,7 +34,7 @@ export default function SelectedWorkSection() {
   }
 
   // Gitex Codebase AI answers matching the active chip
-  const gitexAnswers: Record<string, { prompt: string body: string }> = {
+  const gitexAnswers: Record<string, { prompt: string; body: string }> = {
     Architecture: {
       prompt: "Analyzing 14 source files across compiler/ and vm/...",
       body: "Gitex analyzed 14 source files across compiler/ and vm/. The execution model uses a single-pass bytecode compiler with a flat instruction vector, passing evaluated expressions directly through the stack pointer for O(1) instruction dispatch.",

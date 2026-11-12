@@ -270,10 +270,48 @@ export const BLOG_POSTS: BlogPost[] = [
           "By implementing Vaughan Pratt's top-down operator precedence algorithm in pure Rust, every token type binds to a parselet with a distinct binding power, producing elegant and fast AST generation.",
         ],
       },
+      {
+        heading: "2. Flat Bytecode Vectors vs Stack Frames",
+        paragraphs: [
+          "To avoid dynamic heap allocations during expression evaluation, Guppty emits instructions into a flat, contiguous vector of opcodes. Operands are pushed onto a fixed-capacity stack frame.",
+          "This cache-friendly memory layout enables the interpreter loop to achieve sub-microsecond instruction dispatch on modern x86_64 and ARM processors.",
+        ],
+      },
     ],
     keyTakeaways: [
       "Pratt parsing reduces expression parsing code by 60% compared to traditional recursive descent.",
       "Stack-based bytecode VMs provide deterministic instruction execution with predictable memory behavior.",
+    ],
+  },
+  {
+    id: "gitex-ast-grounding",
+    slug: "ast-grounded-code-intelligence",
+    title: "Hallucination-Free Code Intelligence with AST Grounding",
+    subtitle:
+      "How Gitex verifies semantic LLM retrieval against concrete syntax trees and Git diffs to deliver verifiable codebase answers.",
+    category: "AI & Retrieval",
+    publishDate: "November 2026",
+    readTime: "6 min read",
+    summary:
+      "Techniques for cross-referencing LLM retrieval with AST symbol tables to ensure 100% verifiable code references without hallucinations.",
+    sections: [
+      {
+        heading: "1. The Citation Verification Problem",
+        paragraphs: [
+          "Standard RAG pipelines query vector databases using text chunks, often producing hallucinated function signatures or obsolete file paths when answering code questions.",
+          "Gitex resolves this by parsing the target repository into an abstract syntax tree, resolving symbol scopes, and filtering retrieved snippets against active AST definitions.",
+        ],
+      },
+      {
+        heading: "2. Verifying Citations Against Git Diffs",
+        paragraphs: [
+          "When analyzing pull requests or local working trees, Gitex overlays git diff hunks onto the AST index. Citations are verified against line boundaries so every link points directly to valid code.",
+        ],
+      },
+    ],
+    keyTakeaways: [
+      "AST symbol table grounding prevents LLM hallucinations in codebase Q&A systems.",
+      "Overlaying git diffs on syntax trees enables real-time verification of code citations.",
     ],
   },
 ]

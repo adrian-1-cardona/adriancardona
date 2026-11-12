@@ -2,33 +2,38 @@ import { EXPERIENCES, PROFILE } from "@/data/portfolioData"
 
 export default function TrackRecordSection() {
   return (
-    <section id="experience" className="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+    <section
+      id="experience"
+      className="scroll-mt-24 py-20 px-4 sm:px-6 max-w-6xl mx-auto"
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
         {/* Left Column: Work Experience with Official Company Logos */}
         <div
-          className="lg:col-span-7 rounded-3xl p-6 sm:p-8 text-left shadow-lg border border-[#36393F]/10 relative overflow-hidden"
+          className="lg:col-span-7 rounded-3xl p-6 sm:p-8 text-left shadow-lg border border-[#36393F]/10 relative overflow-hidden flex flex-col justify-between"
           style={{
             background:
               "radial-gradient(92.09% 124.47% at 50% 99.24%, rgba(221, 226, 238, 0.5) 58.91%, rgba(187, 197, 221, 0.5) 100%)",
           }}
         >
           {/* Header */}
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff]">
-              // Work Experience
-            </span>
-            <span className="text-[11px] font-mono text-[#686a71] bg-white/80 px-2.5 py-0.5 rounded-full border border-slate-200">
-              4 Roles
-            </span>
-          </div>
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff]">
+                // Work Experience
+              </span>
+              <span className="text-[11px] font-mono text-[#686a71] bg-white/80 px-2.5 py-0.5 rounded-full border border-slate-200">
+                4 Roles
+              </span>
+            </div>
 
-          <h3 className="text-2xl sm:text-3xl font-bold text-[#19191d] tracking-tight mb-2">
-            Work Experience
-          </h3>
-          <p className="text-xs sm:text-sm text-[#686a71] leading-relaxed mb-6 font-normal">
-            Software engineering internships and university research
-            appointments.
-          </p>
+            <h3 className="font-display text-2xl sm:text-3xl lg:text-[34px] font-medium text-[#19191d] tracking-[-0.5px] mb-2">
+              Work Experience
+            </h3>
+            <p className="text-xs sm:text-sm text-[#686a71] leading-relaxed mb-6 font-normal">
+              Software engineering internships and university research
+              appointments.
+            </p>
+          </div>
 
           {/* Experience Stack */}
           <div className="space-y-4">
@@ -105,17 +110,29 @@ export default function TrackRecordSection() {
           </div>
         </div>
 
-        {/* Right Column: Balanced Profile, Education, Stats & Skills */}
-        <div className="lg:col-span-5 text-left space-y-6 pl-0 lg:pl-2">
-          {/* Profile & Contact */}
+        {/* Right Column: Matched Container with Education, Metrics, Stack & Action Links */}
+        <div
+          className="lg:col-span-5 rounded-3xl p-6 sm:p-8 text-left shadow-lg border border-[#36393F]/10 relative overflow-hidden flex flex-col justify-between"
+          style={{
+            background:
+              "radial-gradient(92.09% 124.47% at 50% 99.24%, rgba(221, 226, 238, 0.5) 58.91%, rgba(187, 197, 221, 0.5) 100%)",
+          }}
+        >
+          {/* Top Section: Header & Education */}
           <div>
-            <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff] mb-2">
-              // Education &amp; Profile
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff]">
+                // Education &amp; Profile
+              </span>
+              <span className="text-[11px] font-mono text-[#686a71] bg-white/80 px-2.5 py-0.5 rounded-full border border-slate-200">
+                Cal Poly SLO
+              </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#19191d] tracking-tight mb-2">
+
+            <h3 className="font-display text-2xl sm:text-3xl lg:text-[34px] font-medium text-[#19191d] tracking-[-0.5px] mb-2">
               Adrian Cardona
-            </h2>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-[#686a71] font-mono mb-4">
+            </h3>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#686a71] font-mono mb-5">
               <span>310-489-6795</span>
               <span className="text-slate-300">·</span>
               <span>cardonaadrian101@gmail.com</span>
@@ -124,7 +141,7 @@ export default function TrackRecordSection() {
             </div>
 
             {/* Education Card with Official Cal Poly SLO Seal */}
-            <div className="p-5 rounded-2xl bg-white border border-[#e5e7eb] shadow-xs">
+            <div className="p-5 rounded-2xl bg-white border border-[#e5e7eb] shadow-xs mb-5">
               <div className="flex items-start gap-3.5 mb-2">
                 <img
                   src={PROFILE.education.logo}
@@ -145,144 +162,129 @@ export default function TrackRecordSection() {
                 <span>Expected May 2027</span>
               </div>
             </div>
-          </div>
 
-          {/* Key Metrics 4-Grid (Matches ouckah.com/work stat banner) */}
-          <div className="grid grid-cols-2 gap-3.5">
-            <div className="p-4 rounded-2xl bg-[#f8fafc] border border-[#e5e7eb]">
-              <div className="text-3xl font-extrabold text-[#19191d] tracking-tight font-mono">
-                4
-              </div>
-              <div className="font-semibold text-[#19191d] text-xs mt-1">
-                Roles &amp; Appointments
-              </div>
-              <div className="text-[11px] text-[#686a71] mt-0.5">
-                Bailey, CSSE, FCCC, Extern
-              </div>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-[#f8fafc] border border-[#e5e7eb]">
-              <div className="text-3xl font-extrabold text-[#19191d] tracking-tight font-mono">
-                3.5
-              </div>
-              <div className="font-semibold text-[#19191d] text-xs mt-1">
-                Cal Poly GPA
-              </div>
-              <div className="text-[11px] text-[#686a71] mt-0.5">
-                Out of 4.0 scale
-              </div>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-[#f8fafc] border border-[#e5e7eb]">
-              <div className="text-2xl font-extrabold text-[#19191d] tracking-tight font-mono pt-1">
-                May &apos;27
-              </div>
-              <div className="font-semibold text-[#19191d] text-xs mt-1">
-                Graduation
-              </div>
-              <div className="text-[11px] text-[#686a71] mt-0.5">
-                San Luis Obispo, CA
-              </div>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-[#f8fafc] border border-[#e5e7eb]">
-              <div className="text-3xl font-extrabold text-[#19191d] tracking-tight font-mono">
-                2
-              </div>
-              <div className="font-semibold text-[#19191d] text-xs mt-1">
-                Flagship Projects
-              </div>
-              <div className="text-[11px] text-[#686a71] mt-0.5">
-                Guppty &amp; Gitex
-              </div>
-            </div>
-          </div>
-
-          {/* Technical Stack Arsenal Card */}
-          <div className="p-5 rounded-2xl bg-white border border-[#e5e7eb] shadow-xs">
-            <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#19191d] mb-3">
-              Technical Arsenal
-            </div>
-
-            <div className="space-y-2.5 text-xs">
-              <div>
-                <div className="text-[11px] font-mono text-[#9ca3af] mb-1">
-                  Languages
+            {/* Key Metrics 4-Grid */}
+            <div className="grid grid-cols-2 gap-3 mb-5">
+              <div className="p-3.5 rounded-xl bg-white border border-[#e5e7eb] shadow-xs">
+                <div className="text-2xl sm:text-3xl font-extrabold text-[#19191d] tracking-tight font-mono">
+                  4
                 </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {[
-                    "TypeScript",
-                    "Python",
-                    "Rust",
-                    "JavaScript",
-                    "SQL",
-                    "HTML/CSS",
-                  ].map((lang) => (
-                    <span
-                      key={lang}
-                      className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[11px]"
-                    >
-                      {lang}
-                    </span>
-                  ))}
+                <div className="font-semibold text-[#19191d] text-[11px] mt-0.5">
+                  Roles &amp; Appointments
+                </div>
+                <div className="text-[10px] text-[#686a71]">
+                  Bailey, CSSE, FCCC, Extern
                 </div>
               </div>
 
-              <div>
-                <div className="text-[11px] font-mono text-[#9ca3af] mb-1">
-                  Systems &amp; Cloud
+              <div className="p-3.5 rounded-xl bg-white border border-[#e5e7eb] shadow-xs">
+                <div className="text-2xl sm:text-3xl font-extrabold text-[#19191d] tracking-tight font-mono">
+                  3.5
                 </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {[
-                    "SharePoint",
-                    "Power Automate",
-                    "OneDrive",
-                    "Drupal",
-                    "CI/CD",
-                    "Git",
-                  ].map((sys) => (
-                    <span
-                      key={sys}
-                      className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[11px]"
-                    >
-                      {sys}
-                    </span>
-                  ))}
+                <div className="font-semibold text-[#19191d] text-[11px] mt-0.5">
+                  Cal Poly GPA
+                </div>
+                <div className="text-[10px] text-[#686a71]">
+                  Out of 4.0 scale
                 </div>
               </div>
 
-              <div>
-                <div className="text-[11px] font-mono text-[#9ca3af] mb-1">
-                  AI, Frameworks &amp; Tooling
+              <div className="p-3.5 rounded-xl bg-white border border-[#e5e7eb] shadow-xs">
+                <div className="text-xl sm:text-2xl font-extrabold text-[#19191d] tracking-tight font-mono pt-0.5">
+                  May &apos;27
                 </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {[
-                    "React",
-                    "Gemini API",
-                    "LlamaIndex",
-                    "Codex",
-                    "pytest",
-                    "Tailwind CSS",
-                  ].map((ai) => (
-                    <span
-                      key={ai}
-                      className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[11px]"
-                    >
-                      {ai}
-                    </span>
-                  ))}
+                <div className="font-semibold text-[#19191d] text-[11px] mt-0.5">
+                  Graduation
+                </div>
+                <div className="text-[10px] text-[#686a71]">
+                  San Luis Obispo, CA
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-white border border-[#e5e7eb] shadow-xs">
+                <div className="text-2xl sm:text-3xl font-extrabold text-[#19191d] tracking-tight font-mono">
+                  2
+                </div>
+                <div className="font-semibold text-[#19191d] text-[11px] mt-0.5">
+                  Flagship Projects
+                </div>
+                <div className="text-[10px] text-[#686a71]">
+                  Guppty &amp; Gitex
+                </div>
+              </div>
+            </div>
+
+            {/* Technical Stack Arsenal Card */}
+            <div className="p-4 rounded-xl bg-white border border-[#e5e7eb] shadow-xs mb-5">
+              <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#19191d] mb-2.5">
+                Technical Arsenal
+              </div>
+
+              <div className="space-y-2 text-xs">
+                <div>
+                  <div className="text-[10px] font-mono text-[#9ca3af] mb-1">
+                    Languages
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {["TypeScript", "Python", "Rust", "JavaScript", "SQL", "HTML/CSS"].map(
+                      (lang) => (
+                        <span
+                          key={lang}
+                          className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[10px]"
+                        >
+                          {lang}
+                        </span>
+                      ),
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-[10px] font-mono text-[#9ca3af] mb-1">
+                    Systems &amp; Cloud
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {["SharePoint", "Power Automate", "OneDrive", "Drupal", "CI/CD", "Git"].map(
+                      (sys) => (
+                        <span
+                          key={sys}
+                          className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[10px]"
+                        >
+                          {sys}
+                        </span>
+                      ),
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-[10px] font-mono text-[#9ca3af] mb-1">
+                    AI, Frameworks &amp; Tooling
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {["React", "Gemini API", "LlamaIndex", "Codex", "pytest", "Tailwind"].map(
+                      (ai) => (
+                        <span
+                          key={ai}
+                          className="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#19191d] font-mono text-[10px]"
+                        >
+                          {ai}
+                        </span>
+                      ),
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Action Links */}
-          <div className="space-y-2.5 pt-1">
+          <div className="space-y-2 pt-1">
             <a
               href="/ADRIAN_CARDONA_RESUME.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-[#e5e7eb] text-sm font-semibold text-[#19191d] hover:border-[#4e95ff] hover:text-[#4e95ff] shadow-xs transition"
+              className="flex items-center justify-between p-3 rounded-xl bg-white border border-[#e5e7eb] text-xs font-semibold text-[#19191d] hover:border-[#4e95ff] hover:text-[#4e95ff] shadow-xs transition"
             >
               <span>Download Resume (PDF)</span>
               <span className="text-xs font-mono text-[#4e95ff]">↗</span>
@@ -291,7 +293,7 @@ export default function TrackRecordSection() {
               href="https://github.com/adrian-1-cardona"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-[#e5e7eb] text-sm font-semibold text-[#19191d] hover:border-[#4e95ff] hover:text-[#4e95ff] shadow-xs transition"
+              className="flex items-center justify-between p-3 rounded-xl bg-white border border-[#e5e7eb] text-xs font-semibold text-[#19191d] hover:border-[#4e95ff] hover:text-[#4e95ff] shadow-xs transition"
             >
               <span>GitHub (adrian-1-cardona)</span>
               <span className="text-xs font-mono text-[#4e95ff]">↗</span>
@@ -300,7 +302,7 @@ export default function TrackRecordSection() {
               href="https://linkedin.com/in/adrian-cardona"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-[#e5e7eb] text-sm font-semibold text-[#19191d] hover:border-[#4e95ff] hover:text-[#4e95ff] shadow-xs transition"
+              className="flex items-center justify-between p-3 rounded-xl bg-white border border-[#e5e7eb] text-xs font-semibold text-[#19191d] hover:border-[#4e95ff] hover:text-[#4e95ff] shadow-xs transition"
             >
               <span>LinkedIn (/in/adrian-cardona)</span>
               <span className="text-xs font-mono text-[#4e95ff]">↗</span>

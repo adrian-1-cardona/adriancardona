@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react"
 import { PROFILE } from "@/data/portfolioData"
 
 export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
@@ -9,7 +8,7 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
         <div>
           <button
             onClick={onScrollTop}
-            className="font-bold text-[#37383c] tracking-tight text-base flex items-center gap-2 mb-2 focus:outline-none"
+            className="font-bold text-[#37383c] tracking-tight text-base flex items-center gap-2 mb-2 focus:outline-none cursor-pointer"
           >
             <span className="w-2.5 h-2.5 rounded-full bg-[#4e95ff]" />
             <span>Adrian Cardona</span>
@@ -37,7 +36,7 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 className="hover:text-[#4e95ff] transition inline-flex items-center gap-1"
               >
                 <span>Guppty Bytecode VM</span>
-                <ArrowUpRight className="w-3 h-3 opacity-60" />
+                <span className="text-[11px] font-mono text-[#4e95ff]">↗</span>
               </a>
             </li>
             <li>
@@ -48,7 +47,7 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 className="hover:text-[#4e95ff] transition inline-flex items-center gap-1"
               >
                 <span>Gitex Codebase AI</span>
-                <ArrowUpRight className="w-3 h-3 opacity-60" />
+                <span className="text-[11px] font-mono text-[#4e95ff]">↗</span>
               </a>
             </li>
             <li>
@@ -59,7 +58,7 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 className="hover:text-[#4e95ff] transition inline-flex items-center gap-1"
               >
                 <span>CSSE Experiment Runner</span>
-                <ArrowUpRight className="w-3 h-3 opacity-60" />
+                <span className="text-[11px] font-mono text-[#4e95ff]">↗</span>
               </a>
             </li>
           </ul>
@@ -108,7 +107,7 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 className="hover:text-[#4e95ff] transition inline-flex items-center gap-1 font-medium text-[#4e95ff]"
               >
                 <span>Curriculum Vitae (PDF)</span>
-                <ArrowUpRight className="w-3 h-3" />
+                <span className="text-[11px] font-mono">↗</span>
               </a>
             </li>
             <li>
@@ -119,7 +118,7 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 className="hover:text-[#4e95ff] transition inline-flex items-center gap-1"
               >
                 <span>LinkedIn</span>
-                <ArrowUpRight className="w-3 h-3 opacity-60" />
+                <span className="text-[11px] font-mono text-[#686a71]">↗</span>
               </a>
             </li>
             <li>
@@ -130,7 +129,7 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 className="hover:text-[#4e95ff] transition inline-flex items-center gap-1"
               >
                 <span>GitHub</span>
-                <ArrowUpRight className="w-3 h-3 opacity-60" />
+                <span className="text-[11px] font-mono text-[#686a71]">↗</span>
               </a>
             </li>
             <li>

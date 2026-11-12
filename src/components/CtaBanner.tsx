@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { Mail, Copy, Check, ArrowRight } from "lucide-react"
 import { PROFILE } from "@/data/portfolioData"
 
 export default function CtaBanner() {
@@ -12,10 +11,16 @@ export default function CtaBanner() {
   }
 
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 max-w-5xl mx-auto">
+    <section
+      id="contact"
+      className="scroll-mt-24 py-20 px-4 sm:px-6 max-w-5xl mx-auto"
+    >
       {/* Soft Gradient Banner (Matches Cluely bottom banner with Cluely blue #4e95ff) */}
       <div className="rounded-3xl bg-gradient-to-r from-[#edf4ff] via-[#f5f9ff] to-[#e8f1ff] border border-[#d4e4fc] p-8 sm:p-14 relative overflow-hidden shadow-xs flex flex-col md:flex-row md:items-center md:justify-between text-left gap-8">
         <div className="max-w-xl relative z-10">
+          <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff] mb-2">
+            // Get In Touch
+          </div>
           <h2 className="font-display text-3xl sm:text-5xl font-medium text-[#19191d] tracking-tight leading-tight mb-3">
             Engineering that delivers clarity, not noise.
           </h2>
@@ -29,27 +34,22 @@ export default function CtaBanner() {
               href={`mailto:${PROFILE.email}?subject=Portfolio%20Inquiry%20for%20Adrian`}
               className="btn-cluely-cta"
             >
-              <Mail className="w-4 h-4" />
               <span>Get in Touch</span>
-              <ArrowRight className="w-4 h-4" />
+              <span className="text-sm font-mono">→</span>
             </a>
 
             <button
               onClick={handleCopyEmail}
-              className="btn-secondary !text-xs !py-2.5 !px-4 !bg-white cursor-pointer"
+              className="btn-secondary !text-xs !py-2.5 !px-4 !bg-white cursor-pointer font-mono"
             >
               {copied ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="text-emerald-600 font-semibold">
-                    Email Copied!
-                  </span>
-                </>
+                <span className="text-emerald-600 font-semibold">
+                  ✓ Email Copied!
+                </span>
               ) : (
-                <>
-                  <Copy className="w-3.5 h-3.5 text-[#686a71]" />
-                  <span>{PROFILE.email}</span>
-                </>
+                <span className="text-[#37383c]">
+                  {PROFILE.email} <span className="text-[#9ca3af]">⎘</span>
+                </span>
               )}
             </button>
           </div>

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import { ArrowRight, Calendar, Clock } from "lucide-react"
 import { BLOG_POSTS, type BlogPost } from "@/data/portfolioData"
 import BlogReaderModal from "@/components/BlogReaderModal"
 
@@ -34,13 +33,19 @@ export default function BlogSection({
   }
 
   return (
-    <section id="blog" className="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <section
+      id="blog"
+      className="scroll-mt-24 py-20 px-4 sm:px-6 max-w-6xl mx-auto"
+    >
       {/* Centered Heading */}
       <div className="text-center max-w-2xl mx-auto mb-14">
-        <h2 className="section-heading text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight mb-3">
+        <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff] mb-2">
+          // Technical Writing
+        </div>
+        <h2 className="font-display text-3xl sm:text-4xl lg:text-[44px] font-medium text-[#19191d] tracking-[-0.5px] leading-tight mb-3">
           Engineering Notes &amp; Writing
         </h2>
-        <p className="text-[#8c929d] text-base sm:text-lg">
+        <p className="text-[#686a71] text-sm sm:text-base">
           In-depth technical writing on compilers, retrieval architectures, and
           dependable software.
         </p>
@@ -52,28 +57,22 @@ export default function BlogSection({
           <article
             key={post.id}
             onClick={() => handleOpenPost(post)}
-            className="rounded-3xl bg-white border border-[#e5e7eb] p-6 sm:p-8 cursor-pointer hover:border-[#cbd5e1] hover:shadow-md transition flex flex-col justify-between group"
+            className="rounded-3xl bg-white border border-[#e5e7eb] p-6 sm:p-8 cursor-pointer hover:border-[#4e95ff]/40 hover:shadow-lg transition-all flex flex-col justify-between group"
           >
             <div>
-              <div className="flex items-center justify-between text-xs text-[#9ca3af] mb-3 font-mono">
+              <div className="flex items-center justify-between text-xs text-[#9ca3af] mb-4 font-mono">
                 <span className="font-semibold text-[#4e95ff] uppercase tracking-wider">
                   {post.category}
                 </span>
 
-                <div className="flex items-center gap-2">
-                  <span className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    {post.publishDate}
-                  </span>
+                <div className="flex items-center gap-1.5 text-[11px] text-[#686a71] bg-slate-50 px-2.5 py-1 rounded-full border border-slate-200">
+                  <span>{post.publishDate}</span>
                   <span>·</span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    {post.readTime}
-                  </span>
+                  <span>{post.readTime}</span>
                 </div>
               </div>
 
-              <h3 className="text-lg sm:text-xl font-bold text-[#37383c] tracking-tight group-hover:text-[#4e95ff] transition mb-2">
+              <h3 className="text-lg sm:text-xl font-bold text-[#19191d] tracking-tight group-hover:text-[#4e95ff] transition mb-3">
                 {post.title}
               </h3>
 
@@ -82,9 +81,11 @@ export default function BlogSection({
               </p>
             </div>
 
-            <div className="pt-4 mt-6 border-t border-[#f1f5f9] flex items-center justify-between text-xs font-semibold text-[#37383c] group-hover:text-[#4e95ff] transition">
+            <div className="pt-4 mt-6 border-t border-[#f1f5f9] flex items-center justify-between text-xs font-semibold text-[#19191d] group-hover:text-[#4e95ff] transition">
               <span>Read Full Article</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              <span className="text-sm font-mono group-hover:translate-x-1 transition-transform">
+                →
+              </span>
             </div>
           </article>
         ))}
