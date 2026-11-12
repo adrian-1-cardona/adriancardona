@@ -1,15 +1,3 @@
-import {
-  ArrowRight,
-  Terminal,
-  Cpu,
-  Play,
-  CheckCircle2,
-  Database,
-  Code,
-  Sparkles,
-  Wifi,
-  Battery,
-} from "lucide-react"
 import { useState } from "react"
 
 export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
@@ -48,15 +36,14 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
           cooperative AI agent systems at CSSE, and compiler tooling.
         </p>
 
-        {/* Single Focal Action Button (Exact Cluely gradient button with radial depth & inset highlight) */}
+        {/* Single Focal Action Button */}
         <div className="flex items-center justify-center">
           <button
             onClick={onGetInTouch}
             className="btn-cluely-cta cursor-pointer group"
           >
-            <span className="relative z-10 flex items-center gap-2">
-              <span>Get in Touch</span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+            <span className="relative z-10 flex items-center gap-1.5">
+              <span>Get in Touch ↗</span>
             </span>
             {/* Shimmer light reflection effect */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-full">
@@ -89,9 +76,8 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
         >
           {/* macOS Top Status Bar */}
           <div className="h-8 sm:h-9 bg-black/25 backdrop-blur-md border-b border-white/10 px-4 flex items-center justify-between text-white text-[11px] sm:text-xs">
-            {/* Left: Brand / Sparkle */}
+            {/* Left: Brand */}
             <div className="flex items-center gap-2">
-              <Sparkles className="w-3.5 h-3.5 text-white/90" />
               <span className="font-semibold tracking-tight hidden sm:inline">
                 Adrian Cardona
               </span>
@@ -105,10 +91,11 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
               </span>
             </div>
 
-            {/* Right: Status Icons */}
-            <div className="flex items-center gap-3 text-white/80">
-              <Wifi className="w-3.5 h-3.5" />
-              <Battery className="w-4 h-4" />
+            {/* Right: Status */}
+            <div className="flex items-center gap-2 text-white/80 font-mono text-[10px]">
+              <span>Wi-Fi</span>
+              <span>·</span>
+              <span>100%</span>
             </div>
           </div>
 
@@ -132,9 +119,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                   disabled={isRunning}
                   className="btn-cluely-cta !text-xs !py-1 !px-3.5 cursor-pointer"
                 >
-                  <Play
-                    className={`w-3 h-3 ${isRunning ? "animate-spin" : ""}`}
-                  />
+                  <span className="text-[10px]">▶</span>
                   <span>
                     {isRunning ? "Dispatching..." : "Execute Pipeline"}
                   </span>
@@ -182,9 +167,8 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                 {/* Right Telemetry */}
                 <div className="md:col-span-5 bg-[#26282d]/80 rounded-xl p-4 border border-[#37383c] flex flex-col justify-between">
                   <div>
-                    <div className="text-xs uppercase tracking-wider text-slate-400 font-bold mb-3 flex items-center gap-1.5">
-                      <Cpu className="w-3.5 h-3.5 text-[#4e95ff]" />
-                      <span>Production Telemetry</span>
+                    <div className="text-xs uppercase tracking-wider text-slate-400 font-bold mb-3">
+                      Production Telemetry
                     </div>
 
                     <div className="space-y-2 text-xs">
@@ -217,7 +201,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
 
                   {ranSuccessfully && (
                     <div className="mt-3 p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-xs flex items-center gap-2 animate-in fade-in">
-                      <CheckCircle2 className="w-4 h-4 shrink-0" />
+                      <span className="font-bold text-xs">✓</span>
                       <span>
                         Media system organized photos across OneDrive
                         successfully.
@@ -228,12 +212,11 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
               </div>
             </div>
 
-            {/* Overlaid Assistant Card (Matches Cluely floating glassmorphism prompt) */}
+            {/* Overlaid Assistant Card */}
             <div className="mt-4 sm:-mt-6 z-20 w-full max-w-xl rounded-2xl bg-black/60 border border-white/25 p-4 text-left backdrop-blur-xl shadow-2xl text-white">
               <div className="flex items-center justify-between text-xs text-white/70 mb-2">
-                <span className="font-semibold text-white flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#4e95ff]" />
-                  <span>Interactive Systems Inspector</span>
+                <span className="font-semibold text-white">
+                  Interactive Systems Inspector
                 </span>
                 <span className="font-mono text-[10px] bg-white/10 px-2 py-0.5 rounded text-white/80">
                   Cmd + Enter

@@ -1,5 +1,3 @@
-import { ArrowUpRight } from "lucide-react"
-
 export default function FlagshipShowcase() {
   return (
     <section
@@ -20,7 +18,7 @@ export default function FlagshipShowcase() {
         </p>
       </div>
 
-      {/* 2-Column Projects Grid (Exact Resume Titles & Bullets) */}
+      {/* 2-Column Projects Grid (Exact Resume Titles & Bullets - No Icons) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
         {/* Project 1: Guppty */}
         <div className="rounded-3xl p-7 bg-[#f8fafc] border border-[#e5e7eb] flex flex-col justify-between shadow-xs hover:shadow-md hover:border-slate-300 transition-all duration-200">
@@ -33,10 +31,9 @@ export default function FlagshipShowcase() {
                 href="https://github.com/adrian-1-cardona"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs font-medium text-[#686a71] hover:text-[#19191d] flex items-center gap-1 transition"
+                className="text-xs font-medium text-[#686a71] hover:text-[#19191d] transition"
               >
-                <span>Project Site</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                Project Site ↗
               </a>
             </div>
 
@@ -67,10 +64,9 @@ export default function FlagshipShowcase() {
               href="https://github.com/adrian-1-cardona"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 font-semibold text-[#4e95ff] hover:text-[#1e82e0] transition"
+              className="font-semibold text-[#4e95ff] hover:text-[#1e82e0] transition"
             >
-              <span>View Project Site</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              View Project Site ↗
             </a>
           </div>
         </div>
@@ -86,10 +82,9 @@ export default function FlagshipShowcase() {
                 href="https://gitex.dev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs font-medium text-[#686a71] hover:text-[#19191d] flex items-center gap-1 transition"
+                className="text-xs font-medium text-[#686a71] hover:text-[#19191d] transition"
               >
-                <span>Live App</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                Live App ↗
               </a>
             </div>
 
@@ -122,10 +117,9 @@ export default function FlagshipShowcase() {
               href="https://gitex.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 font-semibold text-[#4e95ff] hover:text-[#1e82e0] transition"
+              className="font-semibold text-[#4e95ff] hover:text-[#1e82e0] transition"
             >
-              <span>Open Live App</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              Open Live App ↗
             </a>
           </div>
         </div>

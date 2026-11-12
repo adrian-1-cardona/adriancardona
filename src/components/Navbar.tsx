@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { FileText, Menu, X, ArrowUpRight, Sparkles } from "lucide-react"
+import { Menu, X } from "lucide-react"
 
 interface NavbarProps {
   onNavigate: (sectionId: string) => void
@@ -45,12 +45,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             onClick={() => handleLinkClick("top")}
             className="text-left font-bold tracking-tight text-base sm:text-lg flex items-center gap-2 focus:outline-none cursor-pointer"
           >
-            <Sparkles
-              className={`w-4 h-4 ${
-                scrolled ? "text-[#4e95ff]" : "text-white"
-              }`}
-            />
-            <span className="font-semibold">Adrian Cardona</span>
+            <span className="font-semibold tracking-tight">Adrian Cardona</span>
           </button>
 
           {/* Desktop & Tablet Links (visible from sm breakpoint upwards) */}
@@ -79,14 +74,13 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             href="/ADRIAN_CARDONA_RESUME.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className={`hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition ${
+            className={`hidden sm:inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-full transition ${
               scrolled
                 ? "text-[#686a71] hover:text-[#37383c] hover:bg-slate-100"
                 : "text-white/80 hover:text-white"
             }`}
           >
-            <FileText className="w-3.5 h-3.5" />
-            <span>Resume</span>
+            <span>Resume ↗</span>
           </a>
 
           {scrolled && (
