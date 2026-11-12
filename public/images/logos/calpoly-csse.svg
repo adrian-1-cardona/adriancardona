@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="csseGreenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b563f"/>
+      <stop offset="100%" stop-color="#113a2a"/>
+    </linearGradient>
+    <linearGradient id="csseGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5cf68"/>
+      <stop offset="100%" stop-color="#c69214"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Rounded Shield -->
+  <rect width="100" height="100" rx="22" fill="url(#csseGreenGrad)"/>
+  <rect x="2" y="2" width="96" height="96" rx="20" fill="none" stroke="url(#csseGoldGrad)" stroke-width="2.5" opacity="0.85"/>
+  
+  <!-- Cal Poly CSSE Code / System Nodes -->
+  <g transform="translate(50, 43)">
+    <!-- Circuit / Code Bracket Symbol -->
+    <path d="M-18,-14 L-26,-4 L-18,6" fill="none" stroke="url(#csseGoldGrad)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M18,-14 L26,-4 L18,6" fill="none" stroke="url(#csseGoldGrad)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-4,12 L4,-20" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Connected Logic Nodes -->
+    <circle cx="-12" cy="18" r="3" fill="url(#csseGoldGrad)"/>
+    <circle cx="12" cy="18" r="3" fill="url(#csseGoldGrad)"/>
+    <path d="M-12,18 L12,18" stroke="url(#csseGoldGrad)" stroke-width="1.5" stroke-dasharray="2 2"/>
+  </g>
+  
+  <!-- Text Labels -->
+  <text x="50" y="20" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="11" fill="url(#csseGoldGrad)" letter-spacing="1.2">CAL POLY</text>
+  <text x="50" y="89" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="9" fill="#ffffff" letter-spacing="1">DEPT OF CSSE</text>
+</svg>

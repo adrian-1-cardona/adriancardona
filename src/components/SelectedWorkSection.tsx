@@ -69,8 +69,12 @@ export default function SelectedWorkSection() {
         >
           {/* Card Top: Appointment Metadata & Title with Inline Soundwave Pill */}
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-wider text-blue-100 mb-3">
-              <Briefcase className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-blue-100 mb-3">
+              <img
+                src="/images/logos/calpoly-bailey.svg"
+                alt="Cal Poly Bailey College"
+                className="w-5 h-5 rounded-md shadow-xs shrink-0"
+              />
               <span>
                 Cal Poly Bailey College // Software Engineering Intern
               </span>
@@ -264,8 +268,12 @@ export default function SelectedWorkSection() {
         >
           {/* Card Top: Appointment Metadata & Title with Inline Sparkle Pill */}
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-wider text-[#4e95ff] mb-3">
-              <GraduationCap className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-[#4e95ff] mb-3">
+              <img
+                src="/images/logos/calpoly-csse.svg"
+                alt="Cal Poly CSSE"
+                className="w-5 h-5 rounded-md shadow-xs shrink-0"
+              />
               <span>
                 Cal Poly Department of CSSE // Undergraduate Researcher
               </span>

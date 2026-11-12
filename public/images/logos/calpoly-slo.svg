@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="sloGreenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b563f"/>
+      <stop offset="100%" stop-color="#113a2a"/>
+    </linearGradient>
+    <linearGradient id="sloGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5cf68"/>
+      <stop offset="100%" stop-color="#c69214"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="22" fill="url(#sloGreenGrad)"/>
+  <rect x="2" y="2" width="96" height="96" rx="20" fill="none" stroke="url(#sloGoldGrad)" stroke-width="2.5" opacity="0.85"/>
+  
+  <g transform="translate(50, 44)">
+    <!-- Torch & Shield Emblem -->
+    <path d="M-22,-20 L22,-20 L22,8 C22,22 0,30 0,30 C0,30 -22,22 -22,8 Z" fill="#0f3425" stroke="url(#sloGoldGrad)" stroke-width="2"/>
+    <path d="M0,-16 C-4,-12 -1,-8 0,-6 C1,-8 4,-12 0,-16 Z" fill="#f5cf68"/>
+    <path d="M-2,-5 L2,-5 L1,12 L-1,12 Z" fill="url(#sloGoldGrad)"/>
+    <circle cx="0" cy="18" r="3" fill="#f5cf68"/>
+  </g>
+  
+  <text x="50" y="20" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="11" fill="url(#sloGoldGrad)" letter-spacing="1.2">CAL POLY</text>
+  <text x="50" y="89" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="8.5" fill="#ffffff" letter-spacing="1">SAN LUIS OBISPO</text>
+</svg>

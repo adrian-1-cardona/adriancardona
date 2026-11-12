@@ -49,29 +49,43 @@ export default function TrackRecordSection() {
                 key={exp.id}
                 className="p-5 rounded-2xl bg-white border border-[#e5e7eb] shadow-xs text-left"
               >
-                {/* Title & Metadata */}
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
-                  <div className="font-bold text-[#19191d] text-base flex items-center gap-2">
-                    <span>{exp.role}</span>
-                    {exp.current && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200/60 text-[10px] font-medium font-sans">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                        <span>Present</span>
-                      </span>
-                    )}
+                {/* Title, Logo & Metadata */}
+                <div className="flex items-start gap-3.5 mb-3">
+                  {/* Company Logo Badge */}
+                  <div className="w-12 h-12 rounded-xl shrink-0 border border-slate-200/80 bg-white flex items-center justify-center p-1.5 shadow-xs overflow-hidden">
+                    <img
+                      src={exp.logo}
+                      alt={exp.company}
+                      className="w-full h-full object-contain"
+                    />
                   </div>
-                  <div className="text-xs font-mono text-[#9ca3af]">
-                    {exp.period}
-                  </div>
-                </div>
 
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-xs text-[#4e95ff] font-semibold">
-                    {exp.company}
-                  </span>
-                  <span className="text-xs text-[#9ca3af] font-mono">
-                    {exp.location}
-                  </span>
+                  {/* Title & Organization Info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-0.5">
+                      <div className="font-bold text-[#19191d] text-base flex items-center gap-2 flex-wrap">
+                        <span>{exp.role}</span>
+                        {exp.current && (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200/60 text-[10px] font-medium font-sans">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            <span>Present</span>
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-xs font-mono text-[#9ca3af] shrink-0">
+                        {exp.period}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5">
+                      <span className="text-xs text-[#4e95ff] font-semibold">
+                        {exp.company}
+                      </span>
+                      <span className="text-xs text-[#9ca3af] font-mono">
+                        {exp.location}
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Direct Resume Bullet Points */}
@@ -128,20 +142,31 @@ export default function TrackRecordSection() {
               </span>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white border border-[#e5e7eb] shadow-xs mt-3">
-              <div className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[#19191d] mb-1">
-                <GraduationCap className="w-4 h-4 text-[#4e95ff]" />
-                <span>Cal Poly San Luis Obispo</span>
+            <div className="p-4 rounded-2xl bg-white border border-[#e5e7eb] shadow-xs mt-3 flex items-start gap-3.5">
+              <div className="w-12 h-12 rounded-xl shrink-0 border border-slate-200/80 bg-white flex items-center justify-center p-1 shadow-xs overflow-hidden">
+                <img
+                  src={PROFILE.education.logo}
+                  alt={PROFILE.education.school}
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <div className="text-sm font-semibold text-[#19191d]">
-                B.S. in Computer Science
-              </div>
-              <div className="flex items-center justify-between text-xs text-[#686a71] font-mono mt-1">
-                <span className="text-[#4e95ff] font-bold">GPA: 3.5 / 4.0</span>
-                <span>Expected May 2027</span>
-              </div>
-              <div className="text-[11px] text-[#9ca3af] mt-1 font-mono">
-                San Luis Obispo, California
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[#19191d] mb-1">
+                  <GraduationCap className="w-3.5 h-3.5 text-[#4e95ff]" />
+                  <span>Cal Poly San Luis Obispo</span>
+                </div>
+                <div className="text-sm font-semibold text-[#19191d]">
+                  B.S. in Computer Science
+                </div>
+                <div className="flex items-center justify-between text-xs text-[#686a71] font-mono mt-1">
+                  <span className="text-[#4e95ff] font-bold">
+                    GPA: 3.5 / 4.0
+                  </span>
+                  <span>Expected May 2027</span>
+                </div>
+                <div className="text-[11px] text-[#9ca3af] mt-1 font-mono">
+                  San Luis Obispo, California
+                </div>
               </div>
             </div>
           </div>

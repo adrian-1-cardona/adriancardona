@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="cpGreenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b563f"/>
+      <stop offset="100%" stop-color="#113a2a"/>
+    </linearGradient>
+    <linearGradient id="cpGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5cf68"/>
+      <stop offset="100%" stop-color="#c69214"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Rounded Shield -->
+  <rect width="100" height="100" rx="22" fill="url(#cpGreenGrad)"/>
+  <rect x="2" y="2" width="96" height="96" rx="20" fill="none" stroke="url(#cpGoldGrad)" stroke-width="2.5" opacity="0.85"/>
+  
+  <!-- Cal Poly Monogram & Shield -->
+  <g transform="translate(50, 42)">
+    <!-- Shield Outline -->
+    <path d="M-26,-22 L26,-22 L26,8 C26,24 0,34 0,34 C0,34 -26,24 -26,8 Z" fill="#0f3425" stroke="url(#cpGoldGrad)" stroke-width="2"/>
+    <!-- Gear & Torch Symbols -->
+    <circle cx="0" cy="2" r="9" fill="none" stroke="#f5cf68" stroke-width="2"/>
+    <path d="M0,-8 L0,12 M-10,2 L10,2 M-7,-5 L7,9 M-7,9 L7,-5" stroke="#f5cf68" stroke-width="1.5"/>
+    <circle cx="0" cy="2" r="4" fill="url(#cpGoldGrad)"/>
+    <!-- Torch Flame -->
+    <path d="M0,-17 C-3,-13 0,-10 0,-7 C0,-10 3,-13 0,-17 Z" fill="#f5cf68"/>
+  </g>
+  
+  <!-- Text Labels -->
+  <text x="50" y="20" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="11" fill="url(#cpGoldGrad)" letter-spacing="1.2">CAL POLY</text>
+  <text x="50" y="89" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="8.5" fill="#ffffff" letter-spacing="0.8">BAILEY COLLEGE</text>
+</svg>

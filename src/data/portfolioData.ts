@@ -25,6 +25,8 @@ export interface Experience {
   description: string
   achievements: string[]
   skills: string[]
+  logo: string
+  logoBg?: string
 }
 
 export interface BlogPost {
@@ -60,9 +62,10 @@ export const PROFILE = {
   education: {
     school: "California Polytechnic State University, San Luis Obispo",
     degree: "B.S. in Computer Science",
-    gpa: "3.5/4.0",
+    gpa: "3.5 / 4.0",
     graduation: "Expected May 2027",
     location: "San Luis Obispo, California",
+    logo: "/images/logos/calpoly-slo.svg",
   },
   links: {
     github: "https://github.com/adrian-1-cardona",
@@ -81,6 +84,7 @@ export const EXPERIENCES: Experience[] = [
     period: "Jan 2026 – Present",
     current: true,
     type: "Engineering Internship",
+    logo: "/images/logos/calpoly-bailey.svg",
     description:
       "Built a TypeScript media system with SharePoint and Power Automate so staff can quickly find and organize photos across OneDrive.",
     achievements: [
@@ -106,6 +110,7 @@ export const EXPERIENCES: Experience[] = [
     period: "Aug 2026 – Present",
     current: true,
     type: "Research",
+    logo: "/images/logos/calpoly-csse.svg",
     description:
       "Engineered a Python backend to automate training and evaluation pipelines for cooperative AI agents.",
     achievements: [
@@ -130,6 +135,7 @@ export const EXPERIENCES: Experience[] = [
     period: "Jul 2025 – Mar 2026",
     current: false,
     type: "Research Internship",
+    logo: "/images/logos/foundationccc.png",
     description:
       "Analyzed financial aid and student data to identify barriers to FAFSA access and show where students needed support.",
     achievements: [
@@ -150,6 +156,7 @@ export const EXPERIENCES: Experience[] = [
     period: "Feb 2025 – Apr 2025",
     current: false,
     type: "AI Externship",
+    logo: "/images/logos/extern.svg",
     description:
       "Built RAG pipelines that help search through mortgage and lease documents and generate answers from the retrieved information.",
     achievements: [
