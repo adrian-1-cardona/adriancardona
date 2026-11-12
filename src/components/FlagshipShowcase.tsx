@@ -1,97 +1,132 @@
-import { CheckCircle2 } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 
 export default function FlagshipShowcase() {
   return (
     <section
       id="projects"
-      className="py-20 px-4 sm:px-6 max-w-5xl mx-auto text-center"
+      className="py-20 px-4 sm:px-6 max-w-6xl mx-auto text-left"
     >
-      {/* Centered Heading (Matches Cluely 'Instant meeting notes') */}
-      <div className="mb-3">
-        <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff] bg-blue-50 px-3 py-1 rounded-full border border-blue-200/60">
-          Secondary Explorations // Independent Projects
+      {/* Header */}
+      <div className="mb-10 text-center max-w-2xl mx-auto">
+        <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff] bg-blue-50 px-3 py-1 rounded-full border border-blue-200/60 inline-block mb-3">
+          Projects
         </span>
+        <h2 className="section-heading text-3xl sm:text-4xl lg:text-[44px] font-bold tracking-tight mb-3">
+          Featured Projects
+        </h2>
+        <p className="text-[#686a71] text-sm sm:text-base leading-relaxed font-normal">
+          Software engineering projects in Rust, TypeScript, React, and Gemini
+          API.
+        </p>
       </div>
-      <h2 className="section-heading text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight mb-3">
-        Independent Systems Projects
-      </h2>
-      <p className="text-[#8c929d] text-base sm:text-lg max-w-2xl mx-auto mb-12">
-        Self-directed software engineering projects designed to stress-test
-        compiler runtimes, custom bytecode virtual machines, and vector search
-        systems.
-      </p>
 
-      {/* Soft Periwinkle Backdrop Container Framing White Paper Card (Matches Cluely) */}
-      <div className="rounded-3xl bg-[#dce6f6] border border-[#cfdaf0] p-4 sm:p-10 shadow-xs">
-        {/* White Paper Document Card */}
-        <div className="rounded-2xl bg-white border border-[#e5e7eb] shadow-md p-6 sm:p-10 text-left relative overflow-hidden">
-          {/* Document Header */}
-          <div className="border-b border-[#f1f5f9] pb-6 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <div className="text-xs font-mono font-semibold uppercase tracking-wider text-[#4e95ff] mb-1">
-                Cal Poly CSSE // Research Software
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#37383c] tracking-tight">
-                Experiment Runner: Repeatable AI Benchmarking
-              </h3>
+      {/* 2-Column Projects Grid (Exact Resume Titles & Bullets) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+        {/* Project 1: Guppty */}
+        <div className="rounded-3xl p-7 bg-[#f8fafc] border border-[#e5e7eb] flex flex-col justify-between shadow-xs hover:shadow-md hover:border-slate-300 transition-all duration-200">
+          <div>
+            <div className="flex items-center justify-between gap-2 mb-3">
+              <span className="px-2.5 py-1 rounded-md bg-white text-xs font-mono font-semibold text-[#4e95ff] border border-slate-200">
+                Rust
+              </span>
+              <a
+                href="https://github.com/adrian-1-cardona"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-medium text-[#686a71] hover:text-[#19191d] flex items-center gap-1 transition"
+              >
+                <span>Project Site</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-mono text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200/60 shrink-0">
-              <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>100% Deterministic Reproducibility</span>
-            </div>
-          </div>
-
-          {/* Document Body */}
-          <div className="space-y-6 text-sm text-[#686a71] leading-relaxed font-normal">
-            <p>
-              When AI researchers execute long-running model evaluations across
-              distributed environments, subtle variations in GPU execution
-              order, CPU thread scheduling, and PRNG seeds corrupt experimental
-              fidelity.
+            <h3 className="text-2xl font-bold text-[#19191d] tracking-tight mb-2">
+              Guppty Programming Language | Project Site
+            </h3>
+            <p className="text-xs text-[#686a71] mb-5 font-mono">
+              Rust · Compiler &amp; Interpreter
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
-              <div className="p-4 rounded-xl bg-[#f8fafc] border border-[#e5e7eb]">
-                <div className="font-semibold text-[#37383c] text-xs uppercase tracking-wider mb-1">
-                  Subprocess Worker Isolation
-                </div>
-                <p className="text-xs text-[#686a71]">
-                  Each evaluation trial runs in an isolated ephemeral subprocess
-                  to prevent tensor memory leaks and state contamination between
-                  trials.
-                </p>
-              </div>
+            <ul className="space-y-3 text-xs sm:text-[13px] text-[#4b4b5c] leading-relaxed mb-6">
+              <li className="flex items-start gap-2">
+                <span className="text-[#4e95ff] font-bold text-sm leading-none shrink-0 mt-0.5">
+                  •
+                </span>
+                <span>
+                  Built a programming language in Rust with a compiler and
+                  interpreter, using GitHub Actions CI/CD to automatically test
+                  changes.
+                </span>
+              </li>
+            </ul>
+          </div>
 
-              <div className="p-4 rounded-xl bg-[#f8fafc] border border-[#e5e7eb]">
-                <div className="font-semibold text-[#37383c] text-xs uppercase tracking-wider mb-1">
-                  Live Desktop Telemetry
-                </div>
-                <p className="text-xs text-[#686a71]">
-                  A cross-platform desktop monitor streams trial progress,
-                  accuracy, loss, and hardware memory without burdening the
-                  compute loop.
-                </p>
-              </div>
+          <div className="flex items-center justify-between pt-4 border-t border-[#e5e7eb] text-xs">
+            <span className="text-[#9ca3af] font-mono">Rust Runtime</span>
+            <a
+              href="https://github.com/adrian-1-cardona"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 font-semibold text-[#4e95ff] hover:text-[#1e82e0] transition"
+            >
+              <span>View Project Site</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </div>
+
+        {/* Project 2: Gitex */}
+        <div className="rounded-3xl p-7 bg-[#f8fafc] border border-[#e5e7eb] flex flex-col justify-between shadow-xs hover:shadow-md hover:border-slate-300 transition-all duration-200">
+          <div>
+            <div className="flex items-center justify-between gap-2 mb-3">
+              <span className="px-2.5 py-1 rounded-md bg-white text-xs font-mono font-semibold text-[#4e95ff] border border-slate-200">
+                TypeScript, React, JavaScript
+              </span>
+              <a
+                href="https://gitex.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-medium text-[#686a71] hover:text-[#19191d] flex items-center gap-1 transition"
+              >
+                <span>Live App</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
             </div>
 
-            {/* Test Harness Terminal Block */}
-            <div className="rounded-xl bg-[#1e2024] text-slate-300 p-4 font-mono text-xs overflow-x-auto shadow-inner border border-[#37383c]">
-              <div className="text-slate-400 pb-2 mb-2 border-b border-[#37383c] flex items-center justify-between">
-                <span>pytest --deterministic --seed=42 tests/</span>
-                <span className="text-emerald-400">PASSED [100%]</span>
-              </div>
-              <div className="text-emerald-400">
-                tests/test_determinism.py::test_reproducibility PASSED
-              </div>
-              <div className="text-emerald-400">
-                tests/test_harness.py::test_subprocess_isolation PASSED
-              </div>
-              <div className="text-slate-400">
-                ======================== 14 passed in 3.42s
-                ========================
-              </div>
-            </div>
+            <h3 className="text-2xl font-bold text-[#19191d] tracking-tight mb-2">
+              Gitex | Live App
+            </h3>
+            <p className="text-xs text-[#686a71] mb-5 font-mono">
+              TypeScript · React · JavaScript · Gemini API
+            </p>
+
+            <ul className="space-y-3 text-xs sm:text-[13px] text-[#4b4b5c] leading-relaxed mb-6">
+              <li className="flex items-start gap-2">
+                <span className="text-[#4e95ff] font-bold text-sm leading-none shrink-0 mt-0.5">
+                  •
+                </span>
+                <span>
+                  Built a TypeScript and React codebase Q&amp;A app with Gemini
+                  API, while CI/CD and Sentry catch issues before and after
+                  release.
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="flex items-center justify-between pt-4 border-t border-[#e5e7eb] text-xs">
+            <span className="text-[#9ca3af] font-mono">
+              Sentry &amp; CI/CD Monitored
+            </span>
+            <a
+              href="https://gitex.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 font-semibold text-[#4e95ff] hover:text-[#1e82e0] transition"
+            >
+              <span>Open Live App</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
           </div>
         </div>
       </div>

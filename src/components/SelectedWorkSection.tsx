@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Sparkles, Play, Briefcase, BarChart3 } from "lucide-react"
+import { Sparkles, Play, Briefcase, GraduationCap } from "lucide-react"
 
 // Continuous waveform sequence with realistic voice / data frequencies
 const WAVE_BARS = [
@@ -10,8 +10,8 @@ const WAVE_BARS = [
 
 export default function SelectedWorkSection() {
   const [seconds, setSeconds] = useState(12)
-  const [leftActiveChip, setActiveLeftChip] = useState("Pipeline")
-  const [rightActiveChip, setActiveRightChip] = useState("Datasets")
+  const [leftActiveChip, setActiveLeftChip] = useState("Media")
+  const [rightActiveChip, setActiveRightChip] = useState("Agents")
   const [isWindowHidden, setIsWindowHidden] = useState(false)
 
   // Live timer tick matching Cluely's 00:12 counter
@@ -26,24 +26,23 @@ export default function SelectedWorkSection() {
 
   // Dynamic prompts based on active chip
   const leftPromptMap: Record<string, string> = {
-    Pipeline:
-      "Monitoring batch ingestion and SharePoint file transfers, or ⌘ ↵ for status",
+    Media:
+      "Finding and organizing media assets across SharePoint and OneDrive, or ⌘ ↵ for status",
     Automate:
       "Dispatching automated cataloging task to Power Automate workflow...",
-    Sync: "Authenticating with Microsoft Graph API and verifying transfer tokens...",
-    Recovery:
-      "Persistent state verified: 0 collision failures across 58,579 records...",
+    OneDrive: "Syncing photo metadata and folder structures across OneDrive...",
+    Codex:
+      "Running Codex-assisted automated tests, debugging, and feature updates...",
   }
 
   const rightPromptMap: Record<string, string> = {
-    Datasets:
-      "Querying statewide enrollment metrics or ⌘ ↵ for executive summary",
-    Analytics:
-      "Running SQL aggregation queries across student demographic databases...",
-    Milestones:
-      "Mapping critical drop-off points across FAFSA completion pipelines...",
-    Workflow:
-      "Standardizing data cleaning procedures across 6-person research team...",
+    Agents:
+      "Querying cooperative AI agent evaluation metrics or ⌘ ↵ for status",
+    Backend: "Automating training and evaluation runs across Python backend...",
+    Pytest:
+      "Running pytest test suite and GitHub Actions CI/CD to catch bugs...",
+    Telemetry:
+      "Visualizing live AI agent activity and telemetry on Python desktop app...",
   }
 
   return (
@@ -57,14 +56,14 @@ export default function SelectedWorkSection() {
           How Adrian delivers reliable engineering
         </h2>
         <p className="text-[#686a71] text-sm sm:text-base mt-2 max-w-2xl">
-          Real-world data pipelines and analytics systems engineered across
-          university enterprise workflows and statewide educational research.
+          Core technical systems built across Cal Poly Bailey College and the
+          Department of Computer Science and Software Engineering.
         </p>
       </div>
 
       {/* Two Large Cards (Matches Cluely Left Blue + Right Pale Glass Container) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-        {/* Left Card: Cal Poly Bailey College (Web Development Intern) */}
+        {/* Left Card: Cal Poly Bailey College */}
         <div
           className="relative flex flex-col justify-between gap-6 rounded-3xl p-7 sm:p-9 lg:p-10 text-white overflow-hidden shadow-xl"
           style={{
@@ -79,7 +78,9 @@ export default function SelectedWorkSection() {
           <div>
             <div className="flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-wider text-blue-100 mb-2.5">
               <Briefcase className="w-3.5 h-3.5" />
-              <span>Cal Poly Bailey College // Web Development Intern</span>
+              <span>
+                Cal Poly Bailey College // Software Engineering Intern
+              </span>
             </div>
 
             <h3 className="text-2xl sm:text-[28px] leading-tight font-medium tracking-[-0.5px] text-white flex items-center flex-wrap gap-2 mb-3">
@@ -135,13 +136,13 @@ export default function SelectedWorkSection() {
               <span>to campus workflows</span>
             </h3>
             <p className="text-white/85 text-sm sm:text-[15px] leading-relaxed font-normal max-w-lg">
-              Engineered a resumable data pipeline for 58,579 media records with
-              persistent state, collision-safe writes, and automated failure
-              recovery.
+              Built a TypeScript media system with SharePoint and Power Automate
+              so staff can quickly find and organize photos across OneDrive,
+              using Codex-assisted testing for continuous updates.
             </p>
           </div>
 
-          {/* Running Timer & Live Ingestion Indicator */}
+          {/* Running Timer & Live Status */}
           <div className="flex flex-col items-center justify-center my-3">
             <span className="text-4xl sm:text-5xl lg:text-[52px] leading-none font-semibold tracking-[-0.5px] text-white/95 font-mono tabular-nums select-none">
               {formattedTimer}
@@ -152,7 +153,7 @@ export default function SelectedWorkSection() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
               </span>
               <span className="text-xs tracking-wide text-white/80 font-medium">
-                Pipeline Active · 58,579 Records
+                Media System Active · SharePoint Sync
               </span>
             </div>
           </div>
@@ -190,15 +191,15 @@ export default function SelectedWorkSection() {
             {/* Chip Buttons Row */}
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 mb-3 text-xs">
               <button
-                onClick={() => setActiveLeftChip("Pipeline")}
+                onClick={() => setActiveLeftChip("Media")}
                 className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  leftActiveChip === "Pipeline"
+                  leftActiveChip === "Media"
                     ? "bg-white/25 text-white shadow-xs"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span>✦</span>
-                <span>Resumable Pipeline</span>
+                <span>TypeScript Media</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/30" />
 
@@ -216,28 +217,28 @@ export default function SelectedWorkSection() {
               <span className="w-1 h-1 rounded-full bg-white/30" />
 
               <button
-                onClick={() => setActiveLeftChip("Sync")}
+                onClick={() => setActiveLeftChip("OneDrive")}
                 className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  leftActiveChip === "Sync"
+                  leftActiveChip === "OneDrive"
                     ? "bg-white/25 text-white shadow-xs"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span>💬</span>
-                <span>SharePoint Sync</span>
+                <span>SharePoint &amp; OneDrive</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/30" />
 
               <button
-                onClick={() => setActiveLeftChip("Recovery")}
+                onClick={() => setActiveLeftChip("Codex")}
                 className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
-                  leftActiveChip === "Recovery"
+                  leftActiveChip === "Codex"
                     ? "bg-white/25 text-white shadow-xs"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span>🔄</span>
-                <span>State Recovery</span>
+                <span>Codex Updates</span>
               </button>
             </div>
 
@@ -245,7 +246,7 @@ export default function SelectedWorkSection() {
             <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-black/45 border border-white/15 text-xs">
               <div className="text-white/75 truncate font-mono text-[11px] flex items-center gap-1.5">
                 <span>{leftPromptMap[leftActiveChip]}</span>
-                {leftActiveChip === "Pipeline" && (
+                {leftActiveChip === "Media" && (
                   <span className="inline-flex items-center gap-1 ml-1">
                     <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
                       ⌘
@@ -268,7 +269,7 @@ export default function SelectedWorkSection() {
           </div>
         </div>
 
-        {/* Right Card: Foundation for California Community Colleges (Research Intern) */}
+        {/* Right Card: Cal Poly Department of CSSE */}
         <div
           className="relative flex flex-col justify-between gap-6 rounded-3xl p-7 sm:p-9 lg:p-10 overflow-hidden shadow-lg border border-[#36393F]/10"
           style={{
@@ -279,14 +280,14 @@ export default function SelectedWorkSection() {
           {/* Card Title & Description */}
           <div>
             <div className="flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-wider text-[#4e95ff] mb-2.5">
-              <BarChart3 className="w-3.5 h-3.5" />
+              <GraduationCap className="w-3.5 h-3.5" />
               <span>
-                Foundation for CA Community Colleges // Research Intern
+                Cal Poly Department of CSSE // Undergraduate Researcher
               </span>
             </div>
 
             <h3 className="text-2xl sm:text-[28px] leading-tight font-medium tracking-[-0.5px] text-[#19191d] flex items-center flex-wrap gap-2 mb-3">
-              <span>When leadership needs clarity, FoundationCCC</span>
+              <span>When researchers need rigor, CSSE</span>
               <span className="-mx-0.5 inline-flex -translate-y-0.5 items-center gap-1.5 rounded-[110px] bg-white px-2.5 py-0.5 align-middle shadow-xs border border-slate-200/80 text-xs sm:text-sm font-medium text-[#19191d]">
                 <Sparkles className="w-3.5 h-3.5 text-[#4e95ff]" />
                 <span>assists</span>
@@ -294,8 +295,8 @@ export default function SelectedWorkSection() {
               <span>instantly</span>
             </h3>
             <p className="text-[#686a71] text-sm sm:text-[15px] leading-relaxed font-normal max-w-lg">
-              Hit Cmd/Ctrl + Enter to synthesize statewide enrollment and
-              financial-aid records across 10+ executive dashboards.
+              Hit Cmd/Ctrl + Enter to automate training and evaluation pipelines
+              for cooperative AI agents with live desktop telemetry.
             </p>
           </div>
 
@@ -331,74 +332,74 @@ export default function SelectedWorkSection() {
             {/* Top Prompt Pill */}
             <div className="flex justify-end mb-3">
               <div className="w-fit rounded-xl rounded-br-xs px-3 py-1.5 text-xs font-semibold text-white bg-[#0544a9] shadow-[inset_0_1px_0_rgba(129,182,255,0.4)]">
-                Statewide Insights
+                Cooperative AI
               </div>
             </div>
 
             {/* Response Output */}
             <div className="text-xs sm:text-[13px] text-white/90 leading-relaxed font-normal mb-5 space-y-2">
               <div className="text-emerald-400 text-[11px] font-mono">
-                10+ Executive Visualizations · 6-Person Research Workflow
+                Python Backend · GitHub Actions CI/CD &amp; pytest
               </div>
               <p>
-                Analyzed statewide education datasets for the Technology
-                Solutions team, transforming enrollment, demographic, and
-                financial-aid data into actionable insights for senior policy
-                leadership while standardizing validation pipelines.
+                Engineered a Python backend to automate training and evaluation
+                pipelines for cooperative AI agents. Set up GitHub Actions CI/CD
+                and pytest to catch bugs automatically and developed an
+                interactive desktop application for live agent telemetry.
               </p>
             </div>
 
             {/* Action Chips Row */}
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-4 text-xs">
               <button
-                onClick={() => setActiveRightChip("Datasets")}
+                onClick={() => setActiveRightChip("Agents")}
                 className={`flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full transition cursor-pointer ${
-                  rightActiveChip === "Datasets"
+                  rightActiveChip === "Agents"
                     ? "bg-white/20 text-white font-medium"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span className="text-[#b2b3ba]">✦</span>
-                <span>Statewide Datasets</span>
+                <span>Cooperative AI</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/20" />
 
               <button
-                onClick={() => setActiveRightChip("Analytics")}
+                onClick={() => setActiveRightChip("Backend")}
                 className={`flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full transition cursor-pointer ${
-                  rightActiveChip === "Analytics"
+                  rightActiveChip === "Backend"
                     ? "bg-white/20 text-white font-medium"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span className="text-[#b2b3ba]">🪄</span>
-                <span>SQL Analytics</span>
+                <span>Python Backend</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/20" />
 
               <button
-                onClick={() => setActiveRightChip("Milestones")}
+                onClick={() => setActiveRightChip("Pytest")}
                 className={`flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full transition cursor-pointer ${
-                  rightActiveChip === "Milestones"
+                  rightActiveChip === "Pytest"
                     ? "bg-white/20 text-white font-medium"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span className="text-[#b2b3ba]">💬</span>
-                <span>FAFSA Milestones</span>
+                <span>Pytest &amp; CI/CD</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/20" />
 
               <button
-                onClick={() => setActiveRightChip("Workflow")}
+                onClick={() => setActiveRightChip("Telemetry")}
                 className={`flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full transition cursor-pointer ${
-                  rightActiveChip === "Workflow"
+                  rightActiveChip === "Telemetry"
                     ? "bg-white/20 text-white font-medium"
                     : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <span className="text-[#b2b3ba]">🔄</span>
-                <span>Team Workflow</span>
+                <span>Desktop Telemetry</span>
               </button>
             </div>
 
@@ -406,7 +407,7 @@ export default function SelectedWorkSection() {
             <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs">
               <div className="text-white/75 truncate font-mono text-[11px] flex items-center gap-1.5">
                 <span>{rightPromptMap[rightActiveChip]}</span>
-                {rightActiveChip === "Datasets" && (
+                {rightActiveChip === "Agents" && (
                   <span className="inline-flex items-center gap-1 ml-1">
                     <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
                       ⌘

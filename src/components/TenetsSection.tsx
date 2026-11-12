@@ -300,14 +300,106 @@ export default function TenetsSection() {
         </div>
       </div>
 
-      {/* Integration Technology Strip (Matches Cluely platform row) */}
-      <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono font-medium text-[#9ca3af] pt-6 border-t border-[#e5e7eb]">
-        <span>// RUST</span>
-        <span>// PYTHON</span>
-        <span>// TYPESCRIPT</span>
-        <span>// DOCKER</span>
-        <span>// LINUX</span>
-        <span>// GITHUB ACTIONS</span>
+      {/* Ouckah-style 4-Bucket Technical Skills Taxonomy */}
+      <div className="pt-10 border-t border-[#e5e7eb] text-left">
+        <div className="mb-6 text-center">
+          <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#4e95ff] mb-1">
+            // Technical Skills &amp; Tooling
+          </div>
+          <h3 className="text-xl sm:text-2xl font-bold text-[#19191d] tracking-tight">
+            Languages, Frameworks &amp; Infrastructure
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="p-5 rounded-2xl bg-[#f8fafc] border border-[#e5e7eb]">
+            <div className="text-xs font-mono font-bold text-[#19191d] uppercase tracking-wider mb-2.5">
+              Languages
+            </div>
+            <div className="flex flex-wrap gap-1.5 text-xs text-[#4b4b5c]">
+              {[
+                "Python",
+                "TypeScript",
+                "JavaScript",
+                "Rust",
+                "Java",
+                "C++",
+                "SQL",
+                "HTML/CSS",
+              ].map((l) => (
+                <span
+                  key={l}
+                  className="px-2 py-0.5 rounded bg-white border border-slate-200/80 font-mono text-[11px]"
+                >
+                  {l}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#f8fafc] border border-[#e5e7eb]">
+            <div className="text-xs font-mono font-bold text-[#19191d] uppercase tracking-wider mb-2.5">
+              Frameworks
+            </div>
+            <div className="flex flex-wrap gap-1.5 text-xs text-[#4b4b5c]">
+              {["React", "Next.js", "Node.js", "FastAPI"].map((f) => (
+                <span
+                  key={f}
+                  className="px-2 py-0.5 rounded bg-white border border-slate-200/80 font-mono text-[11px]"
+                >
+                  {f}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#f8fafc] border border-[#e5e7eb]">
+            <div className="text-xs font-mono font-bold text-[#19191d] uppercase tracking-wider mb-2.5">
+              Tools
+            </div>
+            <div className="flex flex-wrap gap-1.5 text-xs text-[#4b4b5c]">
+              {[
+                "Git",
+                "GitHub Actions",
+                "Docker",
+                "Sentry",
+                "Power Automate",
+              ].map((d) => (
+                <span
+                  key={d}
+                  className="px-2 py-0.5 rounded bg-white border border-slate-200/80 font-mono text-[11px]"
+                >
+                  {d}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#f8fafc] border border-[#e5e7eb]">
+            <div className="text-xs font-mono font-bold text-[#19191d] uppercase tracking-wider mb-2.5">
+              AI &amp; Developer Tools
+            </div>
+            <div className="flex flex-wrap gap-1.5 text-xs text-[#4b4b5c]">
+              {[
+                "Cursor",
+                "Codex",
+                "Antigravity",
+                "Claude Code",
+                "GitHub Copilot",
+                "Gemini",
+                "LlamaIndex",
+                "RAG",
+              ].map((t) => (
+                <span
+                  key={t}
+                  className="px-2 py-0.5 rounded bg-white border border-slate-200/80 font-mono text-[11px]"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )
