@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react"
 import { Sparkles, Play, Briefcase, GraduationCap } from "lucide-react"
 
-// Continuous waveform sequence with realistic voice / data frequencies
-const WAVE_BARS = [
-  35, 60, 45, 80, 95, 70, 50, 40, 65, 85, 90, 75, 55, 45, 30, 25, 35, 50, 40,
-  60, 45, 35, 25, 20, 30, 45, 60, 50, 40, 30, 45, 65, 85, 95, 80, 60, 40, 55,
-  75, 90, 85, 70, 50, 35, 25, 40, 60, 80,
+// Cluely signature audio waveform distribution: tall ends, quiet center
+const CLUELY_WAVEFORM = [
+  65, 80, 55, 40, 25, 20, 15, 12, 10, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+  8, 8, 8, 8, 8, 10, 12, 15, 20, 25, 30, 45, 60, 85, 70,
 ]
 
 export default function SelectedWorkSection() {
@@ -26,8 +25,7 @@ export default function SelectedWorkSection() {
 
   // Dynamic prompts based on active chip
   const leftPromptMap: Record<string, string> = {
-    Media:
-      "Finding and organizing media assets across SharePoint and OneDrive, or ⌘ ↵ for status",
+    Media: "Finding and organizing media assets across SharePoint and OneDrive",
     Automate:
       "Dispatching automated cataloging task to Power Automate workflow...",
     OneDrive: "Syncing photo metadata and folder structures across OneDrive...",
@@ -37,7 +35,7 @@ export default function SelectedWorkSection() {
 
   const rightPromptMap: Record<string, string> = {
     Agents:
-      "Querying cooperative AI agent evaluation metrics or ⌘ ↵ for status",
+      "Querying cooperative AI agent evaluation metrics across training runs",
     Backend: "Automating training and evaluation runs across Python backend...",
     Pytest:
       "Running pytest test suite and GitHub Actions CI/CD to catch bugs...",
@@ -50,42 +48,37 @@ export default function SelectedWorkSection() {
       id="systems"
       className="py-24 px-4 sm:px-6 max-w-6xl mx-auto text-left"
     >
-      {/* Section Heading (Left-aligned matching Cluely screenshot) */}
-      <div className="mb-10">
-        <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-[#19191d] tracking-tight">
+      {/* Section Heading (Matches Cluely screenshot: clean, bold, no extra clutter) */}
+      <div className="mb-10 text-left">
+        <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-[#19191d] tracking-tight leading-tight">
           How Adrian delivers reliable engineering
         </h2>
-        <p className="text-[#686a71] text-sm sm:text-base mt-2 max-w-2xl">
-          Core technical systems built across Cal Poly Bailey College and the
-          Department of Computer Science and Software Engineering.
-        </p>
       </div>
 
-      {/* Two Large Cards (Matches Cluely Left Blue + Right Pale Glass Container) */}
+      {/* Two Large Cards (Exact 1:1 match to Cluely Left Blue + Right Pale Glass Container) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-        {/* Left Card: Cal Poly Bailey College */}
+        {/* Left Card: Cal Poly Bailey College (Vibrant Blue Card) */}
         <div
-          className="relative flex flex-col justify-between gap-6 rounded-3xl p-7 sm:p-9 lg:p-10 text-white overflow-hidden shadow-xl"
+          className="relative flex flex-col justify-between gap-6 rounded-[28px] p-7 sm:p-9 lg:p-10 text-white overflow-hidden shadow-xl"
           style={{
             background:
-              "radial-gradient(167.08% 140.48% at 79.5% 0%, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(120.74% 124.92% at 7.26% 100%, rgb(68, 122, 235) 0%, rgb(105, 149, 255) 100%)",
-            backgroundBlendMode: "overlay, normal",
+              "radial-gradient(135% 120% at 10% 90%, #3e78f0 0%, #5b94ff 60%, #689dff 100%)",
             boxShadow:
-              "inset 1.899px 1.77px 8.174px 0px rgba(255, 255, 255, 0.15), inset 1.007px 0.939px 4.087px 0px rgba(255, 255, 255, 0.15), 0 20px 40px -15px rgba(68, 122, 235, 0.35)",
+              "inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 20px 40px -15px rgba(68, 122, 235, 0.35)",
           }}
         >
-          {/* Card Title & Description */}
+          {/* Card Top: Appointment Metadata & Title with Inline Soundwave Pill */}
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-wider text-blue-100 mb-2.5">
+            <div className="flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-wider text-blue-100 mb-3">
               <Briefcase className="w-3.5 h-3.5" />
               <span>
                 Cal Poly Bailey College // Software Engineering Intern
               </span>
             </div>
 
-            <h3 className="text-2xl sm:text-[28px] leading-tight font-medium tracking-[-0.5px] text-white flex items-center flex-wrap gap-2 mb-3">
+            <h3 className="text-2xl sm:text-[28px] lg:text-[30px] leading-tight font-medium tracking-[-0.5px] text-white flex items-center flex-wrap gap-2 mb-3">
               <span>Bailey College</span>
-              <span className="-mx-0.5 inline-flex -translate-y-0.5 items-center gap-1.5 rounded-[110px] bg-white/20 px-2.5 py-0.5 align-middle shadow-[inset_2px_2px_9px_rgba(255,255,255,0.5),inset_1px_1px_4.5px_rgba(255,255,255,0.5)] backdrop-blur-3xl text-xs sm:text-sm font-medium text-white">
+              <span className="-mx-0.5 inline-flex -translate-y-0.5 items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 align-middle shadow-[inset_1px_1px_4px_rgba(255,255,255,0.4)] backdrop-blur-md text-xs sm:text-sm font-medium text-white">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="13"
@@ -136,59 +129,42 @@ export default function SelectedWorkSection() {
               <span>to campus workflows</span>
             </h3>
             <p className="text-white/85 text-sm sm:text-[15px] leading-relaxed font-normal max-w-lg">
-              Built a TypeScript media system with SharePoint and Power Automate
-              so staff can quickly find and organize photos across OneDrive,
-              using Codex-assisted testing for continuous updates.
+              It picks up department media requirements in real time, so staff
+              can organize and retrieve photos across OneDrive when they need
+              them.
             </p>
           </div>
 
-          {/* Running Timer & Live Status */}
-          <div className="flex flex-col items-center justify-center my-3">
-            <span className="text-4xl sm:text-5xl lg:text-[52px] leading-none font-semibold tracking-[-0.5px] text-white/95 font-mono tabular-nums select-none">
+          {/* Running Timer & Live Recording Dot (Exact Cluely layout: 00:12 above • Recording) */}
+          <div className="flex flex-col items-center justify-center my-2 select-none">
+            <span className="text-4xl sm:text-5xl lg:text-[56px] leading-none font-semibold tracking-[-0.5px] text-white font-mono tabular-nums">
               {formattedTimer}
             </span>
-            <div className="flex items-center gap-2 mt-2">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-              </span>
-              <span className="text-xs tracking-wide text-white/80 font-medium">
-                Media System Active · SharePoint Sync
+            <div className="flex items-center gap-1.5 mt-2">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              <span className="text-xs text-white/80 font-medium tracking-wide">
+                Recording
               </span>
             </div>
           </div>
 
-          {/* Continuous Audio/Data Waveform Conveyor Belt Stream */}
-          <div className="w-full overflow-hidden my-3 py-1">
-            <div className="animate-waveform-scroll gap-1 items-center h-14">
-              {/* First Track Segment */}
-              {WAVE_BARS.map((h, i) => (
-                <div
-                  key={`wave-seg1-${i}`}
-                  className="w-1 sm:w-1.5 rounded-full shrink-0 transition-all duration-300"
-                  style={{
-                    height: `${h}%`,
-                    backgroundColor: `rgba(255, 255, 255, ${0.4 + (h / 100) * 0.55})`,
-                  }}
-                />
-              ))}
-              {/* Seamless Loop Segment */}
-              {WAVE_BARS.map((h, i) => (
-                <div
-                  key={`wave-seg2-${i}`}
-                  className="w-1 sm:w-1.5 rounded-full shrink-0 transition-all duration-300"
-                  style={{
-                    height: `${h}%`,
-                    backgroundColor: `rgba(255, 255, 255, ${0.4 + (h / 100) * 0.55})`,
-                  }}
-                />
-              ))}
-            </div>
+          {/* Centered Symmetrical Audio Waveform (Matches Cluely soundwave pattern) */}
+          <div className="flex items-center justify-center gap-1.5 h-12 my-2 overflow-hidden px-4">
+            {CLUELY_WAVEFORM.map((h, i) => (
+              <div
+                key={`cluely-wave-${i}`}
+                className="w-1 sm:w-1.5 rounded-full transition-all duration-300"
+                style={{
+                  height: `${h}%`,
+                  backgroundColor: `rgba(255, 255, 255, ${0.45 + (h / 100) * 0.5})`,
+                }}
+              />
+            ))}
           </div>
 
-          {/* Floating Dark Translucent HUD Card (Matches Cluely prompt suggestion HUD) */}
+          {/* Floating Dark Glassy HUD (Matches Cluely prompt suggestion HUD) */}
           <div className="rounded-2xl bg-[#1e2024]/75 border border-white/20 p-4 backdrop-blur-md shadow-2xl text-left">
-            {/* Chip Buttons Row */}
+            {/* Chip Action Row */}
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 mb-3 text-xs">
               <button
                 onClick={() => setActiveLeftChip("Media")}
@@ -199,7 +175,7 @@ export default function SelectedWorkSection() {
                 }`}
               >
                 <span>✦</span>
-                <span>TypeScript Media</span>
+                <span>Assist</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/30" />
 
@@ -212,7 +188,7 @@ export default function SelectedWorkSection() {
                 }`}
               >
                 <span>🪄</span>
-                <span>Power Automate</span>
+                <span>What should I say?</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/30" />
 
@@ -225,7 +201,7 @@ export default function SelectedWorkSection() {
                 }`}
               >
                 <span>💬</span>
-                <span>SharePoint &amp; OneDrive</span>
+                <span>Follow-up questions</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/30" />
 
@@ -238,83 +214,103 @@ export default function SelectedWorkSection() {
                 }`}
               >
                 <span>🔄</span>
-                <span>Codex Updates</span>
+                <span>Recap</span>
               </button>
             </div>
 
-            {/* Input Bar with Authentic Keycaps */}
-            <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-black/45 border border-white/15 text-xs">
-              <div className="text-white/75 truncate font-mono text-[11px] flex items-center gap-1.5">
-                <span>{leftPromptMap[leftActiveChip]}</span>
-                {leftActiveChip === "Media" && (
-                  <span className="inline-flex items-center gap-1 ml-1">
-                    <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
-                      ⌘
-                    </kbd>
-                    <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
-                      ↵
-                    </kbd>
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <span className="px-2 py-0.5 rounded-md bg-white/10 text-[10px] text-white/80 font-mono">
-                  ✦ Smart
+            {/* 2-Line Input Box (Exact Cluely: prompt on top with keycaps, smart + play button below) */}
+            <div className="rounded-xl bg-black/45 border border-white/15 p-3 text-xs flex flex-col gap-2.5">
+              <div className="text-white/75 font-mono text-[11px] flex items-center justify-between">
+                <span className="truncate">
+                  {leftPromptMap[leftActiveChip]}
                 </span>
-                <div className="w-6 h-6 rounded-full bg-[#4e95ff] text-white flex items-center justify-center shadow-xs cursor-pointer hover:bg-[#3d83ee] transition">
-                  <Play className="w-2.5 h-2.5 fill-white" />
+                <span className="inline-flex items-center gap-1 shrink-0 ml-2">
+                  <span className="text-[10px] text-white/50 mr-0.5">or</span>
+                  <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
+                    ⌘
+                  </kbd>
+                  <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
+                    ↵
+                  </kbd>
+                  <span className="text-[10px] text-white/60 ml-0.5">
+                    for Assist
+                  </span>
+                </span>
+              </div>
+              <div className="flex items-center justify-between pt-1 border-t border-white/5">
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/10 text-[10px] text-white/80 font-mono font-medium">
+                    ✦ Smart
+                  </span>
+                  <span className="text-white/40 text-xs tracking-widest font-mono">
+                    ···
+                  </span>
+                </div>
+                <div className="w-6 h-6 rounded-full bg-[#4e95ff] text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-[#3d83ee] transition">
+                  <Play className="w-2.5 h-2.5 fill-white ml-0.5" />
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right Card: Cal Poly Department of CSSE */}
+        {/* Right Card: Cal Poly Department of CSSE (Silvery Pale Card) */}
         <div
-          className="relative flex flex-col justify-between gap-6 rounded-3xl p-7 sm:p-9 lg:p-10 overflow-hidden shadow-lg border border-[#36393F]/10"
+          className="relative flex flex-col justify-between gap-6 rounded-[28px] p-7 sm:p-9 lg:p-10 overflow-hidden shadow-lg border border-[#36393F]/10"
           style={{
             background:
               "radial-gradient(92.09% 124.47% at 50% 99.24%, rgba(221, 226, 238, 0.45) 58.91%, rgba(187, 197, 221, 0.45) 100%)",
           }}
         >
-          {/* Card Title & Description */}
+          {/* Card Top: Appointment Metadata & Title with Inline Sparkle Pill */}
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-wider text-[#4e95ff] mb-2.5">
+            <div className="flex items-center gap-1.5 text-xs font-mono font-semibold uppercase tracking-wider text-[#4e95ff] mb-3">
               <GraduationCap className="w-3.5 h-3.5" />
               <span>
                 Cal Poly Department of CSSE // Undergraduate Researcher
               </span>
             </div>
 
-            <h3 className="text-2xl sm:text-[28px] leading-tight font-medium tracking-[-0.5px] text-[#19191d] flex items-center flex-wrap gap-2 mb-3">
-              <span>When researchers need rigor, CSSE</span>
-              <span className="-mx-0.5 inline-flex -translate-y-0.5 items-center gap-1.5 rounded-[110px] bg-white px-2.5 py-0.5 align-middle shadow-xs border border-slate-200/80 text-xs sm:text-sm font-medium text-[#19191d]">
+            <h3 className="text-2xl sm:text-[28px] lg:text-[30px] leading-tight font-medium tracking-[-0.5px] text-[#19191d] flex items-center flex-wrap gap-2 mb-3">
+              <span>When you need help, CSSE</span>
+              <span className="-mx-0.5 inline-flex -translate-y-0.5 items-center gap-1.5 rounded-full bg-white px-3 py-1 align-middle shadow-xs border border-slate-200/80 text-xs sm:text-sm font-medium text-[#19191d]">
                 <Sparkles className="w-3.5 h-3.5 text-[#4e95ff]" />
                 <span>assists</span>
               </span>
-              <span>instantly</span>
+              <span>you instantly</span>
             </h3>
             <p className="text-[#686a71] text-sm sm:text-[15px] leading-relaxed font-normal max-w-lg">
-              Hit Cmd/Ctrl + Enter to automate training and evaluation pipelines
-              for cooperative AI agents with live desktop telemetry.
+              Hit Cmd/Ctrl + Enter and Adrian helps you with AI in the moment,
+              automating training and evaluation pipelines for cooperative
+              agents.
             </p>
           </div>
 
-          {/* Floating Dynamic Island Notch Pill */}
-          <div className="mx-auto flex w-fit items-center gap-2 rounded-full px-3.5 py-1.5 bg-[#1e2024] text-white text-xs shadow-lg border border-white/15 my-2">
-            <div className="w-4 h-4 rounded-full border border-white/40 flex items-center justify-center">
-              <span className="w-2 h-2 rounded-full bg-[#4e95ff]" />
-            </div>
+          {/* Floating Dynamic Island Notch Pill (Authentic steering radar + Hide toggle + stop icon) */}
+          <div className="mx-auto flex w-fit items-center gap-2.5 rounded-full px-3.5 py-1.5 bg-[#1e2024] text-white text-xs shadow-lg border border-white/15 my-1">
+            {/* 3-Spoke Radar/Steering Icon */}
+            <svg
+              className="w-4 h-4 text-white/90"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 2v20" />
+              <path d="M12 12l8.66 5" />
+              <path d="M12 12l-8.66 5" />
+            </svg>
             <button
               onClick={() => setIsWindowHidden(!isWindowHidden)}
-              className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/15 text-[11px] font-medium text-white hover:bg-white/25 transition cursor-pointer"
+              className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/15 text-[11px] font-medium text-white hover:bg-white/25 transition cursor-pointer"
             >
               <span>{isWindowHidden ? "⌃" : "⌄"}</span>
               <span>{isWindowHidden ? "Show" : "Hide"}</span>
             </button>
-            <button className="w-5 h-5 rounded-full bg-white/15 flex items-center justify-center hover:bg-white/25 transition cursor-pointer">
+            <div className="w-5 h-5 rounded-full bg-white/15 flex items-center justify-center">
               <span className="w-2 h-2 rounded-xs bg-white inline-block" />
-            </button>
+            </div>
           </div>
 
           {/* Floating Dark HUD Window (Matches Cluely right card assistant window) */}
@@ -329,28 +325,29 @@ export default function SelectedWorkSection() {
                 "linear-gradient(180deg, rgba(30, 32, 36, 0.95) 0%, rgba(24, 26, 30, 0.98) 100%)",
             }}
           >
-            {/* Top Prompt Pill */}
-            <div className="flex justify-end mb-3">
-              <div className="w-fit rounded-xl rounded-br-xs px-3 py-1.5 text-xs font-semibold text-white bg-[#0544a9] shadow-[inset_0_1px_0_rgba(129,182,255,0.4)]">
-                Cooperative AI
+            {/* Top Right Speech Bubble */}
+            <div className="flex justify-end mb-2">
+              <div className="w-fit rounded-xl rounded-br-xs px-3.5 py-1 text-xs font-semibold text-white bg-[#0b63e5] shadow-[inset_0_1px_0_rgba(129,182,255,0.4)]">
+                Assist
               </div>
             </div>
 
-            {/* Response Output */}
-            <div className="text-xs sm:text-[13px] text-white/90 leading-relaxed font-normal mb-5 space-y-2">
-              <div className="text-emerald-400 text-[11px] font-mono">
-                Python Backend · GitHub Actions CI/CD &amp; pytest
+            {/* Viewed screen & Response Output */}
+            <div className="text-xs sm:text-[13px] text-white/90 leading-relaxed font-normal mb-4 space-y-1.5">
+              <div className="text-[#8a8d98] text-[11px] font-sans">
+                Viewed screen
               </div>
               <p>
-                Engineered a Python backend to automate training and evaluation
-                pipelines for cooperative AI agents. Set up GitHub Actions CI/CD
-                and pytest to catch bugs automatically and developed an
-                interactive desktop application for live agent telemetry.
+                Cal Poly CSSE is an undergraduate research appointment
+                engineered by Adrian Cardona to automate training and evaluation
+                pipelines for cooperative AI agents, catching bugs automatically
+                via pytest &amp; CI/CD while telemetry streams to an interactive
+                desktop app.
               </p>
             </div>
 
             {/* Action Chips Row */}
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-4 text-xs">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3 text-xs">
               <button
                 onClick={() => setActiveRightChip("Agents")}
                 className={`flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full transition cursor-pointer ${
@@ -360,7 +357,7 @@ export default function SelectedWorkSection() {
                 }`}
               >
                 <span className="text-[#b2b3ba]">✦</span>
-                <span>Cooperative AI</span>
+                <span>Assist</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/20" />
 
@@ -373,7 +370,7 @@ export default function SelectedWorkSection() {
                 }`}
               >
                 <span className="text-[#b2b3ba]">🪄</span>
-                <span>Python Backend</span>
+                <span>What should I say?</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/20" />
 
@@ -386,7 +383,7 @@ export default function SelectedWorkSection() {
                 }`}
               >
                 <span className="text-[#b2b3ba]">💬</span>
-                <span>Pytest &amp; CI/CD</span>
+                <span>Follow-up questions</span>
               </button>
               <span className="w-1 h-1 rounded-full bg-white/20" />
 
@@ -399,31 +396,40 @@ export default function SelectedWorkSection() {
                 }`}
               >
                 <span className="text-[#b2b3ba]">🔄</span>
-                <span>Desktop Telemetry</span>
+                <span>Recap</span>
               </button>
             </div>
 
-            {/* Input Bar with Authentic Keycaps */}
-            <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs">
-              <div className="text-white/75 truncate font-mono text-[11px] flex items-center gap-1.5">
-                <span>{rightPromptMap[rightActiveChip]}</span>
-                {rightActiveChip === "Agents" && (
-                  <span className="inline-flex items-center gap-1 ml-1">
-                    <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
-                      ⌘
-                    </kbd>
-                    <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
-                      ↵
-                    </kbd>
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <span className="px-2 py-0.5 rounded-md bg-white/10 text-[10px] text-white/80 font-mono">
-                  ✦ Smart
+            {/* 2-Line Input Box (Exact Cluely) */}
+            <div className="rounded-xl bg-white/5 border border-white/10 p-3 text-xs flex flex-col gap-2.5">
+              <div className="text-white/75 font-mono text-[11px] flex items-center justify-between">
+                <span className="truncate">
+                  {rightPromptMap[rightActiveChip]}
                 </span>
-                <div className="w-6 h-6 rounded-full bg-[#4e95ff] text-white flex items-center justify-center shadow-xs cursor-pointer hover:bg-[#3d83ee] transition">
-                  <Play className="w-2.5 h-2.5 fill-white" />
+                <span className="inline-flex items-center gap-1 shrink-0 ml-2">
+                  <span className="text-[10px] text-white/50 mr-0.5">or</span>
+                  <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
+                    ⌘
+                  </kbd>
+                  <kbd className="px-1.5 py-0.5 rounded bg-white/15 text-[10px] text-white font-mono border border-white/20">
+                    ↵
+                  </kbd>
+                  <span className="text-[10px] text-white/60 ml-0.5">
+                    for Assist
+                  </span>
+                </span>
+              </div>
+              <div className="flex items-center justify-between pt-1 border-t border-white/5">
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/10 text-[10px] text-white/80 font-mono font-medium">
+                    ✦ Smart
+                  </span>
+                  <span className="text-white/40 text-xs tracking-widest font-mono">
+                    ···
+                  </span>
+                </div>
+                <div className="w-6 h-6 rounded-full bg-[#4e95ff] text-white flex items-center justify-center shadow-md cursor-pointer hover:bg-[#3d83ee] transition">
+                  <Play className="w-2.5 h-2.5 fill-white ml-0.5" />
                 </div>
               </div>
             </div>
