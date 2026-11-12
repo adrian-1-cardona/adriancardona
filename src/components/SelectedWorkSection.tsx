@@ -5,7 +5,6 @@ export default function SelectedWorkSection() {
   const [rightActiveChip, setRightActiveChip] = useState("Grounded Retrieval")
   const [isVmRunning, setIsVmRunning] = useState(false)
   const [vmCycleCount, setVmCycleCount] = useState(1420)
-  const [queryInput, setQueryInput] = useState("")
 
   // Guppty Rust VM interactive prompts & state (Resume verified)
   const leftPromptMap: Record<string, string> = {
@@ -23,7 +22,7 @@ export default function SelectedWorkSection() {
   const gitexAnswers: Record<string, { prompt: string; body: string }> = {
     "Grounded Retrieval": {
       prompt: "Query: \"Explain lexer closure handling and span-aware error syntax\"",
-      body: "Retrieved 4 grounded code chunks via Convex vector search. Citation from src/compiler/lexer.rs: Single-pass recursive descent compiler emitting compact opcodes with span-aware syntax errors.",
+      body: "Retrieved 4 grounded code chunks via Convex vector search. Single-pass recursive descent compiler emitting compact opcodes with span-aware syntax errors.",
     },
     "Refusal Accuracy": {
       prompt: "Query: \"Query missing database migration schema in foreign scope\"",
@@ -39,224 +38,229 @@ export default function SelectedWorkSection() {
     },
   }
 
-  // Interactive VM execution trigger
   const handleExecuteVm = () => {
     setIsVmRunning(true)
     setVmCycleCount((prev) => prev + 64)
     setTimeout(() => {
       setIsVmRunning(false)
-    }, 600)
+    }, 500)
   }
 
   return (
     <section
       id="systems"
-      className="scroll-mt-24 py-20 px-4 sm:px-6 max-w-6xl mx-auto text-left"
+      className="scroll-mt-24 py-16 px-4 sm:px-6 max-w-6xl mx-auto text-left"
     >
-      {/* Section Heading: Direct & Clean */}
-      <div className="mb-10 text-left">
-        <h2 className="font-display text-3xl sm:text-4xl lg:text-[38px] font-medium text-[#111827] tracking-tight leading-tight">
-          Featured Projects
+      {/* Section Header: Compact, Secondary to Experience, All Black Text */}
+      <div className="mb-8">
+        <h2 className="text-2xl sm:text-3xl font-bold text-black tracking-tight leading-tight mb-2">
+          Featured Technical Projects
         </h2>
-        <p className="text-sm sm:text-base text-[#4b5563] mt-2 max-w-2xl font-normal">
-          Interactive runtimes and verification environments for Guppty (Rust VM)
-          and Gitex (GitHub codebase Q&amp;A platform).
+        <p className="text-sm sm:text-base text-black max-w-2xl leading-relaxed">
+          Open-source compiler runtimes and codebase intelligence platforms
+          engineered outside of academic appointments.
         </p>
       </div>
 
-      {/* Two Large Side-by-Side Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+      {/* Two Clean, High-Contrast Project Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
         {/* ========================================================
-            LEFT CARD: Guppty Programming Language & Bytecode VM (Rust)
+            CARD 1: Guppty (Rust VM & Compiler)
            ======================================================== */}
-        <div
-          className="relative flex flex-col justify-between gap-6 rounded-3xl p-7 sm:p-9 text-white overflow-hidden shadow-xl"
-          style={{
-            background:
-              "linear-gradient(180deg, #3b74e6 0%, #295ec7 60%, #1f4ea8 100%)",
-            boxShadow:
-              "inset 0 1px 1px rgba(255, 255, 255, 0.3), 0 20px 40px -15px rgba(31, 78, 168, 0.3)",
-          }}
-        >
-          {/* Card Top: Title */}
+        <div className="flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-white border border-neutral-200 shadow-xs hover:border-black transition text-left">
           <div>
-            <div className="flex items-center justify-between text-xs font-mono text-blue-100 mb-2">
-              <span className="uppercase tracking-wider font-semibold">
-                Guppty · Pure Rust Language &amp; VM
+            <div className="flex items-center justify-between text-xs font-mono font-bold text-black mb-2">
+              <span className="uppercase tracking-wider">
+                Rust · Bytecode VM &amp; Compiler
               </span>
-              <a
-                href="https://adrian-1-cardona.github.io/Guppty/#installation"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition font-medium"
-              >
-                Documentation ↗
-              </a>
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://adrian-1-cardona.github.io/Guppty/#installation"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline text-black"
+                >
+                  Docs ↗
+                </a>
+                <a
+                  href="https://github.com/adrian-1-cardona"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline text-black"
+                >
+                  GitHub ↗
+                </a>
+              </div>
             </div>
 
-            <h3 className="text-2xl sm:text-[28px] lg:text-[30px] leading-tight font-medium tracking-tight text-white mb-3">
-              Guppty: Bytecode VM &amp; Compiler in Rust
+            <h3 className="text-xl sm:text-2xl font-bold text-black tracking-tight mb-2">
+              Guppty Programming Language
             </h3>
-            <p className="text-white/85 text-sm sm:text-[14px] leading-relaxed font-normal">
+            <p className="text-sm text-black leading-relaxed mb-4">
               Built a programming language in Rust with a lexer, parser,
               bytecode compiler, and stack VM, supporting closures, functions,
               control flow, and span-aware runtime errors.
             </p>
+
+            <ul className="space-y-1.5 text-xs text-black leading-relaxed mb-4 pl-1">
+              <li className="flex items-start gap-2">
+                <span className="font-bold">•</span>
+                <span>
+                  Engineered dual interpreter and VM backends with 38+ tests
+                  and CI-enforced differential testing.
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="font-bold">•</span>
+                <span>
+                  Stack machine runtime with compact opcode dispatch and zero
+                  garbage collection overhead.
+                </span>
+              </li>
+            </ul>
           </div>
 
-          {/* Clean Functional Status Bar (No Floating Counter Gimmick) */}
-          <div className="p-3 rounded-xl bg-black/30 border border-white/10 flex items-center justify-between font-mono text-xs">
-            <span className="text-white/90">
-              {isVmRunning
-                ? `Executing Instruction #${vmCycleCount}...`
-                : "Differential Testing: 38+ Tests Passing"}
-            </span>
-            <span
-              className={`font-semibold ${
-                isVmRunning ? "text-emerald-300 animate-pulse" : "text-emerald-400"
-              }`}
-            >
-              Dual Backends Active
-            </span>
-          </div>
+          <div>
+            {/* Interactive Inspector */}
+            <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200">
+              <div className="grid grid-cols-4 gap-1 p-1 rounded-lg bg-neutral-200 text-[10px] font-mono mb-2.5">
+                {[
+                  "Lexer & Parser",
+                  "Bytecode Compiler",
+                  "Stack VM",
+                  "Differential Tests",
+                ].map((chip) => (
+                  <button
+                    key={chip}
+                    onClick={() => {
+                      setLeftActiveChip(chip)
+                      handleExecuteVm()
+                    }}
+                    className={`py-1 px-1 rounded text-center transition cursor-pointer truncate ${
+                      leftActiveChip === chip
+                        ? "bg-black text-white font-bold"
+                        : "text-black hover:bg-neutral-300"
+                    }`}
+                  >
+                    {chip === "Differential Tests" ? "38+ Tests" : chip}
+                  </button>
+                ))}
+              </div>
 
-          {/* Clean HUD Terminal (No Bubbly Pills) */}
-          <div className="rounded-2xl bg-[#13161c]/90 border border-white/15 p-4 shadow-2xl text-left">
-            {/* Segmented Control Tabs */}
-            <div className="grid grid-cols-4 gap-1 p-1 rounded-lg bg-black/40 border border-white/10 mb-3 text-[11px] font-mono">
-              {[
-                "Lexer & Parser",
-                "Bytecode Compiler",
-                "Stack VM",
-                "Differential Tests",
-              ].map((chip) => (
-                <button
-                  key={chip}
-                  onClick={() => {
-                    setLeftActiveChip(chip)
-                    handleExecuteVm()
-                  }}
-                  className={`py-1.5 px-1 rounded text-center transition cursor-pointer truncate ${
-                    leftActiveChip === chip
-                      ? "bg-white/20 text-white font-semibold"
-                      : "text-white/60 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  {chip === "Differential Tests" ? "38+ Tests" : chip}
-                </button>
-              ))}
-            </div>
-
-            {/* Prompt Output Box */}
-            <div className="rounded-xl bg-black/50 border border-white/10 p-3 text-xs flex flex-col gap-2.5">
-              <div className="text-white/90 font-mono text-[11px] sm:text-xs">
+              <div className="font-mono text-xs text-black leading-relaxed min-h-[38px]">
                 {leftPromptMap[leftActiveChip]}
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-white/10 text-xs font-mono text-white/60">
-                <span>Runtime: Pure Rust</span>
+              <div className="flex items-center justify-between pt-2 mt-2 border-t border-neutral-200 text-[11px] font-mono text-black">
+                <span>
+                  {isVmRunning
+                    ? `VM dispatching cycle #${vmCycleCount}...`
+                    : "Status: 38+ Tests Passing"}
+                </span>
                 <button
                   onClick={handleExecuteVm}
-                  className="px-3 py-1 rounded bg-[#1b64f2] text-white font-sans text-xs font-semibold hover:bg-[#1554d1] transition cursor-pointer flex items-center gap-1"
+                  className="px-2.5 py-0.5 rounded bg-black text-white font-sans text-xs font-semibold hover:bg-neutral-800 transition cursor-pointer"
                 >
-                  <span>▶</span>
-                  <span>Run Instruction</span>
+                  ▶ Dispatch
                 </button>
               </div>
+            </div>
+
+            <div className="pt-3 mt-4 border-t border-neutral-100 text-xs font-mono text-black">
+              <span className="font-bold">Stack: </span>
+              <span>
+                Rust · Lexer &amp; Parser · Bytecode VM · Differential Testing
+              </span>
             </div>
           </div>
         </div>
 
         {/* ========================================================
-            RIGHT CARD: Gitex Codebase Q&A (TypeScript + React + Convex)
+            CARD 2: Gitex (Codebase Q&A Platform)
            ======================================================== */}
-        <div
-          className="relative flex flex-col justify-between gap-6 rounded-3xl p-7 sm:p-9 text-[#111827] overflow-hidden shadow-lg border border-[#e2e5eb]"
-          style={{
-            background: "linear-gradient(180deg, #ffffff 0%, #f4f5f8 100%)",
-          }}
-        >
-          {/* Card Top: Title */}
+        <div className="flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-white border border-neutral-200 shadow-xs hover:border-black transition text-left">
           <div>
-            <div className="flex items-center justify-between text-xs font-mono text-[#4b5563] mb-2">
-              <span className="uppercase tracking-wider font-semibold">
-                Gitex · GitHub Codebase Q&amp;A
+            <div className="flex items-center justify-between text-xs font-mono font-bold text-black mb-2">
+              <span className="uppercase tracking-wider">
+                Full-Stack · Vector Search Platform
               </span>
-              <a
-                href="https://gitex.dev"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[#111827] transition font-medium"
-              >
-                Live Demo ↗
-              </a>
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://gitex.dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline text-black"
+                >
+                  Demo ↗
+                </a>
+                <a
+                  href="https://github.com/adrian-1-cardona"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline text-black"
+                >
+                  GitHub ↗
+                </a>
+              </div>
             </div>
 
-            <h3 className="text-2xl sm:text-[28px] lg:text-[30px] leading-tight font-medium tracking-tight text-[#111827] mb-3">
+            <h3 className="text-xl sm:text-2xl font-bold text-black tracking-tight mb-2">
               Gitex: Grounded Codebase Vector Search
             </h3>
-            <p className="text-[#4b5563] text-sm sm:text-[14px] leading-relaxed font-normal">
-              Built a GitHub codebase Q&amp;A platform with Gemini embeddings and
-              Convex vector search, achieving 100% groundedness and refusal
+            <p className="text-sm text-black leading-relaxed mb-4">
+              Built a GitHub codebase Q&amp;A platform with Gemini embeddings
+              and Convex vector search, achieving 100% groundedness and refusal
               accuracy across 31 retrieval evaluations.
             </p>
+
+            <ul className="space-y-1.5 text-xs text-black leading-relaxed mb-4 pl-1">
+              <li className="flex items-start gap-2">
+                <span className="font-bold">•</span>
+                <span>
+                  Engineered production-grade auth with Clerk, tier-based rate
+                  limiting, and Stripe webhook subscription verification.
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="font-bold">•</span>
+                <span>
+                  160+ automated tests enforcing retrieval evaluation thresholds
+                  prior to production merge.
+                </span>
+              </li>
+            </ul>
           </div>
 
-          {/* Clean Functional Status Bar (No Dynamic Island Notch Bubble) */}
-          <div className="p-3 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-between font-mono text-xs">
-            <span className="text-[#374151]">
-              Convex Vector DB · adrian-1-cardona/Guppty
-            </span>
-            <span className="text-emerald-700 font-semibold">
-              31 Evals Passing
-            </span>
-          </div>
-
-          {/* Clean HUD Terminal (No Bubbly Pills) */}
-          <div className="rounded-2xl bg-[#13161c] text-white p-4 shadow-2xl text-left border border-white/10">
-            {/* Segmented Control Tabs */}
-            <div className="grid grid-cols-4 gap-1 p-1 rounded-lg bg-black/40 border border-white/10 mb-3 text-[11px] font-mono">
-              {[
-                "Grounded Retrieval",
-                "Refusal Accuracy",
-                "Auth & Billing",
-                "160+ Tests",
-              ].map((chip) => (
-                <button
-                  key={chip}
-                  onClick={() => setRightActiveChip(chip)}
-                  className={`py-1.5 px-1 rounded text-center transition cursor-pointer truncate ${
-                    rightActiveChip === chip
-                      ? "bg-white/20 text-white font-semibold"
-                      : "text-white/60 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  {chip}
-                </button>
-              ))}
-            </div>
-
-            {/* Response Output Body Text */}
-            <p className="text-xs sm:text-[13px] text-white/90 leading-relaxed font-normal mb-4 font-sans min-h-[56px]">
-              {gitexAnswers[rightActiveChip]?.body}
-            </p>
-
-            {/* Input & Evaluation Switcher */}
-            <div className="rounded-xl bg-black/50 border border-white/10 p-3 text-xs flex flex-col gap-2.5">
-              <div className="text-white/75 text-[11px] sm:text-xs flex items-center justify-between">
-                <input
-                  type="text"
-                  value={
-                    queryInput || gitexAnswers[rightActiveChip]?.prompt || ""
-                  }
-                  onChange={(e) => setQueryInput(e.target.value)}
-                  placeholder="Query codebase citations, AST scopes, or retrieval evals..."
-                  className="bg-transparent border-none outline-none text-white/90 placeholder:text-white/50 w-full text-xs font-mono"
-                />
+          <div>
+            {/* Interactive Inspector */}
+            <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200">
+              <div className="grid grid-cols-4 gap-1 p-1 rounded-lg bg-neutral-200 text-[10px] font-mono mb-2.5">
+                {[
+                  "Grounded Retrieval",
+                  "Refusal Accuracy",
+                  "Auth & Billing",
+                  "160+ Tests",
+                ].map((chip) => (
+                  <button
+                    key={chip}
+                    onClick={() => setRightActiveChip(chip)}
+                    className={`py-1 px-1 rounded text-center transition cursor-pointer truncate ${
+                      rightActiveChip === chip
+                        ? "bg-black text-white font-bold"
+                        : "text-black hover:bg-neutral-300"
+                    }`}
+                  >
+                    {chip}
+                  </button>
+                ))}
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-white/10 text-xs font-mono text-white/60">
-                <span>Gemini Embeddings</span>
+              <div className="font-mono text-xs text-black leading-relaxed min-h-[38px]">
+                {gitexAnswers[rightActiveChip]?.body}
+              </div>
+
+              <div className="flex items-center justify-between pt-2 mt-2 border-t border-neutral-200 text-[11px] font-mono text-black">
+                <span>Convex Vector DB · Gemini</span>
                 <button
                   onClick={() => {
                     const chips = [
@@ -268,14 +272,19 @@ export default function SelectedWorkSection() {
                     const next =
                       chips[(chips.indexOf(rightActiveChip) + 1) % chips.length]
                     setRightActiveChip(next)
-                    setQueryInput("")
                   }}
-                  className="px-3 py-1 rounded bg-[#1b64f2] text-white font-sans text-xs font-semibold hover:bg-[#1554d1] transition cursor-pointer flex items-center gap-1"
+                  className="px-2.5 py-0.5 rounded bg-black text-white font-sans text-xs font-semibold hover:bg-neutral-800 transition cursor-pointer"
                 >
-                  <span>▶</span>
-                  <span>Next Eval</span>
+                  ▶ Next Eval
                 </button>
               </div>
+            </div>
+
+            <div className="pt-3 mt-4 border-t border-neutral-100 text-xs font-mono text-black">
+              <span className="font-bold">Stack: </span>
+              <span>
+                TypeScript · React · Convex · Gemini · Clerk · Stripe · 160+ Tests
+              </span>
             </div>
           </div>
         </div>

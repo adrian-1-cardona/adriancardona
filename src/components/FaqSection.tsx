@@ -50,35 +50,35 @@ export default function FaqSection() {
       id="faq"
       className="scroll-mt-24 py-20 px-4 sm:px-6 max-w-4xl mx-auto text-left"
     >
-      {/* Centered Heading */}
+      {/* Centered Heading: All Black Text */}
       <div className="text-center mb-12">
-        <h2 className="font-display text-3xl sm:text-4xl lg:text-[38px] font-medium text-[#111827] tracking-tight leading-tight mb-2">
+        <h2 className="font-display text-3xl sm:text-4xl lg:text-[38px] font-bold text-black tracking-tight leading-tight mb-2">
           Frequently asked questions
         </h2>
-        <p className="text-[#4b5563] text-sm sm:text-base">
+        <p className="text-black text-sm sm:text-base font-normal">
           Everything you need to know about Adrian&apos;s background,
           availability, and technical focus.
         </p>
       </div>
 
       {/* Accordion List */}
-      <div className="divide-y divide-[#e5e7eb] border-y border-[#e5e7eb]">
+      <div className="divide-y divide-neutral-200 border-y border-neutral-200">
         {FAQ_ITEMS.map((item, index) => {
           const isOpen = openIndex === index
           return (
             <div key={index} className="py-4">
               <button
                 onClick={() => toggle(index)}
-                className="w-full flex items-center justify-between text-left py-2 font-semibold text-[#111827] hover:text-black transition focus:outline-none text-base sm:text-lg cursor-pointer group"
+                className="w-full flex items-center justify-between text-left py-2 font-bold text-black hover:opacity-75 transition focus:outline-none text-base sm:text-lg cursor-pointer group"
               >
                 <span>{item.question}</span>
-                <span className="text-xl font-mono text-[#6b7280] group-hover:text-[#111827] shrink-0 ml-4 font-light transition">
+                <span className="text-2xl font-mono text-black shrink-0 ml-4 font-normal transition">
                   {isOpen ? "−" : "+"}
                 </span>
               </button>
 
               {isOpen && (
-                <div className="pt-2 pb-3 text-[#4b5563] text-sm sm:text-base leading-relaxed animate-in fade-in duration-150">
+                <div className="pt-2 pb-3 text-black text-sm sm:text-base leading-relaxed animate-in fade-in duration-150 font-normal">
                   {item.answer}
                 </div>
               )}

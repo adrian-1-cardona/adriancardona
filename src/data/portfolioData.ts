@@ -71,7 +71,7 @@ export const PROFILE = {
       "Databases",
       "Computer Security",
     ],
-    logo: "/images/logos/calpoly-slo.svg",
+    logo: "/images/logos/calpoly-seal.svg",
   },
   links: {
     github: "https://github.com/adrian-1-cardona",
@@ -90,7 +90,7 @@ export const EXPERIENCES: Experience[] = [
     period: "Jan 2026 – Present",
     current: true,
     type: "Engineering Internship",
-    logo: "/images/logos/calpoly-bailey.svg",
+    logo: "/images/logos/calpoly-seal.svg",
     description:
       "Built an internal digital asset management system with SharePoint and Power Automate, automating batch ingestion, metadata indexing, duplicate detection, validation, and failure recovery.",
     achievements: [
@@ -107,6 +107,31 @@ export const EXPERIENCES: Experience[] = [
     ],
   },
   {
+    id: "cal-poly-csse",
+    role: "Undergraduate Researcher",
+    company: "Cal Poly Department of Computer Science and Software Engineering",
+    location: "San Luis Obispo, California",
+    period: "Aug 2026 – Present",
+    current: true,
+    type: "Academic Research",
+    logo: "/images/logos/calpoly-seal.svg",
+    description:
+      "Engineered a Python backend to automate training and evaluation pipelines for cooperative AI research.",
+    achievements: [
+      "Engineered a Python backend to automate training and evaluation pipelines for cooperative AI agents.",
+      "Set up GitHub Actions CI/CD and pytest to catch bugs automatically and ensure reliable benchmark runs.",
+      "Developed an interactive Python desktop application to monitor live AI agent activity and visualize system telemetry.",
+    ],
+    skills: [
+      "Python",
+      "Cooperative AI",
+      "GitHub Actions CI/CD",
+      "pytest",
+      "Desktop Application",
+      "System Telemetry",
+    ],
+  },
+  {
     id: "foundation-ccc",
     role: "Technology Solutions Research Intern",
     company: "Foundation for California Community Colleges",
@@ -114,7 +139,7 @@ export const EXPERIENCES: Experience[] = [
     period: "July 2025 – March 2026",
     current: false,
     type: "Research Internship",
-    logo: "/images/logos/foundationccc.png",
+    logo: "/images/logos/foundationccc-official.svg",
     description:
       "Analyzed statewide education datasets for the Technology Solutions team, transforming enrollment, demographic, and financial-aid data into 10+ stakeholder-facing visualizations and actionable insights.",
     achievements: [
@@ -137,7 +162,7 @@ export const EXPERIENCES: Experience[] = [
     period: "Feb 2025 – Apr 2025",
     current: false,
     type: "AI Externship",
-    logo: "/images/logos/extern.svg",
+    logo: "/images/logos/extern-official.png",
     description:
       "Built a Python RAG pipeline with LlamaIndex, Ollama, and Gemini API to ingest mortgage and lease documents, generate embeddings, and retrieve grounded context.",
     achievements: [
@@ -151,31 +176,6 @@ export const EXPERIENCES: Experience[] = [
       "Gemini API",
       "RAG Pipeline",
       "Vector Embeddings",
-    ],
-  },
-  {
-    id: "cal-poly-csse",
-    role: "Undergraduate Researcher",
-    company: "Cal Poly Department of Computer Science and Software Engineering",
-    location: "San Luis Obispo, California",
-    period: "Aug 2026 – Present",
-    current: true,
-    type: "Research",
-    logo: "/images/logos/calpoly-csse.svg",
-    description:
-      "Engineered a Python backend to automate training and evaluation pipelines for cooperative AI research.",
-    achievements: [
-      "Engineered a Python backend to automate training and evaluation pipelines for cooperative AI agents.",
-      "Set up GitHub Actions CI/CD and pytest to catch bugs automatically and ensure reliable benchmark runs.",
-      "Developed an interactive Python desktop application to monitor live AI agent activity and visualize system telemetry.",
-    ],
-    skills: [
-      "Python",
-      "Cooperative AI",
-      "GitHub Actions CI/CD",
-      "pytest",
-      "Desktop App",
-      "Telemetry",
     ],
   },
 ]

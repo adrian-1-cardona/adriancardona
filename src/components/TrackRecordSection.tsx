@@ -4,272 +4,253 @@ export default function TrackRecordSection() {
   return (
     <section
       id="experience"
-      className="scroll-mt-24 py-20 px-4 sm:px-6 max-w-6xl mx-auto"
+      className="scroll-mt-24 py-20 px-4 sm:px-6 max-w-6xl mx-auto text-left"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
-        {/* Left Column: Work Experience with Official Company Logos */}
-        <div
-          className="lg:col-span-7 rounded-3xl p-6 sm:p-8 text-left shadow-lg border border-[#36393F]/10 relative overflow-hidden flex flex-col justify-between"
-          style={{
-            background:
-              "radial-gradient(92.09% 124.47% at 50% 99.24%, rgba(221, 226, 238, 0.5) 58.91%, rgba(187, 197, 221, 0.5) 100%)",
-          }}
-        >
-          {/* Header */}
-          <div>
-            <h3 className="font-display text-2xl sm:text-3xl lg:text-[34px] font-medium text-[#111827] tracking-tight mb-2">
-              Work Experience
-            </h3>
-            <p className="text-xs sm:text-sm text-[#4b5563] leading-relaxed mb-6 font-normal">
-              Software engineering appointments, media automation pipelines, and
-              research.
-            </p>
-          </div>
+      {/* Section Header: Direct, Authoritative, All Black Text */}
+      <div className="mb-12">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black tracking-tight leading-tight mb-3">
+          Work Experience &amp; Appointments
+        </h2>
+        <p className="text-base sm:text-lg text-black max-w-3xl leading-relaxed">
+          Software engineering internships, enterprise data automation pipelines,
+          and cooperative AI research. Proven track record across Cal Poly Bailey
+          College, Cal Poly CSSE, Foundation for California Community Colleges,
+          and Extern.
+        </p>
+      </div>
 
-          {/* Experience Stack */}
-          <div className="space-y-4">
-            {EXPERIENCES.map((exp) => (
-              <div
-                key={exp.id}
-                className="p-6 rounded-2xl bg-white border border-[#e5e7eb] shadow-xs text-left"
-              >
-                {/* Company Logo, Name & Dates */}
-                <div className="flex items-start gap-3.5 mb-2">
-                  {exp.logo && (
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left Column (8 cols): Primary Work Experience Stack with Official Company Logos */}
+        <div className="lg:col-span-8 space-y-6">
+          {EXPERIENCES.map((exp) => (
+            <div
+              key={exp.id}
+              className="p-7 sm:p-8 rounded-2xl bg-white border border-neutral-200 shadow-xs hover:border-black transition text-left"
+            >
+              {/* Header: Official Company Logo, Company Name, Role & Dates */}
+              <div className="flex items-start gap-4 mb-4">
+                {exp.logo && (
+                  <div className="w-14 h-14 rounded-xl bg-white border border-neutral-200 p-2 shrink-0 flex items-center justify-center shadow-xs">
                     <img
                       src={exp.logo}
                       alt={exp.company}
-                      className="w-10 h-10 rounded-xl object-contain shadow-xs shrink-0 bg-slate-50 border border-slate-100 p-1"
+                      className="w-full h-full object-contain"
                     />
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
-                      <h4 className="font-bold text-[#111827] text-base sm:text-lg tracking-tight leading-snug">
-                        {exp.company}
-                      </h4>
-                      <div className="text-xs font-mono text-[#6b7280] shrink-0">
-                        {exp.period}
-                      </div>
-                    </div>
-
-                    {/* Role Title & Location */}
-                    <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-sm font-semibold text-[#111827]">
-                          {exp.role}
-                        </span>
-                        {exp.current && (
-                          <span className="text-xs font-mono text-emerald-700 font-medium">
-                            · Present
-                          </span>
-                        )}
-                      </div>
-                      <span className="text-xs font-mono text-[#6b7280]">
-                        {exp.location}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Direct Resume Bullet Points */}
-                <ul className="space-y-2.5 text-xs sm:text-[13px] text-[#374151] leading-relaxed my-4 pl-0 sm:pl-1">
-                  {exp.achievements?.map((ach, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <span className="text-slate-400 font-bold text-sm leading-none shrink-0 mt-0.5">
-                        •
-                      </span>
-                      <span>{ach}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Clean Stack Text (No Grey Bubbles) */}
-                {exp.skills && exp.skills.length > 0 && (
-                  <div className="pt-3 border-t border-[#f1f5f9] text-xs font-mono text-[#6b7280]">
-                    <span className="font-semibold text-[#111827]">Stack: </span>
-                    <span>{exp.skills.join(" · ")}</span>
                   </div>
                 )}
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
+                    <h3 className="text-xl sm:text-2xl font-bold text-black tracking-tight leading-snug">
+                      {exp.company}
+                    </h3>
+                    <div className="text-xs sm:text-sm font-mono font-bold text-black shrink-0">
+                      {exp.period}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-base font-bold text-black">
+                        {exp.role}
+                      </span>
+                      {exp.current && (
+                        <span className="text-xs font-mono font-bold text-black bg-neutral-100 px-2 py-0.5 rounded">
+                          Active
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-xs font-mono text-black font-medium">
+                      {exp.location}
+                    </span>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
+
+              {/* Achievements & Responsibilities: Pure Black High-Contrast Text */}
+              <ul className="space-y-3 text-sm sm:text-[15px] text-black leading-relaxed my-5 pl-1">
+                {exp.achievements?.map((ach, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5">
+                    <span className="text-black font-bold text-base leading-none shrink-0 mt-1">
+                      •
+                    </span>
+                    <span className="font-normal text-black">{ach}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Tech Stack: Clean Typographic Line (No Grey Bubbles) */}
+              {exp.skills && exp.skills.length > 0 && (
+                <div className="pt-4 border-t border-neutral-100 text-xs sm:text-[13px] font-mono text-black">
+                  <span className="font-bold text-black">Tech Stack: </span>
+                  <span className="font-normal text-black">
+                    {exp.skills.join(" · ")}
+                  </span>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
 
-        {/* Right Column: Matched Container with Education, Metrics, Stack & Action Links */}
-        <div
-          className="lg:col-span-5 rounded-3xl p-6 sm:p-8 text-left shadow-lg border border-[#36393F]/10 relative overflow-hidden flex flex-col justify-between"
-          style={{
-            background:
-              "radial-gradient(92.09% 124.47% at 50% 99.24%, rgba(221, 226, 238, 0.5) 58.91%, rgba(187, 197, 221, 0.5) 100%)",
-          }}
-        >
-          {/* Top Section: Header & Education */}
-          <div>
-            <h3 className="font-display text-2xl sm:text-3xl lg:text-[34px] font-medium text-[#111827] tracking-tight mb-2">
-              Adrian Cardona
-            </h3>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#4b5563] font-mono mb-5">
-              <span>{PROFILE.phone}</span>
-              <span className="text-slate-300">·</span>
-              <span>{PROFILE.email}</span>
-              <span className="text-slate-300">·</span>
-              <span>San Luis Obispo, CA</span>
-            </div>
-
-            {/* Education Card with Official Cal Poly SLO Seal */}
-            <div className="p-5 rounded-2xl bg-white border border-[#e5e7eb] shadow-xs mb-5">
-              <div className="flex items-start gap-3.5 mb-2">
+        {/* Right Column (4 cols): Education, Quantified Impact & Technical Arsenal */}
+        <div className="lg:col-span-4 space-y-6">
+          {/* Education Card with Official Cal Poly Seal */}
+          <div className="p-6 sm:p-7 rounded-2xl bg-white border border-neutral-200 shadow-xs text-left">
+            <div className="flex items-start gap-3.5 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-white border border-neutral-200 p-1.5 shrink-0 flex items-center justify-center shadow-xs">
                 <img
                   src={PROFILE.education.logo}
-                  alt="Cal Poly SLO"
-                  className="w-10 h-10 rounded-xl object-contain shadow-xs shrink-0 bg-slate-50 border border-slate-100 p-1"
+                  alt="Cal Poly SLO Seal"
+                  className="w-full h-full object-contain"
                 />
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#111827] mb-0.5">
-                    Cal Poly San Luis Obispo
-                  </div>
-                  <div className="text-base font-semibold text-[#111827]">
-                    B.S. in Computer Science
-                  </div>
-                </div>
               </div>
-              <div className="flex flex-wrap items-center justify-between text-xs font-mono text-[#4b5563] mt-2 pt-2 border-t border-slate-100">
-                <span>GPA: 3.5 / 4.0</span>
-                <span>Expected May 2027</span>
-              </div>
-              <div className="mt-2.5 pt-2 border-t border-slate-100">
-                <div className="text-[10px] font-mono text-[#6b7280] uppercase tracking-wider mb-1">
-                  Relevant Coursework
+              <div className="flex-1 min-w-0">
+                <div className="text-xs font-mono font-bold text-black uppercase tracking-wider mb-0.5">
+                  Education
                 </div>
-                <div className="text-xs text-[#374151] leading-relaxed">
-                  Data Structures &amp; Algorithms, Systems Programming,
-                  Databases, Computer Security
-                </div>
+                <h4 className="text-lg font-bold text-black leading-snug">
+                  Cal Poly San Luis Obispo
+                </h4>
               </div>
             </div>
 
-            {/* Key Metrics 4-Grid */}
-            <div className="grid grid-cols-2 gap-3 mb-5">
-              <div className="p-3.5 rounded-xl bg-white border border-[#e5e7eb] shadow-xs">
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#111827] tracking-tight font-mono">
-                  4
-                </div>
-                <div className="font-semibold text-[#111827] text-[11px] mt-0.5">
-                  Roles &amp; Appointments
-                </div>
-                <div className="text-[10px] text-[#6b7280]">
-                  Bailey, CSSE, FCCC, Extern
-                </div>
-              </div>
+            <div className="text-sm font-semibold text-black mb-3">
+              {PROFILE.education.degree}
+            </div>
 
-              <div className="p-3.5 rounded-xl bg-white border border-[#e5e7eb] shadow-xs">
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#111827] tracking-tight font-mono">
-                  3.5
-                </div>
-                <div className="font-semibold text-[#111827] text-[11px] mt-0.5">
-                  Cal Poly GPA
-                </div>
-                <div className="text-[10px] text-[#6b7280]">
-                  Out of 4.0 scale
-                </div>
+            <div className="space-y-1.5 text-xs font-mono text-black py-3 border-y border-neutral-100">
+              <div className="flex justify-between">
+                <span className="font-bold">GPA:</span>
+                <span>{PROFILE.education.gpa}</span>
               </div>
-
-              <div className="p-3.5 rounded-xl bg-white border border-[#e5e7eb] shadow-xs">
-                <div className="text-xl sm:text-2xl font-extrabold text-[#111827] tracking-tight font-mono pt-0.5">
-                  May &apos;27
-                </div>
-                <div className="font-semibold text-[#111827] text-[11px] mt-0.5">
-                  Graduation
-                </div>
-                <div className="text-[10px] text-[#6b7280]">
-                  San Luis Obispo, CA
-                </div>
+              <div className="flex justify-between">
+                <span className="font-bold">Graduation:</span>
+                <span>{PROFILE.education.graduation}</span>
               </div>
-
-              <div className="p-3.5 rounded-xl bg-white border border-[#e5e7eb] shadow-xs">
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#111827] tracking-tight font-mono">
-                  2
-                </div>
-                <div className="font-semibold text-[#111827] text-[11px] mt-0.5">
-                  Flagship Projects
-                </div>
-                <div className="text-[10px] text-[#6b7280]">
-                  Guppty &amp; Gitex
-                </div>
+              <div className="flex justify-between">
+                <span className="font-bold">Location:</span>
+                <span>{PROFILE.education.location}</span>
               </div>
             </div>
 
-            {/* Technical Arsenal Card (Clean Typographic Text - No Grey Bubbles) */}
-            <div className="p-4 rounded-xl bg-white border border-[#e5e7eb] shadow-xs mb-5">
-              <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#111827] mb-3">
-                Technical Arsenal
+            <div className="mt-3.5">
+              <div className="text-xs font-mono font-bold text-black uppercase tracking-wider mb-1.5">
+                Core Coursework
               </div>
+              <p className="text-xs text-black leading-relaxed">
+                {PROFILE.education.coursework.join(", ")}
+              </p>
+            </div>
+          </div>
 
-              <div className="space-y-2.5 text-xs text-[#4b5563] leading-relaxed">
-                <div>
-                  <span className="font-semibold text-[#111827]">Languages: </span>
-                  <span>
-                    Python, TypeScript, JavaScript, Rust, SQL, Java, C, C++, HTML, CSS
-                  </span>
-                </div>
+          {/* Quantified Career Metrics */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="p-4 rounded-xl bg-white border border-neutral-200 shadow-xs text-left">
+              <div className="text-3xl font-extrabold text-black font-mono tracking-tight">
+                58.5k
+              </div>
+              <div className="text-xs font-bold text-black mt-1">
+                Media Records
+              </div>
+              <div className="text-[11px] text-black">
+                Bailey migration pipeline
+              </div>
+            </div>
 
-                <div>
-                  <span className="font-semibold text-[#111827]">
-                    Frameworks &amp; Infra:{" "}
-                  </span>
-                  <span>
-                    React, Next.js, Node.js, FastAPI, PostgreSQL, Redis, Convex,
-                    Docker, Tailwind CSS
-                  </span>
-                </div>
+            <div className="p-4 rounded-xl bg-white border border-neutral-200 shadow-xs text-left">
+              <div className="text-3xl font-extrabold text-black font-mono tracking-tight">
+                4
+              </div>
+              <div className="text-xs font-bold text-black mt-1">
+                Roles Held
+              </div>
+              <div className="text-[11px] text-black">
+                Engineering &amp; research
+              </div>
+            </div>
 
-                <div>
-                  <span className="font-semibold text-[#111827]">
-                    Developer Tools:{" "}
-                  </span>
-                  <span>
-                    Git, GitHub Actions CI/CD, Unix/Linux, Jira, VS Code,
-                    pytest, Codex
-                  </span>
-                </div>
+            <div className="p-4 rounded-xl bg-white border border-neutral-200 shadow-xs text-left">
+              <div className="text-3xl font-extrabold text-black font-mono tracking-tight">
+                10+
+              </div>
+              <div className="text-xs font-bold text-black mt-1">
+                Visualizations
+              </div>
+              <div className="text-[11px] text-black">
+                Statewide education data
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl bg-white border border-neutral-200 shadow-xs text-left">
+              <div className="text-3xl font-extrabold text-black font-mono tracking-tight">
+                3.5
+              </div>
+              <div className="text-xs font-bold text-black mt-1">
+                Cal Poly GPA
+              </div>
+              <div className="text-[11px] text-black">
+                Computer Science B.S.
               </div>
             </div>
           </div>
 
-          {/* Action Links */}
-          <div className="space-y-2 pt-1">
+          {/* Technical Arsenal: All Black Typography */}
+          <div className="p-6 rounded-2xl bg-white border border-neutral-200 shadow-xs text-left">
+            <h4 className="text-xs font-mono font-bold text-black uppercase tracking-wider mb-3">
+              Technical Arsenal
+            </h4>
+
+            <div className="space-y-3 text-xs leading-relaxed text-black">
+              <div>
+                <span className="font-bold text-black">Languages: </span>
+                <span className="text-black">
+                  Python, TypeScript, JavaScript, Rust, SQL, Java, C, C++, HTML, CSS
+                </span>
+              </div>
+              <div>
+                <span className="font-bold text-black">Frameworks &amp; Infra: </span>
+                <span className="text-black">
+                  React, Next.js, Node.js, FastAPI, PostgreSQL, Redis, Convex,
+                  Docker, Tailwind CSS, SharePoint, Power Automate
+                </span>
+              </div>
+              <div>
+                <span className="font-bold text-black">Developer Tools: </span>
+                <span className="text-black">
+                  Git, GitHub Actions CI/CD, Unix/Linux, Jira, VS Code, pytest,
+                  LlamaIndex, Ollama
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Direct Verified Links */}
+          <div className="space-y-2.5">
             <a
               href="/ADRIAN_CARDONA_RESUME.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3 rounded-xl bg-white border border-[#e5e7eb] text-xs font-semibold text-[#111827] hover:border-[#111827] shadow-xs transition group"
+              className="flex items-center justify-between p-3.5 rounded-xl bg-black text-white hover:bg-neutral-800 text-xs font-bold transition shadow-xs"
             >
-              <span>Download Resume (PDF)</span>
-              <span className="text-xs font-mono text-[#6b7280] group-hover:text-[#111827] transition">
-                ↗
-              </span>
+              <span>Download Full Resume (PDF)</span>
+              <span className="font-mono text-sm">↗</span>
             </a>
             <a
-              href="https://github.com/adrian-1-cardona"
+              href={PROFILE.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3 rounded-xl bg-white border border-[#e5e7eb] text-xs font-semibold text-[#111827] hover:border-[#111827] shadow-xs transition group"
+              className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-neutral-200 text-black hover:border-black text-xs font-bold transition shadow-xs"
             >
               <span>GitHub (adrian-1-cardona)</span>
-              <span className="text-xs font-mono text-[#6b7280] group-hover:text-[#111827] transition">
-                ↗
-              </span>
+              <span className="font-mono text-sm">↗</span>
             </a>
             <a
-              href="https://linkedin.com/in/adrian-cardona"
+              href={PROFILE.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3 rounded-xl bg-white border border-[#e5e7eb] text-xs font-semibold text-[#111827] hover:border-[#111827] shadow-xs transition group"
+              className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-neutral-200 text-black hover:border-black text-xs font-bold transition shadow-xs"
             >
               <span>LinkedIn (/in/adrian-cardona)</span>
-              <span className="text-xs font-mono text-[#6b7280] group-hover:text-[#111827] transition">
-                ↗
-              </span>
+              <span className="font-mono text-sm">↗</span>
             </a>
           </div>
         </div>
