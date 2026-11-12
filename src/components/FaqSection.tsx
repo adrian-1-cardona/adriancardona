@@ -14,27 +14,27 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "What are Adrian's primary software engineering appointments?",
     answer:
-      "Adrian currently serves as a Web Development Intern at the Cal Poly Bailey College of Science and Mathematics, building an internal digital asset management system with SharePoint and Power Automate, automating batch ingestion, and engineering a resumable migration pipeline for 58,579 media records. Concurrently, he is an Undergraduate Researcher at Cal Poly CSSE automating training and evaluation pipelines for cooperative AI agents.",
+      "Adrian currently serves as a Software Engineering Intern at the Cal Poly Bailey College of Science and Mathematics, building a TypeScript media system with SharePoint and Power Automate so staff can quickly find and organize photos across OneDrive, and maintaining college websites using HTML and Drupal. Concurrently, he is an Undergraduate Researcher at Cal Poly CSSE automating training and evaluation pipelines for cooperative AI agents.",
   },
   {
     question: "What independent software systems has Adrian built?",
     answer:
-      "Adrian built Guppty (a programming language in Rust with a lexer, parser, bytecode compiler, and stack VM, with 38+ tests and CI-enforced differential testing) and Gitex (a GitHub codebase Q&A platform with Gemini embeddings and Convex vector search, achieving 100% groundedness and refusal accuracy across 31 retrieval evaluations).",
+      "Adrian built Guppty (a programming language in Rust with a compiler and interpreter, using GitHub Actions CI/CD to automatically test changes) and Gitex (a TypeScript and React codebase Q&A app with Gemini API, while CI/CD and Sentry catch issues before and after release).",
   },
   {
     question: "What research was conducted at Cal Poly CSSE?",
     answer:
-      "As an Undergraduate Researcher under CSSE faculty, Adrian engineered a Python backend to automate training and evaluation pipelines for cooperative AI research, established GitHub Actions CI/CD with pytest to catch bugs automatically, and developed a desktop application to visualize system telemetry.",
+      "As an Undergraduate Researcher under CSSE faculty, Adrian engineered a Python backend to automate training and evaluation pipelines for cooperative AI agents, set up GitHub Actions CI/CD and pytest to catch bugs automatically and ensure reliable system runs, and developed an interactive Python desktop application to monitor live AI agent activity and visualize system telemetry.",
   },
   {
     question: "What technologies does Adrian work with primarily?",
     answer:
-      "Languages: Python, TypeScript, JavaScript, Rust, SQL, Java, C, C++, HTML, CSS. Frameworks & Databases: React, Next.js, Node.js, FastAPI, PostgreSQL, Redis, Convex, Docker. Developer Tools: Git, GitHub Actions, Unix/Linux, Jira, VS Code. AI Tools: Gemini API, LlamaIndex, Ollama, Codex, Claude Code, Cursor.",
+      "Languages: Python, TypeScript, JavaScript, Rust, Java, C++, SQL, HTML/CSS. Frameworks: React, Next.js, Node.js, FastAPI. Tools: Git, GitHub Actions, Docker, Sentry, Power Automate, SharePoint, Drupal. AI & Developer Tools: Cursor, Codex, Antigravity, Claude Code, GitHub Copilot, Gemini, LlamaIndex, RAG.",
   },
   {
     question: "How can I get in touch or request a reference?",
     answer:
-      "You can send an email directly to cardona.adrian.1029@gmail.com, call 310-489-6795, download the resume via the link in the header, or connect on LinkedIn at linkedin.com/in/adrian-cardona.",
+      "You can send an email directly to cardonaadrian101@gmail.com, call 310-489-6795, download the resume via the link in the header, or connect on LinkedIn at linkedin.com/in/adrian-cardona.",
   },
 ]
 

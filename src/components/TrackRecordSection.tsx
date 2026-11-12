@@ -12,10 +12,9 @@ export default function TrackRecordSection() {
           Work Experience &amp; Appointments
         </h2>
         <p className="text-base sm:text-lg text-black max-w-3xl leading-relaxed">
-          Software engineering internships, enterprise data automation pipelines,
-          and cooperative AI research. Proven track record across Cal Poly Bailey
-          College, Cal Poly CSSE, Foundation for California Community Colleges,
-          and Extern.
+          Software engineering internships, media systems, and cooperative AI
+          research. Proven track record across Cal Poly Bailey College, Cal Poly
+          CSSE, Foundation for California Community Colleges, and Extern.
         </p>
       </div>
 
@@ -146,37 +145,13 @@ export default function TrackRecordSection() {
           <div className="grid grid-cols-2 gap-3">
             <div className="p-4 rounded-xl bg-white border border-neutral-200 shadow-xs text-left">
               <div className="text-3xl font-extrabold text-black font-mono tracking-tight">
-                58.5k
-              </div>
-              <div className="text-xs font-bold text-black mt-1">
-                Media Records
-              </div>
-              <div className="text-[11px] text-black">
-                Bailey migration pipeline
-              </div>
-            </div>
-
-            <div className="p-4 rounded-xl bg-white border border-neutral-200 shadow-xs text-left">
-              <div className="text-3xl font-extrabold text-black font-mono tracking-tight">
                 4
               </div>
               <div className="text-xs font-bold text-black mt-1">
                 Roles Held
               </div>
               <div className="text-[11px] text-black">
-                Engineering &amp; research
-              </div>
-            </div>
-
-            <div className="p-4 rounded-xl bg-white border border-neutral-200 shadow-xs text-left">
-              <div className="text-3xl font-extrabold text-black font-mono tracking-tight">
-                10+
-              </div>
-              <div className="text-xs font-bold text-black mt-1">
-                Visualizations
-              </div>
-              <div className="text-[11px] text-black">
-                Statewide education data
+                Bailey, CSSE, FCCC, Extern
               </div>
             </div>
 
@@ -191,9 +166,33 @@ export default function TrackRecordSection() {
                 Computer Science B.S.
               </div>
             </div>
+
+            <div className="p-4 rounded-xl bg-white border border-neutral-200 shadow-xs text-left">
+              <div className="text-xl sm:text-2xl font-extrabold text-black font-mono tracking-tight pt-1">
+                May &apos;27
+              </div>
+              <div className="text-xs font-bold text-black mt-1">
+                Graduation
+              </div>
+              <div className="text-[11px] text-black">
+                San Luis Obispo, CA
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl bg-white border border-neutral-200 shadow-xs text-left">
+              <div className="text-3xl font-extrabold text-black font-mono tracking-tight">
+                2
+              </div>
+              <div className="text-xs font-bold text-black mt-1">
+                Projects
+              </div>
+              <div className="text-[11px] text-black">
+                Guppty &amp; Gitex
+              </div>
+            </div>
           </div>
 
-          {/* Technical Arsenal: All Black Typography */}
+          {/* Technical Arsenal: 100% Authentic to Resume */}
           <div className="p-6 rounded-2xl bg-white border border-neutral-200 shadow-xs text-left">
             <h4 className="text-xs font-mono font-bold text-black uppercase tracking-wider mb-3">
               Technical Arsenal
@@ -203,21 +202,25 @@ export default function TrackRecordSection() {
               <div>
                 <span className="font-bold text-black">Languages: </span>
                 <span className="text-black">
-                  Python, TypeScript, JavaScript, Rust, SQL, Java, C, C++, HTML, CSS
+                  Python, TypeScript, JavaScript, Rust, Java, C++, SQL, HTML/CSS
                 </span>
               </div>
               <div>
-                <span className="font-bold text-black">Frameworks &amp; Infra: </span>
+                <span className="font-bold text-black">Frameworks: </span>
                 <span className="text-black">
-                  React, Next.js, Node.js, FastAPI, PostgreSQL, Redis, Convex,
-                  Docker, Tailwind CSS, SharePoint, Power Automate
+                  React, Next.js, Node.js, FastAPI
                 </span>
               </div>
               <div>
-                <span className="font-bold text-black">Developer Tools: </span>
+                <span className="font-bold text-black">Tools: </span>
                 <span className="text-black">
-                  Git, GitHub Actions CI/CD, Unix/Linux, Jira, VS Code, pytest,
-                  LlamaIndex, Ollama
+                  Git, GitHub Actions, Docker, Sentry, Power Automate, SharePoint, Drupal
+                </span>
+              </div>
+              <div>
+                <span className="font-bold text-black">AI &amp; Dev Tools: </span>
+                <span className="text-black">
+                  Cursor, Codex, Antigravity, Claude Code, GitHub Copilot, Gemini, LlamaIndex, RAG
                 </span>
               </div>
             </div>

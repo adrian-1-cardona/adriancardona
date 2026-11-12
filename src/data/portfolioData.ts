@@ -54,10 +54,10 @@ export interface BlogPost {
 export const PROFILE = {
   name: "Adrian Cardona",
   phone: "310-489-6795",
-  email: "cardona.adrian.1029@gmail.com",
+  email: "cardonaadrian101@gmail.com",
   portfolio: "adriancardona.tech",
   headline: "Computer Science @ Cal Poly San Luis Obispo",
-  bio: "B.S. in Computer Science student at Cal Poly San Luis Obispo (Expected May 2027, GPA: 3.5/4.0). Web Development Intern at Cal Poly Bailey College of Science and Mathematics.",
+  bio: "B.S. in Computer Science student at Cal Poly San Luis Obispo (Expected May 2027, GPA: 3.5/4.0). Software Engineering Intern at Cal Poly Bailey College of Science and Mathematics.",
   location: "San Luis Obispo, California",
   education: {
     school: "California Polytechnic State University, San Luis Obispo",
@@ -84,26 +84,28 @@ export const PROFILE = {
 export const EXPERIENCES: Experience[] = [
   {
     id: "cal-poly-bailey",
-    role: "Web Development Intern",
+    role: "Software Engineering Intern",
     company: "Cal Poly Bailey College of Science and Mathematics",
     location: "San Luis Obispo, California",
     period: "Jan 2026 – Present",
     current: true,
-    type: "Engineering Internship",
+    type: "Software Engineering Internship",
     logo: "/images/logos/calpoly-seal.svg",
     description:
-      "Built an internal digital asset management system with SharePoint and Power Automate, automating batch ingestion, metadata indexing, duplicate detection, validation, and failure recovery.",
+      "Built a TypeScript media system with SharePoint and Power Automate so staff can quickly find and organize photos across OneDrive.",
     achievements: [
-      "Built an internal digital asset management system with SharePoint and Power Automate, automating batch ingestion, metadata indexing, duplicate detection, validation, and failure recovery.",
-      "Engineered a resumable migration pipeline for 58,579 media records with persistent state, collision-safe writes, automated retries, and source traceability while preserving data integrity.",
+      "Built a TypeScript media system with SharePoint and Power Automate so staff can quickly find and organize photos across OneDrive.",
+      "Improved the media system from staff feedback through Codex-assisted testing, debugging, and feature updates.",
+      "Built and updated college websites using HTML and Drupal to keep department content accurate and current.",
     ],
     skills: [
       "TypeScript",
       "SharePoint",
       "Power Automate",
-      "Digital Asset Management",
-      "Data Integrity",
-      "Batch Ingestion",
+      "OneDrive",
+      "Codex",
+      "HTML",
+      "Drupal",
     ],
   },
   {
@@ -119,7 +121,7 @@ export const EXPERIENCES: Experience[] = [
       "Engineered a Python backend to automate training and evaluation pipelines for cooperative AI research.",
     achievements: [
       "Engineered a Python backend to automate training and evaluation pipelines for cooperative AI agents.",
-      "Set up GitHub Actions CI/CD and pytest to catch bugs automatically and ensure reliable benchmark runs.",
+      "Set up GitHub Actions CI/CD and pytest to catch bugs automatically and ensure reliable system runs.",
       "Developed an interactive Python desktop application to monitor live AI agent activity and visualize system telemetry.",
     ],
     skills: [
@@ -136,22 +138,21 @@ export const EXPERIENCES: Experience[] = [
     role: "Technology Solutions Research Intern",
     company: "Foundation for California Community Colleges",
     location: "Los Angeles, California",
-    period: "July 2025 – March 2026",
+    period: "Jul 2025 – Mar 2026",
     current: false,
     type: "Research Internship",
     logo: "/images/logos/foundationccc-official.svg",
     description:
-      "Analyzed statewide education datasets for the Technology Solutions team, transforming enrollment, demographic, and financial-aid data into 10+ stakeholder-facing visualizations and actionable insights.",
+      "Analyzed financial aid and student data to identify barriers to FAFSA access and show where students needed support.",
     achievements: [
-      "Analyzed statewide education datasets for the Technology Solutions team, transforming enrollment, demographic, and financial-aid data into 10+ stakeholder-facing visualizations and actionable insights.",
-      "Built reusable data-processing and validation workflows for a 6-person research team, standardizing data cleaning and reporting to improve accuracy, reproducibility, and delivery speed.",
+      "Analyzed financial aid and student data to identify barriers to FAFSA access and show where students needed support.",
     ],
     skills: [
-      "Statewide Datasets",
+      "Data Analysis",
       "SQL",
-      "Data Visualizations",
-      "Workflow Automation",
-      "Reproducible Research",
+      "Student Financial Aid",
+      "FAFSA Access",
+      "Higher Education",
     ],
   },
   {
@@ -164,18 +165,16 @@ export const EXPERIENCES: Experience[] = [
     type: "AI Externship",
     logo: "/images/logos/extern-official.png",
     description:
-      "Built a Python RAG pipeline with LlamaIndex, Ollama, and Gemini API to ingest mortgage and lease documents, generate embeddings, and retrieve grounded context.",
+      "Built RAG pipelines that help search through mortgage and lease documents and generate answers from the retrieved information.",
     achievements: [
-      "Built a Python RAG pipeline with LlamaIndex, Ollama, and Gemini API to ingest mortgage and lease documents, generate embeddings, and retrieve grounded context.",
-      "Evaluated open-source AI models and optimized chunking, retrieval, and prompting strategies, presenting the final document intelligence system to Outamation stakeholders.",
+      "Built RAG pipelines that help search through mortgage and lease documents and generate answers from the retrieved information.",
     ],
     skills: [
       "Python",
+      "RAG Pipelines",
       "LlamaIndex",
-      "Ollama",
-      "Gemini API",
-      "RAG Pipeline",
-      "Vector Embeddings",
+      "Document Intelligence",
+      "Retrieval Systems",
     ],
   },
 ]
@@ -185,21 +184,19 @@ export const PROJECTS: Project[] = [
     id: "guppty",
     name: "Guppty Programming Language",
     tagline:
-      "A programming language in Rust with a lexer, parser, bytecode compiler, and stack VM.",
+      "Built a programming language in Rust with a compiler and interpreter, using GitHub Actions CI/CD to automatically test changes.",
     category: "Rust",
     year: "2026",
     description:
-      "Built a programming language in Rust with a lexer, parser, bytecode compiler, and stack VM, supporting closures, functions, control flow, and span-aware runtime errors.",
+      "Built a programming language in Rust with a compiler and interpreter, using GitHub Actions CI/CD to automatically test changes.",
     highlights: [
-      "Built a programming language in Rust with a lexer, parser, bytecode compiler, and stack VM, supporting closures, functions, control flow, and span-aware runtime errors.",
-      "Engineered dual interpreter and VM execution backends with 38+ tests and CI-enforced differential testing to guarantee identical program behavior.",
+      "Built a programming language in Rust with a compiler and interpreter, using GitHub Actions CI/CD to automatically test changes.",
     ],
     stack: [
       "Rust",
-      "Lexer & Parser",
-      "Bytecode Compiler",
-      "Stack VM",
-      "Differential Testing",
+      "Compiler",
+      "Interpreter",
+      "GitHub Actions CI/CD",
     ],
     links: [
       {
@@ -218,23 +215,21 @@ export const PROJECTS: Project[] = [
     id: "gitex",
     name: "Gitex",
     tagline:
-      "GitHub codebase Q&A platform with Gemini embeddings and Convex vector search.",
+      "Built a TypeScript and React codebase Q&A app with Gemini API, while CI/CD and Sentry catch issues before and after release.",
     category: "TypeScript, React, JavaScript",
     year: "2026",
     description:
-      "Built a GitHub codebase Q&A platform with Gemini embeddings and Convex vector search, achieving 100% groundedness and refusal accuracy across 31 retrieval evaluations.",
+      "Built a TypeScript and React codebase Q&A app with Gemini API, while CI/CD and Sentry catch issues before and after release.",
     highlights: [
-      "Built a GitHub codebase Q&A platform with Gemini embeddings and Convex vector search, achieving 100% groundedness and refusal accuracy across 31 retrieval evaluations.",
-      "Engineered production-grade auth, billing, rate limiting, and AI security controls with Clerk, Stripe, and 160+ automated tests, enforcing retrieval evaluations through CI.",
+      "Built a TypeScript and React codebase Q&A app with Gemini API, while CI/CD and Sentry catch issues before and after release.",
     ],
     stack: [
       "TypeScript",
       "React",
       "JavaScript",
-      "Gemini Embeddings",
-      "Convex Vector Search",
-      "Clerk",
-      "Stripe",
+      "Gemini API",
+      "CI/CD",
+      "Sentry",
     ],
     links: [
       {
@@ -257,113 +252,72 @@ export const SKILLS_DATA = {
     "TypeScript",
     "JavaScript",
     "Rust",
-    "SQL",
     "Java",
-    "C",
     "C++",
-    "HTML",
-    "CSS",
+    "SQL",
+    "HTML/CSS",
   ],
-  frameworks: [
-    "React",
-    "Next.js",
-    "Node.js",
-    "FastAPI",
-    "Tailwind CSS",
-    "Vite",
-  ],
-  databases: [
-    "PostgreSQL",
-    "Redis",
-    "Convex",
-    "Docker",
-    "Docker Compose",
-    "Celery",
-    "Prometheus",
-    "Grafana",
-  ],
-  tools: [
-    "Git",
-    "GitHub Actions",
-    "Unix/Linux",
-    "Jira",
-    "Jupyter Notebook",
-    "VS Code",
-    "IntelliJ",
-  ],
-  aiDeveloperTools: [
-    "Claude Code",
-    "Codex",
-    "ChatGPT",
+  frameworks: ["React", "Next.js", "Node.js", "FastAPI"],
+  tools: ["Git", "GitHub Actions", "Docker", "Sentry", "Power Automate"],
+  aiAndDevTools: [
     "Cursor",
-    "Gemini API",
-    "Ollama",
+    "Codex",
+    "Antigravity",
+    "Claude Code",
+    "GitHub Copilot",
+    "Gemini",
     "LlamaIndex",
+    "RAG",
   ],
 }
 
 export const BLOG_POSTS: BlogPost[] = [
   {
-    id: "guppty-pratt-parsing",
-    slug: "pratt-parsing-bytecode-rust",
-    title: "Engineering a Bytecode Compiler in Pure Rust",
+    id: "1",
+    slug: "rust-compiler-pipeline",
+    title: "Engineering a Bytecode Compiler & Virtual Machine in Pure Rust",
     subtitle:
-      "A deep dive into zero-allocation lexing, Pratt operator precedence parsing, and stack-based virtual machine dispatch in Rust.",
+      "A hands-on breakdown of single-pass recursive descent parsing, compact opcode emission, and stack VM dispatch without runtime overhead.",
     category: "Systems & Compilers",
-    publishDate: "October 2026",
-    readTime: "8 min read",
+    publishDate: "March 2026",
+    readTime: "7 min read",
     summary:
-      "How I engineered Guppty's compiler and bytecode virtual machine from scratch in Rust, implementing span-aware error formatting and first-class closures.",
+      "How Guppty executes arbitrary dynamic code with zero garbage collection pauses using Pratt precedence parsing, arena constant pools, and differential testing.",
     sections: [
       {
-        heading: "1. The Grammar and Pratt Parser Architecture",
+        heading: "1. The Grammar & Pratt Precedence Parser",
         paragraphs: [
-          "When designing a programming language from scratch, recursive-descent parsers can become bloated when handling infix binary expressions with numerous precedence tiers.",
-          "By implementing Vaughan Pratt's top-down operator precedence algorithm in pure Rust, every token type binds to a parselet with a distinct binding power, producing elegant and fast AST generation.",
-        ],
-      },
-      {
-        heading: "2. Flat Bytecode Vectors vs Stack Frames",
-        paragraphs: [
-          "To avoid dynamic heap allocations during expression evaluation, Guppty emits instructions into a flat, contiguous vector of opcodes. Operands are pushed onto a fixed-capacity stack frame.",
-          "This cache-friendly memory layout enables the interpreter loop to achieve sub-microsecond instruction dispatch on modern x86_64 and ARM processors.",
+          "When designing Guppty, the first major decision was to reject parser-generator bloat in favor of a clean, hand-written Pratt parser in Rust. Pratt parsing associates parsing functions with semantic tokens rather than monolithic grammar rules, keeping expression precedence climbing linear with respect to source token count.",
         ],
       },
     ],
     keyTakeaways: [
-      "Pratt parsing reduces expression parsing code by 60% compared to traditional recursive descent.",
-      "Stack-based bytecode VMs provide deterministic instruction execution with predictable memory behavior.",
+      "Hand-written recursive descent Pratt parsers drastically reduce binary size compared to parser generators.",
+      "Dual execution backends tested with differential test suites prevent compiler-VM behavioral regressions.",
     ],
   },
   {
-    id: "gitex-ast-grounding",
-    slug: "ast-grounded-code-intelligence",
-    title: "Hallucination-Free Code Intelligence with AST Grounding",
+    id: "2",
+    slug: "grounded-rag-architecture",
+    title: "Grounded Retrieval & Hallucination Elimination in Codebase Q&A",
     subtitle:
-      "How Gitex verifies semantic LLM retrieval against concrete syntax trees and Git diffs to deliver verifiable codebase answers.",
+      "Architecting Gitex: Vector indexing, AST chunking, and refusal calibration with Convex and the Gemini API.",
     category: "AI & Retrieval",
-    publishDate: "November 2026",
+    publishDate: "February 2026",
     readTime: "6 min read",
     summary:
-      "Techniques for cross-referencing LLM retrieval with AST symbol tables to ensure 100% verifiable code references without hallucinations.",
+      "A practical engineering guide to achieving 100% groundedness and refusal accuracy across codebase retrieval benchmarks.",
     sections: [
       {
-        heading: "1. The Citation Verification Problem",
+        heading: "1. The Problem with Naive Chunking",
         paragraphs: [
-          "Standard RAG pipelines query vector databases using text chunks, often producing hallucinated function signatures or obsolete file paths when answering code questions.",
-          "Gitex resolves this by parsing the target repository into an abstract syntax tree, resolving symbol scopes, and filtering retrieved snippets against active AST definitions.",
-        ],
-      },
-      {
-        heading: "2. Verifying Citations Against Git Diffs",
-        paragraphs: [
-          "When analyzing pull requests or local working trees, Gitex overlays git diff hunks onto the AST index. Citations are verified against line boundaries so every link points directly to valid code.",
+          "Most RAG pipelines split source files arbitrarily by character count. In code, this destroys function scopes and symbol references. Gitex indexes files by AST boundaries, ensuring every chunk retains its enclosing namespace, imports, and declaration context.",
         ],
       },
     ],
     keyTakeaways: [
-      "AST symbol table grounding prevents LLM hallucinations in codebase Q&A systems.",
-      "Overlaying git diffs on syntax trees enables real-time verification of code citations.",
+      "Chunking source code along AST nodes retains syntactic scope and prevents context fragmentation.",
+      "Calibrating refusal thresholds prevents hallucination on missing external symbols.",
     ],
   },
 ]

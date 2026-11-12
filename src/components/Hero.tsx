@@ -32,9 +32,8 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
         {/* Subhead text */}
         <p className="text-[16px] sm:text-[18px] leading-[140%] text-white/95 max-w-[580px] mx-auto mb-6 font-normal tracking-[-0.02em] drop-shadow-xs">
           Computer Science undergraduate at Cal Poly San Luis Obispo (Expected
-          May 2027, GPA: 3.5/4.0). Web Development Intern at Cal Poly Bailey
-          College, building compiler runtimes in Rust, and engineering grounded
-          codebase intelligence.
+          May 2027, GPA: 3.5/4.0). Software Engineering Intern at Cal Poly Bailey
+          College of Science and Mathematics.
         </p>
 
         {/* Single Focal Action Button */}
@@ -111,7 +110,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                   <span className="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block" />
                   <span className="w-3 h-3 rounded-full bg-[#27c93f] inline-block" />
                   <span className="text-xs font-mono text-slate-400 ml-2">
-                    cal-poly-bailey · pipeline/ingest.ts
+                    cal-poly-bailey · media-system/sync.ts
                   </span>
                 </div>
 
@@ -122,7 +121,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                 >
                   <span className="text-[10px]">▶</span>
                   <span>
-                    {isRunning ? "Dispatching..." : "Execute Pipeline"}
+                    {isRunning ? "Syncing..." : "Sync Media"}
                   </span>
                 </button>
               </div>
@@ -132,40 +131,31 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                 {/* Left Code Inspection */}
                 <div className="md:col-span-7 space-y-1.5 text-slate-300 overflow-x-auto">
                   <div className="text-slate-500">
-                    // Resumable media migration pipeline at Cal Poly Bailey College
+                    // TypeScript media organization system at Cal Poly Bailey College
                   </div>
                   <div>
                     <span className="text-purple-400">
                       export async function
                     </span>{" "}
-                    migrateBatch(records: MediaRecord[]) {"{"}
+                    syncMediaToSharePoint(photo: PhotoRecord) {"{"}
                   </div>
                   <div className="pl-4 text-slate-400">
-                    const token = await getSharePointAuth();
+                    const oneDriveTarget = await getTargetFolder(photo.department);
                   </div>
                   <div className="pl-4 text-slate-400">
-                    const pipeline = new ResumablePipeline({"{"}
+                    const result = await powerAutomate.organize({"{"}
                   </div>
                   <div className="pl-8 text-slate-400">
-                    totalRecords: 58579, collisionSafe: true
+                    fileId: photo.id,
+                  </div>
+                  <div className="pl-8 text-slate-400">
+                    destination: oneDriveTarget,
                   </div>
                   <div className="pl-4 text-slate-400">{"});"}</div>
                   <div className="pl-4">
                     <span className="text-purple-400">return</span>{" "}
-                    pipeline.execute( async (record) =&gt; {"{"}
+                    {"{ status: 'ORGANIZED', path: result.webUrl };"}
                   </div>
-                  <div className="pl-8 text-slate-400">
-                    const res = await powerAutomate.sync({"{"}
-                  </div>
-                  <div className="pl-12 text-slate-400">
-                    action: &quot;INDEX_METADATA&quot;,
-                  </div>
-                  <div className="pl-12 text-slate-400">id: record.id</div>
-                  <div className="pl-8 text-slate-400">{"});"}</div>
-                  <div className="pl-8 text-emerald-400">
-                    return {"{ status: 'MIGRATED', ref: res.id };"}
-                  </div>
-                  <div className="pl-4">{"});"}</div>
                   <div>{"}"}</div>
                 </div>
 
@@ -173,32 +163,32 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                 <div className="md:col-span-5 bg-[#26282d]/80 rounded-xl p-4 border border-[#37383c] flex flex-col justify-between">
                   <div>
                     <div className="text-xs uppercase tracking-wider text-slate-400 font-bold mb-3 font-mono">
-                      Production Telemetry
+                      Media System Telemetry
                     </div>
 
                     <div className="space-y-2 text-xs">
                       <div className="flex justify-between py-1 border-b border-[#37383c]">
-                        <span className="text-slate-400">Digital Asset Mgmt:</span>
+                        <span className="text-slate-400">Platform:</span>
                         <span className="text-emerald-400 font-bold">
-                          Active System
-                        </span>
-                      </div>
-                      <div className="flex justify-between py-1 border-b border-[#37383c]">
-                        <span className="text-slate-400">Migration Pipeline:</span>
-                        <span className="text-emerald-400 font-bold">
-                          58,579 Records
+                          SharePoint &amp; OneDrive
                         </span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-[#37383c]">
                         <span className="text-slate-400">Automation:</span>
+                        <span className="text-emerald-400 font-bold">
+                          Power Automate
+                        </span>
+                      </div>
+                      <div className="flex justify-between py-1 border-b border-[#37383c]">
+                        <span className="text-slate-400">Testing &amp; QA:</span>
                         <span className="text-slate-200">
-                          SharePoint &amp; Flows
+                          Codex-Assisted Tests
                         </span>
                       </div>
                       <div className="flex justify-between py-1">
-                        <span className="text-slate-400">Write Safety:</span>
+                        <span className="text-slate-400">College Portals:</span>
                         <span className="text-slate-200">
-                          Collision-Safe Writes
+                          HTML &amp; Drupal
                         </span>
                       </div>
                     </div>
@@ -208,8 +198,7 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                     <div className="mt-3 p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-xs flex items-center gap-2 animate-in fade-in">
                       <span className="font-bold text-xs">✓</span>
                       <span>
-                        Resumable pipeline verified: 58,579 media records
-                        indexed with automated retries.
+                        Photo sync complete: Staff media organized across OneDrive via Power Automate.
                       </span>
                     </div>
                   )}
@@ -221,17 +210,14 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
             <div className="mt-4 sm:-mt-6 z-20 w-full max-w-xl rounded-2xl bg-black/60 border border-white/25 p-4 text-left backdrop-blur-xl shadow-2xl text-white">
               <div className="flex items-center justify-between text-xs text-white/70 mb-2">
                 <span className="font-semibold text-white">
-                  Cal Poly Bailey College · Web Development Intern
+                  Cal Poly Bailey College · Software Engineering Intern
                 </span>
                 <span className="font-mono text-[10px] bg-white/10 px-2 py-0.5 rounded text-white/80">
                   Jan 2026 – Present
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-mono">
-                &quot;Built an internal digital asset management system with
-                SharePoint and Power Automate, automating batch ingestion,
-                metadata indexing, duplicate detection, and resumable migration
-                for 58,579 media records.&quot;
+                &quot;Built a TypeScript media system with SharePoint and Power Automate so staff can quickly find and organize photos across OneDrive. Improved the media system from staff feedback through Codex-assisted testing, debugging, and feature updates.&quot;
               </p>
             </div>
 
