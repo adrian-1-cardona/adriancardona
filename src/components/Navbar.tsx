@@ -130,7 +130,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             className="flex items-center justify-between px-3 py-2 text-sm font-medium text-[#37383c] hover:text-[#4e95ff]"
           >
             <span>View Resume (PDF)</span>
-            <ArrowUpRight className="w-4 h-4 opacity-50" />
+            <span className="text-xs opacity-60">↗</span>
           </a>
         </div>
       )}

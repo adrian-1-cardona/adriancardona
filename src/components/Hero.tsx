@@ -250,8 +250,8 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                 alt="Zoom"
                 className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg shadow-xs transition-transform duration-200 hover:scale-125 hover:-translate-y-1 cursor-pointer"
               />
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#26282d] text-white flex items-center justify-center shadow-xs transition-transform duration-200 hover:scale-125 hover:-translate-y-1 cursor-pointer">
-                <Terminal className="w-3.5 h-3.5 text-[#4e95ff]" />
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#26282d] text-white flex items-center justify-center shadow-xs transition-transform duration-200 hover:scale-125 hover:-translate-y-1 cursor-pointer font-mono text-xs text-[#4e95ff] font-bold">
+                &gt;_
               </div>
             </div>
           </div>
