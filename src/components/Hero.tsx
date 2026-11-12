@@ -44,9 +44,8 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
         {/* Subhead text (Exact Cluely scale: 19px, leading-[140%], tracking-[-0.02em]) */}
         <p className="text-[16px] sm:text-[18px] leading-[140%] text-white/95 max-w-[580px] mx-auto mb-6 font-normal tracking-[-0.02em] drop-shadow-xs">
           Computer Science undergraduate at Cal Poly San Luis Obispo (Expected
-          May 2027). Building practical data pipelines for 58k+ records at
-          Bailey College, statewide educational analytics, and compiled
-          developer tooling.
+          May 2027). Building media workflow automation at Bailey College,
+          cooperative AI agent systems at CSSE, and compiler tooling.
         </p>
 
         {/* Single Focal Action Button (Exact Cluely gradient button with radial depth & inset highlight) */}
@@ -190,28 +189,28 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
 
                     <div className="space-y-2 text-xs">
                       <div className="flex justify-between py-1 border-b border-[#37383c]">
-                        <span className="text-slate-400">
-                          Migrated Records:
-                        </span>
+                        <span className="text-slate-400">Media System:</span>
                         <span className="text-emerald-400 font-bold">
-                          58,579 items
+                          TypeScript / Active
                         </span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-[#37383c]">
-                        <span className="text-slate-400">
-                          Transfer Failures:
-                        </span>
+                        <span className="text-slate-400">Power Automate:</span>
                         <span className="text-emerald-400 font-bold">
-                          0 data loss
+                          Workflow Synced
                         </span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-[#37383c]">
-                        <span className="text-slate-400">SharePoint Sync:</span>
-                        <span className="text-slate-200">Automated flow</span>
+                        <span className="text-slate-400">Photo Storage:</span>
+                        <span className="text-slate-200">
+                          SharePoint &amp; OneDrive
+                        </span>
                       </div>
                       <div className="flex justify-between py-1">
-                        <span className="text-slate-400">Recovery Mode:</span>
-                        <span className="text-[#4e95ff]">Resumable state</span>
+                        <span className="text-slate-400">Code Quality:</span>
+                        <span className="text-[#4e95ff]">
+                          Codex-Assisted Tests
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -220,7 +219,8 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                     <div className="mt-3 p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-xs flex items-center gap-2 animate-in fade-in">
                       <CheckCircle2 className="w-4 h-4 shrink-0" />
                       <span>
-                        58,579 records synced with collision-safe writes.
+                        Media system organized photos across OneDrive
+                        successfully.
                       </span>
                     </div>
                   )}
@@ -240,8 +240,8 @@ export default function Hero({ onGetInTouch }: { onGetInTouch: () => void }) {
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-mono">
-                &quot;Cal Poly Bailey College migration active: 58,579 records,
-                collision-safe writes, zero data loss.&quot;
+                &quot;Cal Poly Bailey College media system active: SharePoint
+                &amp; OneDrive photo indexing with Power Automate.&quot;
               </p>
             </div>
 
