@@ -1,50 +1,21 @@
-import GitexShowcase from "@/components/GitexShowcase"
-
-interface HeroProps {
-  onExploreWork: () => void
-}
-
-export default function Hero({ onExploreWork }: HeroProps) {
+export default function Hero() {
   return (
-    <section id="top" className="pt-20 sm:pt-24 lg:pt-28 pb-14 px-4 sm:px-6 max-w-6xl mx-auto">
-      {/* Clean, Personal Introduction */}
-      <div className="max-w-3xl mb-8 sm:mb-10 text-left">
-        <h1 className="text-3xl sm:text-5xl lg:text-[56px] font-semibold text-black tracking-tight leading-[1.12] mb-4">
-          Hi, I&apos;m Adrian.
-          <br />
-          <span className="text-neutral-700 font-normal">
-            I build software that makes things easier.
-          </span>
+    <section
+      id="top"
+      className="relative min-h-[92vh] sm:min-h-screen flex flex-col items-center justify-start pt-24 sm:pt-28 px-4 sm:px-6 text-center z-20 pointer-events-none"
+    >
+      <div className="max-w-3xl mx-auto flex flex-col items-center">
+        {/* Headline matching user reference image exactly: "Hey, I'm Adrian." */}
+        <h1 className="text-4xl sm:text-6xl lg:text-[76px] font-bold text-black tracking-tight leading-[1.08] mb-4 pointer-events-auto">
+          Hey, I&apos;m Adrian.
         </h1>
 
-        <p className="text-base sm:text-lg text-neutral-600 leading-relaxed font-normal mb-6 max-w-2xl">
-          I&apos;m a software engineer at Cal Poly, building applications, developer tools, and AI-powered software.
+        <p className="text-base sm:text-xl text-neutral-600 font-normal tracking-tight max-w-xl mx-auto mb-2 pointer-events-auto">
+          I build software that makes things easier.
         </p>
-
-        {/* Actions: One Primary Button & One Understated Secondary Link */}
-        <div className="flex items-center gap-6">
-          <button
-            onClick={onExploreWork}
-            className="px-6 py-2.5 rounded-full bg-black text-white text-sm font-medium hover:bg-neutral-800 transition cursor-pointer shadow-xs"
-          >
-            Explore my work
-          </button>
-
-          <a
-            href="/ADRIAN_CARDONA_RESUME.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-neutral-600 hover:text-black transition"
-          >
-            Resume
-          </a>
-        </div>
       </div>
 
-      {/* The Product as Centerpiece: Gitex Demonstration */}
-      <div id="work" className="w-full scroll-mt-24">
-        <GitexShowcase />
-      </div>
+      {/* The 3D MacBook canvas floats gracefully directly beneath this headline! */}
     </section>
   )
 }

@@ -1,89 +1,72 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Navbar from "@/components/Navbar"
+import CinematicBackground from "@/components/CinematicBackground"
+import MacBookCanvas, { ScreenState } from "@/components/MacBookCanvas"
 import Hero from "@/components/Hero"
 import ExperienceSection from "@/components/ExperienceSection"
-import GupptyShowcase from "@/components/GupptyShowcase"
-import ResearchShowcase from "@/components/ResearchShowcase"
-import AboutSection from "@/components/AboutSection"
-import BlogSection from "@/components/BlogSection"
-import FaqSection from "@/components/FaqSection"
-import CtaBanner from "@/components/CtaBanner"
-import Footer from "@/components/Footer"
+import ProjectsSection from "@/components/ProjectsSection"
+import ContactSection from "@/components/ContactSection"
 
 export default function App() {
-  const [selectedPostSlug, setSelectedPostSlug] = useState<string | null>(null)
-
-  useEffect(() => {
-    const handleHash = () => {
-      const hash = window.location.hash.replace("#", "")
-      if (hash.startsWith("blog/")) {
-        const slug = hash.replace("blog/", "")
-        setSelectedPostSlug(slug)
-      }
-    }
-
-    handleHash()
-    window.addEventListener("popstate", handleHash)
-    return () => window.removeEventListener("popstate", handleHash)
-  }, [])
+  const [screenState, setScreenState] = useState<ScreenState>("wallpaper")
+  const [activeRoleIndex, setActiveRoleIndex] = useState(0)
+  const [activeProject, setActiveProject] = useState<"gitex" | "guppty">("gitex")
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      })
-      window.history.pushState(null, "", `#${id}`)
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" })
+      if (id === "top") setScreenState("wallpaper")
+      else if (id === "experience") setScreenState("experience")
+      else if (id === "projects") setScreenState(activeProject)
+      else if (id === "contact") setScreenState("contact")
     }
   }
 
-  const handleScrollTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    })
-    window.history.pushState(null, "", "#top")
+  const handleSelectRole = (idx: number) => {
+    setActiveRoleIndex(idx)
+    setScreenState("experience")
+  }
+
+  const handleSelectProject = (project: "gitex" | "guppty") => {
+    setActiveProject(project)
+    setScreenState(project)
   }
 
   return (
-    <div className="min-h-screen bg-white text-black selection:bg-black/10 selection:text-black font-sans antialiased">
-      {/* Sticky Header Navigation */}
+    <div className="relative min-h-screen text-black font-sans antialiased selection:bg-blue-500/20 selection:text-black">
+      {/* 1. Ethereal Luminous Silk & Charcoal Wave Background */}
+      <CinematicBackground />
+
+      {/* 2. One Continuous 3D MacBook Model (Three.js + GSAP ScrollTrigger) */}
+      <MacBookCanvas
+        screenState={screenState}
+        activeRoleIndex={activeRoleIndex}
+      />
+
+      {/* 3. Minimal Apple-Inspired Navigation */}
       <Navbar onNavigate={scrollToSection} />
 
-      <main>
-        {/* Hero Section with Integrated Gitex Codebase Intelligence Showcase */}
-        <Hero
-          onExploreWork={() => scrollToSection("work")}
+      {/* 4. Scroll-Synchronized Content Story */}
+      <main className="relative z-20">
+        {/* Opening: "Hey, I'm Adrian." */}
+        <Hero />
+
+        {/* Experience: The 360° Reveal */}
+        <ExperienceSection
+          activeRoleIndex={activeRoleIndex}
+          onSelectRole={handleSelectRole}
         />
 
-        {/* Work Experience: Interactive Selector with Official Company Logos */}
-        <ExperienceSection />
-
-        {/* Flagship Systems: Guppty (Rust Bytecode VM & Pratt Parser) */}
-        <GupptyShowcase />
-
-        {/* Academic Research: Cal Poly CSSE Cooperative AI & Telemetry Engine */}
-        <ResearchShowcase />
-
-        {/* About Adrian: Authentic High-Res Portrait, Story & Engineering Standards */}
-        <AboutSection />
-
-        {/* Engineering Writing: Deep-Dive Articles with Full Modal Reader */}
-        <BlogSection
-          selectedPostSlug={selectedPostSlug}
-          onPostOpened={(slug) => setSelectedPostSlug(slug)}
+        {/* Projects: Close and Reopen (Gitex & Guppty) */}
+        <ProjectsSection
+          activeProject={activeProject}
+          onSelectProject={handleSelectProject}
         />
 
-        {/* Frequently Asked Questions */}
-        <FaqSection />
-
-        {/* Contact Banner */}
-        <CtaBanner />
+        {/* Contact: Cinematic Finale ("Let's connect.") */}
+        <ContactSection />
       </main>
-
-      {/* Modern Footer with Verified Links */}
-      <Footer onScrollTop={handleScrollTop} />
     </div>
   )
 }
