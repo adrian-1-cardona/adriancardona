@@ -260,10 +260,10 @@ export default function MacBookCanvas({
     }
 
     // Left Side: MagSafe 3 and Dual Thunderbolt 4 / USB-C Ports
-    const portL1 = createRecessedPillPort(-width / 2, 0, -0.60)
+    const portL1 = createRecessedPillPort(-width / 2, 0, -0.82)
     baseGroup.add(portL1)
 
-    const portL2 = createRecessedPillPort(-width / 2, 0, -0.42)
+    const portL2 = createRecessedPillPort(-width / 2, 0, -0.66)
     baseGroup.add(portL2)
 
     // Right Side: 3.5mm Headphone Jack (Authentic circular socket)
@@ -450,90 +450,99 @@ export default function MacBookCanvas({
     })
 
     // STAGE 1: Hero to Experience Role 0 (Software Engineering Intern @ Cal Poly)
-    // Matches panel 2 of mockup: angled isometric view showing Magic Keyboard, trackpad, port, and screen with Apple wallpaper
+    // Matches panel 2 of user's reference mockup: angled isometric view showing Magic Keyboard, trackpad, port, and screen with Apple wallpaper
     tl.to(
       animState,
       {
-        posX: 1.65,
+        posX: 2.10,
         posY: -0.32,
-        posZ: 0.25,
-        scale: 0.98,
-        rotX: 0.26,
-        rotY: 0.48,
-        rotZ: -0.06,
-        lidAngle: -1.78,
-        camY: 0.35,
-        camZ: 3.75,
+        posZ: 0.40,
+        scale: 1.18,
+        rotX: 0.31,
+        rotY: 0.60,
+        rotZ: -0.11,
+        lidAngle: -0.52,
+        camY: 0.22,
+        camZ: 3.60,
         shadowOpacity: 0.85,
-        duration: 1.0,
+        duration: 0.8,
         ease: 'power2.inOut',
         onUpdate: updateTransforms,
       },
-      0.6
+      0.1
     )
 
     // STAGE 2: Role 1 (Undergraduate Researcher @ Cal Poly CSSE)
+    // Laptop spins slightly and opens up to ~41 degrees
     tl.to(
       animState,
       {
-        posX: 1.62,
+        posX: 2.15,
         posY: -0.30,
-        posZ: 0.22,
-        scale: 0.98,
-        rotX: 0.28,
-        rotY: 0.44,
-        rotZ: -0.05,
-        lidAngle: -1.80,
+        posZ: 0.42,
+        scale: 1.18,
+        rotX: 0.33,
+        rotY: 0.66,
+        rotZ: -0.12,
+        lidAngle: -0.72,
+        camY: 0.22,
+        camZ: 3.55,
         duration: 0.7,
         ease: 'power1.inOut',
         onUpdate: updateTransforms,
       },
-      1.6
+      1.0
     )
 
     // STAGE 3: Role 2 (Technology Solutions Research Intern @ Foundation for CCC)
+    // Laptop articulates back and closes to ~27 degrees
     tl.to(
       animState,
       {
-        posX: 1.65,
+        posX: 2.10,
         posY: -0.32,
-        posZ: 0.25,
-        scale: 0.98,
-        rotX: 0.25,
-        rotY: 0.49,
-        rotZ: -0.06,
-        lidAngle: -1.78,
+        posZ: 0.40,
+        scale: 1.18,
+        rotX: 0.29,
+        rotY: 0.56,
+        rotZ: -0.10,
+        lidAngle: -0.48,
+        camY: 0.22,
+        camZ: 3.60,
         duration: 0.7,
         ease: 'power1.inOut',
         onUpdate: updateTransforms,
       },
-      2.3
+      1.7
     )
 
     // STAGE 4: Role 3 (AI Document Insights Extern @ Extern)
+    // Laptop glides toward closing (~17 degrees)
     tl.to(
       animState,
       {
-        posX: 1.63,
-        posY: -0.30,
-        posZ: 0.24,
-        scale: 0.98,
-        rotX: 0.27,
-        rotY: 0.43,
-        rotZ: -0.05,
-        lidAngle: -1.80,
+        posX: 2.12,
+        posY: -0.32,
+        posZ: 0.42,
+        scale: 1.18,
+        rotX: 0.31,
+        rotY: 0.62,
+        rotZ: -0.11,
+        lidAngle: -0.30,
+        camY: 0.22,
+        camZ: 3.60,
         duration: 0.7,
         ease: 'power1.inOut',
         onUpdate: updateTransforms,
       },
-      3.0
+      2.4
     )
 
     // STAGE 5: Experience into Projects & Contact (Gracefully glides out before Projects)
     tl.to(
       animState,
       {
-        posX: 0.8,
+        posX: 1.2,
         posY: -7.0,
         posZ: -0.5,
         scale: 0.0,
@@ -542,11 +551,11 @@ export default function MacBookCanvas({
         rotZ: 0,
         lidAngle: 0.0,
         shadowOpacity: 0,
-        duration: 0.5,
+        duration: 0.6,
         ease: 'power2.in',
         onUpdate: updateTransforms,
       },
-      3.6
+      3.1
     )
 
     // STAGE 6: Hold completely off-screen for Projects & Contact
@@ -559,11 +568,13 @@ export default function MacBookCanvas({
         duration: 0.8,
         onUpdate: updateTransforms,
       },
-      4.1
+      3.7
     )
 
     // Expose transform controls on window for live testing and fine-tuning
+    ;(window as any).__tl = tl
     ;(window as any).__setTransform = (params: any) => {
+      tl.pause()
       Object.assign(animState, params)
       updateTransforms()
       renderer.render(scene, camera)

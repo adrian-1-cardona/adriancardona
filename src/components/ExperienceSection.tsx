@@ -116,75 +116,25 @@ export default function ExperienceSection({
       {/* Sticky Full-Viewport Stage */}
       <div className="sticky top-0 h-screen flex items-center px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto overflow-hidden">
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
-          {/* Left Column (5 cols): Identical typography & layout to user's reference mockup */}
-          <div className="lg:col-span-5 max-w-[390px] xl:max-w-[420px] text-left z-30">
+          {/* Left Column: Identical typography & layout to user's reference mockup */}
+          <div className="lg:col-span-5 max-w-[460px] xl:max-w-[500px] text-left z-30">
             {/* Header label */}
-            <div className="flex items-center justify-between mb-5">
-              <div className="text-xs uppercase tracking-[0.28em] text-neutral-400 font-semibold">
-                EXPERIENCE
-              </div>
-              {/* Minimal step indicator */}
-              <div className="text-xs tracking-wider text-neutral-400 font-medium">
-                0{activeRoleIndex + 1} / 04
-              </div>
+            <div className="text-xs uppercase tracking-[0.28em] text-neutral-400 font-semibold mb-6">
+              EXPERIENCE
             </div>
 
             {/* Role Headline */}
-            <h2 className="text-4xl sm:text-5xl lg:text-[52px] font-bold text-black tracking-tight leading-[1.08] mb-3 transition-all duration-300">
+            <h2 className="text-4xl sm:text-5xl lg:text-[44px] xl:text-[50px] font-bold text-black tracking-tight leading-[1.08] mb-3 transition-all duration-300">
               {renderRoleHeading()}
             </h2>
 
             {/* Company Subtitle */}
-            <div className="text-xl sm:text-2xl text-neutral-500 font-normal mb-5 transition-all duration-300">
+            <div className="text-xl sm:text-2xl text-neutral-500 font-normal mb-6 transition-all duration-300">
               {renderCompanySub()}
             </div>
 
             {/* Minimal accent line matching reference image */}
-            <div className="w-10 h-0.5 bg-neutral-300 mb-6" />
-
-            {/* Concise Role Impact matching Apple product simplicity */}
-            <p className="text-[15px] sm:text-base text-neutral-600 font-normal leading-relaxed mb-6">
-              {activeRoleIndex === 0 &&
-                "Built an internal digital asset management system with SharePoint and Power Automate, automating batch ingestion, metadata indexing, duplicate detection, and resumable migration for 58,579 media records."}
-              {activeRoleIndex === 1 &&
-                "Researched multi-agent cooperative AI with Ray RLlib and PettingZoo, benchmarking distributed policy algorithms, centralized value functions, and telemetry."}
-              {activeRoleIndex === 2 &&
-                "Developed data analytics pipelines to track statewide FAFSA completion rates and aid distribution across 116 California Community Colleges."}
-              {activeRoleIndex === 3 &&
-                "Engineered legal contract extraction and document intelligence RAG pipelines using LangChain, semantic embeddings, and verifiable source citations."}
-            </p>
-
-            {/* Understated Tech Stack Pills */}
-            <div className="flex flex-wrap gap-2 mb-8">
-              {activeExp.skills.slice(0, 4).map((skill, idx) => (
-                <span
-                  key={idx}
-                  className="px-3 py-1 rounded-full bg-neutral-100 text-neutral-600 text-xs font-medium tracking-tight"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-
-            {/* Minimal Step Indicator Dots */}
-            <div className="flex items-center gap-2 pt-2">
-              {EXPERIENCES.map((exp, idx) => {
-                const isActive = idx === activeRoleIndex
-                return (
-                  <button
-                    key={exp.id}
-                    onClick={() => onSelectRole(idx)}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      isActive
-                        ? "w-8 bg-neutral-900"
-                        : "w-2 bg-neutral-300 hover:bg-neutral-400"
-                    }`}
-                    title={exp.role}
-                    aria-label={`Switch to ${exp.role}`}
-                  />
-                )
-              })}
-            </div>
+            <div className="w-10 h-0.5 bg-neutral-300" />
           </div>
 
           {/* Right Column (7 cols): Reserved for the 3D MacBook extreme close-up side-profile */}
