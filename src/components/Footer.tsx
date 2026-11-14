@@ -33,10 +33,9 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 href="https://adrian-1-cardona.github.io/Guppty/#installation"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline transition inline-flex items-center gap-1 group text-black"
+                className="hover:underline transition text-black"
               >
-                <span>Guppty Bytecode VM</span>
-                <span className="text-[11px] font-mono group-hover:translate-x-0.5 transition-transform">↗</span>
+                Guppty Bytecode VM
               </a>
             </li>
             <li>
@@ -44,10 +43,9 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 href="https://gitex.dev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline transition inline-flex items-center gap-1 group text-black"
+                className="hover:underline transition text-black"
               >
-                <span>Gitex Codebase Q&amp;A</span>
-                <span className="text-[11px] font-mono group-hover:translate-x-0.5 transition-transform">↗</span>
+                Gitex Codebase Q&amp;A
               </a>
             </li>
             <li>
@@ -55,10 +53,9 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 href="https://github.com/adrian-1-cardona"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline transition inline-flex items-center gap-1 group text-black"
+                className="hover:underline transition text-black"
               >
-                <span>CSSE Experiment Runner</span>
-                <span className="text-[11px] font-mono group-hover:translate-x-0.5 transition-transform">↗</span>
+                CSSE Experiment Runner
               </a>
             </li>
           </ul>
@@ -104,10 +101,9 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 href={PROFILE.links.resume}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline transition inline-flex items-center gap-1 font-bold text-black group"
+                className="hover:underline transition font-bold text-black"
               >
-                <span>Curriculum Vitae (PDF)</span>
-                <span className="text-[11px] font-mono group-hover:translate-x-0.5 transition-transform">↗</span>
+                Curriculum Vitae (PDF)
               </a>
             </li>
             <li>
@@ -115,10 +111,9 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 href={PROFILE.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline transition inline-flex items-center gap-1 group text-black"
+                className="hover:underline transition text-black"
               >
-                <span>LinkedIn</span>
-                <span className="text-[11px] font-mono group-hover:translate-x-0.5 transition-transform">↗</span>
+                LinkedIn
               </a>
             </li>
             <li>
@@ -126,10 +121,9 @@ export default function Footer({ onScrollTop }: { onScrollTop: () => void }) {
                 href={PROFILE.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline transition inline-flex items-center gap-1 group text-black"
+                className="hover:underline transition text-black"
               >
-                <span>GitHub</span>
-                <span className="text-[11px] font-mono group-hover:translate-x-0.5 transition-transform">↗</span>
+                GitHub
               </a>
             </li>
             <li>

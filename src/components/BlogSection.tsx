@@ -80,8 +80,8 @@ export default function BlogSection({
 
             <div className="pt-4 mt-6 border-t border-neutral-100 flex items-center justify-between text-xs font-bold text-black group-hover:underline transition">
               <span>Read Full Article</span>
-              <span className="text-sm font-mono text-black group-hover:translate-x-1 transition-transform">
-                →
+              <span className="text-xs font-mono text-neutral-400 group-hover:text-black transition">
+                {post.readTime}
               </span>
             </div>
           </article>

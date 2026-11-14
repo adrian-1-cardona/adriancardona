@@ -7,10 +7,11 @@ interface NavbarProps {
 
 const NAV_ITEMS = [
   { id: "experience", label: "Experience" },
-  { id: "systems", label: "Projects" },
-  { id: "tenets", label: "Architecture" },
-  { id: "blog", label: "Blog" },
-  { id: "faq", label: "FAQ" },
+  { id: "gitex", label: "Gitex" },
+  { id: "guppty", label: "Guppty" },
+  { id: "research", label: "Research" },
+  { id: "about", label: "About" },
+  { id: "blog", label: "Writing" },
 ]
 
 export default function Navbar({ onNavigate }: NavbarProps) {
@@ -19,7 +20,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40)
+      setScrolled(window.scrollY > 20)
     }
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
@@ -32,106 +33,96 @@ export default function Navbar({ onNavigate }: NavbarProps) {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         scrolled
-          ? "bg-white/95 backdrop-blur-md border-b border-neutral-200 shadow-xs text-black"
-          : "bg-transparent text-white"
+          ? "bg-white/85 backdrop-blur-md border-b border-black/[0.06] shadow-[0_1px_3px_rgba(0,0,0,0.02)]"
+          : "bg-white/60 backdrop-blur-xs border-b border-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        {/* Brand & Nav items clustered on left (Matches Cluely nav) */}
-        <div className="flex items-center gap-7 md:gap-9">
-          <button
-            onClick={() => handleLinkClick("top")}
-            className="text-left font-bold tracking-tight text-base sm:text-lg flex items-center gap-2 focus:outline-none cursor-pointer"
-          >
-            <span className="font-bold tracking-tight">Adrian Cardona</span>
-          </button>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+        {/* Brand */}
+        <button
+          onClick={() => handleLinkClick("top")}
+          className="text-left flex items-baseline gap-2 focus:outline-none cursor-pointer group"
+        >
+          <span className="font-semibold text-black text-sm sm:text-base tracking-tight">
+            Adrian Cardona
+          </span>
+          <span className="hidden md:inline text-xs text-neutral-400 font-mono">
+            Cal Poly SLO
+          </span>
+        </button>
 
-          {/* Desktop & Tablet Links (visible from sm breakpoint upwards) */}
-          <nav
-            className={`hidden sm:flex items-center gap-5 md:gap-7 text-xs sm:text-sm font-semibold transition-colors ${
-              scrolled ? "text-black" : "text-white/90"
-            }`}
-          >
-            {NAV_ITEMS.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleLinkClick(item.id)}
-                className={`transition focus:outline-none cursor-pointer ${
-                  scrolled ? "hover:text-neutral-600" : "hover:text-white"
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-          </nav>
-        </div>
+        {/* Desktop Navigation */}
+        <nav className="hidden sm:flex items-center gap-6 md:gap-8 text-xs sm:text-sm font-medium text-neutral-600">
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => handleLinkClick(item.id)}
+              className="hover:text-black transition-colors focus:outline-none cursor-pointer"
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
 
-        {/* Right CTA */}
+        {/* Right CTA: Resume & Get in Touch (Zero Arrows) */}
         <div className="flex items-center gap-3">
           <a
             href="/ADRIAN_CARDONA_RESUME.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className={`hidden sm:inline-flex items-center text-xs font-bold px-3 py-1.5 rounded-full transition ${
-              scrolled
-                ? "text-black hover:bg-neutral-100"
-                : "text-white/90 hover:text-white"
-            }`}
+            className="text-xs font-semibold px-3 py-1.5 rounded-full text-black hover:bg-neutral-100 transition"
           >
-            <span>Resume ↗</span>
+            Resume
           </a>
 
-          {scrolled && (
-            <button
-              onClick={() => handleLinkClick("contact")}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-black text-white text-xs font-bold hover:bg-neutral-800 transition shadow-xs cursor-pointer animate-in fade-in"
-            >
-              <span>Get in Touch</span>
-            </button>
-          )}
+          <button
+            onClick={() => handleLinkClick("contact")}
+            className="hidden sm:inline-flex items-center px-4 py-1.5 rounded-full bg-black text-white text-xs font-medium hover:bg-neutral-800 transition cursor-pointer"
+          >
+            Get in touch
+          </button>
 
-          {/* Mobile menu toggle (visible strictly on mobile screens < sm) */}
+          {/* Mobile Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`sm:hidden p-1.5 rounded-md ${
-              scrolled
-                ? "text-black hover:bg-neutral-100"
-                : "text-white hover:bg-white/10"
-            }`}
-            aria-label="Toggle menu"
+            className="sm:hidden p-1.5 rounded-md text-black hover:bg-neutral-100 transition"
+            aria-label="Toggle Navigation"
           >
-            {mobileMenuOpen ? (
-              <X className="w-5 h-5" />
-            ) : (
-              <Menu className="w-5 h-5" />
-            )}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="sm:hidden bg-white text-black border-b border-neutral-200 px-4 py-4 flex flex-col gap-2 shadow-lg animate-in fade-in duration-150">
+        <div className="sm:hidden bg-white/95 backdrop-blur-md border-b border-neutral-200 px-4 py-4 flex flex-col gap-2 shadow-lg animate-in fade-in duration-150">
           {NAV_ITEMS.map((item) => (
             <button
               key={item.id}
               onClick={() => handleLinkClick(item.id)}
-              className="text-left px-3 py-2 rounded-lg text-sm text-black hover:bg-neutral-100 font-bold cursor-pointer"
+              className="text-left px-3 py-2 rounded-lg text-sm text-black hover:bg-neutral-100 font-medium cursor-pointer"
             >
               {item.label}
             </button>
           ))}
-          <a
-            href="/ADRIAN_CARDONA_RESUME.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-between px-3 py-2 text-sm font-bold text-black hover:bg-neutral-100 rounded-lg"
-          >
-            <span>View Resume (PDF)</span>
-            <span className="text-xs">↗</span>
-          </a>
+          <div className="pt-2 border-t border-neutral-100 flex items-center justify-between px-3">
+            <a
+              href="/ADRIAN_CARDONA_RESUME.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold text-black"
+            >
+              Resume (PDF)
+            </a>
+            <button
+              onClick={() => handleLinkClick("contact")}
+              className="text-xs font-semibold px-3 py-1 rounded-full bg-black text-white"
+            >
+              Contact
+            </button>
+          </div>
         </div>
       )}
     </header>

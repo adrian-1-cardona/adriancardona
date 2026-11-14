@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import Navbar from "@/components/Navbar"
 import Hero from "@/components/Hero"
-import SelectedWorkSection from "@/components/SelectedWorkSection"
-import TenetsSection from "@/components/TenetsSection"
-import TrackRecordSection from "@/components/TrackRecordSection"
+import ExperienceSection from "@/components/ExperienceSection"
+import GupptyShowcase from "@/components/GupptyShowcase"
+import ResearchShowcase from "@/components/ResearchShowcase"
+import AboutSection from "@/components/AboutSection"
 import BlogSection from "@/components/BlogSection"
 import FaqSection from "@/components/FaqSection"
 import CtaBanner from "@/components/CtaBanner"
@@ -51,19 +52,25 @@ export default function App() {
       <Navbar onNavigate={scrollToSection} />
 
       <main>
-        {/* Hero Section with Live Code Execution Mockup */}
-        <Hero onGetInTouch={() => scrollToSection("contact")} />
+        {/* Hero Section with Integrated Gitex Codebase Intelligence Showcase */}
+        <Hero
+          onExploreWork={() => scrollToSection("guppty")}
+          onViewExperience={() => scrollToSection("experience")}
+        />
 
-        {/* Experience & Track Record (#1 Priority with Company Logos) */}
-        <TrackRecordSection />
+        {/* Work Experience: Interactive Selector with Official Company Logos */}
+        <ExperienceSection />
 
-        {/* Interactive Flagship Projects: Guppty (Rust VM) & Gitex (Codebase AI) */}
-        <SelectedWorkSection />
+        {/* Flagship Systems: Guppty (Rust Bytecode VM & Pratt Parser) */}
+        <GupptyShowcase />
 
-        {/* Architectural Tenets & Engineering Philosophy */}
-        <TenetsSection />
+        {/* Academic Research: Cal Poly CSSE Cooperative AI & Telemetry Engine */}
+        <ResearchShowcase />
 
-        {/* Engineering Blog (Editorial Cards & Longform Reader) */}
+        {/* About Adrian: Authentic High-Res Portrait, Story & Engineering Standards */}
+        <AboutSection />
+
+        {/* Engineering Writing: Deep-Dive Articles with Full Modal Reader */}
         <BlogSection
           selectedPostSlug={selectedPostSlug}
           onPostOpened={(slug) => setSelectedPostSlug(slug)}
@@ -72,11 +79,11 @@ export default function App() {
         {/* Frequently Asked Questions */}
         <FaqSection />
 
-        {/* Bottom Call to Action Banner */}
+        {/* Contact Banner */}
         <CtaBanner />
       </main>
 
-      {/* 4-Column Modern Footer */}
+      {/* Modern Footer with Verified Links */}
       <Footer onScrollTop={handleScrollTop} />
     </div>
   )

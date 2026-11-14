@@ -30,10 +30,9 @@ export default function CtaBanner() {
           <div className="flex flex-wrap items-center gap-3">
             <a
               href={`mailto:${PROFILE.email}?subject=Portfolio%20Inquiry%20for%20Adrian`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black text-white text-xs font-bold hover:bg-neutral-800 transition shadow-sm"
+              className="inline-flex items-center px-5 py-2.5 rounded-full bg-black text-white text-xs font-bold hover:bg-neutral-800 transition shadow-sm"
             >
-              <span>Get in Touch</span>
-              <span className="text-sm font-mono">→</span>
+              Get in Touch
             </a>
 
             <button

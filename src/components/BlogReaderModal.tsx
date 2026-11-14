@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react"
 import {
-  ArrowLeft,
   Clock,
   Calendar,
   Share2,
   Check,
-  ArrowRight,
   X,
 } from "lucide-react"
 import { BLOG_POSTS, type BlogPost } from "@/data/portfolioData"
@@ -79,10 +77,9 @@ export default function BlogReaderModal({
         <div className="sticky top-0 z-40 px-6 py-4 bg-white/95 backdrop-blur-md border-b border-slate-200 flex items-center justify-between">
           <button
             onClick={onClose}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 transition focus:outline-none"
+            className="text-xs sm:text-sm font-semibold text-slate-700 hover:text-black transition focus:outline-none cursor-pointer"
           >
-            <ArrowLeft className="w-4 h-4" />
-            <span>All Articles</span>
+            All Articles
           </button>
 
           <div className="flex items-center gap-3">
@@ -233,7 +230,9 @@ export default function BlogReaderModal({
                   {nextPost.readTime}
                 </div>
               </div>
-              <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition shrink-0 ml-4" />
+              <span className="text-xs font-mono font-semibold text-neutral-500 group-hover:text-black transition shrink-0 ml-4">
+                Read
+              </span>
             </button>
           </div>
         </article>
