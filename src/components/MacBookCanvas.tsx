@@ -414,22 +414,22 @@ export default function MacBookCanvas({
 
     scene.add(laptopGroup)
 
-    // Initial state: Opening / Hero (Floating gracefully below headline)
-    laptopGroup.position.set(0, -0.85, 0)
-    laptopGroup.rotation.set(-0.14, -0.32, 0.07)
-    lidGroup.rotation.x = -1.84 // ~105° open
+    // Initial state: Opening / Hero (Floating gracefully below headline, tilted upward showing underbelly)
+    laptopGroup.position.set(0, -0.42, 0.1)
+    laptopGroup.rotation.set(0.22, -0.56, 0.10)
+    lidGroup.rotation.x = -1.82 // ~104° open
 
-    // 4. GSAP ScrollTrigger Choreography (Cinematic close & reopen sequence!)
+    // 4. GSAP ScrollTrigger Choreography (Scroll-synchronized 3D transformation)
     const animState = {
       posX: 0,
-      posY: -0.85,
-      posZ: 0,
-      rotX: -0.14,
-      rotY: -0.32,
-      rotZ: 0.07,
-      lidAngle: -1.84,
-      camY: 0.5,
-      camZ: 4.4,
+      posY: -0.42,
+      posZ: 0.1,
+      rotX: 0.22,
+      rotY: -0.56,
+      rotZ: 0.10,
+      lidAngle: -1.82,
+      camY: 0.35,
+      camZ: 4.2,
       shadowOpacity: 0.85,
     }
 
@@ -454,19 +454,19 @@ export default function MacBookCanvas({
     })
 
     // STEP 1: Hero to Experience (The 360° reveal)
-    // Laptop rotates, camera zooms into isometric side profile on right half
+    // Extreme isometric close-up of side profile: USB-C port, Magic Keyboard, speaker grille, partially open lid (~48°)
     tl.to(
       animState,
       {
-        posX: 2.35,
-        posY: -0.15,
-        posZ: 0.65,
-        rotX: 0.36,
-        rotY: 0.94,
-        rotZ: -0.16,
-        lidAngle: -1.92, // open wide reflecting light
-        camY: 0.45,
-        camZ: 3.9,
+        posX: 1.85,
+        posY: -0.48,
+        posZ: 1.35,
+        rotX: 0.42,
+        rotY: 0.88,
+        rotZ: -0.14,
+        lidAngle: -0.84, // ~48° partially open, matching reference mockup perfectly
+        camY: 0.4,
+        camZ: 3.6,
         shadowOpacity: 0.9,
         duration: 1,
         ease: "power2.inOut",
@@ -476,15 +476,15 @@ export default function MacBookCanvas({
     )
 
     // STEP 2A: Experience to Projects (THE DRAMATIC CLOSE)
-    // Laptop sweeps to center, and the lid CLOSES FULLY DOWN (0° clamshell shut!)
+    // Laptop sweeps to center, and the lid CLOSES FULLY DOWN (0° clamshell shut)
     tl.to(
       animState,
       {
-        posX: 0.5,
+        posX: 0.35,
         posY: 0.05,
-        posZ: 0.3,
-        rotX: 0.12,
-        rotY: 0.45,
+        posZ: 0.25,
+        rotX: 0.15,
+        rotY: 0.35,
         rotZ: 0.02,
         lidAngle: 0.0, // COMPLETELY CLOSED!
         duration: 0.5,
@@ -495,18 +495,18 @@ export default function MacBookCanvas({
     )
 
     // STEP 2B: Projects Reopen (THE DRAMATIC REOPEN)
-    // Laptop centers, and the lid OPENS BACK UP gracefully facing the viewer!
+    // Laptop centers above project cards, and the lid OPENS BACK UP facing the viewer!
     tl.to(
       animState,
       {
         posX: 0,
-        posY: 0.28,
-        posZ: 0.2,
-        rotX: 0.06,
-        rotY: 0.16,
+        posY: 0.35,
+        posZ: 0.1,
+        rotX: 0.08,
+        rotY: 0.18,
         rotZ: 0,
-        lidAngle: -1.86, // REOPENS FULLY FACING VIEWER!
-        camY: 0.55,
+        lidAngle: -1.84, // REOPENS FULLY FACING VIEWER!
+        camY: 0.5,
         camZ: 4.1,
         duration: 0.7,
         ease: "power2.out",
@@ -521,15 +521,15 @@ export default function MacBookCanvas({
       animState,
       {
         posX: 0,
-        posY: -0.18,
-        posZ: -0.1,
-        rotX: -0.12,
-        rotY: -0.72,
-        rotZ: 0.05,
+        posY: -0.05,
+        posZ: 0.0,
+        rotX: -0.1,
+        rotY: -0.68,
+        rotZ: 0.04,
         lidAngle: 0.0, // CLOSES COMPLETELY INTO SLEEK SILHOUETTE!
         camY: 0.4,
         camZ: 4.5,
-        shadowOpacity: 0.3,
+        shadowOpacity: 0.25,
         duration: 1,
         ease: "power2.inOut",
         onUpdate: updateTransforms,
@@ -789,76 +789,65 @@ function drawScreen(
   ctx.clearRect(0, 0, w, h)
 
   if (state === "wallpaper") {
-    // VIBRANT GLOWING ELECTRIC BLUE & VIOLET WALLPAPER (Identical to user's uploaded mockup!)
+    // VIBRANT GLOWING ELECTRIC BLUE & VIOLET WALLPAPER (Identical to user's uploaded mockup)
     // Deep royal blue & midnight base
     const bgGrad = ctx.createLinearGradient(0, 0, w, h)
-    bgGrad.addColorStop(0, "#11183c")
-    bgGrad.addColorStop(0.35, "#18265e")
-    bgGrad.addColorStop(0.7, "#1d3278")
-    bgGrad.addColorStop(1, "#0d1838")
+    bgGrad.addColorStop(0, "#0b122e")
+    bgGrad.addColorStop(0.3, "#121e4a")
+    bgGrad.addColorStop(0.7, "#172765")
+    bgGrad.addColorStop(1, "#0a0f26")
     ctx.fillStyle = bgGrad
     ctx.fillRect(0, 0, w, h)
 
-    // Flowing luminous silk curves
     ctx.save()
 
-    // Wave 1: Glowing Royal Violet/Indigo Under-Swoop
+    // Wave 1: Soft Luminous Lavender / Purple Ambient Swoop
     ctx.beginPath()
-    ctx.moveTo(-100, h * 0.95)
-    ctx.bezierCurveTo(w * 0.25, h * 0.8, w * 0.55, h * 0.35, w + 100, h * 0.45)
-    ctx.lineTo(w + 100, h + 100)
-    ctx.lineTo(-100, h + 100)
+    ctx.moveTo(-80, h * 0.96)
+    ctx.bezierCurveTo(w * 0.22, h * 0.82, w * 0.52, h * 0.38, w + 80, h * 0.48)
+    ctx.lineTo(w + 80, h + 80)
+    ctx.lineTo(-80, h + 80)
     ctx.closePath()
-    const wave1Grad = ctx.createLinearGradient(0, h * 0.3, w, h)
-    wave1Grad.addColorStop(0, "rgba(129, 140, 248, 0.9)")
-    wave1Grad.addColorStop(0.4, "rgba(99, 102, 241, 0.85)")
-    wave1Grad.addColorStop(0.8, "rgba(59, 130, 246, 0.95)")
-    wave1Grad.addColorStop(1, "rgba(30, 64, 175, 0.9)")
+    const wave1Grad = ctx.createLinearGradient(0, h * 0.35, w, h)
+    wave1Grad.addColorStop(0, "rgba(167, 139, 250, 0.95)")
+    wave1Grad.addColorStop(0.4, "rgba(139, 92, 246, 0.9)")
+    wave1Grad.addColorStop(0.75, "rgba(99, 102, 241, 0.92)")
+    wave1Grad.addColorStop(1, "rgba(37, 99, 235, 0.9)")
     ctx.fillStyle = wave1Grad
     ctx.fill()
 
-    // Wave 2: Luminous Electric Cyan & Sky Blue Ribbon (The brilliant glowing curve!)
+    // Wave 2: Brilliant Electric Cyan & Sky Blue Ribbon (The brilliant glowing curve!)
     ctx.beginPath()
-    ctx.moveTo(w * 0.15, h + 60)
-    ctx.bezierCurveTo(w * 0.45, h * 0.62, w * 0.72, h * 0.28, w + 80, h * 0.18)
-    ctx.lineTo(w + 80, h + 80)
+    ctx.moveTo(w * 0.12, h + 60)
+    ctx.bezierCurveTo(w * 0.42, h * 0.65, w * 0.74, h * 0.26, w + 60, h * 0.16)
+    ctx.lineTo(w + 60, h + 60)
     ctx.closePath()
-    const wave2Grad = ctx.createLinearGradient(w * 0.15, h, w, h * 0.2)
+    const wave2Grad = ctx.createLinearGradient(w * 0.12, h, w, h * 0.18)
     wave2Grad.addColorStop(0, "rgba(56, 189, 248, 0.95)")
-    wave2Grad.addColorStop(0.5, "rgba(96, 165, 250, 0.9)")
-    wave2Grad.addColorStop(0.85, "rgba(192, 132, 252, 0.85)")
-    wave2Grad.addColorStop(1, "rgba(238, 242, 255, 0.95)")
+    wave2Grad.addColorStop(0.45, "rgba(96, 165, 250, 0.95)")
+    wave2Grad.addColorStop(0.8, "rgba(192, 132, 252, 0.9)")
+    wave2Grad.addColorStop(1, "rgba(245, 243, 255, 0.98)")
     ctx.fillStyle = wave2Grad
     ctx.fill()
 
     // Wave 3: Gleaming White Specular Edge Ribbon
     ctx.beginPath()
-    ctx.moveTo(-60, h * 0.92)
-    ctx.bezierCurveTo(w * 0.32, h * 0.68, w * 0.62, h * 0.24, w + 100, h * 0.42)
-    ctx.lineWidth = 14
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.9)"
-    ctx.shadowColor = "rgba(186, 230, 253, 0.9)"
-    ctx.shadowBlur = 25
+    ctx.moveTo(-40, h * 0.94)
+    ctx.bezierCurveTo(w * 0.32, h * 0.7, w * 0.64, h * 0.22, w + 80, h * 0.4)
+    ctx.lineWidth = 12
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.95)"
+    ctx.shadowColor = "rgba(186, 230, 253, 0.95)"
+    ctx.shadowBlur = 24
     ctx.stroke()
-    ctx.restore()
 
-    // Soft Lavender Glow in Upper-Left
-    const auraGrad = ctx.createRadialGradient(w * 0.2, h * 0.2, 50, w * 0.2, h * 0.2, 600)
-    auraGrad.addColorStop(0, "rgba(196, 181, 253, 0.4)")
+    // Soft Lavender Radial Aura in Upper-Left
+    const auraGrad = ctx.createRadialGradient(w * 0.2, h * 0.2, 40, w * 0.2, h * 0.2, 550)
+    auraGrad.addColorStop(0, "rgba(196, 181, 253, 0.35)")
     auraGrad.addColorStop(1, "rgba(0, 0, 0, 0)")
     ctx.fillStyle = auraGrad
     ctx.fillRect(0, 0, w, h)
 
-    // macOS Top Status Bar
-    ctx.fillStyle = "rgba(0, 0, 0, 0.25)"
-    ctx.fillRect(0, 0, w, 44)
-    ctx.fillStyle = "#ffffff"
-    ctx.font = "bold 20px -apple-system, sans-serif"
-    ctx.fillText("", 32, 28)
-    ctx.font = "500 18px -apple-system, sans-serif"
-    ctx.fillText("Adrian Cardona", 68, 28)
-    ctx.fillText("File   Edit   View   Window   Help", 230, 28)
-    ctx.fillText("9:41 AM", w - 120, 28)
+    ctx.restore()
   } else if (state === "experience") {
     // Cal Poly Bailey College / CSSE University Research Workspace
     ctx.fillStyle = "#0c1017"
