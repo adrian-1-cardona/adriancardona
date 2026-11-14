@@ -6,12 +6,10 @@ interface NavbarProps {
 }
 
 const NAV_ITEMS = [
+  { id: "work", label: "Work" },
   { id: "experience", label: "Experience" },
-  { id: "gitex", label: "Gitex" },
-  { id: "guppty", label: "Guppty" },
-  { id: "research", label: "Research" },
   { id: "about", label: "About" },
-  { id: "blog", label: "Writing" },
+  { id: "contact", label: "Contact" },
 ]
 
 export default function Navbar({ onNavigate }: NavbarProps) {
@@ -35,26 +33,23 @@ export default function Navbar({ onNavigate }: NavbarProps) {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         scrolled
-          ? "bg-white/85 backdrop-blur-md border-b border-black/[0.06] shadow-[0_1px_3px_rgba(0,0,0,0.02)]"
-          : "bg-white/60 backdrop-blur-xs border-b border-transparent"
+          ? "bg-white/90 backdrop-blur-md border-b border-black/[0.06] shadow-[0_1px_3px_rgba(0,0,0,0.02)]"
+          : "bg-white/70 backdrop-blur-xs border-b border-transparent"
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
-        {/* Brand */}
+        {/* Brand: Adrian Cardona */}
         <button
           onClick={() => handleLinkClick("top")}
-          className="text-left flex items-baseline gap-2 focus:outline-none cursor-pointer group"
+          className="text-left focus:outline-none cursor-pointer"
         >
-          <span className="font-semibold text-black text-sm sm:text-base tracking-tight">
+          <span className="font-semibold text-black text-sm sm:text-base tracking-tight hover:opacity-80 transition">
             Adrian Cardona
-          </span>
-          <span className="hidden md:inline text-xs text-neutral-400 font-mono">
-            Cal Poly SLO
           </span>
         </button>
 
         {/* Desktop Navigation */}
-        <nav className="hidden sm:flex items-center gap-6 md:gap-8 text-xs sm:text-sm font-medium text-neutral-600">
+        <nav className="hidden sm:flex items-center gap-7 md:gap-9 text-xs sm:text-sm font-medium text-neutral-600">
           {NAV_ITEMS.map((item) => (
             <button
               key={item.id}
@@ -66,23 +61,16 @@ export default function Navbar({ onNavigate }: NavbarProps) {
           ))}
         </nav>
 
-        {/* Right CTA: Resume & Get in Touch (Zero Arrows) */}
+        {/* Right Action: Understated Resume Link */}
         <div className="flex items-center gap-3">
           <a
             href="/ADRIAN_CARDONA_RESUME.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-semibold px-3 py-1.5 rounded-full text-black hover:bg-neutral-100 transition"
+            className="text-xs sm:text-sm font-medium text-neutral-600 hover:text-black transition px-2 py-1"
           >
             Resume
           </a>
-
-          <button
-            onClick={() => handleLinkClick("contact")}
-            className="hidden sm:inline-flex items-center px-4 py-1.5 rounded-full bg-black text-white text-xs font-medium hover:bg-neutral-800 transition cursor-pointer"
-          >
-            Get in touch
-          </button>
 
           {/* Mobile Toggle */}
           <button
@@ -102,27 +90,19 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             <button
               key={item.id}
               onClick={() => handleLinkClick(item.id)}
-              className="text-left px-3 py-2 rounded-lg text-sm text-black hover:bg-neutral-100 font-medium cursor-pointer"
+              className="text-left py-2 text-sm font-medium text-neutral-700 hover:text-black transition"
             >
               {item.label}
             </button>
           ))}
-          <div className="pt-2 border-t border-neutral-100 flex items-center justify-between px-3">
-            <a
-              href="/ADRIAN_CARDONA_RESUME.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-semibold text-black"
-            >
-              Resume (PDF)
-            </a>
-            <button
-              onClick={() => handleLinkClick("contact")}
-              className="text-xs font-semibold px-3 py-1 rounded-full bg-black text-white"
-            >
-              Contact
-            </button>
-          </div>
+          <a
+            href="/ADRIAN_CARDONA_RESUME.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-left py-2 text-sm font-medium text-neutral-700 hover:text-black transition"
+          >
+            Resume (PDF)
+          </a>
         </div>
       )}
     </header>

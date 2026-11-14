@@ -54,8 +54,7 @@ export default function App() {
       <main>
         {/* Hero Section with Integrated Gitex Codebase Intelligence Showcase */}
         <Hero
-          onExploreWork={() => scrollToSection("guppty")}
-          onViewExperience={() => scrollToSection("experience")}
+          onExploreWork={() => scrollToSection("work")}
         />
 
         {/* Work Experience: Interactive Selector with Official Company Logos */}

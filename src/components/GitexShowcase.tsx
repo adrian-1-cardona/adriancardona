@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Search, ExternalLink } from "lucide-react"
 
 interface QueryScenario {
   id: string
@@ -8,16 +9,15 @@ interface QueryScenario {
   lines: string
   codeSnippet: string
   explanation: string
-  evalStatus: string
 }
 
 const SCENARIOS: QueryScenario[] = [
   {
     id: "lexer",
-    label: "Lexer Error Handling",
-    query: "How does the lexer track span-aware source coordinates for syntax errors?",
+    label: "Syntax error handling",
+    query: "How are syntax errors handled in the lexer?",
     file: "src/compiler/lexer.rs",
-    lines: "L42-L58",
+    lines: "Lines 42–58",
     codeSnippet: `pub struct Span {
     pub start: usize,
     pub end: usize,
@@ -34,15 +34,14 @@ impl<'a> Lexer<'a> {
     }
 }`,
     explanation:
-      "Gitex retrieved 3 citations from src/compiler/lexer.rs. The lexer tracks line and column byte offsets on every token emit, producing zero-allocation span slices that bubble up through recursive-descent parse stages.",
-    evalStatus: "100% Grounded · 0 Hallucinations",
+      "The lexer tracks line and column byte positions for every token. When an invalid syntax character is encountered, it constructs an error holding the exact source span, allowing the compiler to highlight the precise line and character in the terminal.",
   },
   {
     id: "vm-dispatch",
-    label: "VM Opcode Dispatch",
-    query: "Where is the stack machine execution loop implemented?",
+    label: "Virtual machine execution loop",
+    query: "Where is the virtual machine execution loop?",
     file: "src/vm/core.rs",
-    lines: "L112-L135",
+    lines: "Lines 112–135",
     codeSnippet: `match self.read_byte() {
     OP_GET_LOCAL => {
         let slot = self.read_byte() as usize;
@@ -56,23 +55,21 @@ impl<'a> Lexer<'a> {
     OP_RETURN => return Ok(self.pop()),
 }`,
     explanation:
-      "Grounded citation from src/vm/core.rs: Opcode dispatch evaluates in a contiguous flat bytecode loop with fixed stack frames, eliminating dynamic heap allocations for local variables.",
-    evalStatus: "Verified against Git diff",
+      "The stack virtual machine runs a flat opcode evaluation loop. Local variables are read directly from stack slots relative to the current frame pointer, keeping execution fast without dynamic heap allocations.",
   },
   {
     id: "ci-eval",
-    label: "CI Retrieval Evals",
-    query: "How does CI prevent hallucinations and verify retrieval accuracy?",
+    label: "Continuous integration tests",
+    query: "How do continuous integration tests run?",
     file: ".github/workflows/evals.yml",
-    lines: "L18-L34",
+    lines: "Lines 18–34",
     codeSnippet: `- name: Run Grounded Retrieval Evals
   run: |
     pnpm exec tsx test/evals/groundedness.eval.ts
-    # Enforces 100% refusal on out-of-repo queries
-    pnpm exec tsx test/evals/refusal.eval.ts --threshold 1.0`,
+    # Verify differential test suite
+    cargo test --all-targets`,
     explanation:
-      "Gitex executes 31 synthetic and developer-curated retrieval benchmarks on every pull request. PRs fail automatically if retrieval citation accuracy or out-of-scope refusal rates dip below 100%.",
-    evalStatus: "31/31 Benchmarks Passing",
+      "GitHub Actions runs automated test suites on every pull request. This includes differential tests comparing the AST interpreter against the bytecode virtual machine to verify that both produce identical outputs.",
   },
 ]
 
@@ -88,37 +85,27 @@ export default function GitexShowcase() {
   }
 
   return (
-    <div className="w-full rounded-2xl bg-white border border-neutral-200/90 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.08)] overflow-hidden text-left">
-      {/* Product App Header */}
-      <div className="px-4 sm:px-6 py-3.5 bg-neutral-50/80 border-b border-neutral-200/80 flex flex-wrap items-center justify-between gap-3">
-        {/* Left: Product Identity & Selected Repository */}
+    <div className="w-full rounded-2xl sm:rounded-3xl bg-white border border-neutral-200/90 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.06)] overflow-hidden text-left">
+      {/* Product Top Bar */}
+      <div className="px-5 sm:px-8 py-4 border-b border-neutral-100 flex items-center justify-between gap-4">
+        {/* Left: Product Name & Codebase Scope */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-red-400 inline-block" />
-            <span className="w-3 h-3 rounded-full bg-amber-400 inline-block" />
-            <span className="w-3 h-3 rounded-full bg-emerald-400 inline-block" />
-          </div>
-          <span className="h-4 w-px bg-neutral-200 mx-1 hidden sm:inline" />
-          <div className="flex items-center gap-2 text-xs font-mono text-black">
-            <span className="font-bold">Gitex</span>
-            <span className="text-neutral-400">/</span>
-            <span className="px-2 py-0.5 rounded bg-neutral-200/60 text-neutral-800 font-medium">
-              adrian-1-cardona/Guppty
-            </span>
-          </div>
+          <span className="font-semibold text-black text-sm tracking-tight">
+            Gitex
+          </span>
+          <span className="text-neutral-300">/</span>
+          <span className="text-xs text-neutral-600 bg-neutral-100 px-2.5 py-1 rounded-full font-medium">
+            adrian-1-cardona/Guppty
+          </span>
         </div>
 
-        {/* Right: Live Links & Telemetry Status */}
-        <div className="flex items-center gap-2 sm:gap-3 text-xs font-medium">
-          <span className="hidden sm:inline-flex items-center gap-1.5 text-neutral-500 font-mono text-[11px]">
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            Convex Index Synced
-          </span>
+        {/* Right: Direct Product Links */}
+        <div className="flex items-center gap-4 text-xs font-medium">
           <a
             href="https://gitex.dev"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3 py-1 rounded-md bg-black text-white hover:bg-neutral-800 transition"
+            className="text-neutral-700 hover:text-black transition"
           >
             Live App
           </a>
@@ -126,41 +113,36 @@ export default function GitexShowcase() {
             href="https://github.com/adrian-1-cardona"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3 py-1 rounded-md border border-neutral-200 text-black hover:border-black transition"
+            className="text-neutral-500 hover:text-black transition"
           >
             GitHub
           </a>
         </div>
       </div>
 
-      {/* Query Bar with Quick Questions */}
-      <div className="p-4 sm:p-6 bg-white border-b border-neutral-100">
-        <div className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 mb-3">
-          <span className="text-xs font-mono font-bold text-neutral-400">
-            Q:
-          </span>
+      {/* Interactive Search Bar */}
+      <div className="p-5 sm:p-8 bg-neutral-50/50 border-b border-neutral-100">
+        <div className="relative mb-3.5">
+          <Search className="w-4 h-4 text-neutral-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             value={customQuery || activeScenario.query}
             onChange={(e) => setCustomQuery(e.target.value)}
-            className="w-full bg-transparent text-xs sm:text-sm text-black placeholder:text-neutral-400 outline-none font-medium"
-            placeholder="Ask anything about the codebase..."
+            className="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-neutral-200 text-sm text-black placeholder:text-neutral-400 focus:outline-none focus:border-black transition font-normal shadow-2xs"
+            placeholder="Ask anything about this codebase..."
           />
         </div>
 
-        {/* Quick Question Chips */}
-        <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-neutral-400 font-mono text-[11px]">
-            Try asking:
-          </span>
+        {/* Suggested Queries */}
+        <div className="flex flex-wrap items-center gap-2">
           {SCENARIOS.map((s) => (
             <button
               key={s.id}
               onClick={() => handleSelect(s)}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition cursor-pointer ${
                 activeScenario.id === s.id && !customQuery
                   ? "bg-black text-white"
-                  : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
+                  : "bg-white text-neutral-600 border border-neutral-200 hover:border-neutral-300 hover:text-black"
               }`}
             >
               {s.label}
@@ -169,68 +151,46 @@ export default function GitexShowcase() {
         </div>
       </div>
 
-      {/* Results Stage: Grounded Source Citation + Synthesized Answer */}
-      <div className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white">
-        {/* Left (7 cols): Verified Source Code Citation */}
-        <div className="lg:col-span-7 flex flex-col justify-between rounded-xl bg-[#0f1115] text-slate-200 p-4 font-mono text-xs overflow-hidden border border-neutral-800">
+      {/* Product Output: Natural Explanation & Grounded Code */}
+      <div className="p-5 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white items-start">
+        {/* Left (5 cols): Clear Explanation */}
+        <div className="lg:col-span-5 space-y-4">
           <div>
-            <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-white/10 text-[11px] text-neutral-400">
-              <div className="flex items-center gap-2">
-                <span className="text-emerald-400 font-bold">Grounded Citation</span>
-                <span>·</span>
-                <span className="text-white">{activeScenario.file}</span>
-              </div>
-              <span className="text-neutral-500 font-mono">
-                {activeScenario.lines}
-              </span>
+            <div className="text-xs uppercase tracking-wider text-neutral-400 font-semibold mb-2">
+              Explanation
             </div>
-
-            <pre className="overflow-x-auto text-[11px] sm:text-xs leading-relaxed text-slate-300 font-mono">
-              <code>{activeScenario.codeSnippet}</code>
-            </pre>
+            <h3 className="text-base sm:text-lg font-semibold text-black leading-snug mb-3">
+              {activeScenario.query}
+            </h3>
+            <p className="text-sm text-neutral-700 leading-relaxed font-normal">
+              {activeScenario.explanation}
+            </p>
           </div>
 
-          <div className="pt-3 mt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-neutral-400">
-            <span>AST Node Scope: Validated</span>
-            <span className="text-emerald-400 font-mono font-medium">
-              {activeScenario.evalStatus}
-            </span>
+          <div className="pt-3 border-t border-neutral-100">
+            <div className="text-xs text-neutral-500 font-medium">
+              Source file:{" "}
+              <span className="text-black font-semibold">
+                {activeScenario.file}
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* Right (5 cols): Natural Language Synthesis */}
-        <div className="lg:col-span-5 flex flex-col justify-between p-4 rounded-xl bg-neutral-50 border border-neutral-200/80 text-left">
-          <div>
-            <div className="text-xs font-mono uppercase tracking-wider text-neutral-500 font-bold mb-2">
-              Synthesized Explanation
-            </div>
-            <p className="text-xs sm:text-sm text-black leading-relaxed font-normal mb-4">
-              {activeScenario.explanation}
-            </p>
-
-            <div className="space-y-2 pt-3 border-t border-neutral-200 text-xs font-mono text-black">
-              <div className="flex justify-between">
-                <span className="text-neutral-500">Vector Search:</span>
-                <span className="font-semibold">Convex 1536-dim</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-neutral-500">Embeddings:</span>
-                <span className="font-semibold">Gemini API</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-neutral-500">CI Verification:</span>
-                <span className="font-semibold">GitHub Actions</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-neutral-500">Monitoring:</span>
-                <span className="font-semibold">Sentry Tracing</span>
-              </div>
-            </div>
+        {/* Right (7 cols): Clean Code Citation View */}
+        <div className="lg:col-span-7 rounded-xl bg-[#111318] text-neutral-200 p-4 sm:p-5 overflow-hidden border border-neutral-800 shadow-inner">
+          <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10 text-xs text-neutral-400">
+            <span className="font-mono text-neutral-200 font-medium">
+              {activeScenario.file}
+            </span>
+            <span className="text-neutral-400 text-[11px]">
+              {activeScenario.lines}
+            </span>
           </div>
 
-          <div className="pt-4 mt-4 border-t border-neutral-200 text-[11px] text-neutral-500 font-mono">
-            Full-stack TypeScript · React · Convex · Gemini API · Sentry
-          </div>
+          <pre className="overflow-x-auto text-xs leading-relaxed text-neutral-300 font-mono">
+            <code>{activeScenario.codeSnippet}</code>
+          </pre>
         </div>
       </div>
     </div>
