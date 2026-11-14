@@ -31,14 +31,10 @@ export default function MacBookCanvas({
   // Interactive manual lid override state
   const isManuallyToggledRef = useRef<boolean>(false)
 
-  // Redraw screen whenever state or active role changes
+  // Synchronize state and active role
   useEffect(() => {
     currentScreenStateRef.current = screenState
     activeRoleIndexRef.current = activeRoleIndex
-    if (screenCanvasRef.current && screenTextureRef.current) {
-      drawScreen(screenCanvasRef.current, screenState, activeRoleIndex, 0)
-      screenTextureRef.current.needsUpdate = true
-    }
   }, [screenState, activeRoleIndex])
 
   useEffect(() => {
@@ -176,6 +172,7 @@ export default function MacBookCanvas({
     kbCanvas.height = 1024
     drawAppleKeyboard(kbCanvas)
     const kbTexture = new THREE.CanvasTexture(kbCanvas)
+    kbTexture.colorSpace = THREE.SRGBColorSpace
     kbTexture.generateMipmaps = true
     kbTexture.minFilter = THREE.LinearMipmapLinearFilter
 
@@ -351,18 +348,19 @@ export default function MacBookCanvas({
     chinMesh.position.set(0, -0.009, 0.03)
     lidContent.add(chinMesh)
 
-    // Liquid Retina XDR Display (Single high-res plane with zero z-fighting)
-    const screenCanvas = document.createElement("canvas")
-    screenCanvas.width = 2048
-    screenCanvas.height = 1280
-    screenCanvasRef.current = screenCanvas
-
-    drawScreen(screenCanvas, currentScreenStateRef.current, activeRoleIndexRef.current)
-
-    const screenTexture = new THREE.CanvasTexture(screenCanvas)
+    // Liquid Retina XDR Display with authentic Apple Liquid Silk Wallpaper
+    const textureLoader = new THREE.TextureLoader()
+    const screenTexture = textureLoader.load("/apple_wallpaper.png", (tex) => {
+      tex.colorSpace = THREE.SRGBColorSpace
+      tex.generateMipmaps = true
+      tex.minFilter = THREE.LinearMipmapLinearFilter
+      tex.needsUpdate = true
+      renderer.render(scene, camera)
+    })
+    screenTexture.colorSpace = THREE.SRGBColorSpace
     screenTexture.generateMipmaps = true
     screenTexture.minFilter = THREE.LinearMipmapLinearFilter
-    screenTextureRef.current = screenTexture
+    screenTextureRef.current = screenTexture as any
 
     // Display plane matches lid interior face (DoubleSide ensures it is NEVER culled by camera angles)
     const screenPlaneGeom = new THREE.PlaneGeometry(width - 0.02, depth - 0.02)
@@ -417,14 +415,14 @@ export default function MacBookCanvas({
     // EXACT MATCH TO USER'S REFERENCE MOCKUP
     const animState = {
       posX: 0.02,
-      posY: -0.52,
+      posY: -0.56,
       posZ: 0.0,
-      scale: 0.84,
-      rotX: -0.08,
-      rotY: -0.34,
+      scale: 0.82,
+      rotX: -0.10,
+      rotY: -0.40,
       rotZ: 0.04,
-      lidAngle: -1.82, // ~104° open, screen standing upright and facing camera
-      camY: 0.05,
+      lidAngle: -1.78, // ~102° open, screen standing upright and facing camera
+      camY: 0.16,
       camZ: 4.60,
       shadowOpacity: 0.75,
     }
@@ -452,152 +450,116 @@ export default function MacBookCanvas({
     })
 
     // STAGE 1: Hero to Experience Role 0 (Software Engineering Intern @ Cal Poly)
-    // Extreme isometric close-up: USB-C port, Magic Keyboard, speaker grille, open lid displaying computer UI
-    // Placed in right column (posX: 1.85) with scale: 0.88 so left typography has complete breathing room!
+    // Matches panel 2 of mockup: angled isometric view showing Magic Keyboard, trackpad, port, and screen with Apple wallpaper
     tl.to(
       animState,
       {
-        posX: 1.85,
-        posY: -0.16,
+        posX: 1.65,
+        posY: -0.32,
         posZ: 0.25,
-        scale: 0.88,
-        rotX: 0.24,
-        rotY: 0.44,
-        rotZ: -0.05,
-        lidAngle: -1.82, // fully open showing actual computer screen!
-        camY: 0.18,
-        camZ: 3.75,
-        shadowOpacity: 0.90,
-        duration: 1.0,
-        ease: "power2.inOut",
-        onUpdate: updateTransforms,
-      },
-      0
-    )
-
-    // STAGE 2: Experience Role 0 -> Role 1 (Undergraduate Researcher @ Cal Poly CSSE)
-    // Dynamic glide: subtle rotation shift to view Ray RLlib telemetry & multi-agent graphs
-    tl.to(
-      animState,
-      {
-        posX: 1.80,
-        posY: -0.15,
-        posZ: 0.22,
-        scale: 0.88,
+        scale: 0.98,
         rotX: 0.26,
-        rotY: 0.40,
-        rotZ: -0.04,
-        lidAngle: -1.84,
-        duration: 0.7,
-        ease: "power1.inOut",
+        rotY: 0.48,
+        rotZ: -0.06,
+        lidAngle: -1.78,
+        camY: 0.35,
+        camZ: 3.75,
+        shadowOpacity: 0.85,
+        duration: 1.0,
+        ease: 'power2.inOut',
         onUpdate: updateTransforms,
       },
-      1.0
+      0.6
     )
 
-    // STAGE 3: Experience Role 1 -> Role 2 (Technology Solutions Research Intern @ Foundation for CCC)
-    // Subtle rotation shift, highlighting the FAFSA analytics dashboard across 116 campuses
+    // STAGE 2: Role 1 (Undergraduate Researcher @ Cal Poly CSSE)
     tl.to(
       animState,
       {
-        posX: 1.84,
-        posY: -0.16,
-        posZ: 0.25,
-        scale: 0.88,
-        rotX: 0.22,
+        posX: 1.62,
+        posY: -0.30,
+        posZ: 0.22,
+        scale: 0.98,
+        rotX: 0.28,
         rotY: 0.44,
         rotZ: -0.05,
-        lidAngle: -1.82,
+        lidAngle: -1.80,
         duration: 0.7,
-        ease: "power1.inOut",
+        ease: 'power1.inOut',
         onUpdate: updateTransforms,
       },
-      1.7
+      1.6
     )
 
-    // STAGE 4: Experience Role 2 -> Role 3 (AI Document Insights Extern @ Extern)
-    // Smooth settling showing RAG document intelligence interface & highlighted contract
+    // STAGE 3: Role 2 (Technology Solutions Research Intern @ Foundation for CCC)
     tl.to(
       animState,
       {
-        posX: 1.82,
-        posY: -0.15,
-        posZ: 0.24,
-        scale: 0.88,
+        posX: 1.65,
+        posY: -0.32,
+        posZ: 0.25,
+        scale: 0.98,
         rotX: 0.25,
-        rotY: 0.38,
-        rotZ: -0.04,
-        lidAngle: -1.85,
+        rotY: 0.49,
+        rotZ: -0.06,
+        lidAngle: -1.78,
         duration: 0.7,
-        ease: "power1.inOut",
+        ease: 'power1.inOut',
         onUpdate: updateTransforms,
       },
-      2.4
+      2.3
     )
 
-    // STAGE 5A: Experience to Projects (THE DRAMATIC CLAMSHELL CLOSE)
-    // Occurs as user scrolls OUT of Experience and into Projects
+    // STAGE 4: Role 3 (AI Document Insights Extern @ Extern)
     tl.to(
       animState,
       {
-        posX: 0.10,
-        posY: 0.10,
-        posZ: 0.15,
-        scale: 0.84,
-        rotX: 0.15,
-        rotY: 0.32,
-        rotZ: 0.02,
-        lidAngle: 0.0, // COMPLETELY CLOSED!
-        duration: 0.6,
-        ease: "power2.inOut",
+        posX: 1.63,
+        posY: -0.30,
+        posZ: 0.24,
+        scale: 0.98,
+        rotX: 0.27,
+        rotY: 0.43,
+        rotZ: -0.05,
+        lidAngle: -1.80,
+        duration: 0.7,
+        ease: 'power1.inOut',
         onUpdate: updateTransforms,
       },
-      3.3
+      3.0
     )
 
-    // STAGE 5B: Projects Reopen (THE DRAMATIC REOPEN)
-    // Laptop centers above project cards, and the lid OPENS BACK UP facing the viewer!
+    // STAGE 5: Experience into Projects & Contact (Gracefully glides out before Projects)
     tl.to(
       animState,
       {
-        posX: 0,
-        posY: 0.45,
-        posZ: 0.10,
-        scale: 0.82,
-        rotX: 0.08,
-        rotY: 0.16,
+        posX: 0.8,
+        posY: -7.0,
+        posZ: -0.5,
+        scale: 0.0,
+        rotX: 0.35,
+        rotY: 0.55,
         rotZ: 0,
-        lidAngle: -1.84, // REOPENS FULLY FACING VIEWER!
-        camY: 0.26,
-        camZ: 4.10,
-        duration: 0.8,
-        ease: "power2.out",
+        lidAngle: 0.0,
+        shadowOpacity: 0,
+        duration: 0.5,
+        ease: 'power2.in',
         onUpdate: updateTransforms,
       },
-      3.9
+      3.6
     )
 
-    // STAGE 6: Projects to Contact (Cinematic finale)
-    // Laptop completes final rotation and lid closes into sleek dark silhouette atop the blue curved dome
+    // STAGE 6: Hold completely off-screen for Projects & Contact
     tl.to(
       animState,
       {
-        posX: 0,
-        posY: 0.38,
-        posZ: 0.0,
-        scale: 0.80,
-        rotX: -0.06,
-        rotY: -0.55,
-        rotZ: 0.02,
-        lidAngle: 0.0, // CLOSES COMPLETELY INTO SLEEK SILHOUETTE!
-        camY: 0.15,
-        camZ: 4.20,
-        shadowOpacity: 0.35,
-        duration: 0.9,
-        ease: "power2.inOut",
+        posY: -7.0,
+        scale: 0.0,
+        shadowOpacity: 0,
+        duration: 0.8,
         onUpdate: updateTransforms,
       },
-      4.8
+      4.1
     )
 
     // Expose transform controls on window for live testing and fine-tuning
@@ -656,20 +618,6 @@ export default function MacBookCanvas({
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate)
       const elapsedTime = clock.getElapsedTime()
-
-      // Redraw screen 10 times per second for smooth live computer animations (blinking cursor, clocks, progress)
-      if (elapsedTime - lastScreenUpdateRef.current > 0.09) {
-        lastScreenUpdateRef.current = elapsedTime
-        if (screenCanvasRef.current && screenTextureRef.current) {
-          drawScreen(
-            screenCanvasRef.current,
-            currentScreenStateRef.current,
-            activeRoleIndexRef.current,
-            elapsedTime
-          )
-          screenTextureRef.current.needsUpdate = true
-        }
-      }
 
       // Subtly float only in hero wallpaper mode
       if (currentScreenStateRef.current === "wallpaper" && !isManuallyToggledRef.current) {
@@ -882,836 +830,4 @@ function drawSpeakerGrille(canvas: HTMLCanvasElement) {
       ctx.fill()
     }
   }
-}
-
-// Helper: macOS Window Frame with Authentic Traffic Lights & Menu Bar inside active screen area
-function drawMacOSTopBar(
-  ctx: CanvasRenderingContext2D,
-  screenX: number,
-  screenY: number,
-  screenW: number,
-  appTitle: string,
-  time: number = 0
-) {
-  // macOS Top Menu Bar
-  ctx.fillStyle = "#1e222b"
-  ctx.fillRect(screenX, screenY, screenW, 44)
-
-  // Apple Logo icon
-  ctx.fillStyle = "#d1d5db"
-  ctx.font = "bold 18px -apple-system, sans-serif"
-  ctx.fillText("", screenX + 24, screenY + 28)
-
-  // Menu items
-  ctx.fillStyle = "#9ca3af"
-  ctx.font = "500 14px -apple-system, sans-serif"
-  const menus = ["File", "Edit", "View", "Window", "Help"]
-  let mx = screenX + 54
-  menus.forEach((m) => {
-    ctx.fillText(m, mx, screenY + 28)
-    mx += ctx.measureText(m).width + 22
-  })
-
-  // Right menu bar items with live time animation
-  const colon = Math.floor(time * 2) % 2 === 0 ? ":" : " "
-  const sec = String(Math.floor(time * 1.5) % 60).padStart(2, "0")
-  const timeStr = `9${colon}41:${sec} AM   100%   Wi-Fi`
-
-  ctx.fillStyle = "#d1d5db"
-  ctx.font = "500 13px -apple-system, sans-serif"
-  ctx.textAlign = "right"
-  ctx.fillText(timeStr, screenX + screenW - 28, screenY + 28)
-  ctx.textAlign = "left"
-
-  // App Window Header Bar
-  ctx.fillStyle = "#161922"
-  ctx.fillRect(screenX, screenY + 44, screenW, 52)
-
-  // Red, Yellow, Green Traffic Lights
-  const lights = ["#ff5f56", "#ffbd2e", "#27c93f"]
-  lights.forEach((color, i) => {
-    ctx.fillStyle = color
-    ctx.beginPath()
-    ctx.arc(screenX + 28 + i * 22, screenY + 70, 7, 0, Math.PI * 2)
-    ctx.fill()
-  })
-
-  // Window Title
-  ctx.fillStyle = "#ffffff"
-  ctx.font = "bold 15px -apple-system, BlinkMacSystemFont, sans-serif"
-  ctx.textAlign = "center"
-  ctx.fillText(appTitle, screenX + screenW / 2, screenY + 76)
-  ctx.textAlign = "left"
-
-  // Thin window separator
-  ctx.strokeStyle = "#252b38"
-  ctx.lineWidth = 1
-  ctx.beginPath()
-  ctx.moveTo(screenX, screenY + 96)
-  ctx.lineTo(screenX + screenW, screenY + 96)
-  ctx.stroke()
-}
-
-// 8. High-Resolution Liquid Retina Screen Canvas Renderer
-function drawScreen(
-  canvas: HTMLCanvasElement,
-  state: ScreenState,
-  activeRoleIndex: number,
-  time: number = 0
-) {
-  const ctx = canvas.getContext("2d")
-  if (!ctx) return
-  const w = canvas.width
-  const h = canvas.height
-
-  const cursor = Math.floor(time * 2) % 2 === 0 ? "█" : " "
-  const pulse = 0.5 + 0.5 * Math.sin(time * 3)
-
-  // 1. Glossy Black Glass Bezel covering the display front
-  ctx.fillStyle = "#050608"
-  ctx.fillRect(0, 0, w, h)
-
-  // Active display screen coordinates (22px bezel on sides/top, 30px on bottom)
-  const bezelTop = 22
-  const bezelSide = 22
-  const bezelBottom = 30
-  const screenX = bezelSide
-  const screenY = bezelTop
-  const screenW = w - bezelSide * 2
-  const screenH = h - bezelTop - bezelBottom
-  const screenRadius = 20
-
-  ctx.save()
-  // Clip to rounded display area
-  ctx.beginPath()
-  ctx.roundRect(screenX, screenY, screenW, screenH, screenRadius)
-  ctx.clip()
-
-  if (state === "wallpaper") {
-    // VIBRANT GLOWING ELECTRIC BLUE & VIOLET WALLPAPER (Identical to user's uploaded mockup)
-    // Deep royal azure & midnight base
-    const bgGrad = ctx.createLinearGradient(screenX, screenY, screenX + screenW, screenY + screenH)
-    bgGrad.addColorStop(0, "#081d4a")
-    bgGrad.addColorStop(0.3, "#0f2e6e")
-    bgGrad.addColorStop(0.65, "#184594")
-    bgGrad.addColorStop(1, "#07173b")
-    ctx.fillStyle = bgGrad
-    ctx.fillRect(screenX, screenY, screenW, screenH)
-
-    // Ambient Lavender Glow in lower left
-    const lavGrad = ctx.createRadialGradient(
-      screenX + screenW * 0.25,
-      screenY + screenH * 0.75,
-      10,
-      screenX + screenW * 0.25,
-      screenY + screenH * 0.75,
-      screenW * 0.55
-    )
-    lavGrad.addColorStop(0, "rgba(216, 180, 254, 0.45)")
-    lavGrad.addColorStop(0.5, "rgba(168, 140, 255, 0.25)")
-    lavGrad.addColorStop(1, "rgba(168, 140, 255, 0)")
-    ctx.fillStyle = lavGrad
-    ctx.fillRect(screenX, screenY, screenW, screenH)
-
-    // Wave 1: Soft Luminous Lavender / Purple Ambient Swoop
-    ctx.beginPath()
-    ctx.moveTo(screenX - 60, screenY + screenH * 0.98)
-    ctx.bezierCurveTo(
-      screenX + screenW * 0.22,
-      screenY + screenH * 0.76,
-      screenX + screenW * 0.46,
-      screenY + screenH * 0.44,
-      screenX + screenW + 60,
-      screenY + screenH * 0.48
-    )
-    ctx.lineTo(screenX + screenW + 60, screenY + screenH + 60)
-    ctx.lineTo(screenX - 60, screenY + screenH + 60)
-    ctx.closePath()
-    const wave1Grad = ctx.createLinearGradient(screenX, screenY + screenH * 0.4, screenX + screenW, screenY + screenH)
-    wave1Grad.addColorStop(0, "rgba(233, 213, 255, 0.95)")
-    wave1Grad.addColorStop(0.35, "rgba(192, 160, 255, 0.92)")
-    wave1Grad.addColorStop(0.7, "rgba(125, 148, 255, 0.90)")
-    wave1Grad.addColorStop(1, "rgba(59, 130, 246, 0.88)")
-    ctx.fillStyle = wave1Grad
-    ctx.fill()
-
-    // Wave 2: Brilliant Glowing Electric Cyan & Sky Blue Ribbon
-    ctx.beginPath()
-    ctx.moveTo(screenX + screenW * 0.08, screenY + screenH + 40)
-    ctx.bezierCurveTo(
-      screenX + screenW * 0.38,
-      screenY + screenH * 0.62,
-      screenX + screenW * 0.68,
-      screenY + screenH * 0.26,
-      screenX + screenW + 40,
-      screenY + screenH * 0.16
-    )
-    ctx.lineTo(screenX + screenW + 40, screenY + screenH + 60)
-    ctx.lineTo(screenX + screenW * 0.08, screenY + screenH + 40)
-    ctx.closePath()
-    const wave2Grad = ctx.createLinearGradient(screenX + screenW * 0.2, screenY + screenH, screenX + screenW, screenY)
-    wave2Grad.addColorStop(0, "rgba(14, 165, 233, 0.98)")
-    wave2Grad.addColorStop(0.45, "rgba(56, 189, 248, 0.98)")
-    wave2Grad.addColorStop(0.85, "rgba(96, 165, 250, 0.96)")
-    wave2Grad.addColorStop(1, "rgba(224, 242, 254, 0.98)")
-    ctx.fillStyle = wave2Grad
-    ctx.fill()
-
-    // Wave 2 Specular Razor Ridge Gleam (Crisp white streak across wave ridge)
-    ctx.save()
-    ctx.shadowColor = "#38bdf8"
-    ctx.shadowBlur = 18 + Math.sin(time * 2) * 4
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.95)"
-    ctx.lineWidth = 4.2
-    ctx.beginPath()
-    ctx.moveTo(screenX + screenW * 0.08, screenY + screenH + 40)
-    ctx.bezierCurveTo(
-      screenX + screenW * 0.38,
-      screenY + screenH * 0.62,
-      screenX + screenW * 0.68,
-      screenY + screenH * 0.26,
-      screenX + screenW + 40,
-      screenY + screenH * 0.16
-    )
-    ctx.stroke()
-    ctx.restore()
-  } else if (state === "experience") {
-    // ACTUAL COMPUTER WORKING ENVIRONMENTS FOR ALL 4 RESUME EXPERIENCES
-    if (activeRoleIndex === 0) {
-      // 01 / 04: Cal Poly Bailey College of Science and Mathematics - Software Engineering Intern
-      // SharePoint & OneDrive Media Asset Pipeline (58,579 records, batch ingestion, duplicate detection, Codex test runner)
-      drawMacOSTopBar(ctx, screenX, screenY, screenW, "OneDrive & SharePoint Media Ingestion Pipeline · Bailey College", time)
-
-      ctx.fillStyle = "#0d1117"
-      ctx.fillRect(screenX, screenY + 96, screenW, screenH - 96)
-
-      // Sidebar
-      const sbW = 380
-      ctx.fillStyle = "#131720"
-      ctx.fillRect(screenX, screenY + 96, sbW, screenH - 96)
-
-      ctx.fillStyle = "#8b949e"
-      ctx.font = "600 13px -apple-system, sans-serif"
-      ctx.fillText("ASSET REPOSITORIES", screenX + 30, screenY + 140)
-
-      const sideItems = [
-        { name: "Ingestion Queue", count: "58,579", active: true },
-        { name: "SharePoint College Hub", count: "34,120", active: false },
-        { name: "OneDrive Faculty Media", count: "24,459", active: false },
-        { name: "Duplicate Detection", count: "0 flagged", active: false },
-        { name: "Codex Test Suite", count: "32/32 pass", active: false },
-        { name: "Drupal CMS Sync", count: "Active", active: false },
-      ]
-
-      sideItems.forEach((item, i) => {
-        const itemY = screenY + 165 + i * 48
-        if (item.active) {
-          ctx.fillStyle = "rgba(59, 130, 246, 0.18)"
-          ctx.beginPath()
-          ctx.roundRect(screenX + 20, itemY, 340, 42, 8)
-          ctx.fill()
-          ctx.fillStyle = "#60a5fa"
-          ctx.font = "bold 15px -apple-system, sans-serif"
-
-          // Pulsing active dot
-          ctx.fillStyle = `rgba(16, 185, 129, ${0.4 + 0.6 * pulse})`
-          ctx.beginPath()
-          ctx.arc(screenX + 32, itemY + 21, 5, 0, Math.PI * 2)
-          ctx.fill()
-        } else {
-          ctx.fillStyle = "#c9d1d9"
-          ctx.font = "500 15px -apple-system, sans-serif"
-        }
-        ctx.fillText(item.name, screenX + 46, itemY + 26)
-
-        ctx.fillStyle = item.active ? "#3b82f6" : "#282e3d"
-        ctx.beginPath()
-        ctx.roundRect(screenX + 275, itemY + 10, 70, 22, 6)
-        ctx.fill()
-        ctx.fillStyle = "#ffffff"
-        ctx.font = "bold 11px -apple-system, sans-serif"
-        ctx.textAlign = "center"
-        ctx.fillText(item.count, screenX + 310, itemY + 25)
-        ctx.textAlign = "left"
-      })
-
-      // Main Content Area
-      const mainX = screenX + sbW + 30
-      const mainW = screenW - sbW - 50
-
-      // Stats KPI Bar
-      ctx.fillStyle = "#161b26"
-      ctx.beginPath()
-      ctx.roundRect(mainX, screenY + 120, mainW, 110, 14)
-      ctx.fill()
-
-      ctx.fillStyle = "#60a5fa"
-      ctx.font = "bold 34px -apple-system, sans-serif"
-      ctx.fillText("58,579", mainX + 40, screenY + 172)
-      ctx.fillStyle = "#8b949e"
-      ctx.font = "500 14px -apple-system, sans-serif"
-      ctx.fillText("Media Records Indexed", mainX + 40, screenY + 202)
-
-      ctx.strokeStyle = "#252d3d"
-      ctx.lineWidth = 1
-      ctx.beginPath()
-      ctx.moveTo(mainX + 300, screenY + 135)
-      ctx.lineTo(mainX + 300, screenY + 215)
-      ctx.stroke()
-
-      ctx.fillStyle = "#34d399"
-      ctx.font = "bold 34px -apple-system, sans-serif"
-      ctx.fillText("100%", mainX + 340, screenY + 172)
-      ctx.fillStyle = "#8b949e"
-      ctx.fillText("Automated Flow Ingestion", mainX + 340, screenY + 202)
-
-      ctx.beginPath()
-      ctx.moveTo(mainX + 620, screenY + 135)
-      ctx.lineTo(mainX + 620, screenY + 215)
-      ctx.stroke()
-
-      ctx.fillStyle = "#a78bfa"
-      ctx.font = "bold 34px -apple-system, sans-serif"
-      ctx.fillText("32 / 32", mainX + 660, screenY + 172)
-      ctx.fillStyle = "#8b949e"
-      ctx.fillText("Codex Test Specs Passing", mainX + 660, screenY + 202)
-
-      // Animated Ingestion Progress Bar
-      ctx.fillStyle = "#1e293b"
-      ctx.beginPath()
-      ctx.roundRect(mainX, screenY + 240, mainW, 8, 4)
-      ctx.fill()
-      ctx.fillStyle = "#38bdf8"
-      ctx.beginPath()
-      ctx.roundRect(mainX, screenY + 240, mainW, 8, 4)
-      ctx.fill()
-      // Shimmer sweep
-      const shimX = mainX + ((time * 260) % (mainW + 120)) - 120
-      const shimGrad = ctx.createLinearGradient(shimX, screenY + 240, shimX + 120, screenY + 240)
-      shimGrad.addColorStop(0, "rgba(255, 255, 255, 0)")
-      shimGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.75)")
-      shimGrad.addColorStop(1, "rgba(255, 255, 255, 0)")
-      ctx.fillStyle = shimGrad
-      ctx.fillRect(Math.max(mainX, shimX), screenY + 240, 120, 8)
-
-      // Media Asset Grid Cards
-      const gridStartY = screenY + 266
-      const cardW = 370
-      const cardH = 205
-      const assetCards = [
-        { name: "Baker_Center_Lab_4K.raw", size: "48.2 MB", tag: "SharePoint Live" },
-        { name: "Dean_Keynote_Spring26.mov", size: "1.4 GB", tag: "OneDrive Synced" },
-        { name: "Biochem_Research_08.heic", size: "12.8 MB", tag: "Metadata Indexed" },
-        { name: "Faculty_Symposium_42.tif", size: "28.5 MB", tag: "Power Automate" },
-        { name: "Observatory_NightSky.raw", size: "52.0 MB", tag: "Archive Ready" },
-        { name: "Commencement_Banner.png", size: "8.6 MB", tag: "Drupal Deployed" },
-      ]
-
-      for (let r = 0; r < 2; r++) {
-        for (let c = 0; c < 3; c++) {
-          const idx = r * 3 + c
-          const card = assetCards[idx]
-          const cx = mainX + c * (cardW + 24)
-          const cy = gridStartY + r * (cardH + 18)
-
-          ctx.fillStyle = "#151a24"
-          ctx.beginPath()
-          ctx.roundRect(cx, cy, cardW, cardH, 12)
-          ctx.fill()
-
-          const imgGrad = ctx.createLinearGradient(cx, cy, cx + cardW, cy + 110)
-          if (idx % 3 === 0) {
-            imgGrad.addColorStop(0, "#1d3557")
-            imgGrad.addColorStop(1, "#457b9d")
-          } else if (idx % 3 === 1) {
-            imgGrad.addColorStop(0, "#2b2d42")
-            imgGrad.addColorStop(1, "#8d99ae")
-          } else {
-            imgGrad.addColorStop(0, "#1a2a3a")
-            imgGrad.addColorStop(1, "#2a4365")
-          }
-          ctx.fillStyle = imgGrad
-          ctx.beginPath()
-          ctx.roundRect(cx + 12, cy + 12, cardW - 24, 105, 8)
-          ctx.fill()
-
-          ctx.fillStyle = "#ffffff"
-          ctx.font = "bold 15px -apple-system, sans-serif"
-          ctx.fillText(card.name, cx + 16, cy + 148)
-
-          ctx.fillStyle = "#8b949e"
-          ctx.font = "13px -apple-system, sans-serif"
-          ctx.fillText(card.size, cx + 16, cy + 175)
-
-          ctx.fillStyle = "#2563eb"
-          ctx.beginPath()
-          ctx.roundRect(cx + cardW - 135, cy + 158, 120, 24, 6)
-          ctx.fill()
-          ctx.fillStyle = "#ffffff"
-          ctx.font = "bold 11px -apple-system, sans-serif"
-          ctx.textAlign = "center"
-          ctx.fillText(card.tag, cx + cardW - 75, cy + 174)
-          ctx.textAlign = "left"
-        }
-      }
-
-      // Bottom Console / Codex Runner Pane
-      const termY = screenY + screenH - 180
-      ctx.fillStyle = "#0a0d14"
-      ctx.fillRect(mainX, termY, mainW, 160)
-      ctx.strokeStyle = "#252d3d"
-      ctx.strokeRect(mainX, termY, mainW, 160)
-
-      ctx.fillStyle = "#38bdf8"
-      ctx.font = "bold 13px Monaco, monospace"
-      ctx.fillText("calpoly-bailey:~/dam-pipeline $ codex run-tests --suite=migration-integrity", mainX + 24, termY + 36)
-      ctx.fillStyle = "#34d399"
-      ctx.fillText("✓ batch_ingestion.spec.ts (58,579 records validated, 0 drops) [PASS]", mainX + 24, termY + 68)
-      ctx.fillText("✓ duplicate_fingerprint_sha256.spec.ts (100% deduplication confidence) [PASS]", mainX + 24, termY + 98)
-      ctx.fillStyle = "#a78bfa"
-      ctx.fillText(`✓ resumable_onedrive_transfer.spec.ts (32/32 assertions passed in 0.42s) ${cursor}`, mainX + 24, termY + 128)
-    } else if (activeRoleIndex === 1) {
-      // 02 / 04: Cal Poly CSSE - Undergraduate Researcher
-      // Cooperative AI Multi-Agent RL Telemetry (Ray RLlib, PettingZoo, PPO Loss Curves, Weights & Biases)
-      drawMacOSTopBar(ctx, screenX, screenY, screenW, "Ray RLlib Multi-Agent Reinforcement Learning Telemetry · Cal Poly CSSE", time)
-
-      ctx.fillStyle = "#0b0f19"
-      ctx.fillRect(screenX, screenY + 96, screenW, screenH - 96)
-
-      // Top Metric Cards
-      const cardW = 320
-      const currentSteps = (2450000 + Math.floor(time * 180)).toLocaleString()
-      const metrics = [
-        { label: "COOPERATION INDEX", val: "0.942", sub: "PettingZoo MARL benchmark", color: "#34d399" },
-        { label: "RAY WORKERS", val: "8 / 8 Active", sub: "Distributed cluster online", color: "#38bdf8" },
-        { label: "POLICY ALGORITHM", val: "MAPPO", sub: "Centralized value function", color: "#a78bfa" },
-        { label: "TRAINING STEPS", val: currentSteps, sub: "Live convergence stream", color: "#f59e0b" },
-      ]
-
-      metrics.forEach((m, i) => {
-        const mx = screenX + 40 + i * (cardW + 28)
-        ctx.fillStyle = "#131a2a"
-        ctx.beginPath()
-        ctx.roundRect(mx, screenY + 120, cardW, 110, 12)
-        ctx.fill()
-
-        ctx.fillStyle = "#8b949e"
-        ctx.font = "bold 12px Monaco, monospace"
-        ctx.fillText(m.label, mx + 20, screenY + 150)
-
-        ctx.fillStyle = m.color
-        ctx.font = "bold 32px -apple-system, sans-serif"
-        ctx.fillText(m.val, mx + 20, screenY + 190)
-
-        ctx.fillStyle = "#6b7280"
-        ctx.font = "12px -apple-system, sans-serif"
-        ctx.fillText(m.sub, mx + 20, screenY + 215)
-      })
-
-      // Dual Telemetry Charts
-      const chartW = (screenW - 120) / 2
-      const chartH = 420
-      const chartY = screenY + 260
-
-      // Chart 1: Multi-Agent Cooperation Index vs Iteration
-      ctx.fillStyle = "#131a2a"
-      ctx.beginPath()
-      ctx.roundRect(screenX + 40, chartY, chartW, chartH, 14)
-      ctx.fill()
-
-      ctx.fillStyle = "#ffffff"
-      ctx.font = "bold 16px -apple-system, sans-serif"
-      ctx.fillText("Multi-Agent Cooperation Index (Reward Sharing)", screenX + 68, chartY + 38)
-
-      // Graph grid lines
-      ctx.strokeStyle = "#1f293d"
-      ctx.lineWidth = 1
-      for (let g = 0; g < 5; g++) {
-        const gy = chartY + 80 + g * 60
-        ctx.beginPath()
-        ctx.moveTo(screenX + 68, gy)
-        ctx.lineTo(screenX + 40 + chartW - 30, gy)
-        ctx.stroke()
-        ctx.fillStyle = "#6b7280"
-        ctx.font = "11px Monaco, monospace"
-        ctx.fillText((1.0 - g * 0.2).toFixed(1), screenX + 45, gy + 4)
-      }
-
-      // Cooperation Curve (Climbing upwards)
-      ctx.strokeStyle = "#34d399"
-      ctx.lineWidth = 3.5
-      ctx.beginPath()
-      ctx.moveTo(screenX + 70, chartY + 300)
-      ctx.bezierCurveTo(
-        screenX + 220, chartY + 280,
-        screenX + 400, chartY + 160,
-        screenX + 40 + chartW - 40, chartY + 95
-      )
-      ctx.stroke()
-
-      // Animated Glowing Tracer Dot on Cooperation Curve
-      const t = (time * 0.3) % 1
-      const p0 = { x: screenX + 70, y: chartY + 300 }
-      const p1 = { x: screenX + 220, y: chartY + 280 }
-      const p2 = { x: screenX + 400, y: chartY + 160 }
-      const p3 = { x: screenX + 40 + chartW - 40, y: chartY + 95 }
-      const u = 1 - t
-      const tx = u * u * u * p0.x + 3 * u * u * t * p1.x + 3 * u * t * t * p2.x + t * t * t * p3.x
-      const ty = u * u * u * p0.y + 3 * u * u * t * p1.y + 3 * u * t * t * p2.y + t * t * t * p3.y
-
-      ctx.save()
-      ctx.shadowColor = "#34d399"
-      ctx.shadowBlur = 14
-      ctx.fillStyle = "#ffffff"
-      ctx.beginPath()
-      ctx.arc(tx, ty, 6, 0, Math.PI * 2)
-      ctx.fill()
-      ctx.restore()
-
-      // Chart 2: PPO Policy & Value Loss Convergence
-      ctx.fillStyle = "#131a2a"
-      ctx.beginPath()
-      ctx.roundRect(screenX + 60 + chartW, chartY, chartW, chartH, 14)
-      ctx.fill()
-
-      ctx.fillStyle = "#ffffff"
-      ctx.fillText("PPO Value Loss Convergence (Ray RLlib)", screenX + 88 + chartW, chartY + 38)
-
-      for (let g = 0; g < 5; g++) {
-        const gy = chartY + 80 + g * 60
-        ctx.beginPath()
-        ctx.moveTo(screenX + 88 + chartW, gy)
-        ctx.lineTo(screenX + 60 + chartW * 2 - 30, gy)
-        ctx.stroke()
-      }
-
-      // Loss Curve (Descending steeply then stabilizing)
-      ctx.strokeStyle = "#818cf8"
-      ctx.lineWidth = 3.5
-      ctx.beginPath()
-      ctx.moveTo(screenX + 90 + chartW, chartY + 90)
-      ctx.bezierCurveTo(
-        screenX + 240 + chartW, chartY + 260,
-        screenX + 420 + chartW, chartY + 285,
-        screenX + 60 + chartW * 2 - 40, chartY + 295
-      )
-      ctx.stroke()
-
-      // Pytest Console Output
-      const termY = chartY + chartH + 25
-      ctx.fillStyle = "#090d16"
-      ctx.beginPath()
-      ctx.roundRect(screenX + 40, termY, screenW - 80, 200, 10)
-      ctx.fill()
-
-      ctx.fillStyle = "#38bdf8"
-      ctx.font = "bold 13px Monaco, monospace"
-      ctx.fillText("calpoly-csse:~/marl-research $ pytest tests/test_coordination.py -v", screenX + 64, termY + 35)
-      ctx.fillStyle = "#34d399"
-      ctx.fillText("tests/test_coordination.py::test_pettingzoo_action_spaces PASSED [25%]", screenX + 64, termY + 68)
-      ctx.fillText("tests/test_coordination.py::test_centralized_critic_value_loss PASSED [50%]", screenX + 64, termY + 98)
-      ctx.fillText("tests/test_coordination.py::test_policy_entropy_stabilization PASSED [75%]", screenX + 64, termY + 128)
-      ctx.fillText("tests/test_coordination.py::test_wandb_telemetry_streaming PASSED [100%]", screenX + 64, termY + 158)
-      ctx.fillStyle = "#facc15"
-      ctx.fillText(`======================== 18 passed in 1.14s ======================== ${cursor}`, screenX + 64, termY + 185)
-    } else if (activeRoleIndex === 2) {
-      // 03 / 04: Foundation for California Community Colleges - Technology Solutions Research Intern
-      // Statewide Student Financial Aid Analytics Platform (116 Campuses, FAFSA Completion Rate Tracking, Low-Income Grants)
-      drawMacOSTopBar(ctx, screenX, screenY, screenW, "Statewide Student Financial Aid Analytics · Foundation for CCC", time)
-
-      ctx.fillStyle = "#0f172a"
-      ctx.fillRect(screenX, screenY + 96, screenW, screenH - 96)
-
-      // Header summary banner
-      ctx.fillStyle = "#1e293b"
-      ctx.beginPath()
-      ctx.roundRect(screenX + 40, screenY + 120, screenW - 80, 100, 12)
-      ctx.fill()
-
-      ctx.fillStyle = "#38bdf8"
-      ctx.font = "bold 30px -apple-system, sans-serif"
-      ctx.fillText("68.4%", screenX + 70, screenY + 170)
-      ctx.fillStyle = "#94a3b8"
-      ctx.font = "14px -apple-system, sans-serif"
-      ctx.fillText("Statewide FAFSA Completion (+14.2% YoY)", screenX + 70, screenY + 198)
-
-      ctx.fillStyle = "#34d399"
-      ctx.font = "bold 30px -apple-system, sans-serif"
-      ctx.fillText("$148.2M", screenX + 440, screenY + 170)
-      ctx.fillStyle = "#94a3b8"
-      ctx.fillText("Low-Income Cal Grants Allocated", screenX + 440, screenY + 198)
-
-      ctx.fillStyle = "#f59e0b"
-      ctx.font = "bold 30px -apple-system, sans-serif"
-      ctx.fillText("116 Campuses", screenX + 800, screenY + 170)
-      ctx.fillStyle = "#94a3b8"
-      ctx.fillText("California Community Colleges Synced", screenX + 800, screenY + 198)
-
-      // Regional Bar Chart
-      const chartX = screenX + 40
-      const chartY = screenY + 250
-      const chartW = screenW - 80
-      const chartH = 340
-
-      ctx.fillStyle = "#1e293b"
-      ctx.beginPath()
-      ctx.roundRect(chartX, chartY, chartW, chartH, 14)
-      ctx.fill()
-
-      ctx.fillStyle = "#ffffff"
-      ctx.font = "bold 16px -apple-system, sans-serif"
-      ctx.fillText("FAFSA & Cal Grant Completion Rate by California Region (1.8M Enrolled Students)", chartX + 30, chartY + 38)
-
-      const regions = [
-        { name: "Bay Area (28 Campuses)", rate: 74, color: "#38bdf8" },
-        { name: "Los Angeles Metro (21 Campuses)", rate: 71, color: "#60a5fa" },
-        { name: "San Diego / Imperial (10 Campuses)", rate: 69, color: "#818cf8" },
-        { name: "Central Valley (16 Campuses)", rate: 65, color: "#34d399" },
-        { name: "Inland Empire (12 Campuses)", rate: 63, color: "#f59e0b" },
-      ]
-
-      regions.forEach((reg, r) => {
-        const ry = chartY + 70 + r * 50
-        ctx.fillStyle = "#cbd5e1"
-        ctx.font = "500 14px -apple-system, sans-serif"
-        ctx.fillText(reg.name, chartX + 30, ry + 20)
-
-        // Bar background
-        const barStartX = chartX + 340
-        const barMaxW = chartW - 460
-        ctx.fillStyle = "#334155"
-        ctx.beginPath()
-        ctx.roundRect(barStartX, ry + 6, barMaxW, 22, 6)
-        ctx.fill()
-
-        // Bar fill
-        const barW = (reg.rate / 100) * barMaxW
-        ctx.fillStyle = reg.color
-        ctx.beginPath()
-        ctx.roundRect(barStartX, ry + 6, barW, 22, 6)
-        ctx.fill()
-
-        ctx.fillStyle = "#ffffff"
-        ctx.font = "bold 14px Monaco, monospace"
-        ctx.fillText(`${reg.rate}%`, barStartX + barW + 16, ry + 22)
-      })
-
-      // Bottom SQL Query Console
-      const sqlY = chartY + chartH + 25
-      ctx.fillStyle = "#090d16"
-      ctx.beginPath()
-      ctx.roundRect(chartX, sqlY, chartW, 240, 10)
-      ctx.fill()
-
-      ctx.fillStyle = "#38bdf8"
-      ctx.font = "bold 13px Monaco, monospace"
-      ctx.fillText("-- FoundationCCC Enterprise Data Pipeline: FAFSA Cross-Campus Aggregation", chartX + 24, sqlY + 36)
-      ctx.fillStyle = "#e2e8f0"
-      ctx.fillText("SELECT r.region_name, COUNT(DISTINCT s.campus_id) as campuses, AVG(s.fafsa_rate) as completion_pct", chartX + 24, sqlY + 68)
-      ctx.fillText("FROM ccc_student_aid_records s JOIN ccc_districts r ON s.district_id = r.id", chartX + 24, sqlY + 98)
-      ctx.fillText("WHERE s.academic_year = '2025-2026' GROUP BY r.region_name ORDER BY completion_pct DESC;", chartX + 24, sqlY + 128)
-      ctx.fillStyle = "#34d399"
-      ctx.fillText(`>> Query executed in 24ms · 116 campus records aggregated · FERPA / Data Privacy compliant ${cursor}`, chartX + 24, sqlY + 168)
-    } else {
-      // 04 / 04: Extern - AI Document Insights Extern
-      // Document Intelligence & Contract Extraction RAG Platform (LangChain, ChromaDB, Cosine Similarity, PDF Grounding)
-      drawMacOSTopBar(ctx, screenX, screenY, screenW, "Document Intelligence & Legal Extraction RAG Engine · Extern AI", time)
-
-      ctx.fillStyle = "#0c1017"
-      ctx.fillRect(screenX, screenY + 96, screenW, screenH - 96)
-
-      // Query Bar
-      ctx.fillStyle = "#161b24"
-      ctx.beginPath()
-      ctx.roundRect(screenX + 30, screenY + 115, screenW - 60, 60, 10)
-      ctx.fill()
-
-      ctx.fillStyle = "#38bdf8"
-      ctx.font = "bold 15px Monaco, monospace"
-      ctx.fillText(`QUERY: Extract early termination penalties, indemnification clauses, and cure windows ${cursor}`, screenX + 54, screenY + 152)
-
-      // Split View: Synthesized Answer on Left, Highlighted PDF on Right
-      const halfW = (screenW - 80) / 2
-      const paneY = screenY + 195
-      const paneH = screenH - 225
-
-      // Left: Synthesized Answer
-      ctx.fillStyle = "#131720"
-      ctx.beginPath()
-      ctx.roundRect(screenX + 30, paneY, halfW, paneH, 12)
-      ctx.fill()
-
-      ctx.fillStyle = "#34d399"
-      ctx.font = "bold 14px -apple-system, sans-serif"
-      ctx.fillText("✓ Synthesized Answer (Vector Similarity: 0.941 · Confidence: 98.9%)", screenX + 54, paneY + 36)
-
-      ctx.fillStyle = "#8b949e"
-      ctx.font = "12px -apple-system, sans-serif"
-      ctx.fillText("Under Section 14.2 of the Master Commercial Lease Agreement:", screenX + 54, paneY + 68)
-
-      const answerPoints = [
-        "1. Liquidated Damages: Upon early termination prior to Month 36, tenant shall pay a fee equal to 6 months base rent plus the unamortized portion of tenant improvement allowances ($125,000).",
-        "2. Indemnification Obligations: Tenant holds Landlord harmless from and against all liabilities, claims, damages, and defense costs arising from premises alterations or tenant operations.",
-        "3. Cure Window: Landlord must issue 30 days written notice before executing default liquidation.",
-      ]
-
-      answerPoints.forEach((pt, p) => {
-        ctx.fillStyle = "#e2e8f0"
-        ctx.font = "13px -apple-system, sans-serif"
-        ctx.fillText(pt, screenX + 54, paneY + 106 + p * 64, halfW - 48)
-      })
-
-      // Grounding Verification Box
-      ctx.fillStyle = "#1e293b"
-      ctx.beginPath()
-      ctx.roundRect(screenX + 54, paneY + 320, halfW - 48, 120, 8)
-      ctx.fill()
-
-      ctx.fillStyle = "#38bdf8"
-      ctx.font = "bold 12px Monaco, monospace"
-      ctx.fillText("EXACT CITATION VERIFICATION", screenX + 74, paneY + 348)
-      ctx.fillStyle = "#cbd5e1"
-      ctx.font = "12px Monaco, monospace"
-      ctx.fillText("Source: Master_Commercial_Lease_Agreement_Final.pdf - Page 35, Paragraph 4 (Lines 112-128)", screenX + 74, paneY + 376)
-      ctx.fillText("Embedding Model: text-embedding-3-large · Chunk Size: 512 tokens · Overlap: 64 tokens", screenX + 74, paneY + 404)
-
-      // Right: Authentic Highlighted PDF Document Viewer
-      const rightX = screenX + 50 + halfW
-      ctx.fillStyle = "#f8fafc"
-      ctx.beginPath()
-      ctx.roundRect(rightX, paneY, halfW, paneH, 12)
-      ctx.fill()
-
-      ctx.fillStyle = "#64748b"
-      ctx.font = "bold 13px -apple-system, sans-serif"
-      ctx.fillText("Master_Lease_Agreement.pdf (p. 35)", rightX + 24, paneY + 36)
-
-      // Fake PDF lines with yellow amber highlighter over Section 14.2
-      for (let l = 0; l < 18; l++) {
-        const ly = paneY + 70 + l * 26
-        if (l >= 4 && l <= 8) {
-          // Highlighted clause
-          ctx.fillStyle = "rgba(254, 240, 138, 0.75)"
-          ctx.fillRect(rightX + 24, ly - 14, halfW - 48, 22)
-          ctx.fillStyle = "#0f172a"
-          ctx.font = "bold 12px Monaco, monospace"
-        } else {
-          ctx.fillStyle = "#94a3b8"
-          ctx.font = "12px Monaco, monospace"
-        }
-        ctx.fillText(`SECTION 14.${l + 1}: Default, remedies, and reciprocal indemnifications between tenant and landlord...`, rightX + 28, ly)
-      }
-    }
-  } else if (state === "gitex" || state === "guppty") {
-    // REAL PROJECT INTERFACES (Gitex & Guppty)
-    const isGitex = state === "gitex"
-    drawMacOSTopBar(
-      ctx,
-      screenX,
-      screenY,
-      screenW,
-      isGitex ? "Gitex · Codebase Intelligence & Q&A Assistant" : "Guppty · Rust Compiler & Bytecode VM",
-      time
-    )
-
-    ctx.fillStyle = "#0d1117"
-    ctx.fillRect(screenX, screenY + 96, screenW, screenH - 96)
-
-    if (isGitex) {
-      // Gitex Desktop Interface
-      const sbW = 340
-      ctx.fillStyle = "#131722"
-      ctx.fillRect(screenX, screenY + 96, sbW, screenH - 96)
-
-      ctx.fillStyle = "#8b949e"
-      ctx.font = "bold 12px Monaco, monospace"
-      ctx.fillText("WORKSPACE FILES", screenX + 28, screenY + 135)
-
-      const files = ["src/main.ts", "src/ast/traversal.ts", "src/api/gemini.ts", "src/index.html", "tests/integration.spec.ts"]
-      files.forEach((f, fi) => {
-        ctx.fillStyle = fi === 1 ? "#38bdf8" : "#94a3b8"
-        ctx.font = "14px Monaco, monospace"
-        ctx.fillText(f, screenX + 32, screenY + 175 + fi * 40)
-      })
-
-      const gMainX = screenX + sbW + 30
-      ctx.fillStyle = "#161b24"
-      ctx.beginPath()
-      ctx.roundRect(gMainX, screenY + 120, screenW - sbW - 60, 60, 10)
-      ctx.fill()
-
-      ctx.fillStyle = "#e2e8f0"
-      ctx.font = "bold 15px -apple-system, sans-serif"
-      ctx.fillText(`How does the AST traversal resolve circular dependencies? ${cursor}`, gMainX + 24, screenY + 156)
-
-      // Gemini Response Box
-      ctx.fillStyle = "#121620"
-      ctx.beginPath()
-      ctx.roundRect(gMainX, screenY + 200, screenW - sbW - 60, 480, 12)
-      ctx.fill()
-
-      ctx.fillStyle = "#38bdf8"
-      ctx.font = "bold 14px -apple-system, sans-serif"
-      ctx.fillText("✨ Gemini 2.0 Flash Analysis (Streaming)", gMainX + 30, screenY + 240)
-
-      ctx.fillStyle = "#cbd5e1"
-      ctx.font = "14px Monaco, monospace"
-      ctx.fillText("// DependencyGraph.ts - Tarjan's Strongly Connected Components", gMainX + 30, screenY + 280)
-      ctx.fillText("export function detectCycles(graph: Graph): CycleReport {", gMainX + 30, screenY + 310)
-      ctx.fillText("  const visited = new Set<NodeId>();", gMainX + 30, screenY + 340)
-      ctx.fillText("  const recursionStack = new Set<NodeId>();", gMainX + 30, screenY + 370)
-      ctx.fillText("  return graph.nodes.map(node => dfs(node, visited, recursionStack));", gMainX + 30, screenY + 400)
-      ctx.fillText("}", gMainX + 30, screenY + 430)
-
-      ctx.fillStyle = "#34d399"
-      ctx.fillText("✓ Sentry Telemetry: 0 runtime errors detected · CI/CD: Pipeline Passing", gMainX + 30, screenY + 490)
-    } else {
-      // Guppty Compiler Interface
-      ctx.fillStyle = "#090d14"
-      ctx.fillRect(screenX + 30, screenY + 120, screenW - 60, screenH - 150)
-      ctx.strokeStyle = "#1e293b"
-      ctx.strokeRect(screenX + 30, screenY + 120, screenW - 60, screenH - 150)
-
-      ctx.fillStyle = "#f59e0b"
-      ctx.font = "bold 15px Monaco, monospace"
-      ctx.fillText("gupptyc v0.4.1 (Rust 1.82.0-nightly compiler & runtime)", screenX + 60, screenY + 160)
-
-      ctx.fillStyle = "#38bdf8"
-      ctx.fillText("guppty:~/projects/guppty $ cargo run --release -- --emit=bytecode src/runtime.gp", screenX + 60, screenY + 200)
-
-      ctx.fillStyle = "#34d399"
-      ctx.fillText("[1/3] Lexing source tokens: 1,842 tokens generated (0.8ms)", screenX + 60, screenY + 240)
-      ctx.fillText("[2/3] AST Parser: Complete AST syntax tree generated (1.4ms)", screenX + 60, screenY + 270)
-      ctx.fillText("[3/3] Bytecode VM: Executing 348 instructions in sandbox...", screenX + 60, screenY + 300)
-
-      ctx.fillStyle = "#a78bfa"
-      ctx.fillText(">> Output: Execution finished with exit code 0 in 4.2ms", screenX + 60, screenY + 350)
-      ctx.fillStyle = "#e2e8f0"
-      ctx.fillText(`guppty:~/projects/guppty $ ${cursor}`, screenX + 60, screenY + 390)
-    }
-  }
-
-  // Draw Camera Notch at Top Center of Display
-  const notchW = 160
-  const notchH = 32
-  const notchX = screenX + (screenW - notchW) / 2
-  const notchY = screenY
-
-  ctx.fillStyle = "#050608"
-  ctx.beginPath()
-  ctx.roundRect(notchX, notchY, notchW, notchH, [0, 0, 10, 10])
-  ctx.fill()
-
-  // Camera lens dot and ambient sensor inside notch
-  ctx.fillStyle = "#0a192f"
-  ctx.beginPath()
-  ctx.arc(screenX + screenW / 2 - 16, screenY + 15, 4.5, 0, Math.PI * 2)
-  ctx.fill()
-
-  ctx.fillStyle = "#00ff88"
-  ctx.beginPath()
-  ctx.arc(screenX + screenW / 2 + 16, screenY + 15, 2.5, 0, Math.PI * 2)
-  ctx.fill()
-
-  ctx.restore()
 }

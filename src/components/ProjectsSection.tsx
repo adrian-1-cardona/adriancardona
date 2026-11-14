@@ -10,11 +10,8 @@ export default function ProjectsSection({
   return (
     <section
       id="projects"
-      className="relative min-h-screen flex flex-col justify-center py-24 sm:py-36 px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto z-20 pointer-events-auto"
+      className="relative min-h-screen flex flex-col justify-center py-20 sm:py-28 px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto z-20 pointer-events-auto"
     >
-      {/* Space reserved for 3D MacBook choreography */}
-      <div className="h-64 sm:h-[380px] pointer-events-none mb-8" />
-
       {/* Projects Section matching user reference image exactly */}
       <div className="text-left w-full">
         <div className="text-xs uppercase tracking-[0.28em] text-neutral-400 font-semibold mb-6">

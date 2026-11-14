@@ -142,24 +142,32 @@ export default function ExperienceSection({
             {/* Minimal accent line matching reference image */}
             <div className="w-10 h-0.5 bg-neutral-300 mb-6" />
 
-            {/* Authentic Resume Details & Achievements */}
-            <div className="space-y-4 text-sm text-neutral-600 leading-relaxed">
-              <div className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
-                {activeExp.period} · {activeExp.company}
-              </div>
+            {/* Concise Role Impact matching Apple product simplicity */}
+            <p className="text-[15px] sm:text-base text-neutral-600 font-normal leading-relaxed mb-6">
+              {activeRoleIndex === 0 &&
+                "Built an internal digital asset management system with SharePoint and Power Automate, automating batch ingestion, metadata indexing, duplicate detection, and resumable migration for 58,579 media records."}
+              {activeRoleIndex === 1 &&
+                "Researched multi-agent cooperative AI with Ray RLlib and PettingZoo, benchmarking distributed policy algorithms, centralized value functions, and telemetry."}
+              {activeRoleIndex === 2 &&
+                "Developed data analytics pipelines to track statewide FAFSA completion rates and aid distribution across 116 California Community Colleges."}
+              {activeRoleIndex === 3 &&
+                "Engineered legal contract extraction and document intelligence RAG pipelines using LangChain, semantic embeddings, and verifiable source citations."}
+            </p>
 
-              <ul className="space-y-2.5">
-                {activeExp.achievements.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-neutral-400 mt-2 shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+            {/* Understated Tech Stack Pills */}
+            <div className="flex flex-wrap gap-2 mb-8">
+              {activeExp.skills.slice(0, 4).map((skill, idx) => (
+                <span
+                  key={idx}
+                  className="px-3 py-1 rounded-full bg-neutral-100 text-neutral-600 text-xs font-medium tracking-tight"
+                >
+                  {skill}
+                </span>
+              ))}
             </div>
 
-            {/* Interactive Experience Step Switcher */}
-            <div className="flex items-center gap-2 mt-8 pt-4 border-t border-neutral-200/60">
+            {/* Minimal Step Indicator Dots */}
+            <div className="flex items-center gap-2 pt-2">
               {EXPERIENCES.map((exp, idx) => {
                 const isActive = idx === activeRoleIndex
                 return (

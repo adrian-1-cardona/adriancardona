@@ -15,9 +15,6 @@ export default function ContactSection() {
       id="contact"
       className="relative min-h-screen flex flex-col justify-end pb-16 px-6 sm:px-12 z-20 pointer-events-auto text-center overflow-hidden"
     >
-      {/* 3D MacBook finale silhouette position */}
-      <div className="h-64 sm:h-[380px] pointer-events-none" />
-
       {/* The Stunning Curved Deep Blue & Midnight Ocean Wave Horizon (Identical to mockup bottom) */}
       <div className="absolute inset-x-0 bottom-0 top-[28vh] pointer-events-none z-0">
         <svg
