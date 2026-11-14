@@ -49,7 +49,7 @@ export default function ContactSection() {
       </div>
 
       {/* Main Content matching user reference image exactly: "CONTACT" & "Let's connect." */}
-      <div className="relative z-10 flex flex-col items-center max-w-4xl mx-auto mb-8">
+      <div className="relative z-30 flex flex-col items-center max-w-4xl mx-auto mb-8">
         <div className="text-xs uppercase tracking-[0.28em] text-white/70 font-semibold mb-4">
           CONTACT
         </div>

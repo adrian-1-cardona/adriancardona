@@ -1,4 +1,6 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Navbar from "@/components/Navbar"
 import CinematicBackground from "@/components/CinematicBackground"
 import MacBookCanvas, { ScreenState } from "@/components/MacBookCanvas"
@@ -7,10 +9,58 @@ import ExperienceSection from "@/components/ExperienceSection"
 import ProjectsSection from "@/components/ProjectsSection"
 import ContactSection from "@/components/ContactSection"
 
+gsap.registerPlugin(ScrollTrigger)
+
 export default function App() {
   const [screenState, setScreenState] = useState<ScreenState>("wallpaper")
   const [activeRoleIndex, setActiveRoleIndex] = useState(0)
   const [activeProject, setActiveProject] = useState<"gitex" | "guppty">("gitex")
+
+  // Synchronize screen state with current section in view
+  useEffect(() => {
+    // 1. Hero / Top -> "wallpaper"
+    const stHero = ScrollTrigger.create({
+      trigger: "#top",
+      start: "top top",
+      end: "bottom center",
+      onEnter: () => setScreenState("wallpaper"),
+      onEnterBack: () => setScreenState("wallpaper"),
+    })
+
+    // 2. Experience -> "experience"
+    const stExp = ScrollTrigger.create({
+      trigger: "#experience",
+      start: "top center",
+      end: "bottom center",
+      onEnter: () => setScreenState("experience"),
+      onEnterBack: () => setScreenState("experience"),
+    })
+
+    // 3. Projects -> activeProject ("gitex" or "guppty")
+    const stProj = ScrollTrigger.create({
+      trigger: "#projects",
+      start: "top center",
+      end: "bottom center",
+      onEnter: () => setScreenState(activeProject),
+      onEnterBack: () => setScreenState(activeProject),
+    })
+
+    // 4. Contact -> "contact"
+    const stContact = ScrollTrigger.create({
+      trigger: "#contact",
+      start: "top center",
+      end: "bottom bottom",
+      onEnter: () => setScreenState("contact"),
+      onEnterBack: () => setScreenState("contact"),
+    })
+
+    return () => {
+      stHero.kill()
+      stExp.kill()
+      stProj.kill()
+      stContact.kill()
+    }
+  }, [activeProject])
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id)
@@ -42,6 +92,7 @@ export default function App() {
       <MacBookCanvas
         screenState={screenState}
         activeRoleIndex={activeRoleIndex}
+        onRoleChange={handleSelectRole}
       />
 
       {/* 3. Minimal Apple-Inspired Navigation */}
@@ -52,7 +103,7 @@ export default function App() {
         {/* Opening: "Hey, I'm Adrian." */}
         <Hero />
 
-        {/* Experience: The 360° Reveal */}
+        {/* Experience: The 360° Reveal (Scrolls through all 4 roles) */}
         <ExperienceSection
           activeRoleIndex={activeRoleIndex}
           onSelectRole={handleSelectRole}
