@@ -95,13 +95,41 @@ export default function ExperienceSection({
   const renderCompanySub = () => {
     switch (activeRoleIndex) {
       case 0:
-        return "Cal Poly"
+        return (
+          <>
+            Cal Poly Bailey College of Science and Mathematics
+            <span className="block text-sm text-neutral-400 font-normal mt-1">
+              Jan 2026 – Present · San Luis Obispo, CA
+            </span>
+          </>
+        )
       case 1:
-        return "Cal Poly CSSE"
+        return (
+          <>
+            Cal Poly Department of Computer Science & Software Engineering
+            <span className="block text-sm text-neutral-400 font-normal mt-1">
+              Aug 2026 – Present · San Luis Obispo, CA
+            </span>
+          </>
+        )
       case 2:
-        return "Foundation for CCC"
+        return (
+          <>
+            Foundation for California Community Colleges
+            <span className="block text-sm text-neutral-400 font-normal mt-1">
+              Jul 2025 – Mar 2026 · Los Angeles, CA
+            </span>
+          </>
+        )
       case 3:
-        return "Extern"
+        return (
+          <>
+            Extern
+            <span className="block text-sm text-neutral-400 font-normal mt-1">
+              Feb 2025 – Apr 2025 · Los Angeles, CA
+            </span>
+          </>
+        )
       default:
         return activeExp.company
     }
@@ -129,12 +157,22 @@ export default function ExperienceSection({
             </h2>
 
             {/* Company Subtitle */}
-            <div className="text-xl sm:text-2xl text-neutral-500 font-normal mb-6 transition-all duration-300">
+            <div className="text-base sm:text-lg text-neutral-600 font-normal mb-5 leading-snug transition-all duration-300">
               {renderCompanySub()}
             </div>
 
             {/* Minimal accent line matching reference image */}
-            <div className="w-10 h-0.5 bg-neutral-300" />
+            <div className="w-10 h-0.5 bg-neutral-300 mb-6" />
+
+            {/* Authentic bullet points directly from Adrian's resume */}
+            <ul className="space-y-3.5 text-[14px] sm:text-[15px] text-neutral-600 leading-relaxed font-normal transition-all duration-300">
+              {activeExp.achievements.map((bullet, i) => (
+                <li key={i} className="flex items-start">
+                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 mr-3 mt-2 flex-shrink-0" />
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Right Column (7 cols): Reserved for the 3D MacBook extreme close-up side-profile */}

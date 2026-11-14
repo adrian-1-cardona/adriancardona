@@ -24,7 +24,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "What research was conducted at Cal Poly CSSE?",
     answer:
-      "As an Undergraduate Researcher under CSSE faculty, Adrian engineered a Python backend to automate training and evaluation pipelines for cooperative AI agents, set up GitHub Actions CI/CD and pytest to catch bugs automatically and ensure reliable system runs, and developed an interactive Python desktop application to monitor live AI agent activity and visualize system telemetry.",
+      "As an Undergraduate Researcher under CSSE faculty, Adrian built a Python multi-agent reinforcement learning platform with Ray RLlib to train AI teams, automated cross-play tests to compare AI pairings and identify collisions, deadlocks, and teamwork failures, developed Pygame visualizers and Streamlit dashboards to inspect AI behavior, and automated tests with pytest and GitHub Actions to catch bugs and verify repeatable experiments.",
   },
   {
     question: "What technologies does Adrian work with primarily?",
