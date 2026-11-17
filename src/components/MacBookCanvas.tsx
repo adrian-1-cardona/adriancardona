@@ -172,6 +172,48 @@ export default function MacBookCanvas() {
       return shape
     }
 
+    // Authentic Liquid Retina Display Shape: Rounded top corners, square bottom chin corners
+    function createDisplayShape(
+      w: number,
+      h: number,
+      topR: number,
+      botR: number = 0.005,
+    ) {
+      const shape = new THREE.Shape()
+      const hw = w / 2
+      const hh = h / 2
+      shape.moveTo(-hw + botR, -hh)
+      shape.lineTo(hw - botR, -hh)
+      if (botR > 0) {
+        shape.quadraticCurveTo(hw, -hh, hw, -hh + botR)
+      }
+      shape.lineTo(hw, hh - topR)
+      shape.quadraticCurveTo(hw, hh, hw - topR, hh)
+      shape.lineTo(-hw + topR, hh)
+      shape.quadraticCurveTo(-hw, hh, -hw, hh - topR)
+      shape.lineTo(-hw, -hh + botR)
+      if (botR > 0) {
+        shape.quadraticCurveTo(-hw, -hh, -hw + botR, -hh)
+      }
+      shape.closePath()
+      return shape
+    }
+
+    // Authentic Apple Camera Notch Shape with smooth corner fillets (Callout 2)
+    function createNotchShape(w: number, h: number, cornerR: number) {
+      const shape = new THREE.Shape()
+      const hw = w / 2
+      shape.moveTo(-hw, h)
+      shape.lineTo(hw, h)
+      shape.lineTo(hw, cornerR)
+      shape.quadraticCurveTo(hw, 0, hw - cornerR, 0)
+      shape.lineTo(-hw + cornerR, 0)
+      shape.quadraticCurveTo(-hw, 0, -hw, cornerR)
+      shape.lineTo(-hw, h)
+      shape.closePath()
+      return shape
+    }
+
     const laptopGroup = new THREE.Group()
 
     // Rounded Pro-style enclosure, matching the supplied front and side references.
@@ -180,7 +222,7 @@ export default function MacBookCanvas() {
     const baseThickness = 0.065
     const cornerRadius = 0.12
 
-    // Authentic Apple Anodized Aluminum PBR Material (Silver / Space Gray Unibody)
+    // Authentic Apple Anodized Aluminum PBR Material (Space Gray / Midnight Unibody)
     // Fine, deterministic surface grain breaks up specular highlights at close range.
     const grainData = new Uint8Array(256 * 256 * 4)
     let grainSeed = 1729
@@ -195,12 +237,12 @@ export default function MacBookCanvas() {
     grain.magFilter = THREE.LinearFilter
     grain.needsUpdate = true
     const aluminumMat = new THREE.MeshStandardMaterial({
-      color: 0xaaaeb5,
-      metalness: 1,
-      roughness: 0.36,
+      color: 0x949aa5,
+      metalness: 0.95,
+      roughness: 0.32,
       bumpMap: grain,
-      bumpScale: 0.0008,
-      envMapIntensity: 0.85,
+      bumpScale: 0.0006,
+      envMapIntensity: 0.95,
     })
 
     // Dark trim material for interior wells & port cavities
@@ -259,11 +301,38 @@ export default function MacBookCanvas() {
         baseGroup.add(screw)
       }
 
-    // Front center thumb scoop
-    const scoopGeom = new THREE.BoxGeometry(0.36, 0.012, 0.016)
-    const scoopMesh = new THREE.Mesh(scoopGeom, darkTrimMat)
-    scoopMesh.position.set(0, 0.032, depth / 2 - 0.004)
+    // Precision Machined Front Center Thumb Scoop (Callout 1 matching Apple hardware reference)
+    const scoopWidth = 0.42
+    const scoopHeight = 0.015
+    const scoopDepth = 0.022
+    const scoopShape = createRoundedRect(scoopWidth, scoopDepth, 0.008)
+    const scoopGeom = new THREE.ExtrudeGeometry(scoopShape, {
+      depth: scoopHeight,
+      bevelEnabled: true,
+      bevelThickness: 0.003,
+      bevelSize: 0.003,
+      bevelSegments: 4,
+    })
+    scoopGeom.center()
+    scoopGeom.rotateX(Math.PI / 2)
+    const scoopMat = new THREE.MeshStandardMaterial({
+      color: 0x4e5460,
+      metalness: 0.88,
+      roughness: 0.35,
+      bumpMap: grain,
+      bumpScale: 0.0003,
+      envMapIntensity: 0.75,
+    })
+    const scoopMesh = new THREE.Mesh(scoopGeom, scoopMat)
+    scoopMesh.position.set(0, baseThickness / 2 + 0.002, depth / 2 - 0.006)
     baseGroup.add(scoopMesh)
+
+    const scoopWell = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.005, 0.005, 0.36, 16).rotateZ(Math.PI / 2),
+      new THREE.MeshBasicMaterial({ color: 0x16181e }),
+    )
+    scoopWell.position.set(0, baseThickness / 2 + 0.004, depth / 2 - 0.005)
+    baseGroup.add(scoopWell)
 
     // Keyboard Well (Recessed dark anodized tray)
     const kbWidth = 2.62
@@ -798,29 +867,33 @@ export default function MacBookCanvas() {
     chinMesh.position.set(0, -0.025, 0.03)
     lidContent.add(chinMesh)
 
-    // Liquid Retina XDR Display with authentic Apple Liquid Silk Wallpaper
+    // Liquid Retina XDR Display with authentic Apple 4K Wallpaper & Menu Bar
     const textureLoader = new THREE.TextureLoader()
     const screenTexture = textureLoader.load("/macbook-desktop.png", (tex) => {
       tex.colorSpace = THREE.SRGBColorSpace
       tex.generateMipmaps = true
       tex.minFilter = THREE.LinearMipmapLinearFilter
+      tex.magFilter = THREE.LinearFilter
+      tex.anisotropy = renderer.capabilities.getMaxAnisotropy()
       tex.needsUpdate = true
       renderer.render(scene, camera)
     })
     screenTexture.colorSpace = THREE.SRGBColorSpace
     screenTexture.generateMipmaps = true
     screenTexture.minFilter = THREE.LinearMipmapLinearFilter
+    screenTexture.magFilter = THREE.LinearFilter
+    screenTexture.anisotropy = renderer.capabilities.getMaxAnisotropy()
 
-    // Display plane matches lid interior face (DoubleSide ensures it is NEVER culled by camera angles)
-    const screenPlaneGeom = new THREE.ShapeGeometry(
-      createRoundedRect(width - 0.12, depth - 0.12, 0.045),
-      32,
-    )
+    // Authentic Liquid Retina Display Geometry (Rounded top corners, square bottom chin)
+    const screenW = width - 0.12
+    const screenH = depth - 0.12
+    const screenShape = createDisplayShape(screenW, screenH, 0.045, 0.005)
+    const screenPlaneGeom = new THREE.ShapeGeometry(screenShape, 32)
     const positions = screenPlaneGeom.getAttribute("position")
     const screenUV = new Float32Array(positions.count * 2)
     for (let i = 0; i < positions.count; i++) {
-      screenUV[i * 2] = positions.getX(i) / (width - 0.12) + 0.5
-      screenUV[i * 2 + 1] = positions.getY(i) / (depth - 0.12) + 0.5
+      screenUV[i * 2] = positions.getX(i) / screenW + 0.5
+      screenUV[i * 2 + 1] = positions.getY(i) / screenH + 0.5
     }
     screenPlaneGeom.setAttribute("uv", new THREE.BufferAttribute(screenUV, 2))
     screenPlaneGeom.rotateX(Math.PI / 2)
@@ -833,39 +906,83 @@ export default function MacBookCanvas() {
     const screenMesh = new THREE.Mesh(screenPlaneGeom, screenPlaneMat)
     screenMesh.position.set(0, -0.026, depth / 2)
     lidContent.add(screenMesh)
+
+    // Ultra-slim display bezel matching Apple Liquid Retina panel
+    const bezelShape = createDisplayShape(
+      width - 0.04,
+      depth - 0.04,
+      0.088,
+      0.01,
+    )
     const bezel = new THREE.Mesh(
-      new THREE.ShapeGeometry(
-        createRoundedRect(width - 0.04, depth - 0.04, 0.09),
-        32,
-      ).rotateX(Math.PI / 2),
-      new THREE.MeshBasicMaterial({ color: 0x090a0e, side: THREE.DoubleSide }),
+      new THREE.ShapeGeometry(bezelShape, 32).rotateX(Math.PI / 2),
+      new THREE.MeshBasicMaterial({ color: 0x08090d, side: THREE.DoubleSide }),
     )
     bezel.position.set(0, -0.024, depth / 2)
     lidContent.add(bezel)
-    // Integrated FaceTime HD camera and ambient sensor neatly in the top display bezel (no obstructive notch block)
+
+    // Iconic Apple Camera Notch (Callout 2 with smooth filleted corners)
+    const notchW = 0.35
+    const notchH = 0.068
+    const notchCornerR = 0.013
+    const notchShape = createNotchShape(notchW, notchH, notchCornerR)
+    const notchGeom = new THREE.ShapeGeometry(notchShape, 24).rotateX(
+      Math.PI / 2,
+    )
+    const notchMat = new THREE.MeshBasicMaterial({
+      color: 0x08090d,
+      side: THREE.DoubleSide,
+      polygonOffset: true,
+      polygonOffsetFactor: -2,
+      polygonOffsetUnits: -2,
+    })
+    const notchMesh = new THREE.Mesh(notchGeom, notchMat)
+    notchMesh.position.set(0, -0.0272, depth - 0.06 - notchH)
+    lidContent.add(notchMesh)
+
+    // Integrated FaceTime HD camera lens centered inside the notch
     const webcam = new THREE.Mesh(
-      new THREE.CircleGeometry(0.0075, 32),
+      new THREE.CircleGeometry(0.0078, 32),
       new THREE.MeshPhysicalMaterial({
-        color: 0x111624,
-        metalness: 0.8,
-        roughness: 0.15,
+        color: 0x0c101c,
+        metalness: 0.9,
+        roughness: 0.12,
         clearcoat: 1,
+        clearcoatRoughness: 0.1,
       }),
     )
     webcam.rotation.x = Math.PI / 2
-    webcam.position.set(0, -0.0265, depth - 0.038)
+    webcam.position.set(0, -0.0274, depth - 0.094)
     lidContent.add(webcam)
 
+    // Camera pupil iris reflection
+    const webcamPupil = new THREE.Mesh(
+      new THREE.CircleGeometry(0.0035, 24),
+      new THREE.MeshBasicMaterial({ color: 0x142036 }),
+    )
+    webcamPupil.rotation.x = Math.PI / 2
+    webcamPupil.position.set(0, -0.0275, depth - 0.094)
+    lidContent.add(webcamPupil)
+
+    // Ambient light / True Tone sensor dot inside notch
     const cameraSensor = new THREE.Mesh(
-      new THREE.CircleGeometry(0.0025, 16),
-      new THREE.MeshBasicMaterial({
-        color: 0x162c1e,
-      }),
+      new THREE.CircleGeometry(0.0022, 16),
+      new THREE.MeshBasicMaterial({ color: 0x122418 }),
     )
     cameraSensor.rotation.x = Math.PI / 2
-    cameraSensor.position.set(0.024, -0.0265, depth - 0.038)
+    cameraSensor.position.set(0.03, -0.0274, depth - 0.094)
     lidContent.add(cameraSensor)
-    // A low-opacity Fresnel layer supplies glass reflections without obscuring the display.
+
+    // Microphone pinhole dot inside notch
+    const micPinhole = new THREE.Mesh(
+      new THREE.CircleGeometry(0.0016, 12),
+      new THREE.MeshBasicMaterial({ color: 0x040507 }),
+    )
+    micPinhole.rotation.x = Math.PI / 2
+    micPinhole.position.set(-0.03, -0.0274, depth - 0.094)
+    lidContent.add(micPinhole)
+
+    // Ultra-clear Liquid Retina optical glass with subtle anti-reflective coating
     const glass = new THREE.Mesh(
       screenPlaneGeom.clone(),
       new THREE.ShaderMaterial({
@@ -874,7 +991,7 @@ export default function MacBookCanvas() {
         vertexShader: `varying vec3 n; varying vec3 v; varying vec2 tex;
       void main(){vec4 p=modelViewMatrix*vec4(position,1.);n=normalize(normalMatrix*normal);v=normalize(-p.xyz);tex=uv;gl_Position=projectionMatrix*p;}`,
         fragmentShader: `varying vec3 n;varying vec3 v;varying vec2 tex;
-      void main(){float f=pow(1.-abs(dot(normalize(n),normalize(v))),3.);float strip=smoothstep(.1,.5,tex.x+tex.y*.25)*(1.-smoothstep(.65,1.2,tex.x+tex.y*.25));gl_FragColor=vec4(.82,.88,1.,f*.20+strip*.024);}`,
+      void main(){float f=pow(1.-abs(dot(normalize(n),normalize(v))),3.5);float strip=smoothstep(.1,.5,tex.x+tex.y*.25)*(1.-smoothstep(.65,1.2,tex.x+tex.y*.25));gl_FragColor=vec4(.45,.65,1.,f*.14+strip*.018);}`,
       }),
     )
     glass.position.copy(screenMesh.position)
