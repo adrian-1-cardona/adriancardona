@@ -20,25 +20,25 @@ button,input,textarea,select{font:inherit}.opening h1{font-size:clamp(64px,8.3vw
 .contact-links a{border-color:#0005}.contact-links a:hover{border-color:#000}
 /* A compact, consistent text hierarchy above the product on desktop. */
 @media(min-width:761px){
-  .has-3d .story-copy{top:5svh;left:50%;right:auto;width:min(86vw,900px);max-width:900px;min-width:0;translate:-50% 0;text-align:center}
-  .story-copy .eyebrow{margin:0 0 12px;font-size:10px;letter-spacing:1.8px}
-  .story-copy h2{font-size:clamp(28px,2.5vw,40px);max-width:900px;margin:0 auto 10px;line-height:1.12;letter-spacing:-.035em;text-wrap:balance}
-  .story-copy .organization{font-size:17px;max-width:780px;margin:0 auto;line-height:1.4;text-wrap:balance}
-  .story-copy .period{margin:9px auto 0;font-size:10px;letter-spacing:.2px}
-  .story-copy .description,.story-copy .project-description{position:static;width:100%;max-width:820px;margin:18px auto 0;text-align:center;font-size:12px;line-height:1.65;text-wrap:pretty}
-  .story-copy .description p{margin:0 0 6px}
+  .has-3d .story-copy{top:3.5svh;left:50%;right:auto;width:min(86vw,840px);max-width:840px;min-width:0;translate:-50% 0;text-align:center;max-height:36svh}
+  .story-copy .eyebrow{margin:0 0 8px;font-size:10px;letter-spacing:1.8px}
+  .story-copy h2{font-size:clamp(26px,2.2vw,36px);max-width:840px;margin:0 auto 6px;line-height:1.1;letter-spacing:-.035em;text-wrap:balance}
+  .story-copy .organization{font-size:16px;max-width:760px;margin:0 auto;line-height:1.35;text-wrap:balance}
+  .story-copy .period{margin:6px auto 0;font-size:10px;letter-spacing:.2px}
+  .story-copy .description,.story-copy .project-description{position:static;width:100%;max-width:760px;margin:12px auto 0;text-align:center;font-size:12px;line-height:1.55;text-wrap:pretty}
+  .story-copy .description p{margin:0 0 4px}
   .story-copy .description p:last-child{margin-bottom:0}
-  .story-copy .project-stack{position:static;width:100%;max-width:780px;margin:14px auto 0;text-align:center;font-size:10px;line-height:1.6}
-  .story-copy .text-link{position:static;margin-top:13px;font-size:12px}
+  .story-copy .project-stack{position:static;width:100%;max-width:760px;margin:10px auto 0;text-align:center;font-size:10px;line-height:1.5}
+  .story-copy .text-link{position:static;margin-top:10px;font-size:12px}
 }
 @media(min-width:761px) and (max-height:750px){
-  .has-3d .story-copy{top:3svh}
-  .story-copy .eyebrow{margin-bottom:8px}
-  .story-copy h2{font-size:28px;margin-bottom:7px}
-  .story-copy .organization{font-size:15px}
-  .story-copy .period{margin-top:7px}
-  .story-copy .description,.story-copy .project-description{font-size:11px;line-height:1.5;margin-top:12px;max-width:860px}
-  .story-copy .description p{margin-bottom:4px}
+  .has-3d .story-copy{top:2.5svh;max-height:32svh}
+  .story-copy .eyebrow{margin-bottom:6px}
+  .story-copy h2{font-size:25px;margin-bottom:5px}
+  .story-copy .organization{font-size:14px}
+  .story-copy .period{margin-top:5px}
+  .story-copy .description,.story-copy .project-description{font-size:11px;line-height:1.45;margin-top:8px;max-width:800px}
+  .story-copy .description p{margin-bottom:3px}
 }
 
 /* Give each physical handoff more scroll distance instead of rushing the turn. */

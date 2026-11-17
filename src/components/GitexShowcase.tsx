@@ -75,7 +75,7 @@ impl<'a> Lexer<'a> {
 
 export default function GitexShowcase() {
   const [activeScenario, setActiveScenario] = useState<QueryScenario>(
-    SCENARIOS[0]
+    SCENARIOS[0],
   )
   const [customQuery, setCustomQuery] = useState("")
 

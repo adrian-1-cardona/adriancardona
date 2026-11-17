@@ -35,7 +35,13 @@ export default function ContactSection() {
             fill="none"
           />
           <defs>
-            <linearGradient id="contactCurvedWave" x1="50%" y1="0%" x2="50%" y2="100%">
+            <linearGradient
+              id="contactCurvedWave"
+              x1="50%"
+              y1="0%"
+              x2="50%"
+              y2="100%"
+            >
               <stop offset="0%" stopColor="#4f7de8" />
               <stop offset="25%" stopColor="#2c51b5" />
               <stop offset="65%" stopColor="#14214f" />

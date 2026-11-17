@@ -51,17 +51,35 @@ export default function ProjectsSection({
                 fill="none"
               />
               <defs>
-                <linearGradient id="card1Bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <linearGradient
+                  id="card1Bg"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
                   <stop offset="0%" stopColor="#ede5fc" />
                   <stop offset="50%" stopColor="#e3d6fb" />
                   <stop offset="100%" stopColor="#d6c6f8" />
                 </linearGradient>
-                <linearGradient id="card1Wave1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <linearGradient
+                  id="card1Wave1"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
                   <stop offset="0%" stopColor="#c5aef8" />
                   <stop offset="50%" stopColor="#ab8eee" />
                   <stop offset="100%" stopColor="#8d6fe3" />
                 </linearGradient>
-                <linearGradient id="card1Wave2" x1="0%" y1="100%" x2="100%" y2="0%">
+                <linearGradient
+                  id="card1Wave2"
+                  x1="0%"
+                  y1="100%"
+                  x2="100%"
+                  y2="0%"
+                >
                   <stop offset="0%" stopColor="#8668df" />
                   <stop offset="60%" stopColor="#9e84ec" />
                   <stop offset="100%" stopColor="#cfbefa" />
@@ -102,17 +120,35 @@ export default function ProjectsSection({
                 fill="none"
               />
               <defs>
-                <linearGradient id="card2Bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <linearGradient
+                  id="card2Bg"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
                   <stop offset="0%" stopColor="#e5f0fc" />
                   <stop offset="50%" stopColor="#d9eafc" />
                   <stop offset="100%" stopColor="#c5e0fa" />
                 </linearGradient>
-                <linearGradient id="card2Wave1" x1="0%" y1="100%" x2="100%" y2="0%">
+                <linearGradient
+                  id="card2Wave1"
+                  x1="0%"
+                  y1="100%"
+                  x2="100%"
+                  y2="0%"
+                >
                   <stop offset="0%" stopColor="#62a9f8" />
                   <stop offset="50%" stopColor="#438ef0" />
                   <stop offset="100%" stopColor="#2c77de" />
                 </linearGradient>
-                <linearGradient id="card2Wave2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <linearGradient
+                  id="card2Wave2"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
                   <stop offset="0%" stopColor="#2d73dc" />
                   <stop offset="70%" stopColor="#539bf5" />
                   <stop offset="100%" stopColor="#8cc1fc" />

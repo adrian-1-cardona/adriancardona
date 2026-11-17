@@ -40,9 +40,7 @@ export default function CtaBanner() {
               className="btn-secondary !text-xs !py-2.5 !px-4 !bg-white border !border-neutral-300 !text-black cursor-pointer font-mono font-bold"
             >
               {copied ? (
-                <span className="text-black font-bold">
-                  ✓ Email Copied!
-                </span>
+                <span className="text-black font-bold">✓ Email Copied!</span>
               ) : (
                 <span className="text-black">
                   {PROFILE.email} <span className="opacity-70">⎘</span>

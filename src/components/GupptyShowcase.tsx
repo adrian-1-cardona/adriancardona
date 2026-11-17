@@ -71,7 +71,10 @@ export default function GupptyShowcase() {
   }
 
   return (
-    <section id="guppty" className="scroll-mt-24 py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto text-left">
+    <section
+      id="guppty"
+      className="scroll-mt-24 py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto text-left"
+    >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* Left Column (5 cols): Concise Architecture & Purpose */}
         <div className="lg:col-span-5">
@@ -84,7 +87,9 @@ export default function GupptyShowcase() {
           </h2>
 
           <p className="text-sm sm:text-base text-neutral-700 leading-relaxed font-normal mb-6">
-            Engineered in Rust from scratch. Features a custom lexer, Pratt parser, bytecode compiler, and a stack-based virtual machine, backed by differential testing in GitHub Actions CI/CD.
+            Engineered in Rust from scratch. Features a custom lexer, Pratt
+            parser, bytecode compiler, and a stack-based virtual machine, backed
+            by differential testing in GitHub Actions CI/CD.
           </p>
 
           <div className="space-y-4 mb-8">
@@ -93,7 +98,8 @@ export default function GupptyShowcase() {
                 Pratt Parser &amp; AST
               </h3>
               <p className="text-xs text-neutral-600 leading-relaxed">
-                Recursive-descent precedence climbing producing typed Abstract Syntax Trees with detailed span diagnostics.
+                Recursive-descent precedence climbing producing typed Abstract
+                Syntax Trees with detailed span diagnostics.
               </p>
             </div>
 
@@ -102,7 +108,8 @@ export default function GupptyShowcase() {
                 Stack VM &amp; Opcode Dispatch
               </h3>
               <p className="text-xs text-neutral-600 leading-relaxed">
-                Flat bytecode compiler emitting compact opcodes executed in a contiguous loop with zero dynamic allocations for local slots.
+                Flat bytecode compiler emitting compact opcodes executed in a
+                contiguous loop with zero dynamic allocations for local slots.
               </p>
             </div>
 
@@ -111,7 +118,9 @@ export default function GupptyShowcase() {
                 38+ Differential Tests
               </h3>
               <p className="text-xs text-neutral-600 leading-relaxed">
-                CI test suite continuously verifies that tree-walk AST interpretation and stack VM execution produce identical outcomes.
+                CI test suite continuously verifies that tree-walk AST
+                interpretation and stack VM execution produce identical
+                outcomes.
               </p>
             </div>
           </div>
@@ -188,7 +197,10 @@ export default function GupptyShowcase() {
               </button>
 
               <span className="text-neutral-400">
-                Cycles: <span className="text-emerald-400 font-semibold">{vmCycles}</span>
+                Cycles:{" "}
+                <span className="text-emerald-400 font-semibold">
+                  {vmCycles}
+                </span>
               </span>
             </div>
 

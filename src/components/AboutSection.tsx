@@ -1,6 +1,9 @@
 export default function AboutSection() {
   return (
-    <section id="about" className="scroll-mt-24 py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto text-left">
+    <section
+      id="about"
+      className="scroll-mt-24 py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto text-left"
+    >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* Left Column (5 cols): Authentic High-Res Portrait */}
         <div className="lg:col-span-5 flex justify-center">
@@ -26,10 +29,16 @@ export default function AboutSection() {
               Background &amp; Craft
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-black tracking-tight leading-tight mb-4">
-              Building at the intersection of systems, compilers, and intelligent software.
+              Building at the intersection of systems, compilers, and
+              intelligent software.
             </h2>
             <p className="text-sm sm:text-base text-neutral-700 leading-relaxed font-normal">
-              I am a third-year Computer Science student at California Polytechnic State University, San Luis Obispo (3.5 GPA). My work centers on building reliable software from first principles—whether designing custom bytecode interpreters in Rust, orchestrating multi-agent reinforcement learning pipelines, or developing TypeScript media infrastructure for university staff.
+              I am a third-year Computer Science student at California
+              Polytechnic State University, San Luis Obispo (3.5 GPA). My work
+              centers on building reliable software from first
+              principles—whether designing custom bytecode interpreters in Rust,
+              orchestrating multi-agent reinforcement learning pipelines, or
+              developing TypeScript media infrastructure for university staff.
             </p>
           </div>
 
@@ -40,7 +49,10 @@ export default function AboutSection() {
                 Rigor &amp; Verifiability
               </h3>
               <p className="text-xs text-neutral-600 leading-relaxed">
-                Every system I build is paired with rigorous automated testing—from differential tests verifying AST and VM execution in Guppty to synthetic retrieval benchmarks verifying zero hallucinations in Gitex.
+                Every system I build is paired with rigorous automated
+                testing—from differential tests verifying AST and VM execution
+                in Guppty to synthetic retrieval benchmarks verifying zero
+                hallucinations in Gitex.
               </p>
             </div>
 
@@ -49,7 +61,9 @@ export default function AboutSection() {
                 Real-World Empathy
               </h3>
               <p className="text-xs text-neutral-600 leading-relaxed">
-                At Cal Poly Bailey College, I interface directly with department staff to iterate on media ingestion tooling, using feedback and Codex-assisted workflows to resolve real workflow friction.
+                At Cal Poly Bailey College, I interface directly with department
+                staff to iterate on media ingestion tooling, using feedback and
+                Codex-assisted workflows to resolve real workflow friction.
               </p>
             </div>
 
@@ -58,13 +72,16 @@ export default function AboutSection() {
                 Clean Architecture Over Decoration
               </h3>
               <p className="text-xs text-neutral-600 leading-relaxed">
-                Prioritizing clean abstractions, fast compilation, and responsive user experiences without relying on unnecessary visual clutter or marketing fluff.
+                Prioritizing clean abstractions, fast compilation, and
+                responsive user experiences without relying on unnecessary
+                visual clutter or marketing fluff.
               </p>
             </div>
           </div>
 
           <div className="pt-2 text-xs font-mono text-neutral-500">
-            Based in San Luis Obispo, CA · Available for Summer 2026 Software Engineering Roles
+            Based in San Luis Obispo, CA · Available for Summer 2026 Software
+            Engineering Roles
           </div>
         </div>
       </div>

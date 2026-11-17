@@ -24,7 +24,13 @@ export default function CinematicBackground() {
           opacity="0.5"
         />
         <defs>
-          <linearGradient id="topLavenderSilk" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient
+            id="topLavenderSilk"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
             <stop offset="0%" stopColor="#ede6fc" stopOpacity="0.85" />
             <stop offset="50%" stopColor="#e0e8fd" stopOpacity="0.65" />
             <stop offset="100%" stopColor="#d2e3fa" stopOpacity="0.3" />
@@ -50,7 +56,13 @@ export default function CinematicBackground() {
           fill="url(#softBlueSwoop)"
         />
         <defs>
-          <linearGradient id="softBlueSwoop" x1="0%" y1="100%" x2="100%" y2="0%">
+          <linearGradient
+            id="softBlueSwoop"
+            x1="0%"
+            y1="100%"
+            x2="100%"
+            y2="0%"
+          >
             <stop offset="0%" stopColor="#dce8fd" stopOpacity="0.75" />
             <stop offset="50%" stopColor="#e8e3fd" stopOpacity="0.4" />
             <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />

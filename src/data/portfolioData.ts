@@ -194,12 +194,7 @@ export const PROJECTS: Project[] = [
     highlights: [
       "Built a programming language in Rust with a compiler and interpreter, using GitHub Actions CI/CD to automatically test changes.",
     ],
-    stack: [
-      "Rust",
-      "Compiler",
-      "Interpreter",
-      "GitHub Actions CI/CD",
-    ],
+    stack: ["Rust", "Compiler", "Interpreter", "GitHub Actions CI/CD"],
     links: [
       {
         label: "Documentation",

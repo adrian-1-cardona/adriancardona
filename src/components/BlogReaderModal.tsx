@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react"
-import {
-  Clock,
-  Calendar,
-  Share2,
-  Check,
-  X,
-} from "lucide-react"
+import { Clock, Calendar, Share2, Check, X } from "lucide-react"
 import { BLOG_POSTS, type BlogPost } from "@/data/portfolioData"
 
 interface BlogReaderModalProps {

@@ -1,6 +1,6 @@
 import { Box3, PerspectiveCamera, Quaternion, Vector3 } from "three"
 
-/** Fit the complete product inside its own viewport, including tilted/open-lid poses. */
+/** Fit the product close to the user with a confident, cinematic Apple framing. */
 export function frameMacBook(
   camera: PerspectiveCamera,
   bounds: Box3,
@@ -29,9 +29,15 @@ export function frameMacBook(
       }
     }
   }
+
+  // Keep the MacBook nice, cool, and close to the user — clamp distance so it never zooms out too far
+  // Distance around 3.6 - 4.2 gives that tactile, immersive keynote feel.
+  const fittedDistance = distance * 0.94
+  const clampedDistance = Math.max(3.6, Math.min(fittedDistance, 4.25))
+
   camera.position
     .copy(center)
-    .addScaledVector(direction.clone().normalize(), distance * 1.1)
+    .addScaledVector(direction.clone().normalize(), clampedDistance)
   camera.lookAt(center)
   camera.updateProjectionMatrix()
   camera.updateMatrixWorld()

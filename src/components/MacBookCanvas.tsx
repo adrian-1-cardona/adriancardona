@@ -749,24 +749,29 @@ export default function MacBookCanvas() {
     )
     bezel.position.set(0, -0.024, depth / 2)
     lidContent.add(bezel)
-    const notch = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.4, 0.065).rotateX(Math.PI / 2),
-      new THREE.MeshBasicMaterial({ color: 0x08090c, side: THREE.DoubleSide }),
-    )
-    notch.position.set(0, -0.028, depth - 0.085)
-    lidContent.add(notch)
+    // Integrated FaceTime HD camera and ambient sensor neatly in the top display bezel (no obstructive notch block)
     const webcam = new THREE.Mesh(
-      new THREE.CircleGeometry(0.008, 24),
+      new THREE.CircleGeometry(0.0075, 32),
       new THREE.MeshPhysicalMaterial({
-        color: 0x162138,
-        metalness: 0.65,
-        roughness: 0.08,
+        color: 0x111624,
+        metalness: 0.8,
+        roughness: 0.15,
         clearcoat: 1,
       }),
     )
     webcam.rotation.x = Math.PI / 2
-    webcam.position.set(0, -0.029, depth - 0.085)
+    webcam.position.set(0, -0.0265, depth - 0.038)
     lidContent.add(webcam)
+
+    const cameraSensor = new THREE.Mesh(
+      new THREE.CircleGeometry(0.0025, 16),
+      new THREE.MeshBasicMaterial({
+        color: 0x162c1e,
+      }),
+    )
+    cameraSensor.rotation.x = Math.PI / 2
+    cameraSensor.position.set(0.024, -0.0265, depth - 0.038)
+    lidContent.add(cameraSensor)
     // A low-opacity Fresnel layer supplies glass reflections without obscuring the display.
     const glass = new THREE.Mesh(
       screenPlaneGeom.clone(),
@@ -989,20 +994,20 @@ export default function MacBookCanvas() {
         (match) => {
           const mobile = !!match.conditions?.mobile
           const reduced = !!match.conditions?.reduce
-          const side = mobile ? 0 : 0.3
-          const lower = mobile ? -3.25 : -1.4
-          const size = mobile ? 0.9 : 1.06
+          const side = mobile ? 0 : 0.16
+          const lower = mobile ? -0.8 : -0.42
+          const size = mobile ? 1.05 : 1.18
           const initial = {
             x: 0,
-            y: mobile ? -0.7 : -1.4,
-            scale: mobile ? 1.02 : 1.1,
-            rx: -0.1,
-            ry: 0.48,
-            rz: 0.17,
-            lid: -1.65,
-            cy: 0.45,
-            cz: 6.9,
-            lookY: 0.12,
+            y: mobile ? -0.65 : -0.52,
+            scale: mobile ? 1.06 : 1.2,
+            rx: -0.08,
+            ry: 0.42,
+            rz: 0.1,
+            lid: -1.68,
+            cy: 0.35,
+            cz: 5.5,
+            lookY: 0.1,
             dark: 0,
             light: 1,
             stage: 0,
@@ -1014,104 +1019,104 @@ export default function MacBookCanvas() {
               x: side,
               y: lower,
               scale: size,
-              rx: 0.1,
-              ry: -0.6,
-              rz: -0.1,
-              lid: -1.5,
-              cy: 1.6,
-              cz: 6.7,
-              lookY: 0.18,
+              rx: 0.08,
+              ry: -0.38,
+              rz: -0.06,
+              lid: -1.72,
+              cy: 0.75,
+              cz: 5.5,
+              lookY: 0.12,
               stage: 1,
             },
             {
-              x: side,
+              x: -side * 0.5,
               y: lower,
               scale: size,
-              rx: 0.28,
-              ry: Math.PI * 2 + 0.45,
-              rz: 0.07,
-              lid: -1.9,
-              cy: 2.1,
-              cz: 6.7,
-              lookY: 0.18,
+              rx: 0.1,
+              ry: 0.35,
+              rz: 0.05,
+              lid: -1.75,
+              cy: 0.85,
+              cz: 5.5,
+              lookY: 0.12,
               stage: 2,
             },
             {
               x: side,
               y: lower,
               scale: size,
-              rx: -0.12,
-              ry: -0.55,
-              rz: 0.12,
-              lid: -1.55,
-              cy: 1.1,
-              cz: 6.7,
-              lookY: 0.18,
+              rx: 0.06,
+              ry: -0.32,
+              rz: -0.05,
+              lid: -1.7,
+              cy: 0.75,
+              cz: 5.5,
+              lookY: 0.12,
               stage: 3,
             },
             {
-              x: side,
+              x: -side * 0.5,
               y: lower,
               scale: size,
-              rx: 0.1,
-              ry: -Math.PI * 2 + 0.5,
-              rz: -0.09,
-              lid: -1.9,
-              cy: 1.5,
-              cz: 6.7,
-              lookY: 0.18,
+              rx: 0.08,
+              ry: 0.28,
+              rz: 0.04,
+              lid: -1.74,
+              cy: 0.8,
+              cz: 5.5,
+              lookY: 0.12,
               stage: 4,
             },
             {
               x: 0,
-              y: mobile ? -0.5 : -0.35,
-              scale: mobile ? 0.93 : 1,
-              rx: 0.1,
-              ry: -Math.PI * 2 + 1.1,
-              rz: 0.06,
+              y: mobile ? -0.45 : -0.3,
+              scale: mobile ? 1.02 : 1.15,
+              rx: 0.08,
+              ry: 0.38,
+              rz: 0.04,
               lid: CLOSED_LID,
-              cy: 1.9,
-              cz: 6.9,
-              lookY: 0.1,
+              cy: 0.95,
+              cz: 5.6,
+              lookY: 0.08,
               stage: 5,
             },
             {
+              x: mobile ? 0 : 0.06,
               y: lower,
+              scale: size,
               rx: 0.02,
-              ry: -Math.PI * 2 + 0.16,
-              rz: -0.03,
-              lid: -1.86,
-              cy: 1.3,
-              cz: 6.7,
-              lookY: 0.2,
+              ry: 0.12,
+              rz: -0.02,
+              lid: -1.78,
+              cy: 0.65,
+              cz: 5.5,
+              lookY: 0.12,
               stage: 6,
-              scale: mobile ? 0.84 : 0.96,
-              x: mobile ? 0 : 0.3,
             },
             {
+              x: mobile ? 0 : -0.06,
               y: lower,
+              scale: size,
               rx: 0.02,
-              ry: -Math.PI * 2 - 0.18,
-              rz: 0.03,
-              lid: -1.86,
-              cy: 1.3,
-              cz: 6.7,
-              lookY: 0.2,
+              ry: -0.12,
+              rz: 0.02,
+              lid: -1.78,
+              cy: 0.65,
+              cz: 5.5,
+              lookY: 0.12,
               stage: 7,
-              scale: mobile ? 0.84 : 0.96,
-              x: mobile ? 0 : 0.3,
             },
             {
               x: 0,
-              y: mobile ? -1.0 : -1.08,
-              scale: mobile ? 1 : 1.05,
-              rx: 0.09,
-              ry: 0.45,
-              rz: 0.06,
+              y: mobile ? -0.7 : -0.58,
+              scale: mobile ? 1.05 : 1.18,
+              rx: 0.08,
+              ry: 0.35,
+              rz: 0.04,
               lid: CLOSED_LID,
-              cy: 0.7,
-              cz: 6.9,
-              lookY: 0.15,
+              cy: 0.6,
+              cz: 5.6,
+              lookY: 0.1,
               dark: 1,
               light: 0.55,
               stage: 8,
@@ -1136,7 +1141,7 @@ export default function MacBookCanvas() {
                 trigger: document.getElementById("story")!,
                 start: "top top",
                 end: () => `+=${end}`,
-                scrub: reduced ? true : 1.6,
+                scrub: reduced ? true : 1.4,
                 invalidateOnRefresh: true,
               },
               defaults: { ease: reduced ? "none" : "cinemaSmooth" },
@@ -1149,40 +1154,43 @@ export default function MacBookCanvas() {
                   ? stops[i - 1] + (stops[i] - stops[i - 1]) * 0.04
                   : stops[i - 1] + (stops[i] - stops[i - 1]) * 0.04
               const duration = stops[i] - start
-              // Keep the lid exactly closed through the complete turn and screen swap.
-              const swapAt = start + duration * 0.52
+              const swapAt = start + duration * 0.45
               if (i === 6) timeline!.set(state, { screenIndex: 1 }, swapAt)
               if (i === 7) timeline!.set(state, { screenIndex: 2 }, swapAt)
               if (i === 8) timeline!.set(state, { screenIndex: 0 }, swapAt)
               if (!reduced) {
-                // Close completely, settle, turn while shut, settle, then open.
-                timeline!.to(
-                  state,
-                  {
-                    lid: CLOSED_LID,
-                    stage: i - 0.74,
-                    duration: duration * 0.26,
-                  },
-                  start,
-                )
-                timeline!.to(
-                  state,
-                  {
-                    ...shot,
-                    lid: CLOSED_LID,
-                    stage: i - 0.28,
-                    duration: duration * 0.42,
-                  },
-                  start + duration * 0.3,
-                )
-                timeline!.to(
-                  state,
-                  {
-                    ...shot,
-                    duration: duration * 0.24,
-                  },
-                  start + duration * 0.76,
-                )
+                if (i === 5 || i === 8) {
+                  // Clean Apple close transition for interlude and contact
+                  timeline!.to(
+                    state,
+                    {
+                      ...shot,
+                      lid: CLOSED_LID,
+                      duration,
+                    },
+                    start,
+                  )
+                } else if (i === 6) {
+                  // Smoothly open back up to reveal Gitex
+                  timeline!.to(
+                    state,
+                    {
+                      ...shot,
+                      duration,
+                    },
+                    start,
+                  )
+                } else {
+                  // Silky smooth, continuous perspective transitions between roles — no full 360 spins, no slamming shut
+                  timeline!.to(
+                    state,
+                    {
+                      ...shot,
+                      duration,
+                    },
+                    start,
+                  )
+                }
               } else {
                 timeline!.to(
                   state,
@@ -1247,8 +1255,13 @@ export default function MacBookCanvas() {
           THREE.MathUtils.lerp(mobile ? 52 : 72, bottom, anticipation),
         )
       })
-      const sceneTop = Math.ceil(Math.min(textBottom, viewHeight))
-      const sceneHeight = Math.max(0, viewHeight - sceneTop)
+      // Keep ample room for the MacBook so it stays heroically sized and close to the user
+      const maxSceneTop = viewHeight * (mobile ? 0.36 : 0.28)
+      const sceneTop = Math.ceil(Math.min(textBottom, maxSceneTop))
+      const sceneHeight = Math.max(
+        Math.floor(viewHeight * (mobile ? 0.64 : 0.74)),
+        viewHeight - sceneTop,
+      )
       laptopGroup.updateMatrixWorld(true)
       productBounds.setFromObject(laptopGroup)
       camera.fov = 38
@@ -1256,7 +1269,7 @@ export default function MacBookCanvas() {
       frameMacBook(
         camera,
         productBounds,
-        viewWidth / Math.max(1,sceneHeight),
+        viewWidth / Math.max(1, sceneHeight),
         viewDirection,
       )
       copies.forEach((copy, index) => {
@@ -1318,7 +1331,7 @@ export default function MacBookCanvas() {
       renderer.setScissorTest(false)
       renderer.setViewport(0, 0, viewWidth, viewHeight)
       renderer.clear()
-      if(sceneHeight<64)return
+      if (sceneHeight < 64) return
       renderer.setViewport(0, 0, viewWidth, sceneHeight)
       renderer.setScissor(0, 0, viewWidth, sceneHeight)
       renderer.setScissorTest(true)
