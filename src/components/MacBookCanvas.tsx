@@ -12,8 +12,6 @@ gsap.registerEase(
   (p: number) => p * p * p * (p * (p * 6 - 15) + 10),
 )
 
-const CLOSED_LID = 0
-
 export type ScreenState = "wallpaper" | "experience" | "gitex" | "guppty" | "contact"
 
 export default function MacBookCanvas() {
@@ -215,11 +213,6 @@ export default function MacBookCanvas() {
     // --- BASE ASSEMBLY ---
     const baseGroup = new THREE.Group()
     const baseShape = createRoundedRect(width, depth, cornerRadius)
-    // The keycaps sit in an actual opening, rather than on top of an uncut slab.
-    const wellPoints = createRoundedRect(2.62, 1.07, 0.04)
-      .getPoints(24)
-      .map((point) => new THREE.Vector2(point.x, point.y + 0.3))
-    baseShape.holes.push(new THREE.Path(wellPoints))
     const baseGeom = new THREE.ExtrudeGeometry(baseShape, {
       depth: baseThickness,
       bevelEnabled: true,
@@ -272,80 +265,45 @@ export default function MacBookCanvas() {
     scoopMesh.position.set(0, 0.032, depth / 2 - 0.004)
     baseGroup.add(scoopMesh)
 
-    // Keyboard Well (Recessed tray)
+    // Keyboard Well (Recessed dark anodized tray)
     const kbWidth = 2.62
     const kbDepth = 1.07
     const kbShape = createRoundedRect(kbWidth, kbDepth, 0.04)
     const kbGeom = new THREE.ExtrudeGeometry(kbShape, {
-      depth: 0.006,
+      depth: 0.005,
       bevelEnabled: false,
     })
     kbGeom.center()
     kbGeom.rotateX(Math.PI / 2)
-    const kbTray = new THREE.Mesh(
-      kbGeom,
-      new THREE.MeshBasicMaterial({ color: 0x0a0b0e }),
-    )
-    kbTray.position.set(0, 0.037, -0.3)
+    const kbTrayMat = new THREE.MeshStandardMaterial({
+      color: 0x181a20,
+      metalness: 0.75,
+      roughness: 0.52,
+      bumpMap: grain,
+      bumpScale: 0.0004,
+      envMapIntensity: 0.4,
+    })
+    const kbTray = new THREE.Mesh(kbGeom, kbTrayMat)
+    kbTray.position.set(0, 0.038, -0.3)
     baseGroup.add(kbTray)
 
-    // Individual recessed keycaps retain their thickness at grazing camera angles.
-    const keyRows = [
-      ["esc", "☀", "☀", "▤", "⌕", "◉", "☾", "◀", "▶", "▶▶", "◖", "◖", "◖", "◉"],
-      [
-        "~",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "0",
-        "-",
-        "=",
-        "delete",
-      ],
-      ["tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\"],
-      [
-        "caps lock",
-        "A",
-        "S",
-        "D",
-        "F",
-        "G",
-        "H",
-        "J",
-        "K",
-        "L",
-        ";",
-        "'",
-        "return",
-      ],
-      ["shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "shift"],
-      [
-        "fn",
-        "control",
-        "option",
-        "command",
-        " ",
-        "command",
-        "option",
-        "◀",
-        "▼",
-        "▶",
-      ],
-    ]
-    const keyMat = new THREE.MeshPhysicalMaterial({
-      color: 0x101114,
-      roughness: 0.72,
-      metalness: 0,
-      specularIntensity: 0.15,
-      envMapIntensity: 0.18,
+    // Deep velvety matte black Apple Magic Keyboard keycaps
+    const keyMat = new THREE.MeshStandardMaterial({
+      color: 0x151619,
+      roughness: 0.65,
+      metalness: 0.02,
+      envMapIntensity: 0.15,
     })
+
     const keyGeometries = new Map<string, THREE.BufferGeometry>()
+    const getKeyGeo = (w: number, d: number, r: number = 0.0035) => {
+      const sig = `${w.toFixed(4)}_${d.toFixed(4)}`
+      if (!keyGeometries.has(sig)) {
+        keyGeometries.set(sig, new RoundedBoxGeometry(w, 0.014, d, 4, r))
+      }
+      return keyGeometries.get(sig)!
+    }
+
     const labelCanvas = document.createElement("canvas")
     const textureScale =
       window.innerWidth > 760 && renderer.capabilities.maxTextureSize >= 4096
@@ -355,122 +313,257 @@ export default function MacBookCanvas() {
     labelCanvas.height = 900 * textureScale
     const labels = labelCanvas.getContext("2d")!
     labels.scale(textureScale, textureScale)
-    labels.fillStyle = "#c2c4ca"
+    labels.fillStyle = "rgba(240, 242, 248, 0.94)"
     labels.textAlign = "center"
     labels.textBaseline = "middle"
-    keyRows.forEach((row, ri) => {
-      const weights = row.map((_, ki) =>
-        ri === 5
-          ? [1, 1, 1, 1.2, 5, 1.2, 1, 1, 1, 1][ki]
-          : ri === 4 && (ki === 0 || ki === row.length - 1)
-            ? 2.1
-            : (ri === 2 && ki === 0) ||
-                (ri === 3 && (ki === 0 || ki === row.length - 1)) ||
-                (ri === 1 && ki === row.length - 1)
-              ? 1.5
-              : 1,
-      )
-      const unit =
-        (kbWidth - 0.08 - (row.length - 1) * 0.023) /
-        weights.reduce((a, b) => a + b, 0)
-      let x = -kbWidth / 2 + 0.04
-      const h = ri === 0 ? 0.122 : 0.143
+
+    // Helper to draw text onto the label plane
+    const drawLabel = (
+      text: string,
+      worldX: number,
+      worldZ: number,
+      isSmall: boolean = false,
+    ) => {
+      const u = ((worldX + kbWidth / 2) / kbWidth) * 2048
+      const v = ((worldZ + 0.3 + kbDepth / 2) / kbDepth) * 900
+      labels.font = isSmall
+        ? '600 16px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+        : '600 24px -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+      labels.fillText(text, u, v)
+    }
+
+    const keyGap = 0.022
+    const usableW = kbWidth - 0.08 // 2.54
+
+    // Rows 0 to 4
+    const standardRows = [
+      // Row 0: Function keys (half height)
+      {
+        keys: [
+          "esc",
+          "F1",
+          "F2",
+          "F3",
+          "F4",
+          "F5",
+          "F6",
+          "F7",
+          "F8",
+          "F9",
+          "F10",
+          "F11",
+          "F12",
+          "touchid",
+        ],
+        weights: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        height: 0.062,
+      },
+      // Row 1: Numbers
+      {
+        keys: [
+          "~",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "0",
+          "-",
+          "=",
+          "delete",
+        ],
+        weights: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.4],
+        height: 0.122,
+      },
+      // Row 2: QWERTY
+      {
+        keys: [
+          "tab",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "T",
+          "Y",
+          "U",
+          "I",
+          "O",
+          "P",
+          "[",
+          "]",
+          "\\",
+        ],
+        weights: [1.5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.5],
+        height: 0.122,
+      },
+      // Row 3: Home row
+      {
+        keys: [
+          "caps lock",
+          "A",
+          "S",
+          "D",
+          "F",
+          "G",
+          "H",
+          "J",
+          "K",
+          "L",
+          ";",
+          "'",
+          "return",
+        ],
+        weights: [1.8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.8],
+        height: 0.122,
+      },
+      // Row 4: Shift row
+      {
+        keys: [
+          "shift",
+          "Z",
+          "X",
+          "C",
+          "V",
+          "B",
+          "N",
+          "M",
+          ",",
+          ".",
+          "/",
+          "shift",
+        ],
+        weights: [2.3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2.3],
+        height: 0.122,
+      },
+    ]
+
+    standardRows.forEach((rowDef, ri) => {
+      const sumW = rowDef.weights.reduce((a, b) => a + b, 0)
+      const totalGaps = (rowDef.keys.length - 1) * keyGap
+      const unit = (usableW - totalGaps) / sumW
+      let currX = -usableW / 2
       const z = -0.3 - kbDepth / 2 + 0.083 + ri * 0.172
-      row.forEach((label, ki) => {
-        const w = weights[ki] * unit
-        const signature = `${w.toFixed(4)}-${h}`
-        if (!keyGeometries.has(signature))
-          keyGeometries.set(
-            signature,
-            new RoundedBoxGeometry(w, 0.014, h, 5, 0.005),
+
+      rowDef.keys.forEach((label, ki) => {
+        const kw = rowDef.weights[ki] * unit
+        const kx = currX + kw / 2
+
+        if (label === "touchid") {
+          // Touch ID button with sensor ring
+          const key = new THREE.Mesh(getKeyGeo(kw, rowDef.height), keyMat)
+          key.position.set(kx, 0.043, z)
+          baseGroup.add(key)
+          const touchRing = new THREE.Mesh(
+            new THREE.RingGeometry(0.018, 0.021, 32).rotateX(-Math.PI / 2),
+            new THREE.MeshStandardMaterial({
+              color: 0x4a4e58,
+              metalness: 0.9,
+              roughness: 0.25,
+            }),
           )
-        if (ri === 5 && ki === 8) {
-          x += w + 0.023
-          return
+          touchRing.position.set(kx, 0.0505, z)
+          baseGroup.add(touchRing)
+        } else {
+          const key = new THREE.Mesh(getKeyGeo(kw, rowDef.height), keyMat)
+          key.position.set(kx, 0.043, z)
+          baseGroup.add(key)
+          drawLabel(label, kx, z, label.length > 2 || label.startsWith("F"))
         }
-        const key = new THREE.Mesh(keyGeometries.get(signature)!, keyMat)
-        key.position.set(x + w / 2, 0.043, z)
-        baseGroup.add(key)
-        labels.font = `${
-          label.length > 2 ? 17 : 25
-        }px "Geist Variable", sans-serif`
-        labels.fillText(
-          label,
-          ((x + w / 2 + kbWidth / 2) / kbWidth) * 2048,
-          ((z + 0.3 + kbDepth / 2) / kbDepth) * 900,
-        )
-        x += w + 0.023
+
+        currX += kw + keyGap
       })
     })
-    // Separate half-height arrows form the characteristic inverted-T cluster.
-    const arrowGeometry = new RoundedBoxGeometry(0.146, 0.014, 0.064, 3, 0.004)
-    const arrowX = kbWidth / 2 - 0.04 - 0.146 - 0.023 - 0.073
-    for (const [z, label] of [
-      [0.067, "▲"],
-      [0.145, "▼"],
-    ] as const) {
-      const arrow = new THREE.Mesh(arrowGeometry, keyMat)
-      arrow.position.set(arrowX, 0.043, z)
-      baseGroup.add(arrow)
-      labels.font = '18px "Geist Variable",sans-serif'
-      labels.fillText(
-        label,
-        ((arrowX + kbWidth / 2) / kbWidth) * 2048,
-        ((z + 0.3 + kbDepth / 2) / kbDepth) * 900,
-      )
-    }
+
+    // Row 5: Bottom row with Inverted-T Arrow Cluster (10 columns total)
+    const row5Z = -0.3 - kbDepth / 2 + 0.083 + 5 * 0.172
+    const row5Weights = [1.0, 1.0, 1.0, 1.25, 5.4, 1.25, 1.0, 1.0, 1.0, 1.0]
+    const row5SumW = row5Weights.reduce((a, b) => a + b, 0)
+    const row5TotalGaps = 9 * keyGap
+    const row5Unit = (usableW - row5TotalGaps) / row5SumW
+    let r5X = -usableW / 2
+
+    const row5Labels = [
+      "fn",
+      "control",
+      "option",
+      "command",
+      " ",
+      "command",
+      "option",
+    ]
+    row5Labels.forEach((label, ki) => {
+      const kw = row5Weights[ki] * row5Unit
+      const kx = r5X + kw / 2
+      const key = new THREE.Mesh(getKeyGeo(kw, 0.122), keyMat)
+      key.position.set(kx, 0.043, row5Z)
+      baseGroup.add(key)
+      if (label.trim()) {
+        drawLabel(label, kx, row5Z, true)
+      }
+      r5X += kw + keyGap
+    })
+
+    // Inverted-T Arrow keys in columns 7, 8, 9
+    const arrowColW = row5Weights[7] * row5Unit
+    const arrowH = 0.054
+    const arrowZOffset = 0.033
+
+    // Left Arrow (Column 7, bottom half)
+    const leftArrowX = r5X + arrowColW / 2
+    const leftArrowKey = new THREE.Mesh(getKeyGeo(arrowColW, arrowH), keyMat)
+    leftArrowKey.position.set(leftArrowX, 0.043, row5Z + arrowZOffset)
+    baseGroup.add(leftArrowKey)
+    drawLabel("◀", leftArrowX, row5Z + arrowZOffset, true)
+    r5X += arrowColW + keyGap
+
+    // Up / Down Column (Column 8)
+    const midArrowX = r5X + arrowColW / 2
+    // Up Arrow (top half)
+    const upArrowKey = new THREE.Mesh(getKeyGeo(arrowColW, arrowH), keyMat)
+    upArrowKey.position.set(midArrowX, 0.043, row5Z - arrowZOffset)
+    baseGroup.add(upArrowKey)
+    drawLabel("▲", midArrowX, row5Z - arrowZOffset, true)
+
+    // Down Arrow (bottom half)
+    const downArrowKey = new THREE.Mesh(getKeyGeo(arrowColW, arrowH), keyMat)
+    downArrowKey.position.set(midArrowX, 0.043, row5Z + arrowZOffset)
+    baseGroup.add(downArrowKey)
+    drawLabel("▼", midArrowX, row5Z + arrowZOffset, true)
+    r5X += arrowColW + keyGap
+
+    // Right Arrow (Column 9, bottom half)
+    const rightArrowX = r5X + arrowColW / 2
+    const rightArrowKey = new THREE.Mesh(getKeyGeo(arrowColW, arrowH), keyMat)
+    rightArrowKey.position.set(rightArrowX, 0.043, row5Z + arrowZOffset)
+    baseGroup.add(rightArrowKey)
+    drawLabel("▶", rightArrowX, row5Z + arrowZOffset, true)
+
+    // Label texture & plane
     const labelTexture = new THREE.CanvasTexture(labelCanvas)
     labelTexture.colorSpace = THREE.SRGBColorSpace
     labelTexture.anisotropy = renderer.capabilities.getMaxAnisotropy()
     labelTexture.minFilter = THREE.LinearMipmapLinearFilter
     labelTexture.magFilter = THREE.LinearFilter
+
     const labelPlane = new THREE.Mesh(
       new THREE.PlaneGeometry(kbWidth, kbDepth).rotateX(-Math.PI / 2),
       new THREE.MeshBasicMaterial({
         map: labelTexture,
         transparent: true,
         depthWrite: false,
+        polygonOffset: true,
+        polygonOffsetFactor: -1,
+        polygonOffsetUnits: -1,
       }),
     )
-    labelPlane.position.set(0, 0.0505, -0.3)
+    labelPlane.position.set(0, 0.0503, -0.3)
     baseGroup.add(labelPlane)
 
-    const touchID = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.038, 0.038, 0.003, 40),
-      new THREE.MeshPhysicalMaterial({
-        color: 0x08090b,
-        roughness: 0.18,
-        metalness: 0.35,
-        clearcoat: 1,
-      }),
-    )
-    touchID.position.set(1.18, 0.049, -0.752)
-    baseGroup.add(touchID)
-
-    // Speaker Grilles (Left & Right laser-drilled perforations)
-    const speakerCanvas = document.createElement("canvas")
-    speakerCanvas.width = 128
-    speakerCanvas.height = 512
-    drawSpeakerGrille(speakerCanvas)
-    const speakerTexture = new THREE.CanvasTexture(speakerCanvas)
-    const speakerGeom = new THREE.PlaneGeometry(0.16, 0.94)
-    speakerGeom.rotateX(-Math.PI / 2)
-    const speakerMat = new THREE.MeshBasicMaterial({
-      map: speakerTexture,
-      transparent: true,
-      polygonOffset: true,
-      polygonOffsetFactor: -1,
-    })
-
-    const speakerL = new THREE.Mesh(speakerGeom, speakerMat)
-    speakerL.position.set(-1.44, 0.048, -0.3)
-    baseGroup.add(speakerL)
-
-    const speakerR = new THREE.Mesh(speakerGeom, speakerMat)
-    speakerR.position.set(1.44, 0.048, -0.3)
-    baseGroup.add(speakerR)
-
-    // Force Touch Glass Trackpad with Hairline Gap
+    // Force Touch Glass Trackpad with Hairline Gap (Clean solid deck matching reference image, no speaker grilles)
     const tpWidth = 1.3
     const tpDepth = 0.76
     const tpShape = createRoundedRect(tpWidth, tpDepth, 0.035)
@@ -937,15 +1030,15 @@ export default function MacBookCanvas() {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
     const state = {
       x: 0,
-      y: -0.62,
-      scale: 1,
-      rx: -0.1,
-      ry: 0.48,
-      rz: 0.17,
-      lid: -1.65,
-      cy: 0.45,
-      cz: 6.9,
-      lookY: 0.12,
+      y: -0.42,
+      scale: 1.22,
+      rx: 0.16,
+      ry: 0.36,
+      rz: -0.05,
+      lid: -1.82,
+      cy: 0.65,
+      cz: 5.3,
+      lookY: 0.1,
       dark: 0,
       light: 1,
       stage: 0,
@@ -994,19 +1087,19 @@ export default function MacBookCanvas() {
         (match) => {
           const mobile = !!match.conditions?.mobile
           const reduced = !!match.conditions?.reduce
-          const side = mobile ? 0 : 0.16
-          const lower = mobile ? -0.8 : -0.42
+          const side = mobile ? 0 : 0.14
+          const lower = mobile ? -0.75 : -0.42
           const size = mobile ? 1.05 : 1.18
           const initial = {
             x: 0,
-            y: mobile ? -0.65 : -0.52,
-            scale: mobile ? 1.06 : 1.2,
-            rx: -0.08,
-            ry: 0.42,
-            rz: 0.1,
-            lid: -1.68,
-            cy: 0.35,
-            cz: 5.5,
+            y: mobile ? -0.55 : -0.42,
+            scale: mobile ? 1.08 : 1.22,
+            rx: 0.16,
+            ry: 0.36,
+            rz: -0.05,
+            lid: -1.82,
+            cy: 0.65,
+            cz: 5.3,
             lookY: 0.1,
             dark: 0,
             light: 1,
@@ -1019,103 +1112,103 @@ export default function MacBookCanvas() {
               x: side,
               y: lower,
               scale: size,
-              rx: 0.08,
-              ry: -0.38,
-              rz: -0.06,
-              lid: -1.72,
-              cy: 0.75,
-              cz: 5.5,
-              lookY: 0.12,
+              rx: 0.14,
+              ry: -0.22,
+              rz: 0.04,
+              lid: -1.8,
+              cy: 0.65,
+              cz: 5.3,
+              lookY: 0.1,
               stage: 1,
             },
             {
               x: -side * 0.5,
               y: lower,
               scale: size,
-              rx: 0.1,
-              ry: 0.35,
-              rz: 0.05,
-              lid: -1.75,
-              cy: 0.85,
-              cz: 5.5,
-              lookY: 0.12,
+              rx: 0.15,
+              ry: 0.22,
+              rz: -0.04,
+              lid: -1.82,
+              cy: 0.65,
+              cz: 5.3,
+              lookY: 0.1,
               stage: 2,
             },
             {
               x: side,
               y: lower,
               scale: size,
-              rx: 0.06,
-              ry: -0.32,
-              rz: -0.05,
-              lid: -1.7,
-              cy: 0.75,
-              cz: 5.5,
-              lookY: 0.12,
+              rx: 0.14,
+              ry: -0.18,
+              rz: 0.03,
+              lid: -1.8,
+              cy: 0.65,
+              cz: 5.3,
+              lookY: 0.1,
               stage: 3,
             },
             {
               x: -side * 0.5,
               y: lower,
               scale: size,
-              rx: 0.08,
-              ry: 0.28,
-              rz: 0.04,
-              lid: -1.74,
-              cy: 0.8,
-              cz: 5.5,
-              lookY: 0.12,
+              rx: 0.15,
+              ry: 0.2,
+              rz: -0.03,
+              lid: -1.82,
+              cy: 0.65,
+              cz: 5.3,
+              lookY: 0.1,
               stage: 4,
             },
             {
               x: 0,
-              y: mobile ? -0.45 : -0.3,
-              scale: mobile ? 1.02 : 1.15,
-              rx: 0.08,
-              ry: 0.38,
-              rz: 0.04,
-              lid: CLOSED_LID,
-              cy: 0.95,
-              cz: 5.6,
-              lookY: 0.08,
+              y: mobile ? -0.45 : -0.36,
+              scale: mobile ? 1.04 : 1.18,
+              rx: 0.14,
+              ry: 0.28,
+              rz: -0.04,
+              lid: -1.78,
+              cy: 0.65,
+              cz: 5.3,
+              lookY: 0.1,
               stage: 5,
             },
             {
               x: mobile ? 0 : 0.06,
               y: lower,
               scale: size,
-              rx: 0.02,
-              ry: 0.12,
-              rz: -0.02,
-              lid: -1.78,
+              rx: 0.12,
+              ry: -0.14,
+              rz: 0.02,
+              lid: -1.8,
               cy: 0.65,
-              cz: 5.5,
-              lookY: 0.12,
+              cz: 5.3,
+              lookY: 0.1,
               stage: 6,
             },
             {
               x: mobile ? 0 : -0.06,
               y: lower,
               scale: size,
-              rx: 0.02,
-              ry: -0.12,
-              rz: 0.02,
-              lid: -1.78,
+              rx: 0.12,
+              ry: 0.14,
+              rz: -0.02,
+              lid: -1.8,
               cy: 0.65,
-              cz: 5.5,
-              lookY: 0.12,
+              cz: 5.3,
+              lookY: 0.1,
               stage: 7,
             },
             {
               x: 0,
-              y: mobile ? -0.7 : -0.58,
-              scale: mobile ? 1.05 : 1.18,
-              rx: 0.08,
-              ry: 0.35,
-              rz: 0.04,
-              lid: CLOSED_LID,
-              cy: 0.6,
-              cz: 5.6,
+              y: mobile ? -0.58 : -0.44,
+              scale: mobile ? 1.06 : 1.2,
+              rx: 0.15,
+              ry: 0.28,
+              rz: -0.04,
+              lid: -1.82,
+              cy: 0.65,
+              cz: 5.3,
               lookY: 0.1,
               dark: 1,
               light: 0.55,
@@ -1158,52 +1251,15 @@ export default function MacBookCanvas() {
               if (i === 6) timeline!.set(state, { screenIndex: 1 }, swapAt)
               if (i === 7) timeline!.set(state, { screenIndex: 2 }, swapAt)
               if (i === 8) timeline!.set(state, { screenIndex: 0 }, swapAt)
-              if (!reduced) {
-                if (i === 5 || i === 8) {
-                  // Clean Apple close transition for interlude and contact
-                  timeline!.to(
-                    state,
-                    {
-                      ...shot,
-                      lid: CLOSED_LID,
-                      duration,
-                    },
-                    start,
-                  )
-                } else if (i === 6) {
-                  // Smoothly open back up to reveal Gitex
-                  timeline!.to(
-                    state,
-                    {
-                      ...shot,
-                      duration,
-                    },
-                    start,
-                  )
-                } else {
-                  // Silky smooth, continuous perspective transitions between roles — no full 360 spins, no slamming shut
-                  timeline!.to(
-                    state,
-                    {
-                      ...shot,
-                      duration,
-                    },
-                    start,
-                  )
-                }
-              } else {
-                timeline!.to(
-                  state,
-                  {
-                    ...shot,
-                    ...(reduced
-                      ? { ry: initial.ry, rx: initial.rx, rz: initial.rz }
-                      : {}),
-                    duration,
-                  },
-                  start,
-                )
-              }
+              // Silky smooth, continuous perspective transitions between roles — no full 360 spins, never closed off
+              timeline!.to(
+                state,
+                {
+                  ...shot,
+                  duration,
+                },
+                start,
+              )
             })
             // Hold the final composition to the bottom without introducing a second device.
             ScrollTrigger.refresh()
@@ -1239,11 +1295,9 @@ export default function MacBookCanvas() {
       laptopGroup.position.set(state.x, state.y + float, 0)
       laptopGroup.scale.setScalar(state.scale)
       laptopGroup.rotation.set(state.rx, state.ry, state.rz)
-      lidGroup.rotation.x =
-        Math.abs(state.lid) < 0.0001 ? CLOSED_LID : state.lid
-      const shut = Math.abs(lidGroup.rotation.x) < 0.018
-      screenMesh.visible = !shut
-      glass.visible = !shut
+      lidGroup.rotation.x = state.lid
+      screenMesh.visible = true
+      glass.visible = true
       const stage = state.stage
       // Anticipate incoming text while it is still invisible, so framing moves smoothly.
       let textBottom = mobile ? 52 : 72
@@ -1313,11 +1367,7 @@ export default function MacBookCanvas() {
       ambientLight.intensity = 0.65 * state.light
       keyLight.intensity = 1.8 * state.light
       rimLight.intensity = 2.4 + state.dark * 1.1
-      screenGlowLight.intensity = shut
-        ? 0
-        : screen === "wallpaper"
-          ? 0.55
-          : 0.25
+      screenGlowLight.intensity = screen === "wallpaper" ? 0.55 : 0.25
       if (darkWorld) darkWorld.style.opacity = String(state.dark)
       if (lightWorld) {
         lightWorld.style.opacity = String(1 - state.dark)
@@ -1397,15 +1447,4 @@ export default function MacBookCanvas() {
   ) : (
     <div ref={containerRef} className="macbook-canvas" aria-hidden="true" />
   )
-}
-
-function drawSpeakerGrille(canvas: HTMLCanvasElement) {
-  const ctx = canvas.getContext("2d")!
-  ctx.fillStyle = "rgba(25,28,38,.55)"
-  for (let y = 4; y < canvas.height; y += 8)
-    for (let x = 4; x < canvas.width; x += 8) {
-      ctx.beginPath()
-      ctx.arc(x, y, 1.2, 0, Math.PI * 2)
-      ctx.fill()
-    }
 }
