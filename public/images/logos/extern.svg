@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="externDarkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1d22"/>
+      <stop offset="100%" stop-color="#0a0b0e"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Rounded Square -->
+  <rect width="100" height="100" rx="22" fill="url(#externDarkGrad)"/>
+  <rect x="2" y="2" width="96" height="96" rx="20" fill="none" stroke="rgba(255, 255, 255, 0.15)" stroke-width="2"/>
+  
+  <!-- Stylized Extern Lettermark & Spark -->
+  <g transform="translate(50, 48)">
+    <!-- Lowercase Bold 'e' -->
+    <path d="M-18,6 C-18,14 -11,20 -1,20 C6,20 12,17 15,13 L10,9 C8,11 4,13 -1,13 C-6,13 -10,10 -11,4 L18,4 C19,4 19,2 19,-1 C19,-11 11,-20 -1,-20 C-12,-20 -19,-11 -18,6 Z M-10,-2 C-9,-7 -4,-13 -1,-13 C3,-13 9,-7 10,-2 Z" fill="#ffffff"/>
+    <!-- Top-Right Vibrant Indigo/Emerald Sparkle -->
+    <circle cx="21" cy="-21" r="4.5" fill="#4e95ff"/>
+    <path d="M21,-28 L21,-14 M14,-21 L28,-21" stroke="#4e95ff" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  
+  <text x="50" y="89" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="9" fill="#9ca3af" letter-spacing="1.5">EXTERN</text>
+</svg>
