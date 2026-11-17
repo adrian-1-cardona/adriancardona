@@ -1290,16 +1290,17 @@ export default function MacBookCanvas() {
           ? "none"
           : `translateY(${THREE.MathUtils.clamp(index - stage, -1, 1) * 18}px)`
       })
-      // The abstract desktop remains until the project opening; reverse scroll restores it.
-      const experienceIndex = Math.round(stage) - 1
-      const screen =
-        stage >= 0.55 && stage < 4.6
-          ? `company-${Math.max(0, Math.min(3, experienceIndex))}`
-          : state.screenIndex === 2
-            ? "guppty"
-            : state.screenIndex === 1
-              ? "gitex"
-              : "wallpaper"
+      // Ensure the display texture is always strictly synchronized with the current section
+      let screen = "wallpaper"
+      if (stage >= 0.55 && stage < 4.5) {
+        screen = `company-${Math.max(0, Math.min(3, Math.round(stage) - 1))}`
+      } else if (stage >= 5.5 && stage < 6.5) {
+        screen = "gitex"
+      } else if (stage >= 6.5 && stage < 7.5) {
+        screen = "guppty"
+      } else {
+        screen = "wallpaper"
+      }
       setScreen(screen)
       shadowMat.opacity = 0.7 * (1 - state.dark)
       productBounds.getCenter(shadowCenter)

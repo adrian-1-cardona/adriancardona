@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "format": "oxfmt",
+    "update-screens": "node scripts/update-screens.mjs",
     "prebuild": "node scripts/verify-public-assets.mjs"
   },
   "dependencies": {
