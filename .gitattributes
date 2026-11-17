@@ -144,3 +144,7 @@
 *.stl                filter=lfs diff=lfs merge=lfs -text
 *.nc                 filter=lfs diff=lfs merge=lfs -text
 *.mat                filter=lfs diff=lfs merge=lfs -text
+
+# Public site assets must be available in ordinary deployment checkouts.
+# Keep real image/PDF content in Git rather than LFS pointer stubs.
+public/** -filter !diff !merge

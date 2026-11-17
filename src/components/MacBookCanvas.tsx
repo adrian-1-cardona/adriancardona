@@ -1,42 +1,24 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
-import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js"
+import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js"
 import { gsap } from "gsap"
+import { frameMacBook } from "@/lib/macbookFraming"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 gsap.registerPlugin(ScrollTrigger)
+// Zero velocity and acceleration at each phase boundary avoids abrupt hinge/turn changes.
+gsap.registerEase(
+  "cinemaSmooth",
+  (p: number) => p * p * p * (p * (p * 6 - 15) + 10),
+)
+
+const CLOSED_LID = 0
 
 export type ScreenState = "wallpaper" | "experience" | "gitex" | "guppty" | "contact"
 
-interface MacBookCanvasProps {
-  screenState?: ScreenState
-  activeRoleIndex?: number
-  onScreenStateChange?: (state: ScreenState) => void
-  onRoleChange?: (index: number) => void
-}
-
-export default function MacBookCanvas({
-  screenState = "wallpaper",
-  activeRoleIndex = 0,
-  onRoleChange,
-}: MacBookCanvasProps) {
+export default function MacBookCanvas() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const screenCanvasRef = useRef<HTMLCanvasElement | null>(null)
-  const screenTextureRef = useRef<THREE.CanvasTexture | null>(null)
-  const currentScreenStateRef = useRef<ScreenState>(screenState)
-  const activeRoleIndexRef = useRef<number>(activeRoleIndex)
-  const lastScreenUpdateRef = useRef<number>(0)
-  const mousePosRef = useRef({ x: 0, y: 0 })
-
-  // Interactive manual lid override state
-  const isManuallyToggledRef = useRef<boolean>(false)
-
-  // Synchronize state and active role
-  useEffect(() => {
-    currentScreenStateRef.current = screenState
-    activeRoleIndexRef.current = activeRoleIndex
-  }, [screenState, activeRoleIndex])
-
+  const [unavailable, setUnavailable] = useState(false)
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
@@ -45,36 +27,119 @@ export default function MacBookCanvas({
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(
       38,
-      window.innerWidth / window.innerHeight,
+      container.clientWidth / container.clientHeight,
       0.1,
-      100
+      100,
     )
     camera.position.set(0, 0.18, 4.1)
 
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      powerPreference: "high-performance",
-    })
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    let renderer: THREE.WebGLRenderer
+    try {
+      renderer = new THREE.WebGLRenderer({
+        antialias: window.innerWidth <= 760,
+        alpha: true,
+        powerPreference: "high-performance",
+      })
+    } catch {
+      setUnavailable(true)
+      return
+    }
+    // Supersample desktop views up to a 4K-wide drawing buffer, bounded by GPU memory.
+    const renderLimit = Math.min(
+      4096,
+      renderer.capabilities.maxTextureSize,
+      renderer
+        .getContext()
+        .getParameter(renderer.getContext().MAX_RENDERBUFFER_SIZE),
+    )
+    let viewWidth = container.clientWidth,
+      viewHeight = container.clientHeight
+    const resizeDrawingBuffer = () => {
+      const w = container.clientWidth,
+        h = container.clientHeight
+      if (!w || !h) return
+      viewWidth = w
+      viewHeight = h
+      const mobile = w <= 760
+      const desired = mobile
+        ? Math.min(window.devicePixelRatio || 1, 2.5)
+        : Math.max(window.devicePixelRatio || 1, 3840 / w)
+      const ratio = Math.min(
+        desired,
+        renderLimit / w,
+        renderLimit / h,
+        Math.sqrt((mobile ? 3000000 : 10000000) / (w * h)),
+        3,
+      )
+      renderer.setPixelRatio(ratio)
+      renderer.setSize(w, h)
+    }
+    resizeDrawingBuffer()
+    renderer.autoClear = false
+    renderer.shadowMap.enabled = true
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap
     renderer.toneMapping = THREE.ACESFilmicToneMapping
-    renderer.toneMappingExposure = 1.15
+    renderer.toneMappingExposure = 0.82
     container.appendChild(renderer.domElement)
 
     // Photorealistic Studio Environment Map (PMREM) for authentic Apple unibody reflections
     const pmremGenerator = new THREE.PMREMGenerator(renderer)
     pmremGenerator.compileEquirectangularShader()
-    const roomEnvironment = new RoomEnvironment()
-    scene.environment = pmremGenerator.fromScene(roomEnvironment, 0.04).texture
+    // Dark studio flags give metal contrasting reflections instead of a flat white wash.
+    const studio = new THREE.Scene()
+    studio.background = new THREE.Color(0x505664)
+    const softbox = (
+      w: number,
+      h: number,
+      color: number,
+      intensity: number,
+      position: THREE.Vector3,
+    ) => {
+      const panel = new THREE.Mesh(
+        new THREE.PlaneGeometry(w, h),
+        new THREE.MeshBasicMaterial({
+          color: new THREE.Color(color).multiplyScalar(intensity),
+          side: THREE.DoubleSide,
+        }),
+      )
+      panel.position.copy(position)
+      panel.lookAt(0, 0, 0)
+      studio.add(panel)
+    }
+    softbox(7, 3, 0xf1f4ff, 3, new THREE.Vector3(-4, 5, 1))
+    softbox(2, 8, 0xffffff, 4, new THREE.Vector3(5, 2, -3))
+    softbox(9, 1, 0xc3cfff, 2, new THREE.Vector3(0, 1, 6))
+    softbox(8, 6, 0x11151f, 0.5, new THREE.Vector3(0, -2, -5))
+    scene.environment = pmremGenerator.fromScene(studio, 0.06).texture
+    studio.traverse((object) => {
+      if (object instanceof THREE.Mesh) {
+        object.geometry.dispose()
+        ;(object.material as THREE.Material).dispose()
+      }
+    })
 
     // 2. Studio Lighting Setup for Apple Aluminum & Glass Reflections
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.1)
+    const ambientLight = new THREE.AmbientLight(0xe4e8ff, 0.65)
     scene.add(ambientLight)
 
     // Key front light
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.3)
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.8)
     keyLight.position.set(2.5, 4.5, 4.0)
+    keyLight.castShadow = true
+    keyLight.shadow.mapSize.set(
+      window.innerWidth <= 760 ? 1024 : 2048,
+      window.innerWidth <= 760 ? 1024 : 2048,
+    )
+    Object.assign(keyLight.shadow.camera, {
+      left: -5,
+      right: 5,
+      top: 5,
+      bottom: -5,
+      near: 0.1,
+      far: 20,
+    })
+    keyLight.shadow.normalBias = 0.012
+    keyLight.shadow.bias = -0.00015
     scene.add(keyLight)
 
     // Soft sky blue/lavender fill light from left
@@ -88,7 +153,7 @@ export default function MacBookCanvas({
     scene.add(rimLight)
 
     // Soft bottom bounce light for aluminum underbelly
-    const bounceLight = new THREE.DirectionalLight(0xe8eeff, 1.4)
+    const bounceLight = new THREE.DirectionalLight(0xe8eeff, 0.45)
     bounceLight.position.set(-1, -3.5, 2.5)
     scene.add(bounceLight)
 
@@ -111,17 +176,33 @@ export default function MacBookCanvas({
 
     const laptopGroup = new THREE.Group()
 
-    // Authentic M3/M4 MacBook Air Proportions (Razor-thin unibody chassis)
+    // Rounded Pro-style enclosure, matching the supplied front and side references.
     const width = 3.25
     const depth = 2.15
-    const baseThickness = 0.052
+    const baseThickness = 0.065
     const cornerRadius = 0.12
 
     // Authentic Apple Anodized Aluminum PBR Material (Silver / Space Gray Unibody)
+    // Fine, deterministic surface grain breaks up specular highlights at close range.
+    const grainData = new Uint8Array(256 * 256 * 4)
+    let grainSeed = 1729
+    for (let i = 0; i < 256 * 256; i++) {
+      grainSeed = (Math.imul(grainSeed, 1664525) + 1013904223) >>> 0
+      const value = 110 + (grainSeed >>> 26)
+      grainData.set([value, value, value, 255], i * 4)
+    }
+    const grain = new THREE.DataTexture(grainData, 256, 256)
+    grain.wrapS = grain.wrapT = THREE.RepeatWrapping
+    grain.repeat.set(7, 7)
+    grain.magFilter = THREE.LinearFilter
+    grain.needsUpdate = true
     const aluminumMat = new THREE.MeshStandardMaterial({
-      color: 0xb2b7c0,
-      metalness: 0.82,
-      roughness: 0.22,
+      color: 0xaaaeb5,
+      metalness: 1,
+      roughness: 0.36,
+      bumpMap: grain,
+      bumpScale: 0.0008,
+      envMapIntensity: 0.85,
     })
 
     // Dark trim material for interior wells & port cavities
@@ -134,17 +215,56 @@ export default function MacBookCanvas({
     // --- BASE ASSEMBLY ---
     const baseGroup = new THREE.Group()
     const baseShape = createRoundedRect(width, depth, cornerRadius)
+    // The keycaps sit in an actual opening, rather than on top of an uncut slab.
+    const wellPoints = createRoundedRect(2.62, 1.07, 0.04)
+      .getPoints(24)
+      .map((point) => new THREE.Vector2(point.x, point.y + 0.3))
+    baseShape.holes.push(new THREE.Path(wellPoints))
     const baseGeom = new THREE.ExtrudeGeometry(baseShape, {
       depth: baseThickness,
       bevelEnabled: true,
       bevelThickness: 0.014,
       bevelSize: 0.014,
-      bevelSegments: 5,
+      bevelSegments: 8,
     })
     baseGeom.center()
     baseGeom.rotateX(Math.PI / 2)
     const baseMesh = new THREE.Mesh(baseGeom, aluminumMat)
     baseGroup.add(baseMesh)
+    const undersideGeometry = new THREE.ExtrudeGeometry(
+      createRoundedRect(width - 0.012, depth - 0.012, cornerRadius),
+      {
+        depth: 0.003,
+        bevelEnabled: true,
+        bevelSize: 0.003,
+        bevelThickness: 0.002,
+        bevelSegments: 3,
+      },
+    )
+    undersideGeometry.center()
+    undersideGeometry.rotateX(Math.PI / 2)
+    const underside = new THREE.Mesh(
+      undersideGeometry,
+      new THREE.MeshStandardMaterial({
+        color: 0x9096a2,
+        metalness: 1,
+        roughness: 0.36,
+      }),
+    )
+    underside.position.y = -baseThickness / 2 - 0.012
+    baseGroup.add(underside)
+    const screwGeo = new THREE.CylinderGeometry(0.008, 0.008, 0.002, 16)
+    const screwMat = new THREE.MeshStandardMaterial({
+      color: 0x555b66,
+      metalness: 1,
+      roughness: 0.3,
+    })
+    for (const x of [-1.38, 0, 1.38])
+      for (const z of [-0.88, 0.88]) {
+        const screw = new THREE.Mesh(screwGeo, screwMat)
+        screw.position.set(x, -0.049, z)
+        baseGroup.add(screw)
+      }
 
     // Front center thumb scoop
     const scoopGeom = new THREE.BoxGeometry(0.36, 0.012, 0.016)
@@ -154,7 +274,7 @@ export default function MacBookCanvas({
 
     // Keyboard Well (Recessed tray)
     const kbWidth = 2.62
-    const kbDepth = 1.02
+    const kbDepth = 1.07
     const kbShape = createRoundedRect(kbWidth, kbDepth, 0.04)
     const kbGeom = new THREE.ExtrudeGeometry(kbShape, {
       depth: 0.006,
@@ -162,31 +282,170 @@ export default function MacBookCanvas({
     })
     kbGeom.center()
     kbGeom.rotateX(Math.PI / 2)
-    const kbTray = new THREE.Mesh(kbGeom, darkTrimMat)
-    kbTray.position.set(0, 0.038, -0.30)
+    const kbTray = new THREE.Mesh(
+      kbGeom,
+      new THREE.MeshBasicMaterial({ color: 0x0a0b0e }),
+    )
+    kbTray.position.set(0, 0.037, -0.3)
     baseGroup.add(kbTray)
 
-    // Photorealistic Apple Magic Keyboard Texture Canvas
-    const kbCanvas = document.createElement("canvas")
-    kbCanvas.width = 2048
-    kbCanvas.height = 1024
-    drawAppleKeyboard(kbCanvas)
-    const kbTexture = new THREE.CanvasTexture(kbCanvas)
-    kbTexture.colorSpace = THREE.SRGBColorSpace
-    kbTexture.generateMipmaps = true
-    kbTexture.minFilter = THREE.LinearMipmapLinearFilter
-
-    const kbPlaneGeom = new THREE.PlaneGeometry(kbWidth - 0.02, kbDepth - 0.02)
-    kbPlaneGeom.rotateX(-Math.PI / 2)
-    // Using MeshBasicMaterial with transparent dark tone prevents blown-out white specular wash
-    const kbMat = new THREE.MeshBasicMaterial({
-      map: kbTexture,
-      polygonOffset: true,
-      polygonOffsetFactor: -1,
+    // Individual recessed keycaps retain their thickness at grazing camera angles.
+    const keyRows = [
+      ["esc", "☀", "☀", "▤", "⌕", "◉", "☾", "◀", "▶", "▶▶", "◖", "◖", "◖", "◉"],
+      [
+        "~",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "0",
+        "-",
+        "=",
+        "delete",
+      ],
+      ["tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\"],
+      [
+        "caps lock",
+        "A",
+        "S",
+        "D",
+        "F",
+        "G",
+        "H",
+        "J",
+        "K",
+        "L",
+        ";",
+        "'",
+        "return",
+      ],
+      ["shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "shift"],
+      [
+        "fn",
+        "control",
+        "option",
+        "command",
+        " ",
+        "command",
+        "option",
+        "◀",
+        "▼",
+        "▶",
+      ],
+    ]
+    const keyMat = new THREE.MeshPhysicalMaterial({
+      color: 0x101114,
+      roughness: 0.72,
+      metalness: 0,
+      specularIntensity: 0.15,
+      envMapIntensity: 0.18,
     })
-    const kbPlaneMesh = new THREE.Mesh(kbPlaneGeom, kbMat)
-    kbPlaneMesh.position.set(0, 0.042, -0.30)
-    baseGroup.add(kbPlaneMesh)
+    const keyGeometries = new Map<string, THREE.BufferGeometry>()
+    const labelCanvas = document.createElement("canvas")
+    const textureScale =
+      window.innerWidth > 760 && renderer.capabilities.maxTextureSize >= 4096
+        ? 2
+        : 1
+    labelCanvas.width = 2048 * textureScale
+    labelCanvas.height = 900 * textureScale
+    const labels = labelCanvas.getContext("2d")!
+    labels.scale(textureScale, textureScale)
+    labels.fillStyle = "#c2c4ca"
+    labels.textAlign = "center"
+    labels.textBaseline = "middle"
+    keyRows.forEach((row, ri) => {
+      const weights = row.map((_, ki) =>
+        ri === 5
+          ? [1, 1, 1, 1.2, 5, 1.2, 1, 1, 1, 1][ki]
+          : ri === 4 && (ki === 0 || ki === row.length - 1)
+            ? 2.1
+            : (ri === 2 && ki === 0) ||
+                (ri === 3 && (ki === 0 || ki === row.length - 1)) ||
+                (ri === 1 && ki === row.length - 1)
+              ? 1.5
+              : 1,
+      )
+      const unit =
+        (kbWidth - 0.08 - (row.length - 1) * 0.023) /
+        weights.reduce((a, b) => a + b, 0)
+      let x = -kbWidth / 2 + 0.04
+      const h = ri === 0 ? 0.122 : 0.143
+      const z = -0.3 - kbDepth / 2 + 0.083 + ri * 0.172
+      row.forEach((label, ki) => {
+        const w = weights[ki] * unit
+        const signature = `${w.toFixed(4)}-${h}`
+        if (!keyGeometries.has(signature))
+          keyGeometries.set(
+            signature,
+            new RoundedBoxGeometry(w, 0.014, h, 5, 0.005),
+          )
+        if (ri === 5 && ki === 8) {
+          x += w + 0.023
+          return
+        }
+        const key = new THREE.Mesh(keyGeometries.get(signature)!, keyMat)
+        key.position.set(x + w / 2, 0.043, z)
+        baseGroup.add(key)
+        labels.font = `${
+          label.length > 2 ? 17 : 25
+        }px "Geist Variable", sans-serif`
+        labels.fillText(
+          label,
+          ((x + w / 2 + kbWidth / 2) / kbWidth) * 2048,
+          ((z + 0.3 + kbDepth / 2) / kbDepth) * 900,
+        )
+        x += w + 0.023
+      })
+    })
+    // Separate half-height arrows form the characteristic inverted-T cluster.
+    const arrowGeometry = new RoundedBoxGeometry(0.146, 0.014, 0.064, 3, 0.004)
+    const arrowX = kbWidth / 2 - 0.04 - 0.146 - 0.023 - 0.073
+    for (const [z, label] of [
+      [0.067, "▲"],
+      [0.145, "▼"],
+    ] as const) {
+      const arrow = new THREE.Mesh(arrowGeometry, keyMat)
+      arrow.position.set(arrowX, 0.043, z)
+      baseGroup.add(arrow)
+      labels.font = '18px "Geist Variable",sans-serif'
+      labels.fillText(
+        label,
+        ((arrowX + kbWidth / 2) / kbWidth) * 2048,
+        ((z + 0.3 + kbDepth / 2) / kbDepth) * 900,
+      )
+    }
+    const labelTexture = new THREE.CanvasTexture(labelCanvas)
+    labelTexture.colorSpace = THREE.SRGBColorSpace
+    labelTexture.anisotropy = renderer.capabilities.getMaxAnisotropy()
+    labelTexture.minFilter = THREE.LinearMipmapLinearFilter
+    labelTexture.magFilter = THREE.LinearFilter
+    const labelPlane = new THREE.Mesh(
+      new THREE.PlaneGeometry(kbWidth, kbDepth).rotateX(-Math.PI / 2),
+      new THREE.MeshBasicMaterial({
+        map: labelTexture,
+        transparent: true,
+        depthWrite: false,
+      }),
+    )
+    labelPlane.position.set(0, 0.0505, -0.3)
+    baseGroup.add(labelPlane)
+
+    const touchID = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.038, 0.038, 0.003, 40),
+      new THREE.MeshPhysicalMaterial({
+        color: 0x08090b,
+        roughness: 0.18,
+        metalness: 0.35,
+        clearcoat: 1,
+      }),
+    )
+    touchID.position.set(1.18, 0.049, -0.752)
+    baseGroup.add(touchID)
 
     // Speaker Grilles (Left & Right laser-drilled perforations)
     const speakerCanvas = document.createElement("canvas")
@@ -204,15 +463,15 @@ export default function MacBookCanvas({
     })
 
     const speakerL = new THREE.Mesh(speakerGeom, speakerMat)
-    speakerL.position.set(-1.44, 0.041, -0.30)
+    speakerL.position.set(-1.44, 0.048, -0.3)
     baseGroup.add(speakerL)
 
     const speakerR = new THREE.Mesh(speakerGeom, speakerMat)
-    speakerR.position.set(1.44, 0.041, -0.30)
+    speakerR.position.set(1.44, 0.048, -0.3)
     baseGroup.add(speakerR)
 
     // Force Touch Glass Trackpad with Hairline Gap
-    const tpWidth = 1.20
+    const tpWidth = 1.3
     const tpDepth = 0.76
     const tpShape = createRoundedRect(tpWidth, tpDepth, 0.035)
     const tpGeom = new THREE.ExtrudeGeometry(tpShape, {
@@ -222,57 +481,109 @@ export default function MacBookCanvas({
     tpGeom.center()
     tpGeom.rotateX(Math.PI / 2)
     const tpMat = new THREE.MeshStandardMaterial({
-      color: 0x989ea8,
-      metalness: 0.65,
-      roughness: 0.28,
+      color: 0xb1b6c1,
+      metalness: 0.9,
+      roughness: 0.4,
+      envMapIntensity: 0.85,
     })
     const trackpad = new THREE.Mesh(tpGeom, tpMat)
-    trackpad.position.set(0, 0.040, 0.62)
+    trackpad.position.set(0, 0.049, 0.62)
     baseGroup.add(trackpad)
 
     // Trackpad fine hairline border
-    const tpBorderShape = createRoundedRect(tpWidth + 0.005, tpDepth + 0.005, 0.037)
+    const tpBorderShape = createRoundedRect(
+      tpWidth + 0.005,
+      tpDepth + 0.005,
+      0.037,
+    )
     const tpBorderGeom = new THREE.ShapeGeometry(tpBorderShape)
-    tpBorderGeom.rotateX(Math.PI / 2)
+    tpBorderGeom.rotateX(-Math.PI / 2)
     const tpBorderMat = new THREE.MeshBasicMaterial({ color: 0x727a87 })
     const tpBorderMesh = new THREE.Mesh(tpBorderGeom, tpBorderMat)
-    tpBorderMesh.position.set(0, 0.0405, 0.62)
+    tpBorderMesh.position.set(0, 0.0475, 0.62)
     baseGroup.add(tpBorderMesh)
 
-    // Recessed Flush Ports on Left & Right Sides (Authentic Apple Unibody Pill Sockets)
-    const portSocketMat = new THREE.MeshBasicMaterial({ color: 0x0a0c10 })
-    const portPinMat = new THREE.MeshBasicMaterial({ color: 0x606570 })
-
-    function createRecessedPillPort(x: number, y: number, z: number, isRight = false) {
-      const portGroup = new THREE.Group()
-      // Outer dark socket cavity
-      const cavityGeom = new THREE.BoxGeometry(0.016, 0.018, 0.048)
-      const cavity = new THREE.Mesh(cavityGeom, portSocketMat)
-      portGroup.add(cavity)
-
-      // Center tongue / pin bar
-      const pinGeom = new THREE.BoxGeometry(0.012, 0.004, 0.032)
-      const pin = new THREE.Mesh(pinGeom, portPinMat)
-      portGroup.add(pin)
-
-      portGroup.position.set(x, y, z)
-      return portGroup
+    // Flush sockets follow the side-view reference: MagSafe, USB-C, audio, SD and HDMI.
+    const socketMat = new THREE.MeshBasicMaterial({ color: 0x08090c })
+    const socketRim = new THREE.MeshStandardMaterial({
+      color: 0x777c85,
+      metalness: 1,
+      roughness: 0.23,
+    })
+    const pinMat = new THREE.MeshStandardMaterial({
+      color: 0x747980,
+      metalness: 0.8,
+      roughness: 0.3,
+    })
+    function socket(
+      side: number,
+      z: number,
+      w: number,
+      h: number,
+      kind: "usb" | "magsafe" | "sd" | "hdmi",
+    ) {
+      const group = new THREE.Group()
+      const faceX = side * (width / 2 + 0.0145)
+      const surround = new THREE.Mesh(
+        new THREE.ShapeGeometry(
+          createRoundedRect(w + 0.014, h + 0.012, Math.min(h * 0.45, 0.013)),
+          24,
+        ),
+        socketRim,
+      )
+      surround.rotation.y = (side * Math.PI) / 2
+      surround.position.set(faceX, 0, z)
+      group.add(surround)
+      let holeShape = createRoundedRect(w, h, Math.min(h * 0.44, 0.01))
+      if (kind === "hdmi") {
+        holeShape = new THREE.Shape()
+        holeShape.moveTo(-w / 2, h / 2)
+        holeShape.lineTo(w / 2, h / 2)
+        holeShape.lineTo(w / 2 - 0.015, -h / 2)
+        holeShape.lineTo(-w / 2 + 0.015, -h / 2)
+        holeShape.closePath()
+      }
+      const cavity = new THREE.Mesh(
+        new THREE.ShapeGeometry(holeShape, 24),
+        socketMat,
+      )
+      cavity.rotation.y = (side * Math.PI) / 2
+      cavity.position.set(faceX + side * 0.0008, 0, z)
+      group.add(cavity)
+      if (kind === "usb" || kind === "hdmi") {
+        const tongue = new THREE.Mesh(
+          new THREE.BoxGeometry(0.0018, 0.004, w * 0.68),
+          pinMat,
+        )
+        tongue.position.set(faceX + side * 0.0017, -0.001, z)
+        group.add(tongue)
+      }
+      if (kind === "magsafe") {
+        for (let i = 0; i < 5; i++) {
+          const pin = new THREE.Mesh(
+            new THREE.SphereGeometry(0.003, 8, 6),
+            new THREE.MeshStandardMaterial({
+              color: 0xcbb987,
+              metalness: 1,
+              roughness: 0.3,
+            }),
+          )
+          pin.position.set(faceX + side * 0.0017, 0, z + (i - 2) * 0.021)
+          group.add(pin)
+        }
+      }
+      baseGroup.add(group)
     }
-
-    // Left Side: MagSafe 3 and Dual Thunderbolt 4 / USB-C Ports
-    const portL1 = createRecessedPillPort(-width / 2, 0, -0.82)
-    baseGroup.add(portL1)
-
-    const portL2 = createRecessedPillPort(-width / 2, 0, -0.66)
-    baseGroup.add(portL2)
-
-    // Right Side: 3.5mm Headphone Jack (Authentic circular socket)
-    const jackGeom = new THREE.CylinderGeometry(0.013, 0.013, 0.024, 20)
-    jackGeom.rotateZ(Math.PI / 2)
-    const jackMat = new THREE.MeshBasicMaterial({ color: 0x050608 })
-    const jackMesh = new THREE.Mesh(jackGeom, jackMat)
-    jackMesh.position.set(width / 2, 0, -0.45)
-    baseGroup.add(jackMesh)
+    socket(-1, -0.82, 0.18, 0.026, "magsafe")
+    socket(-1, -0.55, 0.085, 0.027, "usb")
+    socket(-1, -0.35, 0.085, 0.027, "usb")
+    const audio = new THREE.Mesh(new THREE.CircleGeometry(0.018, 32), socketMat)
+    audio.rotation.y = -Math.PI / 2
+    audio.position.set(-width / 2 - 0.0158, 0, -0.14)
+    baseGroup.add(audio)
+    socket(1, -0.8, 0.145, 0.035, "hdmi")
+    socket(1, -0.53, 0.085, 0.027, "usb")
+    socket(1, -0.2, 0.255, 0.015, "sd")
 
     // Bottom Rubber Feet (Four circular black feet clearly protruding on bottom chassis plate)
     const footGeom = new THREE.CylinderGeometry(0.065, 0.065, 0.014, 24)
@@ -293,7 +604,7 @@ export default function MacBookCanvas({
     })
 
     // Iconic Apple Clutch Hinge Bar (Matte Graphite Recessed Hinge)
-    const hingeGeom = new THREE.CylinderGeometry(0.020, 0.020, width * 0.74, 24)
+    const hingeGeom = new THREE.CylinderGeometry(0.02, 0.02, width * 0.74, 24)
     hingeGeom.rotateZ(Math.PI / 2)
     const hingeMat = new THREE.MeshStandardMaterial({
       color: 0x0a0c0e,
@@ -303,12 +614,20 @@ export default function MacBookCanvas({
     const hinge = new THREE.Mesh(hingeGeom, hingeMat)
     hinge.position.set(0, baseThickness / 2 - 0.004, -depth / 2)
     baseGroup.add(hinge)
+    for (const x of [-width * 0.36, width * 0.36]) {
+      const knuckle = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.027, 0.027, 0.18, 32).rotateZ(Math.PI / 2),
+        aluminumMat,
+      )
+      knuckle.position.set(x, baseThickness / 2, -depth / 2 + 0.014)
+      baseGroup.add(knuckle)
+    }
 
     laptopGroup.add(baseGroup)
 
     // --- LID ASSEMBLY (Articulating Hinge) ---
     const lidGroup = new THREE.Group()
-    lidGroup.position.set(0, baseThickness / 2, -depth / 2)
+    lidGroup.position.set(0, 0.077, -depth / 2)
 
     const lidContent = new THREE.Group()
     const lidThickness = 0.024
@@ -325,32 +644,70 @@ export default function MacBookCanvas({
     const lidBackMesh = new THREE.Mesh(lidGeom, aluminumMat)
     lidBackMesh.position.set(0, lidThickness / 2, depth / 2)
     lidContent.add(lidBackMesh)
-
-    // Apple Logo on Back of Lid (Polished Chrome with Real Shape)
-    const logoShape = createAppleLogoShape()
-    const logoGeom = new THREE.ShapeGeometry(logoShape)
-    logoGeom.rotateX(-Math.PI / 2)
-    const logoMat = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
-      metalness: 1.0,
-      roughness: 0.05,
+    // The rubber perimeter joins glass to the shell and leaves only a hairline closed seam.
+    const gasketShape = createRoundedRect(width - 0.035, depth - 0.035, 0.09)
+    gasketShape.holes.push(
+      new THREE.Path(
+        createRoundedRect(width - 0.12, depth - 0.12, 0.045).getPoints(32),
+      ),
+    )
+    const gasketGeometry = new THREE.ExtrudeGeometry(gasketShape, {
+      depth: 0.018,
+      bevelEnabled: false,
+      curveSegments: 32,
     })
-    const appleLogo = new THREE.Mesh(logoGeom, logoMat)
-    appleLogo.position.set(0, lidThickness + 0.003, depth / 2)
-    appleLogo.scale.set(0.0035, 0.0035, 0.0035)
-    lidContent.add(appleLogo)
+    gasketGeometry.center()
+    gasketGeometry.rotateX(Math.PI / 2)
+    const gasket = new THREE.Mesh(
+      gasketGeometry,
+      new THREE.MeshStandardMaterial({ color: 0x101114, roughness: 0.85 }),
+    )
+    gasket.position.set(0, -0.0165, depth / 2)
+    lidContent.add(gasket)
+    const mark = new THREE.Shape()
+    mark.moveTo(0, -0.25)
+    mark.bezierCurveTo(-0.11, -0.31, -0.16, -0.27, -0.23, -0.18)
+    mark.bezierCurveTo(-0.36, -0.01, -0.35, 0.16, -0.23, 0.23)
+    mark.bezierCurveTo(-0.13, 0.29, -0.06, 0.23, 0, 0.23)
+    mark.bezierCurveTo(0.08, 0.23, 0.16, 0.3, 0.25, 0.22)
+    mark.bezierCurveTo(0.16, 0.17, 0.15, 0.04, 0.29, -0.02)
+    mark.bezierCurveTo(0.24, -0.16, 0.13, -0.32, 0.06, -0.27)
+    mark.bezierCurveTo(0.03, -0.25, 0.01, -0.25, 0, -0.25)
+    const logoMaterial = new THREE.MeshStandardMaterial({
+      color: 0x171b23,
+      metalness: 1,
+      roughness: 0.12,
+      envMapIntensity: 1.2,
+    })
+    const logo = new THREE.Mesh(new THREE.ShapeGeometry(mark, 48), logoMaterial)
+    logo.rotation.set(-Math.PI / 2, 0, Math.PI)
+    logo.scale.setScalar(0.7)
+    logo.position.set(0, lidThickness + 0.013, depth / 2)
+    lidContent.add(logo)
+    const leaf = new THREE.Shape()
+    leaf.moveTo(-0.01, 0.28)
+    leaf.bezierCurveTo(-0.02, 0.37, 0.05, 0.43, 0.13, 0.43)
+    leaf.bezierCurveTo(0.14, 0.35, 0.07, 0.28, -0.01, 0.28)
+    const leafMesh = new THREE.Mesh(
+      new THREE.ShapeGeometry(leaf, 32),
+      logoMaterial,
+    )
+    leafMesh.rotation.set(-Math.PI / 2, 0, Math.PI)
+    leafMesh.scale.setScalar(0.7)
+    leafMesh.position.copy(logo.position)
+    lidContent.add(leafMesh)
 
     // Matte Black Display Chin
     const chinGeom = new THREE.PlaneGeometry(width - 0.03, 0.06)
     chinGeom.rotateX(Math.PI / 2)
     const chinMat = new THREE.MeshBasicMaterial({ color: 0x050608 })
     const chinMesh = new THREE.Mesh(chinGeom, chinMat)
-    chinMesh.position.set(0, -0.009, 0.03)
+    chinMesh.position.set(0, -0.025, 0.03)
     lidContent.add(chinMesh)
 
     // Liquid Retina XDR Display with authentic Apple Liquid Silk Wallpaper
     const textureLoader = new THREE.TextureLoader()
-    const screenTexture = textureLoader.load("/apple_wallpaper.png", (tex) => {
+    const screenTexture = textureLoader.load("/macbook-desktop.png", (tex) => {
       tex.colorSpace = THREE.SRGBColorSpace
       tex.generateMipmaps = true
       tex.minFilter = THREE.LinearMipmapLinearFilter
@@ -360,20 +717,71 @@ export default function MacBookCanvas({
     screenTexture.colorSpace = THREE.SRGBColorSpace
     screenTexture.generateMipmaps = true
     screenTexture.minFilter = THREE.LinearMipmapLinearFilter
-    screenTextureRef.current = screenTexture as any
 
     // Display plane matches lid interior face (DoubleSide ensures it is NEVER culled by camera angles)
-    const screenPlaneGeom = new THREE.PlaneGeometry(width - 0.02, depth - 0.02)
+    const screenPlaneGeom = new THREE.ShapeGeometry(
+      createRoundedRect(width - 0.12, depth - 0.12, 0.045),
+      32,
+    )
+    const positions = screenPlaneGeom.getAttribute("position")
+    const screenUV = new Float32Array(positions.count * 2)
+    for (let i = 0; i < positions.count; i++) {
+      screenUV[i * 2] = positions.getX(i) / (width - 0.12) + 0.5
+      screenUV[i * 2 + 1] = positions.getY(i) / (depth - 0.12) + 0.5
+    }
+    screenPlaneGeom.setAttribute("uv", new THREE.BufferAttribute(screenUV, 2))
     screenPlaneGeom.rotateX(Math.PI / 2)
     const screenPlaneMat = new THREE.MeshBasicMaterial({
       map: screenTexture,
-      side: THREE.DoubleSide,
+      toneMapped: false,
       polygonOffset: true,
       polygonOffsetFactor: -1,
     })
     const screenMesh = new THREE.Mesh(screenPlaneGeom, screenPlaneMat)
-    screenMesh.position.set(0, -0.008, depth / 2)
+    screenMesh.position.set(0, -0.026, depth / 2)
     lidContent.add(screenMesh)
+    const bezel = new THREE.Mesh(
+      new THREE.ShapeGeometry(
+        createRoundedRect(width - 0.04, depth - 0.04, 0.09),
+        32,
+      ).rotateX(Math.PI / 2),
+      new THREE.MeshBasicMaterial({ color: 0x090a0e, side: THREE.DoubleSide }),
+    )
+    bezel.position.set(0, -0.024, depth / 2)
+    lidContent.add(bezel)
+    const notch = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.4, 0.065).rotateX(Math.PI / 2),
+      new THREE.MeshBasicMaterial({ color: 0x08090c, side: THREE.DoubleSide }),
+    )
+    notch.position.set(0, -0.028, depth - 0.085)
+    lidContent.add(notch)
+    const webcam = new THREE.Mesh(
+      new THREE.CircleGeometry(0.008, 24),
+      new THREE.MeshPhysicalMaterial({
+        color: 0x162138,
+        metalness: 0.65,
+        roughness: 0.08,
+        clearcoat: 1,
+      }),
+    )
+    webcam.rotation.x = Math.PI / 2
+    webcam.position.set(0, -0.029, depth - 0.085)
+    lidContent.add(webcam)
+    // A low-opacity Fresnel layer supplies glass reflections without obscuring the display.
+    const glass = new THREE.Mesh(
+      screenPlaneGeom.clone(),
+      new THREE.ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        vertexShader: `varying vec3 n; varying vec3 v; varying vec2 tex;
+      void main(){vec4 p=modelViewMatrix*vec4(position,1.);n=normalize(normalMatrix*normal);v=normalize(-p.xyz);tex=uv;gl_Position=projectionMatrix*p;}`,
+        fragmentShader: `varying vec3 n;varying vec3 v;varying vec2 tex;
+      void main(){float f=pow(1.-abs(dot(normalize(n),normalize(v))),3.);float strip=smoothstep(.1,.5,tex.x+tex.y*.25)*(1.-smoothstep(.65,1.2,tex.x+tex.y*.25));gl_FragColor=vec4(.82,.88,1.,f*.20+strip*.024);}`,
+      }),
+    )
+    glass.position.copy(screenMesh.position)
+    glass.position.y -= 0.0007
+    lidContent.add(glass)
 
     // Ethereal Screen Glow Light (Casts soft purple/blue light onto keyboard deck matching mockup)
     const screenGlowLight = new THREE.PointLight(0x7090ff, 1.6, 2.5)
@@ -383,6 +791,16 @@ export default function MacBookCanvas({
     lidGroup.add(lidContent)
     laptopGroup.add(lidGroup)
 
+    laptopGroup.traverse((object) => {
+      if (
+        object instanceof THREE.Mesh &&
+        object.material instanceof THREE.MeshStandardMaterial &&
+        !object.material.transparent
+      ) {
+        object.castShadow = true
+        object.receiveShadow = true
+      }
+    })
     scene.add(laptopGroup)
 
     // Ground Contact Shadow (Soft Apple product drop shadow)
@@ -411,434 +829,569 @@ export default function MacBookCanvas({
     shadowMesh.position.set(0, -1.05, 0)
     scene.add(shadowMesh)
 
-    // 4. GSAP ScrollTrigger Choreography (Scroll-synchronized 3D transformation)
-    // EXACT MATCH TO USER'S REFERENCE MOCKUP
-    const animState = {
-      posX: 0.02,
-      posY: -0.56,
-      posZ: 0.0,
-      scale: 0.82,
-      rotX: -0.10,
-      rotY: -0.40,
-      rotZ: 0.04,
-      lidAngle: -1.78, // ~102° open, screen standing upright and facing camera
-      camY: 0.16,
-      camZ: 4.60,
-      shadowOpacity: 0.75,
-    }
-
-    const updateTransforms = () => {
-      laptopGroup.position.set(animState.posX, animState.posY, animState.posZ)
-      laptopGroup.scale.set(animState.scale, animState.scale, animState.scale)
-      laptopGroup.rotation.set(animState.rotX, animState.rotY, animState.rotZ)
-      if (!isManuallyToggledRef.current) {
-        lidGroup.rotation.x = animState.lidAngle
-      }
-      camera.position.set(0, animState.camY, animState.camZ)
-      shadowMesh.material.opacity = animState.shadowOpacity
-    }
-
-    // ScrollTrigger Timeline
-    // Choreographed to scroll through all 4 experiences, then close/reopen into projects, then contact
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: document.body,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.2,
-      },
+    // One device and one renderer remain mounted for the entire scroll story.
+    const gitexTexture = textureLoader.load("/screens/gitex.jpg")
+    const gupptyTexture = textureLoader.load("/screens/guppty.jpg")
+    const projectTextures = { gitex: gitexTexture, guppty: gupptyTexture }
+    Object.values(projectTextures).forEach((texture) => {
+      texture.colorSpace = THREE.SRGBColorSpace
+      texture.anisotropy = renderer.capabilities.getMaxAnisotropy()
     })
-
-    // STAGE 1: Hero to Experience Role 0 (Software Engineering Intern @ Cal Poly)
-    // Matches panel 2 of user's reference mockup: angled isometric view showing Magic Keyboard, trackpad, port, and screen with Apple wallpaper
-    tl.to(
-      animState,
+    screenTexture.anisotropy = renderer.capabilities.getMaxAnisotropy()
+    // Compose the supplied company marks into local, high-resolution display textures.
+    let disposed = false
+    const companyTextures: THREE.CanvasTexture[] = []
+    const marks = [
       {
-        posX: 2.10,
-        posY: -0.32,
-        posZ: 0.40,
-        scale: 1.18,
-        rotX: 0.31,
-        rotY: 0.60,
-        rotZ: -0.11,
-        lidAngle: -0.52,
-        camY: 0.22,
-        camZ: 3.60,
-        shadowOpacity: 0.85,
-        duration: 0.8,
-        ease: 'power2.inOut',
-        onUpdate: updateTransforms,
+        src: "/images/logos/calpoly-official.svg",
+        bg: "#f7f8fa",
+        caption: "Bailey College of Science and Mathematics",
+        width: 1080,
       },
-      0.1
-    )
-
-    // STAGE 2: Role 1 (Undergraduate Researcher @ Cal Poly CSSE)
-    // Laptop spins slightly and opens up to ~41 degrees
-    tl.to(
-      animState,
       {
-        posX: 2.15,
-        posY: -0.30,
-        posZ: 0.42,
-        scale: 1.18,
-        rotX: 0.33,
-        rotY: 0.66,
-        rotZ: -0.12,
-        lidAngle: -0.72,
-        camY: 0.22,
-        camZ: 3.55,
-        duration: 0.7,
-        ease: 'power1.inOut',
-        onUpdate: updateTransforms,
+        src: "/images/logos/calpoly-official.svg",
+        bg: "#f7f8fa",
+        caption: "Computer Science and Software Engineering",
+        width: 1080,
       },
-      1.0
-    )
-
-    // STAGE 3: Role 2 (Technology Solutions Research Intern @ Foundation for CCC)
-    // Laptop articulates back and closes to ~27 degrees
-    tl.to(
-      animState,
       {
-        posX: 2.10,
-        posY: -0.32,
-        posZ: 0.40,
-        scale: 1.18,
-        rotX: 0.29,
-        rotY: 0.56,
-        rotZ: -0.10,
-        lidAngle: -0.48,
-        camY: 0.22,
-        camZ: 3.60,
-        duration: 0.7,
-        ease: 'power1.inOut',
-        onUpdate: updateTransforms,
+        src: "/images/logos/foundationccc-official.svg",
+        bg: "#ffffff",
+        caption: "",
+        width: 1430,
       },
-      1.7
-    )
-
-    // STAGE 4: Role 3 (AI Document Insights Extern @ Extern)
-    // Laptop glides toward closing (~17 degrees)
-    tl.to(
-      animState,
       {
-        posX: 2.12,
-        posY: -0.32,
-        posZ: 0.42,
-        scale: 1.18,
-        rotX: 0.31,
-        rotY: 0.62,
-        rotZ: -0.11,
-        lidAngle: -0.30,
-        camY: 0.22,
-        camZ: 3.60,
-        duration: 0.7,
-        ease: 'power1.inOut',
-        onUpdate: updateTransforms,
+        src: "/images/logos/extern-official.png",
+        bg: "#f5f4f7",
+        caption: "Extern",
+        width: 450,
       },
-      2.4
+    ]
+    marks.forEach((mark) => {
+      const canvas = document.createElement("canvas")
+      canvas.width = 2048 * textureScale
+      canvas.height = 1280 * textureScale
+      const ctx = canvas.getContext("2d")!
+      ctx.scale(textureScale, textureScale)
+      const texture = new THREE.CanvasTexture(canvas)
+      texture.colorSpace = THREE.SRGBColorSpace
+      texture.anisotropy = renderer.capabilities.getMaxAnisotropy()
+      companyTextures.push(texture)
+      const paint = (logo?: HTMLImageElement) => {
+        if (disposed) return
+        ctx.fillStyle = mark.bg
+        ctx.fillRect(0, 0, 2048, 1280)
+        if (logo) {
+          const ratio = Math.min(
+            mark.width / logo.naturalWidth,
+            600 / logo.naturalHeight,
+          )
+          const w = logo.naturalWidth * ratio,
+            h = logo.naturalHeight * ratio
+          ctx.filter = "none"
+          ctx.drawImage(
+            logo,
+            (mark.bg === "#123b31" ? 850 : 1024) - w / 2,
+            (1280 - h) / 2 - (mark.caption ? 45 : 0),
+            w,
+            h,
+          )
+          ctx.filter = "none"
+        }
+        if (mark.caption) {
+          ctx.font = '400 35px "Geist Variable", sans-serif'
+          ctx.textAlign = "center"
+          ctx.fillStyle = "#000000"
+          ctx.fillText(mark.caption, mark.bg === "#123b31" ? 850 : 1024, 900)
+        }
+        texture.needsUpdate = true
+      }
+      paint()
+      const logo = new Image()
+      logo.onload = () => {
+        paint(logo)
+        document.fonts.ready.then(() => paint(logo))
+      }
+      logo.src = mark.src
+    })
+    let currentScreen = "wallpaper"
+    const setScreen = (name: string) => {
+      if (name === currentScreen) return
+      currentScreen = name
+      screenPlaneMat.map = name.startsWith("company-")
+        ? companyTextures[Number(name.split("-")[1])]
+        : name === "gitex"
+          ? gitexTexture
+          : name === "guppty"
+            ? gupptyTexture
+            : screenTexture
+      screenPlaneMat.needsUpdate = true
+      container.dataset.screen = name
+    }
+    container.dataset.screen = "wallpaper"
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    const state = {
+      x: 0,
+      y: -0.62,
+      scale: 1,
+      rx: -0.1,
+      ry: 0.48,
+      rz: 0.17,
+      lid: -1.65,
+      cy: 0.45,
+      cz: 6.9,
+      lookY: 0.12,
+      dark: 0,
+      light: 1,
+      stage: 0,
+      screenIndex: 0,
+    }
+    const lightWorld = document.querySelector<HTMLElement>(".light-world")
+    const darkWorld = document.querySelector<HTMLElement>(".dark-world")
+    const panels = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-shot]"),
     )
-
-    // STAGE 5: Experience into Projects & Contact (Gracefully glides out before Projects)
-    tl.to(
-      animState,
-      {
-        posX: 1.2,
-        posY: -7.0,
-        posZ: -0.5,
-        scale: 0.0,
-        rotX: 0.35,
-        rotY: 0.55,
-        rotZ: 0,
-        lidAngle: 0.0,
-        shadowOpacity: 0,
-        duration: 0.6,
-        ease: 'power2.in',
-        onUpdate: updateTransforms,
-      },
-      3.1
+    const copies = panels.map((panel) =>
+      panel.querySelector<HTMLElement>(
+        ".opening-copy, .story-copy, .interlude-copy, .contact-copy",
+      ),
     )
+    const root = container.closest<HTMLElement>(".portfolio")
+    root?.classList.add("has-3d")
+    // Cache text geometry after fonts and viewport changes; never read layout per frame.
+    let textClearance: number[] = []
+    const measureText = () => {
+      if (disposed) return
+      textClearance = copies.map((copy) => {
+        if (!copy) return 0
+        const top = parseFloat(getComputedStyle(copy).top) || 0
+        return top + copy.offsetHeight + (viewWidth <= 760 ? 42 : 50)
+      })
+    }
+    measureText()
+    document.fonts.ready.then(measureText)
+    const textObserver = new ResizeObserver(measureText)
+    copies.forEach((copy) => {
+      if (copy) textObserver.observe(copy)
+    })
+    const lightColor = new THREE.Color(0xdee6ff)
+    const nightColor = new THREE.Color(0x7185b6)
+    let lastStage = -1
+    let timeline: gsap.core.Timeline | undefined
+    const context = gsap.context(() => {
+      const media = gsap.matchMedia()
+      media.add(
+        {
+          mobile: "(max-width: 760px)",
+          desktop: "(min-width: 761px)",
+          reduce: "(prefers-reduced-motion: reduce)",
+        },
+        (match) => {
+          const mobile = !!match.conditions?.mobile
+          const reduced = !!match.conditions?.reduce
+          const side = mobile ? 0 : 0.3
+          const lower = mobile ? -3.25 : -1.4
+          const size = mobile ? 0.9 : 1.06
+          const initial = {
+            x: 0,
+            y: mobile ? -0.7 : -1.4,
+            scale: mobile ? 1.02 : 1.1,
+            rx: -0.1,
+            ry: 0.48,
+            rz: 0.17,
+            lid: -1.65,
+            cy: 0.45,
+            cz: 6.9,
+            lookY: 0.12,
+            dark: 0,
+            light: 1,
+            stage: 0,
+            screenIndex: 0,
+          }
+          const shots = [
+            initial,
+            {
+              x: side,
+              y: lower,
+              scale: size,
+              rx: 0.1,
+              ry: -0.6,
+              rz: -0.1,
+              lid: -1.5,
+              cy: 1.6,
+              cz: 6.7,
+              lookY: 0.18,
+              stage: 1,
+            },
+            {
+              x: side,
+              y: lower,
+              scale: size,
+              rx: 0.28,
+              ry: Math.PI * 2 + 0.45,
+              rz: 0.07,
+              lid: -1.9,
+              cy: 2.1,
+              cz: 6.7,
+              lookY: 0.18,
+              stage: 2,
+            },
+            {
+              x: side,
+              y: lower,
+              scale: size,
+              rx: -0.12,
+              ry: -0.55,
+              rz: 0.12,
+              lid: -1.55,
+              cy: 1.1,
+              cz: 6.7,
+              lookY: 0.18,
+              stage: 3,
+            },
+            {
+              x: side,
+              y: lower,
+              scale: size,
+              rx: 0.1,
+              ry: -Math.PI * 2 + 0.5,
+              rz: -0.09,
+              lid: -1.9,
+              cy: 1.5,
+              cz: 6.7,
+              lookY: 0.18,
+              stage: 4,
+            },
+            {
+              x: 0,
+              y: mobile ? -0.5 : -0.35,
+              scale: mobile ? 0.93 : 1,
+              rx: 0.1,
+              ry: -Math.PI * 2 + 1.1,
+              rz: 0.06,
+              lid: CLOSED_LID,
+              cy: 1.9,
+              cz: 6.9,
+              lookY: 0.1,
+              stage: 5,
+            },
+            {
+              y: lower,
+              rx: 0.02,
+              ry: -Math.PI * 2 + 0.16,
+              rz: -0.03,
+              lid: -1.86,
+              cy: 1.3,
+              cz: 6.7,
+              lookY: 0.2,
+              stage: 6,
+              scale: mobile ? 0.84 : 0.96,
+              x: mobile ? 0 : 0.3,
+            },
+            {
+              y: lower,
+              rx: 0.02,
+              ry: -Math.PI * 2 - 0.18,
+              rz: 0.03,
+              lid: -1.86,
+              cy: 1.3,
+              cz: 6.7,
+              lookY: 0.2,
+              stage: 7,
+              scale: mobile ? 0.84 : 0.96,
+              x: mobile ? 0 : 0.3,
+            },
+            {
+              x: 0,
+              y: mobile ? -1.0 : -1.08,
+              scale: mobile ? 1 : 1.05,
+              rx: 0.09,
+              ry: 0.45,
+              rz: 0.06,
+              lid: CLOSED_LID,
+              cy: 0.7,
+              cz: 6.9,
+              lookY: 0.15,
+              dark: 1,
+              light: 0.55,
+              stage: 8,
+            },
+          ]
+          Object.assign(state, initial)
+          const positions = () =>
+            panels.map((panel, i) =>
+              i === 0
+                ? 0
+                : panel.offsetTop +
+                  panel.offsetHeight * 0.5 -
+                  window.innerHeight * 0.5,
+            )
+          const build = () => {
+            timeline?.scrollTrigger?.kill()
+            timeline?.kill()
+            const stops = positions()
+            const end = stops[stops.length - 1]
+            timeline = gsap.timeline({
+              scrollTrigger: {
+                trigger: document.getElementById("story")!,
+                start: "top top",
+                end: () => `+=${end}`,
+                scrub: reduced ? true : 1.6,
+                invalidateOnRefresh: true,
+              },
+              defaults: { ease: reduced ? "none" : "cinemaSmooth" },
+            })
+            timeline.set(state, initial, 0)
+            shots.slice(1).forEach((shot, index) => {
+              const i = index + 1
+              const start =
+                i === 1
+                  ? stops[i - 1] + (stops[i] - stops[i - 1]) * 0.04
+                  : stops[i - 1] + (stops[i] - stops[i - 1]) * 0.04
+              const duration = stops[i] - start
+              // Keep the lid exactly closed through the complete turn and screen swap.
+              const swapAt = start + duration * 0.52
+              if (i === 6) timeline!.set(state, { screenIndex: 1 }, swapAt)
+              if (i === 7) timeline!.set(state, { screenIndex: 2 }, swapAt)
+              if (i === 8) timeline!.set(state, { screenIndex: 0 }, swapAt)
+              if (!reduced) {
+                // Close completely, settle, turn while shut, settle, then open.
+                timeline!.to(
+                  state,
+                  {
+                    lid: CLOSED_LID,
+                    stage: i - 0.74,
+                    duration: duration * 0.26,
+                  },
+                  start,
+                )
+                timeline!.to(
+                  state,
+                  {
+                    ...shot,
+                    lid: CLOSED_LID,
+                    stage: i - 0.28,
+                    duration: duration * 0.42,
+                  },
+                  start + duration * 0.3,
+                )
+                timeline!.to(
+                  state,
+                  {
+                    ...shot,
+                    duration: duration * 0.24,
+                  },
+                  start + duration * 0.76,
+                )
+              } else {
+                timeline!.to(
+                  state,
+                  {
+                    ...shot,
+                    ...(reduced
+                      ? { ry: initial.ry, rx: initial.rx, rz: initial.rz }
+                      : {}),
+                    duration,
+                  },
+                  start,
+                )
+              }
+            })
+            // Hold the final composition to the bottom without introducing a second device.
+            ScrollTrigger.refresh()
+          }
+          build()
+          const resize = () => {
+            build()
+          }
+          window.addEventListener("resize", resize)
+          return () => {
+            window.removeEventListener("resize", resize)
+            timeline?.scrollTrigger?.kill()
+            timeline?.kill()
+          }
+        },
+      )
+      return () => media.revert()
+    }, container)
 
-    // STAGE 6: Hold completely off-screen for Projects & Contact
-    tl.to(
-      animState,
-      {
-        posY: -7.0,
-        scale: 0.0,
-        shadowOpacity: 0,
-        duration: 0.8,
-        onUpdate: updateTransforms,
-      },
-      3.7
-    )
-
-    // Expose transform controls on window for live testing and fine-tuning
-    ;(window as any).__tl = tl
-    ;(window as any).__setTransform = (params: any) => {
-      tl.pause()
-      Object.assign(animState, params)
-      updateTransforms()
+    const copyOpacity = new WeakMap<HTMLElement, number>()
+    let frame = 0
+    let visible = !document.hidden
+    const startedAt = performance.now()
+    const productBounds = new THREE.Box3()
+    const viewDirection = new THREE.Vector3()
+    const shadowCenter = new THREE.Vector3()
+    const update = () => {
+      frame = requestAnimationFrame(update)
+      if (!visible) return
+      const t = (performance.now() - startedAt) / 1000
+      const float = motion.matches ? 0 : Math.sin(t * 0.85) * 0.018
+      const mobile = viewWidth <= 760
+      laptopGroup.position.set(state.x, state.y + float, 0)
+      laptopGroup.scale.setScalar(state.scale)
+      laptopGroup.rotation.set(state.rx, state.ry, state.rz)
+      lidGroup.rotation.x =
+        Math.abs(state.lid) < 0.0001 ? CLOSED_LID : state.lid
+      const shut = Math.abs(lidGroup.rotation.x) < 0.018
+      screenMesh.visible = !shut
+      glass.visible = !shut
+      const stage = state.stage
+      // Anticipate incoming text while it is still invisible, so framing moves smoothly.
+      let textBottom = mobile ? 52 : 72
+      textClearance.forEach((bottom, index) => {
+        const anticipation =
+          1 - THREE.MathUtils.smoothstep(Math.abs(stage - index), 0.48, 0.9)
+        textBottom = Math.max(
+          textBottom,
+          THREE.MathUtils.lerp(mobile ? 52 : 72, bottom, anticipation),
+        )
+      })
+      const sceneTop = Math.ceil(Math.min(textBottom, viewHeight))
+      const sceneHeight = Math.max(0, viewHeight - sceneTop)
+      laptopGroup.updateMatrixWorld(true)
+      productBounds.setFromObject(laptopGroup)
+      camera.fov = 38
+      viewDirection.set(0, state.cy - state.lookY, state.cz)
+      frameMacBook(
+        camera,
+        productBounds,
+        viewWidth / Math.max(1,sceneHeight),
+        viewDirection,
+      )
+      copies.forEach((copy, index) => {
+        if (!copy) return
+        const distance = Math.abs(stage - index)
+        const opacity = THREE.MathUtils.clamp(
+          1 - Math.max(0, distance - 0.18) / 0.3,
+          0,
+          1,
+        )
+        const roundedOpacity = Math.round(opacity * 1000) / 1000
+        if (copyOpacity.get(copy) === roundedOpacity && roundedOpacity === 0)
+          return
+        copyOpacity.set(copy, roundedOpacity)
+        copy.style.opacity = String(roundedOpacity)
+        copy.style.visibility = opacity < 0.01 ? "hidden" : "visible"
+        copy.style.transform = motion.matches
+          ? "none"
+          : `translateY(${THREE.MathUtils.clamp(index - stage, -1, 1) * 18}px)`
+      })
+      // The abstract desktop remains until the project opening; reverse scroll restores it.
+      const experienceIndex = Math.round(stage) - 1
+      const screen =
+        stage >= 0.55 && stage < 4.6
+          ? `company-${Math.max(0, Math.min(3, experienceIndex))}`
+          : state.screenIndex === 2
+            ? "guppty"
+            : state.screenIndex === 1
+              ? "gitex"
+              : "wallpaper"
+      setScreen(screen)
+      shadowMat.opacity = 0.7 * (1 - state.dark)
+      productBounds.getCenter(shadowCenter)
+      shadowMesh.position.set(
+        shadowCenter.x,
+        productBounds.min.y - 0.2,
+        shadowCenter.z,
+      )
+      fillLight.color.copy(lightColor).lerp(nightColor, state.dark)
+      ambientLight.intensity = 0.65 * state.light
+      keyLight.intensity = 1.8 * state.light
+      rimLight.intensity = 2.4 + state.dark * 1.1
+      screenGlowLight.intensity = shut
+        ? 0
+        : screen === "wallpaper"
+          ? 0.55
+          : 0.25
+      if (darkWorld) darkWorld.style.opacity = String(state.dark)
+      if (lightWorld) {
+        lightWorld.style.opacity = String(1 - state.dark)
+        lightWorld.style.transform = `translateY(${-Math.min(stage, 5) * 1.3}%)`
+      }
+      const nearest = Math.round(stage)
+      if (nearest !== lastStage) {
+        container.dataset.stage = String(nearest)
+        lastStage = nearest
+      }
+      // Clear the full canvas, then render only below the reserved text area.
+      renderer.setScissorTest(false)
+      renderer.setViewport(0, 0, viewWidth, viewHeight)
+      renderer.clear()
+      if(sceneHeight<64)return
+      renderer.setViewport(0, 0, viewWidth, sceneHeight)
+      renderer.setScissor(0, 0, viewWidth, sceneHeight)
+      renderer.setScissorTest(true)
       renderer.render(scene, camera)
     }
-    ;(window as any).__getTransform = () => ({ ...animState })
-
-    updateTransforms()
-
-    // 5. Interactive Click & Hover on MacBook
-    const raycaster = new THREE.Raycaster()
-    const mouse = new THREE.Vector2()
-
-    const handleClick = (e: MouseEvent) => {
-      mouse.x = (e.clientX / window.innerWidth) * 2 - 1
-      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1
-      raycaster.setFromCamera(mouse, camera)
-
-      const intersects = raycaster.intersectObjects([baseMesh, lidBackMesh, screenMesh], true)
-      if (intersects.length > 0) {
-        // Toggle lid open/close smoothly on click!
-        isManuallyToggledRef.current = true
-        const isCurrentlyClosed = Math.abs(lidGroup.rotation.x) < 0.2
-        const targetAngle = isCurrentlyClosed ? -1.85 : 0.0
-
-        gsap.to(lidGroup.rotation, {
-          x: targetAngle,
-          duration: 0.8,
-          ease: "power2.inOut",
-          onComplete: () => {
-            if (!isCurrentlyClosed) {
-              setTimeout(() => {
-                isManuallyToggledRef.current = false
-              }, 1200)
-            }
-          },
-        })
-      }
-    }
-
-    window.addEventListener("click", handleClick)
-
-    const handlePointerMove = (e: PointerEvent) => {
-      mousePosRef.current.x = (e.clientX / window.innerWidth - 0.5) * 2
-      mousePosRef.current.y = (e.clientY / window.innerHeight - 0.5) * 2
-    }
-    window.addEventListener("pointermove", handlePointerMove)
-
-    // 6. Animation Loop (Live computer animations, floating levitation, and mouse parallax)
-    let animationFrameId: number
-    const clock = new THREE.Clock()
-
-    const animate = () => {
-      animationFrameId = requestAnimationFrame(animate)
-      const elapsedTime = clock.getElapsedTime()
-
-      // Subtly float only in hero wallpaper mode
-      if (currentScreenStateRef.current === "wallpaper" && !isManuallyToggledRef.current) {
-        laptopGroup.position.y = animState.posY + Math.sin(elapsedTime * 1.2) * 0.012
-        laptopGroup.rotation.z = animState.rotZ + Math.cos(elapsedTime * 0.9) * 0.006
-      }
-
-      // Subtle Apple-style physical mouse parallax
-      const targetParallaxY = mousePosRef.current.x * 0.035
-      const targetParallaxX = -mousePosRef.current.y * 0.025
-      laptopGroup.rotation.y = THREE.MathUtils.lerp(
-        laptopGroup.rotation.y,
-        animState.rotY + targetParallaxY,
-        0.05
-      )
-      laptopGroup.rotation.x = THREE.MathUtils.lerp(
-        laptopGroup.rotation.x,
-        animState.rotX + targetParallaxX,
-        0.05
-      )
-
-      renderer.render(scene, camera)
-    }
-
-    animate()
-
-    // Handle Window Resize
-    const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight
+    update()
+    const resizeRenderer = () => {
+      resizeDrawingBuffer()
+      camera.aspect = viewWidth / viewHeight
       camera.updateProjectionMatrix()
-      renderer.setSize(window.innerWidth, window.innerHeight)
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+      measureText()
     }
-
-    window.addEventListener("resize", handleResize)
-
+    const visibility = () => {
+      visible = !document.hidden
+    }
+    window.addEventListener("resize", resizeRenderer)
+    document.addEventListener("visibilitychange", visibility)
     return () => {
-      window.removeEventListener("resize", handleResize)
-      window.removeEventListener("click", handleClick)
-      window.removeEventListener("pointermove", handlePointerMove)
-      cancelAnimationFrame(animationFrameId)
-      tl.kill()
-      ScrollTrigger.getAll().forEach((st) => st.kill())
+      cancelAnimationFrame(frame)
+      window.removeEventListener("resize", resizeRenderer)
+      document.removeEventListener("visibilitychange", visibility)
+      disposed = true
+      textObserver.disconnect()
+      companyTextures.forEach((texture) => texture.dispose())
+      context.revert()
+      root?.classList.remove("has-3d")
+      copies.forEach((copy) => {
+        if (copy) {
+          copy.style.opacity = ""
+          copy.style.visibility = ""
+          copy.style.transform = ""
+        }
+      })
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh) {
+          object.geometry.dispose()
+          const materials = Array.isArray(object.material)
+            ? object.material
+            : [object.material]
+          materials.forEach((material) => {
+            Object.values(material).forEach((value) => {
+              if (value instanceof THREE.Texture) value.dispose()
+            })
+            material.dispose()
+          })
+        }
+      })
+      gitexTexture.dispose()
+      gupptyTexture.dispose()
+      scene.environment?.dispose()
+      pmremGenerator.dispose()
+      keyLight.shadow.dispose()
       renderer.dispose()
-      if (container.contains(renderer.domElement)) {
-        container.removeChild(renderer.domElement)
-      }
+      renderer.domElement.remove()
     }
-  }, [onRoleChange])
-
-  return (
-    <div
-      ref={containerRef}
-      className="fixed inset-0 pointer-events-none z-25"
-      style={{ overflow: "hidden" }}
-    />
+  }, [])
+  return unavailable ? (
+    <div className="webgl-fallback">
+      The 3D presentation needs a browser with WebGL enabled. All experience,
+      projects, and contact details are available below.
+    </div>
+  ) : (
+    <div ref={containerRef} className="macbook-canvas" aria-hidden="true" />
   )
 }
 
-// 5. Authentic Apple Logo Vector Shape Generator
-function createAppleLogoShape() {
-  const shape = new THREE.Shape()
-  shape.moveTo(0, 15)
-  shape.bezierCurveTo(-15, 15, -30, -5, -30, -25)
-  shape.bezierCurveTo(-30, -55, 0, -65, 0, -65)
-  shape.bezierCurveTo(0, -65, 30, -55, 30, -25)
-  shape.bezierCurveTo(30, -5, 15, 15, 0, 15)
-  return shape
-}
-
-// 6. Photorealistic Apple Magic Keyboard Drawer
-function drawAppleKeyboard(canvas: HTMLCanvasElement) {
-  const ctx = canvas.getContext("2d")
-  if (!ctx) return
-  const w = canvas.width
-  const h = canvas.height
-
-  // Anodized black tray base
-  ctx.fillStyle = "#0c0d10"
-  ctx.fillRect(0, 0, w, h)
-
-  // Keyboard Rows layout definition
-  const row0 = ["esc", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "Touch ID"]
-  const row1 = ["~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "delete"]
-  const row2 = ["tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\"]
-  const row3 = ["caps lock", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "return"]
-  const row4 = ["shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "shift"]
-  const row5 = ["fn", "control", "option", "command", " ", "command", "option", "◀", "▲▼", "▶"]
-
-  const allRows = [row0, row1, row2, row3, row4, row5]
-  const rowHeights = [110, 135, 135, 135, 135, 135]
-  const paddingX = 40
-  const paddingY = 40
-  const gapX = 14
-  const gapY = 14
-
-  let currentY = paddingY
-
-  allRows.forEach((row, rIdx) => {
-    const rowH = rowHeights[rIdx]
-    const usableW = w - paddingX * 2
-    const totalGaps = (row.length - 1) * gapX
-
-    const keyWidths: number[] = []
-    if (rIdx === 0) {
-      const standardW = (usableW - totalGaps) / row.length
-      row.forEach(() => keyWidths.push(standardW))
-    } else if (rIdx === 1) {
-      const unit = (usableW - totalGaps) / (row.length + 0.6)
-      row.forEach((_, i) => keyWidths.push(i === row.length - 1 ? unit * 1.6 : unit))
-    } else if (rIdx === 2) {
-      const unit = (usableW - totalGaps) / (row.length + 0.6)
-      row.forEach((_, i) => {
-        if (i === 0) keyWidths.push(unit * 1.5)
-        else if (i === row.length - 1) keyWidths.push(unit * 1.1)
-        else keyWidths.push(unit)
-      })
-    } else if (rIdx === 3) {
-      const unit = (usableW - totalGaps) / (row.length + 1.6)
-      row.forEach((_, i) => {
-        if (i === 0 || i === row.length - 1) keyWidths.push(unit * 1.8)
-        else keyWidths.push(unit)
-      })
-    } else if (rIdx === 4) {
-      const unit = (usableW - totalGaps) / (row.length + 2.6)
-      row.forEach((_, i) => {
-        if (i === 0 || i === row.length - 1) keyWidths.push(unit * 2.3)
-        else keyWidths.push(unit)
-      })
-    } else if (rIdx === 5) {
-      const unit = (usableW - totalGaps) / 16
-      keyWidths.push(unit * 1.2) // fn
-      keyWidths.push(unit * 1.2) // ctrl
-      keyWidths.push(unit * 1.2) // opt
-      keyWidths.push(unit * 1.5) // cmd
-      keyWidths.push(unit * 6.0) // spacebar
-      keyWidths.push(unit * 1.5) // cmd
-      keyWidths.push(unit * 1.2) // opt
-      keyWidths.push(unit * 1.0) // left
-      keyWidths.push(unit * 1.0) // up/down
-      keyWidths.push(unit * 1.0) // right
-    }
-
-    let currentX = paddingX
-    row.forEach((key, kIdx) => {
-      const kw = keyWidths[kIdx] || 100
-
-      // Matte Black Chiclet Key Body
-      ctx.fillStyle = "#121418"
-      ctx.strokeStyle = "#1a1d24"
-      ctx.lineWidth = 1.5
-      ctx.beginPath()
-      ctx.roundRect(currentX, currentY, kw, rowH, 14)
-      ctx.fill()
-      ctx.stroke()
-
-      // Key top subtle highlight bevel
-      const keyGrad = ctx.createLinearGradient(currentX, currentY, currentX, currentY + rowH)
-      keyGrad.addColorStop(0, "rgba(255, 255, 255, 0.06)")
-      keyGrad.addColorStop(1, "rgba(0, 0, 0, 0.35)")
-      ctx.fillStyle = keyGrad
-      ctx.beginPath()
-      ctx.roundRect(currentX + 2, currentY + 2, kw - 4, rowH - 4, 12)
-      ctx.fill()
-
-      // Crisp White Key Legend (San Francisco / Apple System Font)
-      ctx.fillStyle = "rgba(255, 255, 255, 0.92)"
-      ctx.textAlign = "center"
-      ctx.textBaseline = "middle"
-
-      if (key === "Touch ID") {
-        ctx.fillStyle = "#08090b"
-        ctx.beginPath()
-        ctx.roundRect(currentX + 6, currentY + 6, kw - 12, rowH - 12, 10)
-        ctx.fill()
-      } else if (rIdx === 0) {
-        ctx.font = "600 22px -apple-system, BlinkMacSystemFont, sans-serif"
-        ctx.fillText(key, currentX + kw / 2, currentY + rowH / 2)
-      } else {
-        ctx.font = "bold 30px -apple-system, BlinkMacSystemFont, sans-serif"
-        ctx.fillText(key, currentX + kw / 2, currentY + rowH / 2)
-      }
-
-      currentX += kw + gapX
-    })
-
-    currentY += rowH + gapY
-  })
-}
-
-// 7. Micro-drilled Speaker Grille Texture
 function drawSpeakerGrille(canvas: HTMLCanvasElement) {
-  const ctx = canvas.getContext("2d")
-  if (!ctx) return
-  const w = canvas.width
-  const h = canvas.height
-
-  ctx.clearRect(0, 0, w, h)
-  ctx.fillStyle = "rgba(10, 12, 16, 0.85)"
-
-  const cols = 8
-  const rows = 40
-  const stepX = w / cols
-  const stepY = h / rows
-
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
+  const ctx = canvas.getContext("2d")!
+  ctx.fillStyle = "rgba(25,28,38,.55)"
+  for (let y = 4; y < canvas.height; y += 8)
+    for (let x = 4; x < canvas.width; x += 8) {
       ctx.beginPath()
-      ctx.arc(c * stepX + stepX / 2, r * stepY + stepY / 2, 1.8, 0, Math.PI * 2)
+      ctx.arc(x, y, 1.2, 0, Math.PI * 2)
       ctx.fill()
     }
-  }
 }
